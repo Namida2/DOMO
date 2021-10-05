@@ -38,6 +38,12 @@ android {
 }
 
 dependencies {
+
+    //Dagger2
+    def dagger_version = "2.30.1"
+    implementation" com.google.dagger:dagger-android:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+
     //Fragment and Activity
     implementation "androidx.fragment:fragment-ktx:1.3.6"
     implementation "androidx.activity:activity-ktx:1.3.1"
@@ -45,8 +51,8 @@ dependencies {
     //Coroutine
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
     //LifeCycle
-    def lifecycle_version = "2.4.0-beta01"
     // ViewModel
+    def lifecycle_version = "2.4.0-beta01"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     // LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
