@@ -8,5 +8,7 @@ class SplashScreenModel @Inject constructor(
     private var localRepository: SplashScreenLocalRepository,
     private var remoteRepository: SplashScreenRemoteRepository
 ) {
-
+    fun getCurrentUser(): String {
+        localRepository.getCurrentEmployee()
+    }
 }

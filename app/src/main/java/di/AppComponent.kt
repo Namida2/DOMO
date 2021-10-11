@@ -4,9 +4,11 @@ import android.content.Context
 
 import androidx.room.Room
 import com.example.domo.modeles.SplashScreenModel
-import dagger.*
+import dagger.BindsInstance
+import dagger.Component
+import dagger.Module
+import dagger.Provides
 import database.Database
-import database.EmployeeDao
 import javax.inject.Singleton
 
 @Singleton
@@ -30,8 +32,6 @@ class LocalRepositoryModule {
         "restaurant_database"
     ).build()
 
-    @Provides
-    fun provideEmployeeDao(): EmployeeDao =
 
 }
 
