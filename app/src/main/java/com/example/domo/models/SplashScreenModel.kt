@@ -1,14 +1,15 @@
 package com.example.domo.models
 
-import com.example.domo.models.localRepository.SplashScreenLocalRepository
 import com.example.domo.models.remoteRepository.SplashScreenRemoteRepository
+import database.EmployeeDao
+import entities.Employee
 import javax.inject.Inject
 
 class SplashScreenModel @Inject constructor(
-    private var localRepository: SplashScreenLocalRepository,
+    private var employeeDao: EmployeeDao,
     private var remoteRepository: SplashScreenRemoteRepository
 ) {
-//    suspend fun getCurrentUser(): String {
-//        localRepository.getCurrentEmployee()
-//    }
+    suspend fun getCurrentEmployee(): Employee? =
+        employeeDao.readCurrentEmployee()
+
 }
