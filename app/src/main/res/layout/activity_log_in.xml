@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/bottomSheetDialog"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
         <LinearLayout
             android:id="@+id/top_card"
             android:layout_width="match_parent"
@@ -29,7 +24,6 @@
             android:layout_height="match_parent"
             android:layout_below="@id/top_card"
             android:orientation="vertical">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -101,4 +95,3 @@
 
     </RelativeLayout>
 
-</layout>

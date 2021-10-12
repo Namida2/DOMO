@@ -2,10 +2,13 @@ package database
 
 import androidx.room.Dao
 import androidx.room.Insert
-import com.example.domo.modeles.Employee
+import androidx.room.Query
+import entities.Employee
 
 @Dao
 interface EmployeeDao {
     @Insert
-    fun insert(vararg employees: Employee)
+    suspend fun insert(employees: Employee)
+    @Query("select * from employee")
+    suspend fun readCurrentEmployee(): Employee
 }

@@ -3,9 +3,8 @@ package com.example.domo.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domo.modeles.SplashScreenModel
+import com.example.domo.models.SplashScreenModel
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 sealed class SplashScreenStates {
     object DefaultState: SplashScreenStates()
@@ -23,10 +22,10 @@ class SplashScreenViewModel(
     }
     val state = _state
 
-    fun getCurrentUser() {
-        viewModelScope.launch {
-            splashScreenModel.getCurrentUser()
-        }
-    }
+//    init {
+//        viewModelScope.launch {
+//            splashScreenModel.getCurrentUser()
+//        }
+//    }
 
 }

@@ -1,4 +1,4 @@
-package com.example.domo.modeles.remoteRepository
+package com.example.domo.models.remoteRepository
 
 import javax.inject.Inject
 
