@@ -28,7 +28,7 @@
 
                                 <com.google.android.material.progressindicator.CircularProgressIndicator
                                     android:id="@+id/progressIndicator"
-                                    style="@style/circularProgressIndicator"
+                                    style=""
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_toLeftOf="@id/progressText"

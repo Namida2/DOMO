@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 data class Employee (
     @PrimaryKey val id: Int,
     var name: String,
-    val email: String
+    val email: String,
+    var post: String
 )

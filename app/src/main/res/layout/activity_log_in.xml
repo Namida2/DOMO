@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
 
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
             android:id="@+id/top_card"
             android:layout_width="match_parent"
@@ -10,12 +14,14 @@
             android:background="@drawable/bg_top_card"
             android:orientation="vertical"
             android:elevation="10dp">
+
             <ImageView
                 android:id="@+id/logo"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/ic_logo_round"/>
+                android:src="@drawable/ic_logo_round" />
         </LinearLayout>
 
         <LinearLayout
@@ -24,6 +30,7 @@
             android:layout_height="match_parent"
             android:layout_below="@id/top_card"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -83,15 +90,17 @@
                     android:layout_marginBottom="8dp"
                     android:text="Войти"
                     android:textAllCaps="false" />
+
                 <Button
                     android:id="@+id/newAccountButton"
-                    style="@style/buttonStyle"
+                    style="@style/emptyButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="36dp"
-                    android:text="У меня еще нет аккаунта"/>
+                    android:text="У меня еще нет аккаунта" />
             </LinearLayout>
         </LinearLayout>
-
     </RelativeLayout>
+</layout>
+
 

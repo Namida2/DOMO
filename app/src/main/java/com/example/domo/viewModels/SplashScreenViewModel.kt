@@ -1,5 +1,6 @@
 package com.example.domo.viewModels
 
+import android.window.SplashScreen
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,7 +27,10 @@ class SplashScreenViewModel(
     init {
         viewModelScope.launch {
             _state.value = SplashScreenStates.CheckingForCurrentEmployee
-            splashScreenModel.getCurrentEmployee()
+            state.value = with(splashScreenModel.getCurrentEmployee()) {
+                if(this == null) SplashScreenStates.EmployeeDoesNotExit
+                else SplashScreenStates.EmployeeExists(this)
+            }
         }
     }
 

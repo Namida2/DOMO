@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">DOMO</string>
+    <string name="tables">Столики</string>
+    <string name="orders">Заказы</string>
+    <string name="profile">Профиль</string>
+    <string name="messenger">Мессенджер</string>
 </resources>
