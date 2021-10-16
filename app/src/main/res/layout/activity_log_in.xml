@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.example.domo.viewModels.LogInViewModel" />
     </data>
 
     <RelativeLayout
@@ -62,6 +64,7 @@
                 android:layout_marginBottom="12dp"
                 android:drawableStart="@drawable/ic_email"
                 android:hint="Email"
+                android:text="@{viewModel.data}"
                 android:inputType="textEmailAddress"
                 android:textColorHint="@android:color/darker_gray" />
 
@@ -89,6 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:text="Войти"
+                    android:onClick="@{(view) -> viewModel.onClick(view, email.text)}"
                     android:textAllCaps="false" />
 
                 <Button
