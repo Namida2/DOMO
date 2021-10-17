@@ -42,7 +42,7 @@ class SplashScreenActivity : AppCompatActivity() {
                     //progressBar?
                 }
                 is SplashScreenStates.EmployeeDoesNotExit -> {
-                    startActivity(Intent(this, LogInActivity::class.java))
+                    startActivity(Intent(this, AuthorizationActivity::class.java))
                 }
                 is SplashScreenStates.EmployeeExists -> {
                     employee = state.employee
