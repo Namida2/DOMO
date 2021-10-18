@@ -13,9 +13,10 @@
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/activity_sign_in.xml" value="0.4504731861198738" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/activity_splash_screen.xml" value="0.16" />
+        <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/activity_waiter_main.xml" value="0.12777777777777777" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_log_in.xml" value="0.24791666666666667" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_orders.xml" value="0.24791666666666667" />
-        <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_registration.xml" value="0.24791666666666667" />
+        <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_registration.xml" value="0.25" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_tables.xml" value="0.24791666666666667" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/layout_order_item.xml" value="0.33" />
         <entry key="..\:/Projects/Graduation/DOMO/app/src/main/res/drawable/ic_logo.xml" value="0.22604166666666667" />

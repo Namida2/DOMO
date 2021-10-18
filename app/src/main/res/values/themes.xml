@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.DOMO" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
+
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/black</item>
@@ -14,15 +15,6 @@
         <!-- Customize your theme here. -->
 
     </style>
-
-    <style name="bottomNavigationStyle" parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="shapeAppearance">@style/shape</item>
-    </style>
-    <style name="shape" parent="ShapeAppearance.MaterialComponents.MediumComponent">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">90dp</item>
-    </style>
-
 
     <style name="emptyButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textColor">@color/black</item>
@@ -48,6 +40,7 @@
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginEnd">16dp</item>
     </style>
+
     <style name="buttonShapeAppearance" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerSize">90dp</item>
         <item name="cornerFamily">rounded</item>
