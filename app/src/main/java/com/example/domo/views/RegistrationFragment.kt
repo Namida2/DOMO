@@ -22,6 +22,7 @@ class RegistrationFragment: Fragment() {
     ): View? {
         binding = FragmentRegistrationBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
         return binding.root
     }
 

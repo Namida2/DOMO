@@ -1,5 +1,12 @@
 <layout>
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.domo.viewModels.RegistrationViewModel" />
+    </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/rootLayout"
@@ -18,17 +25,18 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/white"
                 android:elevation="0dp"
-                app:titleCentered="true"
                 app:layout_scrollFlags="scroll"
-                app:navigationIcon="@drawable/ic_arrow_left">
+                app:navigationIcon="@drawable/ic_arrow_left"
+                app:titleCentered="true">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
                     android:layout_gravity="center"
-                    android:textColor="@color/black"
                     android:fontFamily="@font/montserrat_semi_bold"
-                    android:text="Profile"/>
+                    android:text="Profile"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
             </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -42,6 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -51,6 +60,7 @@
                     android:text="Welcome"
                     android:textColor="@color/black"
                     android:textSize="24sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -60,7 +70,9 @@
                     android:text="Заполните следующие поля"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
+
                 <EditText
+                    android:id="@+id/nameEditText"
                     style="@style/editTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -68,7 +80,9 @@
                     android:drawableLeft="@drawable/ic_profile"
                     android:fontFamily="@font/montserrat_semi_bold"
                     android:hint="Name" />
+
                 <EditText
+                    android:id="@+id/emailEditText"
                     style="@style/editTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -76,7 +90,9 @@
                     android:drawableLeft="@drawable/ic_email"
                     android:fontFamily="@font/montserrat_semi_bold"
                     android:hint="Email" />
+
                 <EditText
+                    android:id="@+id/passwordEditText"
                     style="@style/editTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -84,7 +100,9 @@
                     android:drawableLeft="@drawable/ic_lock"
                     android:fontFamily="@font/montserrat_semi_bold"
                     android:hint="Password" />
+
                 <EditText
+                    android:id="@+id/confirmPasswordEditText"
                     style="@style/editTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -92,6 +110,7 @@
                     android:drawableLeft="@drawable/ic_lock"
                     android:fontFamily="@font/montserrat_semi_bold"
                     android:hint="Confirm password" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -101,25 +120,30 @@
                     android:text="Post:"
                     android:textColor="@color/black"
                     android:textSize="24sp" />
+
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:overScrollMode="always"
                     android:scrollbars="none">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp">
+
                         <View
                             android:layout_width="142dp"
                             android:layout_height="172dp"
                             android:layout_marginStart="16dp"
                             android:background="@color/black" />
+
                         <View
                             android:layout_width="142dp"
                             android:layout_height="172dp"
                             android:layout_marginStart="16dp"
                             android:background="@color/black" />
+
                         <View
                             android:layout_width="142dp"
                             android:layout_height="172dp"
@@ -128,12 +152,15 @@
                             android:background="@color/black" />
                     </LinearLayout>
                 </HorizontalScrollView>
+
                 <Button
+                    android:id="@+id/registrationButton"
                     style="@style/buttonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:layout_marginBottom="32dp"
+                    android:onClick="@{ () -> viewModel.validation(nameEditText.getText().toString(), emailEditText.getText().toString(),passwordEditText.getText().toString(), confirmPasswordEditText.getText().toString)}"
                     android:text="Registration" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
