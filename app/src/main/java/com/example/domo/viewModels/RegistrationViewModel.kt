@@ -1,24 +1,41 @@
 package com.example.domo.viewModels
 
+import Tools.ErrorMessage
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.domo.R
 import com.example.domo.views.log
 import entities.Employee
 
-typealias States = RegistrationViewModelStates
 sealed class RegistrationViewModelStates {
     object Default : RegistrationViewModelStates()
     object Validating : RegistrationViewModelStates()
-    object EmptyField: RegistrationViewModelStates()
-    object ShortPassword: RegistrationViewModelStates()
-    object WrongPasswordConfirmation: RegistrationViewModelStates()
+    object EmptyField : RegistrationViewModelStates() {
+        val message = ErrorMessage(
+            R.string.emptyFieldTitle,
+            R.string.emailAlreadyExistMessage
+        )
+    }
+    object ShortPassword : RegistrationViewModelStates() {
+        val message = ErrorMessage(
+            R.string.tooShortPasswordTitle,
+            R.string.tooShortPasswordMessage
+        )
+    }
+    object WrongPasswordConfirmation: RegistrationViewModelStates() {
+        val message = ErrorMessage(
+            R.string.wrongConfirmPasswordTitle,
+            R.string.wrongConfirmPasswordMessage
+        )
+    }
     class Valid(employee: Employee) : RegistrationViewModelStates()
 }
 
 class RegistrationViewModel : ViewModel() {
+
     private val MIN_PASSWORD_LENGH = 6
-    private var _state = MutableLiveData<States>(RegistrationViewModelStates.Default)
+    private var _state = MutableLiveData<RegistrationViewModelStates>(RegistrationViewModelStates.Default)
     val state = _state
 
     fun validation(name: String, email: String, password: String, confirmPassword: String) {
