@@ -19,7 +19,7 @@ class RegistrationViewModel : ViewModel() {
     val state = _state
 
     fun validation(name: String, email: String, password: String, confirmPassword: String) {
-        return name.isEmpty()
+        //return name.isEmpty()
     }
 
 }
