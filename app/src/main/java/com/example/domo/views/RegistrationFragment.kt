@@ -13,6 +13,8 @@ import android.content.DialogInterface
 
 
 import android.app.AlertDialog
+import com.example.domo.viewModels.RegistrationViewModelStates
+import com.google.common.eventbus.Subscribe
 
 
 class RegistrationFragment: Fragment() {
@@ -29,22 +31,21 @@ class RegistrationFragment: Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
-        val inflater = layoutInflater
-
-        builder.setView(inflater.inflate(com.example.domo.R.layout.fragment_log_in, null)) // Add action buttons
-            .setPositiveButton("com.example.domo.R.string.signin", DialogInterface.OnClickListener { dialog, id ->
-                // sign in the user ...
-            })
-            .setNegativeButton(
-                "com.example.domo.R.string.cancel",
-                DialogInterface.OnClickListener { dialog, id ->
-
-                })
-        builder.create().show()
+        observeViewModelState()
 
         return binding.root
     }
 
+    private fun observeViewModelState() {
+        viewModel.state.observe(viewLifecycleOwner) {
+            when(it) {
+                is RegistrationViewModelStates.WrongPasswordConfirmation -> {
+
+                }
+                else -> {}//defaultState
+            }
+
+        }
+    }
 
 }
