@@ -1,4 +1,4 @@
-package Tools
+package tools
 
 
 import android.app.AlertDialog
@@ -16,7 +16,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
-class ErrorAlertDialog<T>(
+class MyAlertDialog<T>(
     private val binding: DialogErrorBinding,
     private val title: String,
     private val message: String,
@@ -32,12 +32,12 @@ class ErrorAlertDialog<T>(
             title: String,
             message: String,
             action: (() -> T)? = null
-        ): ErrorAlertDialog<T>? {
+        ): MyAlertDialog<T>? {
             if (isExist.get()) {
                 log("Tools.ErrorAlertDialog:: dialog already exists.")
                 return null
             }
-            return ErrorAlertDialog(binding, title, message, action)
+            return MyAlertDialog(binding, title, message, action)
         }
 
     }
@@ -65,9 +65,10 @@ class ErrorAlertDialog<T>(
         (binding.root.parent as ViewGroup).removeView(binding.root)
         super.onDestroyView()
     }
-    override fun onDestroy() {
+
+    override fun onDetach() {
         isExist.set(false)
-        super.onDestroy()
+        super.onDetach()
     }
 }
 

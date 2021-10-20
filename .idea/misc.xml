@@ -5,8 +5,6 @@
       <map>
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3880208333333333" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/bg_edit_text.xml" value="0.3880208333333333" />
-        <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/bg_error_dialog.xml" value="0.2586805555555556" />
-        <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/bg_error_dialog_button.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3880208333333333" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/ic_lock.xml" value="0.2078125" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/ic_logo.xml" value="0.3880208333333333" />
@@ -15,7 +13,6 @@
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/activity_sign_in.xml" value="0.4504731861198738" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/activity_splash_screen.xml" value="0.16" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/activity_waiter_main.xml" value="0.23599726775956284" />
-        <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/dialog_error.xml" value="0.24791666666666667" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_log_in.xml" value="0.23599726775956284" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_registration.xml" value="0.23599726775956284" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/layout_order_item.xml" value="0.33" />
@@ -24,6 +21,8 @@
         <entry key="..\:/Projects/Graduation/DOMO/app/src/main/res/layout/activity_log_in.xml" value="0.25" />
         <entry key="..\:/Projects/Graduation/DOMO/app/src/main/res/layout/activity_splash_screen.xml" value="0.18" />
         <entry key="..\:/Projects/Graduation/DOMO/app/src/main/res/layout/activity_waiter_main.xml" value="0.25" />
+        <entry key="..\:/Projects/Graduation/DOMO/app/src/main/res/layout/fragment_log_in.xml" value="0.1865740740740741" />
+        <entry key="..\:/Projects/Graduation/DOMO/app/src/main/res/layout/fragment_orders.xml" value="0.1865740740740741" />
         <entry key="..\:/Projects/Graduation/DOMO/app/src/main/res/layout/fragment_registration.xml" value="0.22" />
         <entry key="..\:/Projects/Graduation/DOMO/app/src/main/res/menu/manu_waiter.xml" value="0.1865740740740741" />
         <entry key="..\:/Projects/Graduation/DOMO/app/src/main/res/menu/menu_waiter.xml" value="0.1865740740740741" />

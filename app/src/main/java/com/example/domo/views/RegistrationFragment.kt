@@ -1,7 +1,6 @@
 package com.example.domo.views
 
-import Tools.ErrorAlertDialog
-import android.app.AlertDialog
+import tools.MyAlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -43,17 +42,28 @@ class RegistrationFragment: Fragment() {
             var dialog: DialogFragment? = null
             when(it) {
                 is RegistrationViewModelStates.WrongPasswordConfirmation -> {
-
+                    dialog = MyAlertDialog.getNewInstance<Unit>(
+                        errorDialogBinding,
+                        requireContext().resources.getString(it.message.titleId),
+                        requireContext().resources.getString(it.message.messageId) )
                 }
                 is RegistrationViewModelStates.EmptyField -> {
-                    dialog = ErrorAlertDialog.getNewInstance<Unit>(
+                    dialog = MyAlertDialog.getNewInstance<Unit>(
                         errorDialogBinding,
                         requireContext().resources.getString(it.message.titleId),
                         requireContext().resources.getString(it.message.messageId) )
                 }
                 is RegistrationViewModelStates.ShortPassword -> {
-
+                    dialog = MyAlertDialog.getNewInstance<Unit>(
+                        errorDialogBinding,
+                        requireContext().resources.getString(it.message.titleId),
+                        requireContext().resources.getString(it.message.messageId)
+                    )
                 }
+                is RegistrationViewModelStates.Validating -> {
+                    binding.registrationButton.isEnabled = false
+                }
+
                 else -> {}//defaultState
             }
             dialog?.show(parentFragmentManager, "")
