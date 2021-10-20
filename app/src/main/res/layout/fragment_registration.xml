@@ -79,7 +79,8 @@
                     android:layout_marginTop="24dp"
                     android:drawableLeft="@drawable/ic_profile"
                     android:fontFamily="@font/montserrat_semi_bold"
-                    android:hint="Name" />
+                    android:hint="Name"
+                    android:inputType="textEmailAddress" />
 
                 <EditText
                     android:id="@+id/emailEditText"
@@ -89,7 +90,8 @@
                     android:layout_marginTop="16dp"
                     android:drawableLeft="@drawable/ic_email"
                     android:fontFamily="@font/montserrat_semi_bold"
-                    android:hint="Email" />
+                    android:hint="Email"
+                    android:inputType="textEmailAddress" />
 
                 <EditText
                     android:id="@+id/passwordEditText"
@@ -99,7 +101,8 @@
                     android:layout_marginTop="16dp"
                     android:drawableLeft="@drawable/ic_lock"
                     android:fontFamily="@font/montserrat_semi_bold"
-                    android:hint="Password" />
+                    android:hint="Password"
+                    android:inputType="textPassword" />
 
                 <EditText
                     android:id="@+id/confirmPasswordEditText"
@@ -109,7 +112,8 @@
                     android:layout_marginTop="16dp"
                     android:drawableLeft="@drawable/ic_lock"
                     android:fontFamily="@font/montserrat_semi_bold"
-                    android:hint="Confirm password" />
+                    android:hint="Confirm password"
+                    android:inputType="textPassword" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -160,7 +164,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:layout_marginBottom="32dp"
-                    android:onClick="@{ () -> viewModel.validation(nameEditText.getText().toString(), emailEditText.getText().toString(),passwordEditText.getText().toString(), confirmPasswordEditText.getText().toString)}"
+                    android:onClick="@{() -> viewModel.validation(nameEditText.getText().toString(), emailEditText.getText().toString(),passwordEditText.getText().toString(), confirmPasswordEditText.getText().toString)}"
                     android:text="Registration" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

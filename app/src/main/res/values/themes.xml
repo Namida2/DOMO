@@ -15,6 +15,18 @@
 
     </style>
 
+    <style name="alertDialogStyle"
+        parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/animErrorAlertDialogStyle</item>
+    </style>
+
+    <style name="animErrorAlertDialogStyle">
+        <item name="android:windowEnterAnimation">@anim/dialog_show</item>
+        <item name="android:windowExitAnimation">@anim/dialog_hide</item>
+    </style>
+
+
     <style name="errorButtonStyle" parent="Widget.MaterialComponents.Button">
         <item name="android:background">@drawable/bg_error_dialog_button</item>
         <item name="rippleColor">@color/black</item>
