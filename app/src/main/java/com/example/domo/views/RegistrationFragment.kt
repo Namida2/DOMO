@@ -19,6 +19,7 @@ import com.example.domo.databinding.DialogErrorBinding
 import com.example.domo.viewModels.RegistrationViewModelStates
 
 
+
 class RegistrationFragment: Fragment() {
 
     private val viewModel: RegistrationViewModel by viewModels()
@@ -30,9 +31,6 @@ class RegistrationFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        sharedElementEnterTransition = TransitionInflater.from(requireContext())
-            .inflateTransition(android.R.transition.move)
 
         errorDialogBinding = DialogErrorBinding.inflate(inflater)
         binding = FragmentRegistrationBinding.inflate(inflater)
@@ -61,6 +59,13 @@ class RegistrationFragment: Fragment() {
                         requireContext().resources.getString(it.message.messageId) )
                 }
                 is RegistrationViewModelStates.ShortPassword -> {
+                    dialog = MyAlertDialog.getNewInstance<Unit>(
+                        errorDialogBinding,
+                        requireContext().resources.getString(it.message.titleId),
+                        requireContext().resources.getString(it.message.messageId)
+                    )
+                }
+                is RegistrationViewModelStates.InvalidEmail -> {
                     dialog = MyAlertDialog.getNewInstance<Unit>(
                         errorDialogBinding,
                         requireContext().resources.getString(it.message.titleId),

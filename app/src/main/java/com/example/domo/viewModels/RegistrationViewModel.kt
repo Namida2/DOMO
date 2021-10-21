@@ -35,11 +35,10 @@ sealed class RegistrationViewModelStates {
             R.string.wrongConfirmPasswordMessage
         )
     }
-
     class Valid(employee: Employee) : RegistrationViewModelStates()
 }
 
-class RegistrationViewModel : ViewModel() {
+class RegistrationViewModel() : ViewModel() {
 
     private val MIN_PASSWORD_LENGH = 6
     private var _state =
@@ -63,6 +62,11 @@ class RegistrationViewModel : ViewModel() {
             state.value = RegistrationViewModelStates.WrongPasswordConfirmation
             return
         }
+
+    }
+
+    private fun registration(email: String, password: String) {
+
     }
 
     private fun anyFieldIsEmpty(
@@ -78,6 +82,6 @@ class RegistrationViewModel : ViewModel() {
     }
 
     private fun isValidEmail(email: String) =
-        TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
 }

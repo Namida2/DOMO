@@ -18,10 +18,6 @@ class LogInFragment: Fragment() {
 
     private lateinit var binding: FragmentLogInBinding
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,13 +25,8 @@ class LogInFragment: Fragment() {
     ): View? {
 
         binding = FragmentLogInBinding.inflate(layoutInflater)
-        binding.view.setOnClickListener {
-            val extra = FragmentNavigatorExtras(binding.view to "view2")
-            findNavController().navigate(R.id.action_logInFragment_to_registrationFragment,
-                null,
-                null,
-                extra
-            )
+        binding.newAccountButton .setOnClickListener {
+            findNavController().navigate(R.id.action_logInFragment_to_registrationFragment)
         }
         return binding.root
     }
