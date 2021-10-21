@@ -13,11 +13,11 @@
         <action
             android:id="@+id/action_logInFragment_to_registrationFragment"
             app:destination="@id/registrationFragment"
-            app:enterAnim="@anim/anim_slide_in_right"
-            app:exitAnim="@anim/anim_slide_out_left"
-            app:popExitAnim="@anim/anim_slide_out_right"
-            app:popEnterAnim="@anim/anim_slide_in_left"
-            />
+            app:enterAnim="@anim/anim_slide_in_right" />
+<!--            app:exitAnim="@anim/anim_slide_out_left"-->
+<!--            app:popExitAnim="@anim/anim_slide_out_right"-->
+<!--            app:popEnterAnim="@anim/anim_slide_in_left"-->
+
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"

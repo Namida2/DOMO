@@ -2,12 +2,15 @@ package com.example.domo.views
 
 import tools.MyAlertDialog
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
+import android.view.SurfaceControl
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.domo.R
 
 import com.example.domo.databinding.FragmentRegistrationBinding
 import com.example.domo.viewModels.RegistrationViewModel
@@ -27,6 +30,10 @@ class RegistrationFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        sharedElementEnterTransition = TransitionInflater.from(requireContext())
+            .inflateTransition(android.R.transition.move)
+
         errorDialogBinding = DialogErrorBinding.inflate(inflater)
         binding = FragmentRegistrationBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
@@ -61,7 +68,7 @@ class RegistrationFragment: Fragment() {
                     )
                 }
                 is RegistrationViewModelStates.Validating -> {
-                    binding.registrationButton.isEnabled = false
+                    //binding.registrationButton.isEnabled = false
                 }
 
                 else -> {}//defaultState

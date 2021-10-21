@@ -1,7 +1,11 @@
 package com.example.domo.views
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
+import android.view.animation.OvershootInterpolator
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -26,5 +30,9 @@ class AuthorizationActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+
+
+
+
     }
 }

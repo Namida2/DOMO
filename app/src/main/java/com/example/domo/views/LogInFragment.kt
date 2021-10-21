@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.domo.R
 import com.example.domo.databinding.FragmentLogInBinding
@@ -28,8 +29,13 @@ class LogInFragment: Fragment() {
     ): View? {
 
         binding = FragmentLogInBinding.inflate(layoutInflater)
-        binding.newAccountButton.setOnClickListener {
-            findNavController().navigate(R.id.action_logInFragment_to_registrationFragment)
+        binding.view.setOnClickListener {
+            val extra = FragmentNavigatorExtras(binding.view to "view2")
+            findNavController().navigate(R.id.action_logInFragment_to_registrationFragment,
+                null,
+                null,
+                extra
+            )
         }
         return binding.root
     }
