@@ -11,6 +11,7 @@ class ViewModelFactory (var appComponent: AppComponent): ViewModelProvider.Facto
         val viewModel = when(modelClass) {
             SplashScreenViewModel::class.java -> SplashScreenViewModel(appComponent.provideSplashScreenModel())
             LogInViewModel::class.java -> LogInViewModel()
+            RegistrationViewModel::class.java -> RegistrationViewModel(appComponent.)
             else -> throw IllegalArgumentException("Unknown viewModel class")
         }
         return viewModel as T

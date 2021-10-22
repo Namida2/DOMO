@@ -23,7 +23,6 @@ class LogInFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentLogInBinding.inflate(layoutInflater)
         binding.newAccountButton .setOnClickListener {
             findNavController().navigate(R.id.action_logInFragment_to_registrationFragment)

@@ -17,7 +17,7 @@ import com.example.domo.viewModels.RegistrationViewModel
 
 import com.example.domo.databinding.DialogErrorBinding
 import com.example.domo.viewModels.RegistrationViewModelStates
-
+import tools.ErrorMessage
 
 
 class RegistrationFragment: Fragment() {
@@ -31,56 +31,38 @@ class RegistrationFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         errorDialogBinding = DialogErrorBinding.inflate(inflater)
         binding = FragmentRegistrationBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-
         observeViewModelState()
-
         return binding.root
     }
-
     private fun observeViewModelState() {
         viewModel.state.observe(viewLifecycleOwner) {
             var dialog: DialogFragment? = null
             when(it) {
-                is RegistrationViewModelStates.WrongPasswordConfirmation -> {
-                    dialog = MyAlertDialog.getNewInstance<Unit>(
-                        errorDialogBinding,
-                        requireContext().resources.getString(it.message.titleId),
-                        requireContext().resources.getString(it.message.messageId) )
-                }
-                is RegistrationViewModelStates.EmptyField -> {
-                    dialog = MyAlertDialog.getNewInstance<Unit>(
-                        errorDialogBinding,
-                        requireContext().resources.getString(it.message.titleId),
-                        requireContext().resources.getString(it.message.messageId) )
-                }
-                is RegistrationViewModelStates.ShortPassword -> {
-                    dialog = MyAlertDialog.getNewInstance<Unit>(
-                        errorDialogBinding,
-                        requireContext().resources.getString(it.message.titleId),
-                        requireContext().resources.getString(it.message.messageId)
-                    )
-                }
-                is RegistrationViewModelStates.InvalidEmail -> {
-                    dialog = MyAlertDialog.getNewInstance<Unit>(
-                        errorDialogBinding,
-                        requireContext().resources.getString(it.message.titleId),
-                        requireContext().resources.getString(it.message.messageId)
-                    )
-                }
-                is RegistrationViewModelStates.Validating -> {
-                    //binding.registrationButton.isEnabled = false
-                }
+                is RegistrationViewModelStates.Validating -> binding.registrationButton.isEnabled = false
+                is RegistrationViewModelStates.WrongPasswordConfirmation -> createDialog(it.message)
+                is RegistrationViewModelStates.EmptyField -> createDialog(it.message)
+                is RegistrationViewModelStates.ShortPassword -> createDialog(it.message)
+                is RegistrationViewModelStates.InvalidEmail -> createDialog(it.message)
+                is RegistrationViewModelStates.Valid -> {
 
-                else -> {}//defaultState
+                }
+                else -> {} //DefaultState
             }
             dialog?.show(parentFragmentManager, "")
 
         }
     }
+    private fun createDialog(message: ErrorMessage): DialogFragment? =
+        MyAlertDialog.getNewInstance<Unit>(
+            errorDialogBinding,
+            requireContext().resources.getString(message.titleId),
+            requireContext().resources.getString(message.messageId)
+        )
+
+
 
 }

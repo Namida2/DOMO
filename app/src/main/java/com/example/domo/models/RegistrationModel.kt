@@ -1,4 +1,6 @@
 package com.example.domo.models
 
-class RegistrationModel {
+import javax.inject.Inject
+
+class RegistrationModel @Inject constructor() {
 }

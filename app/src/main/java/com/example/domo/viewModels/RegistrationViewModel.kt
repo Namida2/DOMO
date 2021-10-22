@@ -35,7 +35,7 @@ sealed class RegistrationViewModelStates {
             R.string.wrongConfirmPasswordMessage
         )
     }
-    class Valid(employee: Employee) : RegistrationViewModelStates()
+    class Valid(val employee: Employee) : RegistrationViewModelStates()
 }
 
 class RegistrationViewModel() : ViewModel() {
