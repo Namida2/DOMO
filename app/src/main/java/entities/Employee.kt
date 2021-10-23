@@ -5,8 +5,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "employee")
 data class Employee (
-    @PrimaryKey val id: Int,
+    @PrimaryKey val email: String,
     var name: String,
-    val email: String,
-    var post: String
+    var post: String,
+    var password: String,
+    var permission: Boolean
 )

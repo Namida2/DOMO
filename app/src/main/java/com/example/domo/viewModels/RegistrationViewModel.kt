@@ -1,12 +1,13 @@
 package com.example.domo.viewModels
 
-import android.text.TextUtils
+import android.view.View
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domo.R
+import com.example.domo.models.RegistrationModel
 import entities.Employee
 import tools.ErrorMessage
-
 
 sealed class RegistrationViewModelStates {
     object Default : RegistrationViewModelStates()
@@ -38,9 +39,12 @@ sealed class RegistrationViewModelStates {
     class Valid(val employee: Employee) : RegistrationViewModelStates()
 }
 
-class RegistrationViewModel() : ViewModel() {
+class RegistrationViewModel(val model: RegistrationModel) : ViewModel() {
 
     private val MIN_PASSWORD_LENGH = 6
+    var cookPostSelectedIcon = MutableLiveData(View.VISIBLE)
+    var waiterPostSelectedIcon = MutableLiveData(View.VISIBLE)
+    var administratorPostSelectedIcon = MutableLiveData(View.VISIBLE)
     private var _state =
         MutableLiveData<RegistrationViewModelStates>(RegistrationViewModelStates.Default)
     val state = _state
@@ -62,11 +66,17 @@ class RegistrationViewModel() : ViewModel() {
             state.value = RegistrationViewModelStates.WrongPasswordConfirmation
             return
         }
+//        state.value = RegistrationViewModelStates.Valid(Employee(
+//            email, name,
+//        ))
+    }
+
+    fun onCookPostSelected() {
 
     }
 
-    private fun registration(email: String, password: String) {
-
+    fun registration(email: String, password: String, employee: Employee) {
+        model.registration(email, password, employee)
     }
 
     private fun anyFieldIsEmpty(

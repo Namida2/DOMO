@@ -43,22 +43,3 @@ class OrderItemAdapter(var orderItemsArrayList: List<OrderItem>):
 }
 
 
-class OrderItem (
-    var name: String? = null,
-    var categoryName: String? = null,
-    var cost: String? = null,
-    var weight: String? = null,
-    var description: String? = null,
-    var isReady: Boolean = false,
-    var commentary: String? = null,
-    var count: Int = 0
-) {
-    override fun hashCode(): Int {
-        return (name + commentary).hashCode()
-    }
-    override fun equals(obj: Any?): Boolean {
-        if (obj == null || obj.javaClass != OrderItem::class.java) return false
-        val orderItem = obj as OrderItem
-        return name + commentary == orderItem.name + orderItem.commentary
-    }
-}
