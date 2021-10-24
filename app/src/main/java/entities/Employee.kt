@@ -9,5 +9,5 @@ data class Employee (
     var name: String,
     var post: String,
     var password: String,
-    var permission: Boolean
+    var permission: Boolean = false
 )

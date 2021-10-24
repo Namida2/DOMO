@@ -5,6 +5,8 @@
     <string name="profile">Профиль</string>
     <string name="messenger">Мессенджер</string>
 
+    <string name="networkConnectionMessage">Пожалуйста, проверьте свое интернет-соединение.</string>
+
 <!--ErrorAlertDialog messages and titles-->
     <string name="defaultTitle">Oops!</string>
     <string name="emptyFieldTitle">Пустоле поле</string>
@@ -24,5 +26,6 @@
 
     <string name="tooShortPasswordTitle">Пароль слишком короткий</string>
     <string name="tooShortPasswordMessage">Пароль должен состоять из 6 и больше стмволов.</string>
+
 
 </resources>

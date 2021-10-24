@@ -1,5 +1,6 @@
 package com.example.domo.models.remoteRepository
 
+import com.example.domo.views.log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 
@@ -10,12 +11,6 @@ import constants.FirestoreConstants.DOCUMENT_DOMO
 import entities.Employee
 import javax.inject.Inject
 
-
-sealed class RegistrationResults {
-    object Success: RegistrationResults()
-    //object Error(): RegistrationResults()
-}
-
 class RegistrationRemoteRepository @Inject constructor(
     private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore
@@ -24,12 +19,16 @@ class RegistrationRemoteRepository @Inject constructor(
         firestore.collection(COLLECTION_RESTAURANTS).document(DOCUMENT_DOMO)
             .collection(COLLECTION_EMPLOYEES)
 
-    fun registration(email: String, password: String, emloyee: Employee, result: (result: RegistrationResults) -> Unit) {
+    fun registration(employee: Employee, onSuccess: () -> Unit, onError: () -> Unit) {
         firestore.runTransaction { transition ->
-            auth.createUserWithEmailAndPassword(email, password).addOnCanceledListener {
-               //transition.set(employeesCollectionRef.document(email), )
-
-            }
+            transition.set(employeesCollectionRef.document(employee.email), employee )
+//            auth.createUserWithEmailAndPassword(employee.email, employee.password).addOnCompleteListener { task ->
+//                if(task.isSuccessful) {
+//                    transition.set(employeesCollectionRef.document(employee.email), employee )
+//                } else {
+//                    log(task.exception.toString())
+//                }
+//            }
         }
     }
 

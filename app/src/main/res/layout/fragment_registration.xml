@@ -133,6 +133,8 @@
                         android:textSize="24sp" />
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/postsRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:overScrollMode="always"
@@ -150,9 +152,8 @@
                             style="@style/buttonStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="32dp"
+                            android:layout_marginTop="24dp"
                             android:layout_marginBottom="32dp"
-                            android:onClick="@{() -> viewModel.validation(nameEditText.getText().toString(), emailEditText.getText().toString(),passwordEditText.getText().toString(), confirmPasswordEditText.getText().toString)}"
                             android:text="Registration" />
                     </LinearLayout>
                 </LinearLayout>

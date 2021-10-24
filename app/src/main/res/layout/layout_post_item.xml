@@ -1,0 +1,26 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:id="@+id/postContainer"
+        android:layout_width="142dp"
+        android:layout_height="172dp"
+        android:background="@drawable/bg_black_round"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/selectedView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/ic_selected" />
+        <TextView
+            android:id="@+id/postNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/montserrat_semi_bold"
+            android:gravity="center"
+            android:text="Официант"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+    </RelativeLayout>
+</layout>

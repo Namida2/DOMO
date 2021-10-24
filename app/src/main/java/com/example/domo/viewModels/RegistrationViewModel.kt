@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domo.R
 import com.example.domo.models.RegistrationModel
+import com.example.domo.views.PostItem
+import constants.EmployeePosts
 import entities.Employee
 import tools.ErrorMessage
 
@@ -21,7 +23,7 @@ sealed class RegistrationViewModelStates {
     object EmptyField : RegistrationViewModelStates() {
         val message = ErrorMessage(
             R.string.emptyFieldTitle,
-            R.string.emailAlreadyExistMessage
+            R.string.emptyFieldMessage
         )
     }
     object ShortPassword : RegistrationViewModelStates() {
@@ -39,12 +41,10 @@ sealed class RegistrationViewModelStates {
     class Valid(val employee: Employee) : RegistrationViewModelStates()
 }
 
-class RegistrationViewModel(val model: RegistrationModel) : ViewModel() {
+class RegistrationViewModel(private val model: RegistrationModel) : ViewModel() {
 
+    var selectedPost: String = EmployeePosts.COOK
     private val MIN_PASSWORD_LENGH = 6
-    var cookPostSelectedIcon = MutableLiveData(View.VISIBLE)
-    var waiterPostSelectedIcon = MutableLiveData(View.VISIBLE)
-    var administratorPostSelectedIcon = MutableLiveData(View.VISIBLE)
     private var _state =
         MutableLiveData<RegistrationViewModelStates>(RegistrationViewModelStates.Default)
     val state = _state
@@ -66,18 +66,16 @@ class RegistrationViewModel(val model: RegistrationModel) : ViewModel() {
             state.value = RegistrationViewModelStates.WrongPasswordConfirmation
             return
         }
-//        state.value = RegistrationViewModelStates.Valid(Employee(
-//            email, name,
-//        ))
+        val employee: Employee = Employee(email, name, selectedPost, password)
+        model.registration(employee, {
+            state.value = RegistrationViewModelStates.Valid(employee)
+        }, {
+
+        }
+        )
     }
 
-    fun onCookPostSelected() {
-
-    }
-
-    fun registration(email: String, password: String, employee: Employee) {
-        model.registration(email, password, employee)
-    }
+    fun getPostItems(): MutableList<PostItem> = model.getPostItems()
 
     private fun anyFieldIsEmpty(
         name: String,

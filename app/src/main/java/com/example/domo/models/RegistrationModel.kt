@@ -1,6 +1,9 @@
 package com.example.domo.models
 
+import android.view.View
 import com.example.domo.models.remoteRepository.RegistrationRemoteRepository
+import com.example.domo.views.PostItem
+import constants.EmployeePosts
 import database.EmployeeDao
 import entities.Employee
 import javax.inject.Inject
@@ -12,7 +15,14 @@ class RegistrationModel @Inject constructor(
     private val remoteRepository: RegistrationRemoteRepository
     ) {
 
-    fun registration(email: String, password: String, employee: Employee) {
-        //remoteRepository.registration(email, password, employee)
+    fun registration(employee: Employee, onSuccess: () -> Unit, onError: () -> Unit) {
+        remoteRepository.registration(employee, onSuccess, onError)
     }
+
+    fun getPostItems(): MutableList<PostItem> =
+        mutableListOf(
+            PostItem(EmployeePosts.COOK, View.VISIBLE),
+            PostItem(EmployeePosts.WAITER, View.INVISIBLE),
+            PostItem(EmployeePosts.ADMINISTRATOR, View.INVISIBLE)
+        )
 }

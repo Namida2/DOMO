@@ -2,13 +2,19 @@ package com.example.domo.views
 
 import android.content.Context
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import application.appComponent
+import com.example.domo.R
+import com.example.domo.adapters.itemDecorations.PostItemDecoration
+import com.example.domo.adapters.PostItemsAdapter
 import com.example.domo.databinding.DialogErrorBinding
 import com.example.domo.databinding.FragmentRegistrationBinding
 import com.example.domo.viewModels.RegistrationViewModel
@@ -16,9 +22,15 @@ import com.example.domo.viewModels.RegistrationViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
 import tools.ErrorMessage
 import tools.MyAlertDialog
+import tools.NetworkConnection
 
-
+data class PostItem(val postName: String, var visibility: Int)
 class RegistrationFragment : Fragment() {
+
+    private val SMALL_MARGIN_IN_DP = 8f
+    private val BIG_MARGIN_IN_DP = 16f
+    private var SMALL_MARGIN_IN_PX: Float? = null
+    private var BIG_MARGIN_IN_PX: Float? = null
 
     private var viewModel: RegistrationViewModel? = null
     lateinit var binding: FragmentRegistrationBinding
@@ -30,6 +42,16 @@ class RegistrationFragment : Fragment() {
             ViewModelProvider(requireActivity(), ViewModelFactory(context.appComponent)).get(
                 RegistrationViewModel::class.java
             )
+        SMALL_MARGIN_IN_PX = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            SMALL_MARGIN_IN_DP,
+            resources.displayMetrics
+        )
+        BIG_MARGIN_IN_PX = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            BIG_MARGIN_IN_DP,
+            resources.displayMetrics
+        )
     }
 
     override fun onCreateView(
@@ -37,16 +59,47 @@ class RegistrationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        errorDialogBinding = DialogErrorBinding.inflate(inflater)
+        initBindings(inflater)
+        observeViewModelState()
+        with(binding.postsRecyclerView) {
+            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+            adapter = viewModel?.getPostItems()?.let {
+                PostItemsAdapter(it) { post ->
+                    viewModel?.selectedPost = post
+                }
+            }
+            addItemDecoration(
+                PostItemDecoration(
+                    SMALL_MARGIN_IN_PX!!.toInt(),
+                    BIG_MARGIN_IN_PX!!.toInt()
+                )
+            )
+        }
+        binding.registrationButton.setOnClickListener {
+            if (NetworkConnection.isNetworkConnected(requireContext()))
+                with(binding) {
+                    viewModel?.validation(
+                        nameEditText.text.toString(),
+                        emailEditText.text.toString(),
+                        passwordEditText.text.toString(),
+                        confirmPasswordEditText.text.toString(),
+                    )
+                }
+            else createDialog(
+                ErrorMessage(
+                    R.string.defaultTitle,
+                    R.string.networkConnectionMessage
+                )
+            )?.show(parentFragmentManager, "")
+        }
+        return binding.root
+    }
+
+    private fun initBindings(inflater: LayoutInflater) {
         binding = FragmentRegistrationBinding.inflate(inflater)
+        errorDialogBinding = DialogErrorBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        observeViewModelState()
-        viewModel?.cookPostSelectedIcon?.observe(viewLifecycleOwner) {
-            log(it.toString())
-        }
-
-        return binding.root
     }
 
     private fun observeViewModelState() {
@@ -55,22 +108,18 @@ class RegistrationFragment : Fragment() {
             when (it) {
                 is RegistrationViewModelStates.Validating -> binding.registrationButton.isEnabled =
                     false
-                is RegistrationViewModelStates.WrongPasswordConfirmation -> dialog = createDialog(it.message)
+                is RegistrationViewModelStates.WrongPasswordConfirmation -> dialog =
+                    createDialog(it.message)
                 is RegistrationViewModelStates.EmptyField -> dialog = createDialog(it.message)
                 is RegistrationViewModelStates.ShortPassword -> dialog = createDialog(it.message)
                 is RegistrationViewModelStates.InvalidEmail -> dialog = createDialog(it.message)
                 is RegistrationViewModelStates.Valid -> {
-                    viewModel?.registration(
-                        binding.emailEditText.text.toString(),
-                        binding.passwordEditText.text.toString(),
-                        it.employee
-                    )
+
                 }
                 else -> {
                 } //DefaultState
             }
             dialog?.show(parentFragmentManager, "")
-
         }
     }
 
@@ -83,3 +132,4 @@ class RegistrationFragment : Fragment() {
 
 
 }
+
