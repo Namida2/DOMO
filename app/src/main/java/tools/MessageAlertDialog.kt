@@ -5,10 +5,9 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.example.domo.R
-import com.example.domo.databinding.DialogErrorBinding
+import com.example.domo.databinding.DialogMessageBinding
 import com.example.domo.views.log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
@@ -16,8 +15,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
-class MyAlertDialog<T>(
-    private val binding: DialogErrorBinding,
+class MessageAlertDialog<T>(
     private val title: String,
     private val message: String,
     private val action: (() -> T)? = null
@@ -28,16 +26,15 @@ class MyAlertDialog<T>(
     companion object {
         val isExist: AtomicBoolean = AtomicBoolean(false)
         fun <T> getNewInstance(
-            binding: DialogErrorBinding,
             title: String,
             message: String,
             action: (() -> T)? = null
-        ): MyAlertDialog<T>? {
+        ): MessageAlertDialog<T>? {
             if (isExist.get()) {
                 log("Tools.ErrorAlertDialog:: dialog already exists.")
                 return null
             }
-            return MyAlertDialog(binding, title, message, action)
+            return MessageAlertDialog(title, message, action)
         }
 
     }
@@ -46,6 +43,7 @@ class MyAlertDialog<T>(
         super.onAttach(context)
     }
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val binding = DialogMessageBinding.inflate(layoutInflater)
         val builder = AlertDialog.Builder(context, R.style.alertDialogStyle)
         with(binding) {
             titleTextView.text = title
@@ -58,12 +56,8 @@ class MyAlertDialog<T>(
                 }
             }
         }
-        return builder.setView(binding.root)
-            .setCancelable(false).create()
-    }
-    override fun onDestroyView() {
-        (binding.root.parent as ViewGroup).removeView(binding.root)
-        super.onDestroyView()
+        isCancelable = false
+        return builder.setView(binding.root).create()
     }
 
     override fun onDetach() {

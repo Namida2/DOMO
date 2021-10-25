@@ -15,14 +15,14 @@ import application.appComponent
 import com.example.domo.R
 import com.example.domo.adapters.itemDecorations.PostItemDecoration
 import com.example.domo.adapters.PostItemsAdapter
-import com.example.domo.databinding.DialogErrorBinding
 import com.example.domo.databinding.FragmentRegistrationBinding
 import com.example.domo.viewModels.RegistrationViewModel
 import com.example.domo.viewModels.RegistrationViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
 import tools.ErrorMessage
-import tools.MyAlertDialog
+import tools.MessageAlertDialog
 import tools.NetworkConnection
+import tools.ProcessAlertDialog
 
 data class PostItem(val postName: String, var visibility: Int)
 class RegistrationFragment : Fragment() {
@@ -34,7 +34,6 @@ class RegistrationFragment : Fragment() {
 
     private var viewModel: RegistrationViewModel? = null
     lateinit var binding: FragmentRegistrationBinding
-    lateinit var errorDialogBinding: DialogErrorBinding
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -68,7 +67,6 @@ class RegistrationFragment : Fragment() {
 
     private fun initBindings(inflater: LayoutInflater) {
         binding = FragmentRegistrationBinding.inflate(inflater)
-        errorDialogBinding = DialogErrorBinding.inflate(inflater)
         binding.viewModel = viewModel
 
         with(binding.postsRecyclerView) {
@@ -108,11 +106,14 @@ class RegistrationFragment : Fragment() {
         viewModel?.state?.observe(viewLifecycleOwner) {
             var dialog: DialogFragment? = null
             when (it) {
+                is RegistrationViewModelStates.Validating -> {
+                    ProcessAlertDialog().show(parentFragmentManager, "")
+                }
                 is RegistrationViewModelStates.Valid -> {
 
                 }
                 is RegistrationViewModelStates.InvalidEmail -> {
-                    //Show loader
+
                 }
                 else -> {
                     if (it is RegistrationViewModelStates.Default) return@observe
@@ -124,8 +125,7 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun createDialog(message: ErrorMessage): DialogFragment? =
-        MyAlertDialog.getNewInstance<Unit>(
-            errorDialogBinding,
+        MessageAlertDialog.getNewInstance<Unit>(
             requireContext().resources.getString(message.titleId),
             requireContext().resources.getString(message.messageId)
         )

@@ -60,6 +60,7 @@ class RegistrationViewModel(private val model: RegistrationModel) : ViewModel() 
     val state = _state
 
     fun validation(name: String, email: String, password: String, confirmPassword: String) {
+        state.value = RegistrationViewModelStates.Validating
         if (anyFieldIsEmpty(name, email, password, confirmPassword)) {
             state.value = RegistrationViewModelStates.EmptyField
             return
@@ -76,7 +77,7 @@ class RegistrationViewModel(private val model: RegistrationModel) : ViewModel() 
             state.value = RegistrationViewModelStates.WrongPasswordConfirmation
             return
         }
-        val employee: Employee = Employee(email, name, selectedPost, password)
+        val employee = Employee(email, name, selectedPost, password)
         model.registration(employee, {
             state.value = RegistrationViewModelStates.Valid(employee)
         }, {
