@@ -1,7 +1,5 @@
 package com.example.domo.viewModels
 
-import android.view.View
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domo.R
@@ -12,30 +10,43 @@ import entities.Employee
 import tools.ErrorMessage
 
 sealed class RegistrationViewModelStates {
+    open var errorMessage: ErrorMessage? = null
     object Default : RegistrationViewModelStates()
     object Validating : RegistrationViewModelStates()
     object InvalidEmail : RegistrationViewModelStates() {
-        val message = ErrorMessage(
+        override var errorMessage: ErrorMessage? = ErrorMessage(
             R.string.wrongEmailFormatTitle,
             R.string.wrongEmailFormatMessage
         )
     }
     object EmptyField : RegistrationViewModelStates() {
-        val message = ErrorMessage(
+        override var errorMessage: ErrorMessage? = ErrorMessage(
             R.string.emptyFieldTitle,
             R.string.emptyFieldMessage
         )
     }
     object ShortPassword : RegistrationViewModelStates() {
-        val message = ErrorMessage(
+        override var errorMessage: ErrorMessage? = ErrorMessage(
             R.string.tooShortPasswordTitle,
             R.string.tooShortPasswordMessage
         )
     }
     object WrongPasswordConfirmation : RegistrationViewModelStates() {
-        val message = ErrorMessage(
+        override var errorMessage: ErrorMessage? = ErrorMessage(
             R.string.wrongConfirmPasswordTitle,
             R.string.wrongConfirmPasswordMessage
+        )
+    }
+    object EmailAlreadyExists : RegistrationViewModelStates() {
+        override var errorMessage: ErrorMessage? = ErrorMessage(
+            R.string.emailAlreadyExitTitle,
+            R.string.emailAlreadyExistMessage
+        )
+    }
+    object DefaultError : RegistrationViewModelStates() {
+        override var errorMessage: ErrorMessage? = ErrorMessage(
+            R.string.defaultTitle,
+            R.string.defaultMessage
         )
     }
     class Valid(val employee: Employee) : RegistrationViewModelStates()
@@ -70,9 +81,15 @@ class RegistrationViewModel(private val model: RegistrationModel) : ViewModel() 
         model.registration(employee, {
             state.value = RegistrationViewModelStates.Valid(employee)
         }, {
-
-        }
-        )
+            when (it.titleId) {
+                R.string.emailAlreadyExitTitle -> {
+                    state.value = RegistrationViewModelStates.EmailAlreadyExists
+                }
+                R.string.defaultTitle -> {
+                    state.value = RegistrationViewModelStates.DefaultError
+                }
+            }
+        })
     }
 
     fun getPostItems(): MutableList<PostItem> = model.getPostItems()

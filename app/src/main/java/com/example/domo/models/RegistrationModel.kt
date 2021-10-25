@@ -6,6 +6,7 @@ import com.example.domo.views.PostItem
 import constants.EmployeePosts
 import database.EmployeeDao
 import entities.Employee
+import tools.ErrorMessage
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,7 +16,7 @@ class RegistrationModel @Inject constructor(
     private val remoteRepository: RegistrationRemoteRepository
     ) {
 
-    fun registration(employee: Employee, onSuccess: () -> Unit, onError: () -> Unit) {
+    fun registration(employee: Employee, onSuccess: () -> Unit, onError: (errorMessage: ErrorMessage) -> Unit) {
         remoteRepository.registration(employee, onSuccess, onError)
     }
 

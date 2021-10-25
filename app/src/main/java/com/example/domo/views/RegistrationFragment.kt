@@ -52,6 +52,7 @@ class RegistrationFragment : Fragment() {
             BIG_MARGIN_IN_DP,
             resources.displayMetrics
         )
+        initBindings(layoutInflater)
     }
 
     override fun onCreateView(
@@ -59,8 +60,16 @@ class RegistrationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        initBindings(inflater)
+        binding.lifecycleOwner = viewLifecycleOwner
         observeViewModelState()
+        return binding.root
+    }
+
+    private fun initBindings(inflater: LayoutInflater) {
+        binding = FragmentRegistrationBinding.inflate(inflater)
+        errorDialogBinding = DialogErrorBinding.inflate(inflater)
+        binding.viewModel = viewModel
+
         with(binding.postsRecyclerView) {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
             adapter = viewModel?.getPostItems()?.let {
@@ -92,32 +101,22 @@ class RegistrationFragment : Fragment() {
                 )
             )?.show(parentFragmentManager, "")
         }
-        return binding.root
-    }
-
-    private fun initBindings(inflater: LayoutInflater) {
-        binding = FragmentRegistrationBinding.inflate(inflater)
-        errorDialogBinding = DialogErrorBinding.inflate(inflater)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
     }
 
     private fun observeViewModelState() {
         viewModel?.state?.observe(viewLifecycleOwner) {
             var dialog: DialogFragment? = null
             when (it) {
-                is RegistrationViewModelStates.Validating -> binding.registrationButton.isEnabled =
-                    false
-                is RegistrationViewModelStates.WrongPasswordConfirmation -> dialog =
-                    createDialog(it.message)
-                is RegistrationViewModelStates.EmptyField -> dialog = createDialog(it.message)
-                is RegistrationViewModelStates.ShortPassword -> dialog = createDialog(it.message)
-                is RegistrationViewModelStates.InvalidEmail -> dialog = createDialog(it.message)
                 is RegistrationViewModelStates.Valid -> {
 
                 }
+                is RegistrationViewModelStates.InvalidEmail -> {
+                    //Show loader
+                }
                 else -> {
-                } //DefaultState
+                    if (it is RegistrationViewModelStates.Default) return@observe
+                    dialog = createDialog(it.errorMessage!!)
+                }
             }
             dialog?.show(parentFragmentManager, "")
         }
