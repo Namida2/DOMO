@@ -51,7 +51,6 @@ sealed class RegistrationViewModelStates {
     }
     class Valid(val employee: Employee) : RegistrationViewModelStates()
 }
-
 class RegistrationViewModel(private val model: RegistrationModel) : ViewModel() {
 
     var selectedPost: String = EmployeePosts.COOK
@@ -91,6 +90,9 @@ class RegistrationViewModel(private val model: RegistrationModel) : ViewModel() 
             }
         })
     }
+    fun resetState() {
+        state.value = RegistrationViewModelStates.Default
+    }
 
     fun getPostItems(): MutableList<PostItem> = model.getPostItems()
 
@@ -110,3 +112,4 @@ class RegistrationViewModel(private val model: RegistrationModel) : ViewModel() 
         android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
 }
+

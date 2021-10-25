@@ -42,6 +42,7 @@ class RegistrationFragment : Fragment() {
             ViewModelProvider(requireActivity(), ViewModelFactory(context.appComponent)).get(
                 RegistrationViewModel::class.java
             )
+        viewModel?.resetState()
         SMALL_MARGIN_IN_PX = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
             SMALL_MARGIN_IN_DP,
@@ -128,7 +129,6 @@ class RegistrationFragment : Fragment() {
             requireContext().resources.getString(message.titleId),
             requireContext().resources.getString(message.messageId)
         )
-
 
 }
 
