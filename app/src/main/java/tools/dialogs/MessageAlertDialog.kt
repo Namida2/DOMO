@@ -1,4 +1,4 @@
-package tools
+package tools.dialogs
 
 
 import android.app.AlertDialog

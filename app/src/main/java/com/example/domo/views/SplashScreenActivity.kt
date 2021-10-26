@@ -4,12 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.transition.*
 import android.util.Log
+import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import androidx.activity.viewModels
 import application.appComponent
 import application.employee
+import com.example.domo.R
 import com.example.domo.databinding.ActivitySplashScreenBinding
 import com.example.domo.viewModels.SplashScreenStates
 import com.example.domo.viewModels.SplashScreenViewModel
@@ -19,6 +22,10 @@ import constants.EmployeePosts.COOK
 import constants.EmployeePosts.WAITER
 import database.Database
 import database.EmployeeDao
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 

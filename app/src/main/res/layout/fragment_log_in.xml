@@ -6,12 +6,10 @@
             type="com.example.domo.viewModels.LogInViewModel" />
     </data>
 
-
-
-
     <RelativeLayout
         android:id="@+id/logInFragment"
         android:layout_width="match_parent"
+        android:background="@color/white"
         android:layout_height="match_parent">
         <LinearLayout
             android:id="@+id/top_card"

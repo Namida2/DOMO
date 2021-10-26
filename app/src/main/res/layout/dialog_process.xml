@@ -3,14 +3,15 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
+        android:background="@drawable/bg_process_dialog"
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/loadingLinearLayout"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:background="@drawable/bg_process_dialog">
+            android:gravity="center">
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_marginStart="32dp"
@@ -31,17 +32,18 @@
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
+            android:id="@+id/successLinearLayout"
+            android:visibility="visible"
+            android:alpha="0"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:background="@drawable/bg_process_dialog">
+            android:gravity="center">
             <ImageView
                 android:id="@+id/successIcon"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
                 android:background="@drawable/ic_selected"
                 android:backgroundTint="@color/black"
                 android:layout_width="48dp"
@@ -52,9 +54,10 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="32dp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/montserrat_semi_bold"
-                android:text="Подождите немного..."/>
+                android:text="Успешно!"/>
         </LinearLayout>
 
 

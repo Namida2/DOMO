@@ -20,9 +20,9 @@ import com.example.domo.viewModels.RegistrationViewModel
 import com.example.domo.viewModels.RegistrationViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
 import tools.ErrorMessage
-import tools.MessageAlertDialog
+import tools.dialogs.MessageAlertDialog
 import tools.NetworkConnection
-import tools.ProcessAlertDialog
+import tools.dialogs.ProcessAlertDialog
 
 data class PostItem(val postName: String, var visibility: Int)
 class RegistrationFragment : Fragment() {
@@ -107,16 +107,17 @@ class RegistrationFragment : Fragment() {
             var dialog: DialogFragment? = null
             when (it) {
                 is RegistrationViewModelStates.Validating -> {
-                    ProcessAlertDialog().show(parentFragmentManager, "")
+                    ProcessAlertDialog.show(parentFragmentManager, "")
                 }
                 is RegistrationViewModelStates.Valid -> {
-
+                    ProcessAlertDialog.onSuccess()
                 }
                 is RegistrationViewModelStates.InvalidEmail -> {
 
                 }
                 else -> {
                     if (it is RegistrationViewModelStates.Default) return@observe
+                    ProcessAlertDialog.dismiss()
                     dialog = createDialog(it.errorMessage!!)
                 }
             }
