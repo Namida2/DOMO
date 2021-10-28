@@ -13,6 +13,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.domo.R
 import com.example.domo.databinding.FragmentLogInBinding
+import tools.dialogs.ProcessAlertDialog
 
 class LogInFragment: Fragment() {
 
@@ -27,6 +28,7 @@ class LogInFragment: Fragment() {
         binding.newAccountButton .setOnClickListener {
             findNavController().navigate(R.id.action_logInFragment_to_registrationFragment)
         }
+        ProcessAlertDialog.show(parentFragmentManager, "")
         return binding.root
     }
 }

@@ -24,7 +24,6 @@ object ProcessAlertDialog : DialogFragment() {
     }
     fun onSuccess() {
         Animations.hideView(binding?.loadingLinearLayout!!)
-        Animations.slideUp(binding?.successLinearLayout!!)
         CoroutineScope(Main).launch {
             delay(500)
             dismiss()
