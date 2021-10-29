@@ -118,6 +118,7 @@ class RegistrationFragment : Fragment() {
 
                 }
                 else -> {
+                    ProcessAlertDialog.dismiss()
                     if (it is RegistrationViewModelStates.Default) return@observe
                     ProcessAlertDialog.dismiss()
                     dialog = createDialog(it.errorMessage!!)
