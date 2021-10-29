@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import tools.Animations
+import java.util.concurrent.atomic.AtomicBoolean
 
 object ProcessAlertDialog : DialogFragment() {
 
@@ -23,9 +24,10 @@ object ProcessAlertDialog : DialogFragment() {
             .create()
     }
     fun onSuccess() {
-        Animations.hideView(binding?.loadingLinearLayout!!)
+        Animations.hideView(binding?.loadingLinearLayout!!).start()
+        Animations.showView(binding?.successTextView!!, startDelay = 150).start()
         CoroutineScope(Main).launch {
-            delay(500)
+            delay(600)
             dismiss()
         }
     }

@@ -23,10 +23,12 @@ import constants.EmployeePosts.WAITER
 import database.Database
 import database.EmployeeDao
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.log2
 
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -40,13 +42,13 @@ class SplashScreenActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
+        appComponent.inject(this)
         super.onCreate(savedInstanceState)
 
+        viewModel.getCurrentEmployee()
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
         binding.lifecycleOwner = this
-        appComponent.inject(this)
+        setContentView(binding.root)
         viewModel.state.observe(this) { state ->
             when(state) {
                 is SplashScreenStates.CheckingForCurrentEmployee -> {
@@ -74,7 +76,6 @@ class SplashScreenActivity : AppCompatActivity() {
             }
         }
     }
-
 }
 fun Any.log(message: String) {
     Log.d("MyLogging", message)

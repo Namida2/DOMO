@@ -5,9 +5,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "employee")
 data class Employee (
-    @PrimaryKey val email: String,
+    @PrimaryKey var email: String,
     var name: String,
     var post: String,
     var password: String,
     var permission: Boolean = false
-)
+) {
+    constructor() : this("", "", "", "")
+}

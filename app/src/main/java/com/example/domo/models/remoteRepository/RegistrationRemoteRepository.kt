@@ -14,14 +14,14 @@ import javax.inject.Inject
 
 class RegistrationRemoteRepository @Inject constructor(
     private val auth: FirebaseAuth,
-    private val firestore: FirebaseFirestore
+    private val fireStore: FirebaseFirestore
 ) {
     private val emailAlreadyExistsTitle = R.string.emailAlreadyExitTitle
     private val emailAlreadyExistsMessage = R.string.emailAlreadyExistMessage
     private val defaultExceptionTitle = R.string.defaultTitle
     private val defaultExceptionMessage = R.string.defaultTitle
     private val employeesCollectionRef: CollectionReference =
-        firestore.collection(COLLECTION_RESTAURANTS).document(DOCUMENT_DOMO)
+        fireStore.collection(COLLECTION_RESTAURANTS).document(DOCUMENT_DOMO)
             .collection(COLLECTION_EMPLOYEES)
 
     fun registration(
@@ -73,7 +73,7 @@ class RegistrationRemoteRepository @Inject constructor(
         onSuccess: () -> Unit,
         onError: (errorMessage: ErrorMessage) -> Unit
     ) {
-        firestore.runTransaction {
+        fireStore.runTransaction {
             it.set(employeesCollectionRef.document(employee.email), employee)
         }.addOnCompleteListener {
             if (it.isSuccessful)

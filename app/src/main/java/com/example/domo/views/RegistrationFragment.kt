@@ -1,6 +1,7 @@
 package com.example.domo.views
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -111,6 +112,7 @@ class RegistrationFragment : Fragment() {
                 }
                 is RegistrationViewModelStates.Valid -> {
                     ProcessAlertDialog.onSuccess()
+                    startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
                 }
                 is RegistrationViewModelStates.InvalidEmail -> {
 

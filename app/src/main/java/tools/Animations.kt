@@ -3,24 +3,30 @@ package tools
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.view.View
+import android.view.animation.LinearInterpolator
 import android.view.animation.OvershootInterpolator
 
 object Animations {
-    fun showView(view: View) {
 
-    }
-    fun hideView(view: View) {
-        view.visibility = View.INVISIBLE
-    }
-    fun slideUp(vararg view: View) {
-        view.forEach { v ->
-            val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 2F, 1F)
-            val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 2F, 1F)
-            val alpha = PropertyValuesHolder.ofFloat(View.ALPHA, 0F, 1F)
-            ObjectAnimator.ofPropertyValuesHolder(v, scaleX, scaleY, alpha).apply {
-                interpolator = OvershootInterpolator()
-                duration = 150
-            }.start()
+    fun showView(view: View, duration: Long = 150, startDelay: Long = 0): ObjectAnimator {
+        val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1.2f, 1f)
+        val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.2f, 1f)
+        val alpha = PropertyValuesHolder.ofFloat(View.ALPHA, 0f, 1f)
+        return ObjectAnimator.ofPropertyValuesHolder(view, scaleX, scaleY, alpha).apply {
+            interpolator = OvershootInterpolator()
+            this.duration = duration
+            this.startDelay = startDelay
         }
     }
+    fun hideView(view: View, duration: Long = 150, startDelay: Long = 0): ObjectAnimator {
+        val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1f, 0f)
+        val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f, 0f)
+        val alpha = PropertyValuesHolder.ofFloat(View.ALPHA, 1f, 0f)
+        return ObjectAnimator.ofPropertyValuesHolder(view, scaleX, scaleY, alpha).apply {
+            interpolator = LinearInterpolator()
+            this.duration = duration
+            this.startDelay = startDelay
+        }
+    }
+
 }

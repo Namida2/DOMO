@@ -11,6 +11,7 @@ import tools.ErrorMessage
 
 sealed class RegistrationViewModelStates {
     open var errorMessage: ErrorMessage? = null
+
     object Default : RegistrationViewModelStates()
     object Validating : RegistrationViewModelStates()
     object InvalidEmail : RegistrationViewModelStates() {
@@ -19,38 +20,45 @@ sealed class RegistrationViewModelStates {
             R.string.wrongEmailFormatMessage
         )
     }
+
     object EmptyField : RegistrationViewModelStates() {
         override var errorMessage: ErrorMessage? = ErrorMessage(
             R.string.emptyFieldTitle,
             R.string.emptyFieldMessage
         )
     }
+
     object ShortPassword : RegistrationViewModelStates() {
         override var errorMessage: ErrorMessage? = ErrorMessage(
             R.string.tooShortPasswordTitle,
             R.string.tooShortPasswordMessage
         )
     }
+
     object WrongPasswordConfirmation : RegistrationViewModelStates() {
         override var errorMessage: ErrorMessage? = ErrorMessage(
             R.string.wrongConfirmPasswordTitle,
             R.string.wrongConfirmPasswordMessage
         )
     }
+
     object EmailAlreadyExists : RegistrationViewModelStates() {
         override var errorMessage: ErrorMessage? = ErrorMessage(
             R.string.emailAlreadyExitTitle,
             R.string.emailAlreadyExistMessage
         )
     }
+
     object DefaultError : RegistrationViewModelStates() {
         override var errorMessage: ErrorMessage? = ErrorMessage(
             R.string.defaultTitle,
             R.string.defaultMessage
         )
     }
+
     class Valid(val employee: Employee) : RegistrationViewModelStates()
 }
+
 class RegistrationViewModel(private val model: RegistrationModel) : ViewModel() {
 
     var selectedPost: String = EmployeePosts.COOK
@@ -61,23 +69,27 @@ class RegistrationViewModel(private val model: RegistrationModel) : ViewModel() 
 
     fun validation(name: String, email: String, password: String, confirmPassword: String) {
         state.value = RegistrationViewModelStates.Validating
-        if (anyFieldIsEmpty(name, email, password, confirmPassword)) {
-            state.value = RegistrationViewModelStates.EmptyField
-            return
-        }
-        if (!isValidEmail(email)) {
-            state.value = RegistrationViewModelStates.InvalidEmail
-            return
-        }
-        if (password.length < MIN_PASSWORD_LENGH) {
-            state.value = RegistrationViewModelStates.ShortPassword
-            return
-        }
-        if (password != confirmPassword) {
-            state.value = RegistrationViewModelStates.WrongPasswordConfirmation
-            return
+
+        when {
+            anyFieldIsEmpty(name, email, password, confirmPassword) -> {
+                state.value = RegistrationViewModelStates.EmptyField
+                return
+            }
+            !isValidEmail(email) -> {
+                state.value = RegistrationViewModelStates.InvalidEmail
+                return
+            }
+            password.length < MIN_PASSWORD_LENGH -> {
+                state.value = RegistrationViewModelStates.ShortPassword
+                return
+            }
+            password != confirmPassword -> {
+                state.value = RegistrationViewModelStates.WrongPasswordConfirmation
+                return
+            }
         }
         val employee = Employee(email, name, selectedPost, password)
+
         model.registration(employee, {
             state.value = RegistrationViewModelStates.Valid(employee)
         }, {
@@ -91,6 +103,7 @@ class RegistrationViewModel(private val model: RegistrationModel) : ViewModel() 
             }
         })
     }
+
     fun resetState() {
         state.value = RegistrationViewModelStates.Default
     }
