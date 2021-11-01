@@ -7,7 +7,7 @@ import com.example.domo.models.RegistrationModel
 import com.example.domo.views.PostItem
 import constants.EmployeePosts
 import entities.Employee
-import tools.ErrorMessage
+import entities.ErrorMessage
 
 sealed class RegistrationViewModelStates {
     open var errorMessage: ErrorMessage? = null
@@ -59,7 +59,7 @@ sealed class RegistrationViewModelStates {
     class Valid(val employee: Employee) : RegistrationViewModelStates()
 }
 
-class RegistrationViewModel(private val model: RegistrationModel) : ViewModel() {
+class RegistrationViewModel(private val model: RegistrationModel): ViewModel() {
 
     var selectedPost: String = EmployeePosts.COOK
     private val MIN_PASSWORD_LENGH = 6
@@ -69,27 +69,22 @@ class RegistrationViewModel(private val model: RegistrationModel) : ViewModel() 
 
     fun validation(name: String, email: String, password: String, confirmPassword: String) {
         state.value = RegistrationViewModelStates.Validating
-
         when {
             anyFieldIsEmpty(name, email, password, confirmPassword) -> {
-                state.value = RegistrationViewModelStates.EmptyField
-                return
+                state.value = RegistrationViewModelStates.EmptyField; return
             }
             !isValidEmail(email) -> {
-                state.value = RegistrationViewModelStates.InvalidEmail
-                return
+                state.value = RegistrationViewModelStates.InvalidEmail; return
             }
             password.length < MIN_PASSWORD_LENGH -> {
-                state.value = RegistrationViewModelStates.ShortPassword
-                return
+                state.value = RegistrationViewModelStates.ShortPassword; return
             }
             password != confirmPassword -> {
-                state.value = RegistrationViewModelStates.WrongPasswordConfirmation
-                return
+                state.value = RegistrationViewModelStates.WrongPasswordConfirmation; return
             }
         }
-        val employee = Employee(email, name, selectedPost, password)
 
+        val employee = Employee(email, name, selectedPost, password)
         model.registration(employee, {
             state.value = RegistrationViewModelStates.Valid(employee)
         }, {

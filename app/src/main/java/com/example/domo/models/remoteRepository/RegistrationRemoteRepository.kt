@@ -9,7 +9,7 @@ import constants.FirestoreConstants.COLLECTION_EMPLOYEES
 import constants.FirestoreConstants.COLLECTION_RESTAURANTS
 import constants.FirestoreConstants.DOCUMENT_DOMO
 import entities.Employee
-import tools.ErrorMessage
+import entities.ErrorMessage
 import javax.inject.Inject
 
 class RegistrationRemoteRepository @Inject constructor(
@@ -29,7 +29,6 @@ class RegistrationRemoteRepository @Inject constructor(
         onSuccess: () -> Unit,
         onError: (errorMessage: ErrorMessage) -> Unit
     ) {
-
         auth.fetchSignInMethodsForEmail(employee.email)
             .addOnCompleteListener {
                 if (it.isSuccessful) {

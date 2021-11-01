@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import tools.ErrorMessage
+import entities.ErrorMessage
 import javax.inject.Inject
 import javax.inject.Singleton
 

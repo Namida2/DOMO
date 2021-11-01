@@ -7,7 +7,7 @@ import com.example.domo.adapters.PostItemsAdapter
 
 class PostItemDecoration(
     private val smallMargin: Int,
-    private val bigMargin: Int
+    private val largeMargin: Int
         ) : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
         outRect: Rect,
@@ -21,12 +21,12 @@ class PostItemDecoration(
         if (position == RecyclerView.NO_POSITION) return
         when (position) {
             0 -> {
-                outRect.left = bigMargin
+                outRect.left = largeMargin
                 outRect.right = smallMargin
             }
             adapter.postItemsList.size - 1 -> {
                 outRect.left = smallMargin
-                outRect.right = bigMargin
+                outRect.right = largeMargin
             }
             else -> {
                 outRect.left = smallMargin

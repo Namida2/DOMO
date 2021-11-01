@@ -52,8 +52,8 @@
         <item name="strokeColor">@color/black</item>
         <item name="fontFamily">@font/montserrat_regular</item>
         <item name="shapeAppearance">@style/buttonShapeAppearance</item>
-        <item name="android:layout_marginStart">16dp</item>
-        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginStart">@dimen/large_margin</item>
+        <item name="android:layout_marginEnd">@dimen/large_margin</item>
     </style>
 
     <style name="buttonStyle" parent="Widget.MaterialComponents.Button">
@@ -64,8 +64,8 @@
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/montserrat_regular</item>
         <item name="shapeAppearance">@style/buttonShapeAppearance</item>
-        <item name="android:layout_marginStart">16dp</item>
-        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginStart">@dimen/large_margin</item>
+        <item name="android:layout_marginEnd">@dimen/large_margin</item>
     </style>
 
     <style name="buttonShapeAppearance" parent="ShapeAppearance.MaterialComponents.MediumComponent">
@@ -76,8 +76,8 @@
     <style name="editTextStyle" parent="Widget.AppCompat.EditText">
         <item name="android:minHeight">46dp</item>
         <item name="android:background">@drawable/bg_edit_text</item>
-        <item name="android:layout_marginStart">16sp</item>
-        <item name="android:layout_marginEnd">16sp</item>
+        <item name="android:layout_marginStart">@dimen/large_margin</item>
+        <item name="android:layout_marginEnd">@dimen/large_margin</item>
         <item name="android:drawablePadding">8sp</item>
         <item name="android:paddingStart">16sp</item>
         <item name="android:fontFamily">@font/montserrat_semi_bold</item>

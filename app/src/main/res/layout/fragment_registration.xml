@@ -2,7 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.example.domo.viewModels.RegistrationViewModel" />
@@ -27,7 +26,6 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
-
                     android:background="@color/white"
                     android:elevation="0dp"
                     app:layout_scrollFlags="scroll|enterAlways"
@@ -39,9 +37,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/montserrat_semi_bold"
-                        android:text="Profile"
+                        android:text="Registration"
                         android:textColor="@color/black"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
                 </com.google.android.material.appbar.MaterialToolbar>
             </com.google.android.material.appbar.AppBarLayout>
 

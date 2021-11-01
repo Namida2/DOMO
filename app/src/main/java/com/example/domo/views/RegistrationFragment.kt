@@ -20,7 +20,7 @@ import com.example.domo.databinding.FragmentRegistrationBinding
 import com.example.domo.viewModels.RegistrationViewModel
 import com.example.domo.viewModels.RegistrationViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
-import tools.ErrorMessage
+import entities.ErrorMessage
 import tools.dialogs.MessageAlertDialog
 import tools.NetworkConnection
 import tools.dialogs.ProcessAlertDialog
@@ -28,10 +28,8 @@ import tools.dialogs.ProcessAlertDialog
 data class PostItem(val postName: String, var visibility: Int)
 class RegistrationFragment : Fragment() {
 
-    private val SMALL_MARGIN_IN_DP = 8f
-    private val BIG_MARGIN_IN_DP = 16f
-    private var SMALL_MARGIN_IN_PX: Float? = null
-    private var BIG_MARGIN_IN_PX: Float? = null
+    private var smallMargin: Int? = null
+    private var largeMargin: Int? = null
 
     private var viewModel: RegistrationViewModel? = null
     lateinit var binding: FragmentRegistrationBinding
@@ -43,16 +41,8 @@ class RegistrationFragment : Fragment() {
                 RegistrationViewModel::class.java
             )
         viewModel?.resetState()
-        SMALL_MARGIN_IN_PX = TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            SMALL_MARGIN_IN_DP,
-            resources.displayMetrics
-        )
-        BIG_MARGIN_IN_PX = TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            BIG_MARGIN_IN_DP,
-            resources.displayMetrics
-        )
+        smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
+        largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
         initBindings(layoutInflater)
     }
 
@@ -79,8 +69,8 @@ class RegistrationFragment : Fragment() {
             }
             addItemDecoration(
                 PostItemDecoration(
-                    SMALL_MARGIN_IN_PX!!.toInt(),
-                    BIG_MARGIN_IN_PX!!.toInt()
+                    smallMargin!!,
+                    largeMargin!!
                 )
             )
         }
@@ -114,11 +104,7 @@ class RegistrationFragment : Fragment() {
                     ProcessAlertDialog.onSuccess()
                     startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
                 }
-                is RegistrationViewModelStates.InvalidEmail -> {
-
-                }
                 else -> {
-                    ProcessAlertDialog.dismiss()
                     if (it is RegistrationViewModelStates.Default) return@observe
                     ProcessAlertDialog.dismiss()
                     dialog = createDialog(it.errorMessage!!)

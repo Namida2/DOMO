@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_waiter"
     app:startDestination="@id/tablesFragment2">
-
     <fragment
         android:id="@+id/tablesFragment2"
         android:name="com.example.domo.views.TablesFragment"
-        android:label="TablesFragment" />
+        android:label="TablesFragment"
+        tools:layout="@layout/fragment_tables"/>
 </navigation>
