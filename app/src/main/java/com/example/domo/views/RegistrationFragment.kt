@@ -3,7 +3,6 @@ package com.example.domo.views
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,11 +20,11 @@ import com.example.domo.viewModels.RegistrationViewModel
 import com.example.domo.viewModels.RegistrationViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
 import entities.ErrorMessage
-import tools.dialogs.MessageAlertDialog
-import tools.NetworkConnection
+import entities.Task
+import extentions.createDialog
+import extentions.isNetworkConnected
 import tools.dialogs.ProcessAlertDialog
 
-data class PostItem(val postName: String, var visibility: Int)
 class RegistrationFragment : Fragment() {
 
     private var smallMargin: Int? = null
@@ -53,6 +52,7 @@ class RegistrationFragment : Fragment() {
     ): View? {
         binding.lifecycleOwner = viewLifecycleOwner
         observeViewModelState()
+
         return binding.root
     }
 
@@ -75,7 +75,7 @@ class RegistrationFragment : Fragment() {
             )
         }
         binding.registrationButton.setOnClickListener {
-            if (NetworkConnection.isNetworkConnected(requireContext()))
+            if (requireContext().isNetworkConnected())
                 with(binding) {
                     viewModel?.validation(
                         nameEditText.text.toString(),
@@ -84,7 +84,7 @@ class RegistrationFragment : Fragment() {
                         confirmPasswordEditText.text.toString(),
                     )
                 }
-            else createDialog(
+            else requireContext().createDialog(
                 ErrorMessage(
                     R.string.defaultTitle,
                     R.string.networkConnectionMessage
@@ -107,18 +107,12 @@ class RegistrationFragment : Fragment() {
                 else -> {
                     if (it is RegistrationViewModelStates.Default) return@observe
                     ProcessAlertDialog.dismiss()
-                    dialog = createDialog(it.errorMessage!!)
+                    dialog = requireContext().createDialog(it.errorMessage!!)
                 }
             }
             dialog?.show(parentFragmentManager, "")
         }
     }
-
-    private fun createDialog(message: ErrorMessage): DialogFragment? =
-        MessageAlertDialog.getNewInstance<Unit>(
-            requireContext().resources.getString(message.titleId),
-            requireContext().resources.getString(message.messageId)
-        )
 
 }
 

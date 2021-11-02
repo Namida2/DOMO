@@ -41,7 +41,7 @@ class TablesFragment : Fragment() {
     ): View? {
         binding = FragmentTablesBinding.inflate(inflater)
         with(binding.tablesContainerRecyclerView) {
-            layoutManager = GridLayoutManager(container?.context, spanCount)
+            layoutManager = GridLayoutManager(container?.context, spanCount).apply {  }
             adapter = TablesAdapter(tablesCount)
             addItemDecoration(TablesItemDecorations(
                 smallMargin!!,

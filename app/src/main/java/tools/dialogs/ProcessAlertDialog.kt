@@ -3,9 +3,11 @@ package tools.dialogs
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.DialogFragment
 import com.example.domo.R
 import com.example.domo.databinding.DialogProcessBinding
+import com.example.domo.views.log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
@@ -31,5 +33,6 @@ object ProcessAlertDialog : DialogFragment() {
             dismiss()
         }
     }
+
 
 }

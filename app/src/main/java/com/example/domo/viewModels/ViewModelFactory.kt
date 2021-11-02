@@ -10,7 +10,7 @@ class ViewModelFactory (private val appComponent: AppComponent): ViewModelProvid
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         val viewModel = when(modelClass) {
             SplashScreenViewModel::class.java -> SplashScreenViewModel(appComponent.provideSplashScreenModel())
-            LogInViewModel::class.java -> LogInViewModel()
+            LogInViewModel::class.java -> LogInViewModel(appComponent.provideLogInModel())
             RegistrationViewModel::class.java -> RegistrationViewModel(appComponent.provideRegistrationModel())
             else -> throw IllegalArgumentException("Unknown viewModel class")
         }

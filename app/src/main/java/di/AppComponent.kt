@@ -1,6 +1,7 @@
 package di
 
 import android.content.Context
+import com.example.domo.models.LogInModel
 import com.example.domo.models.RegistrationModel
 
 import com.example.domo.models.SplashScreenModel
@@ -24,6 +25,7 @@ interface AppComponent {
     }
     fun provideSplashScreenModel(): SplashScreenModel
     fun provideRegistrationModel(): RegistrationModel
+    fun provideLogInModel(): LogInModel
     fun inject(splashScreenActivity: SplashScreenActivity)
 
 }

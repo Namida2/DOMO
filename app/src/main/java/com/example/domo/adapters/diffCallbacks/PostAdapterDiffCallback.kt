@@ -1,7 +1,7 @@
 package com.example.domo.adapters.diffCallbacks
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.domo.views.PostItem
+import entities.PostItem
 
 class PostAdapterDiffCallback(
     private val oldList: List<PostItem>,

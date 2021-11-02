@@ -61,13 +61,13 @@ class SplashScreenActivity : AppCompatActivity() {
                     employee = state.employee
                     when(employee?.post) {
                         COOK -> {
-                            //CookMainActivity
+                            startActivity(Intent(this, WaiterMainActivity::class.java))
                         }
                         WAITER -> {
                             startActivity(Intent(this, WaiterMainActivity::class.java))
                         }
                         ADMINISTRATOR -> {
-                            //AdministratorMainActivity
+                            startActivity(Intent(this, WaiterMainActivity::class.java))
                         }
                     }
 

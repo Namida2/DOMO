@@ -4,10 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domo.R
 import com.example.domo.models.RegistrationModel
-import com.example.domo.views.PostItem
 import constants.EmployeePosts
-import entities.Employee
-import entities.ErrorMessage
+import entities.*
+import extentions.isEmptyField
+import extentions.isValidEmail
 
 sealed class RegistrationViewModelStates {
     open var errorMessage: ErrorMessage? = null
@@ -59,7 +59,7 @@ sealed class RegistrationViewModelStates {
     class Valid(val employee: Employee) : RegistrationViewModelStates()
 }
 
-class RegistrationViewModel(private val model: RegistrationModel): ViewModel() {
+class RegistrationViewModel(private val model: RegistrationModel) : ViewModel() {
 
     var selectedPost: String = EmployeePosts.COOK
     private val MIN_PASSWORD_LENGH = 6
@@ -70,10 +70,10 @@ class RegistrationViewModel(private val model: RegistrationModel): ViewModel() {
     fun validation(name: String, email: String, password: String, confirmPassword: String) {
         state.value = RegistrationViewModelStates.Validating
         when {
-            anyFieldIsEmpty(name, email, password, confirmPassword) -> {
+            isEmptyField(name, email, password, confirmPassword) -> {
                 state.value = RegistrationViewModelStates.EmptyField; return
             }
-            !isValidEmail(email) -> {
+            !email.isValidEmail() -> {
                 state.value = RegistrationViewModelStates.InvalidEmail; return
             }
             password.length < MIN_PASSWORD_LENGH -> {
@@ -85,40 +85,32 @@ class RegistrationViewModel(private val model: RegistrationModel): ViewModel() {
         }
 
         val employee = Employee(email, name, selectedPost, password)
-        model.registration(employee, {
-            state.value = RegistrationViewModelStates.Valid(employee)
-        }, {
-            when (it.titleId) {
-                R.string.emailAlreadyExitTitle -> {
-                    state.value = RegistrationViewModelStates.EmailAlreadyExists
+        model.registration(
+            employee,
+            object : TaskWithErrorMessage {
+                override fun onSuccess(arg: Unit) {
+                    state.value = RegistrationViewModelStates.Valid(employee)
                 }
-                R.string.defaultTitle -> {
-                    state.value = RegistrationViewModelStates.DefaultError
+                override fun onError(arg: ErrorMessage) {
+                    when (arg.titleId) {
+                        R.string.emailAlreadyExitTitle -> {
+                            state.value = RegistrationViewModelStates.EmailAlreadyExists
+                        }
+                        R.string.defaultTitle -> {
+                            state.value = RegistrationViewModelStates.DefaultError
+                        }
+                    }
                 }
             }
-        })
-    }
+        )
 
+    }
     fun resetState() {
         state.value = RegistrationViewModelStates.Default
     }
-
     fun getPostItems(): MutableList<PostItem> = model.getPostItems()
-
-    private fun anyFieldIsEmpty(
-        name: String,
-        email: String,
-        password: String,
-        confirmPassword: String
-    ): Boolean {
-        return name.isEmpty() || name.replace(" ", "").isEmpty() ||
-                email.isEmpty() || email.replace(" ", "").isEmpty() ||
-                password.isEmpty() || password.replace(" ", "").isEmpty() ||
-                confirmPassword.isEmpty() || confirmPassword.replace(" ", "").isEmpty()
-    }
-
-    private fun isValidEmail(email: String) =
-        android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-
 }
+
+
+
 

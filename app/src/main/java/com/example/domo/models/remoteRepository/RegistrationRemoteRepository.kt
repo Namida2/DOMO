@@ -10,6 +10,7 @@ import constants.FirestoreConstants.COLLECTION_RESTAURANTS
 import constants.FirestoreConstants.DOCUMENT_DOMO
 import entities.Employee
 import entities.ErrorMessage
+import entities.Task
 import javax.inject.Inject
 
 class RegistrationRemoteRepository @Inject constructor(
@@ -26,18 +27,17 @@ class RegistrationRemoteRepository @Inject constructor(
 
     fun registration(
         employee: Employee,
-        onSuccess: () -> Unit,
-        onError: (errorMessage: ErrorMessage) -> Unit
+        task: Task<Unit, Unit, ErrorMessage, Unit>
     ) {
         auth.fetchSignInMethodsForEmail(employee.email)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     if (it.result!!.signInMethods!!.isEmpty()) {
                         log("${this}: New email")
-                        createNewEmployee(employee, onSuccess, onError)
+                        createNewEmployee(employee, task)
                     } else {
                         log("${this}: Email already exits")
-                        onError(
+                        task.onError(
                             ErrorMessage(
                                 emailAlreadyExistsTitle,
                                 emailAlreadyExistsMessage
@@ -53,34 +53,32 @@ class RegistrationRemoteRepository @Inject constructor(
 
     private fun createNewEmployee(
         employee: Employee,
-        onSuccess: () -> Unit,
-        onError: (errorMessage: ErrorMessage) -> Unit
+        task: Task<Unit, Unit, ErrorMessage, Unit>
     ) {
         auth.createUserWithEmailAndPassword(employee.email, employee.password)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    addEmployeeToCollection(employee, onSuccess, onError)
+                    addEmployeeToCollection(employee, task)
                 } else {
                     log("${this}: ${it.exception.toString()}")
-                    onSuccess()
+                    task.onSuccess(Unit)
                 }
             }
     }
 
     private fun addEmployeeToCollection(
         employee: Employee,
-        onSuccess: () -> Unit,
-        onError: (errorMessage: ErrorMessage) -> Unit
+        task: Task<Unit, Unit, ErrorMessage, Unit>
     ) {
         fireStore.runTransaction {
             it.set(employeesCollectionRef.document(employee.email), employee)
         }.addOnCompleteListener {
             if (it.isSuccessful)
-                onSuccess()
+                task.onSuccess(Unit)
             else {
                 log("${this}: ${it.exception.toString()}")
                 auth.currentUser?.delete()
-                onError(
+                task.onError(
                     ErrorMessage(
                         defaultExceptionTitle,
                         defaultExceptionMessage

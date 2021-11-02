@@ -1,6 +1,5 @@
 package tools.dialogs
 
-
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
@@ -15,10 +14,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
-class MessageAlertDialog<T>(
+class MessageAlertDialog(
     private val title: String,
     private val message: String,
-    private val action: (() -> T)? = null
+    private val action: (() -> Unit)? = null
 ) : DialogFragment() {
 
     private val DISMISS_TIME: Long = 140
@@ -28,10 +27,10 @@ class MessageAlertDialog<T>(
         fun <T> getNewInstance(
             title: String,
             message: String,
-            action: (() -> T)? = null
-        ): MessageAlertDialog<T>? {
+            action: (() -> Unit)? = null
+        ): MessageAlertDialog? {
             if (isExist.get()) {
-                log("Tools.ErrorAlertDialog:: dialog already exists.")
+                log("$this: dialog already exists.")
                 return null
             }
             return MessageAlertDialog(title, message, action)

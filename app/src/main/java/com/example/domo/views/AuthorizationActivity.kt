@@ -8,11 +8,13 @@ import androidx.navigation.NavController
 import com.example.domo.databinding.ActivityAuthorizationBinding
 import com.example.domo.viewModels.LogInViewModel
 import android.util.DisplayMetrics
+import application.appComponent
+import com.example.domo.viewModels.ViewModelFactory
 
 class AuthorizationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthorizationBinding
-    private val viewModel: LogInViewModel by viewModels()
+    private val viewModel: LogInViewModel by viewModels { ViewModelFactory(appComponent) }
 
     private var navController: NavController? = null
 
