@@ -29,5 +29,7 @@
     <string name="tooShortPasswordTitle">Пароль слишком короткий</string>
     <string name="tooShortPasswordMessage">Пароль должен состоять из 6 и больше стмволов.</string>
 
+    <string name="permissionErrorTitle">Нет прав</string>
+    <string name="permissionErrorMessage">Владльцу данной почты запрещено работать с приложением. Обатитесь к администратору.</string>
 
 </resources>

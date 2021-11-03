@@ -1,12 +1,15 @@
 package com.example.domo.models
 
-import androidx.lifecycle.LiveData
-import com.example.domo.R
 import com.example.domo.models.remoteRepository.LogInRemoteRepository
-import com.example.domo.viewModels.RegistrationViewModelStates
 import database.EmployeeDao
+import entities.Employee
 import entities.ErrorMessage
-import entities.TaskWithErrorMessage
+import entities.TaskWithEmployee
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
@@ -14,8 +17,20 @@ class LogInModel @Inject constructor(
     private val employeeDao: EmployeeDao,
     private val remoteRepository: LogInRemoteRepository
 ) {
-    fun signIn(email: String, password: String, task: TaskWithErrorMessage) {
-        remoteRepository.signIn(email, password, task)
+    fun signIn(email: String, password: String, task: TaskWithEmployee) {
+        remoteRepository.signIn(email, password, object: TaskWithEmployee {
+            override fun onSuccess(employee: Employee?) {
+                CoroutineScope(IO).launch {
+                    employeeDao.deleteAll()
+                    employeeDao.insert(employee!!)
+                    withContext(Main) {
+                        task.onSuccess(employee)
+                    }
+                }
+            }
+            override fun onError(arg: ErrorMessage) {
+               task.onError(arg)
+            }
+        })
     }
-
 }

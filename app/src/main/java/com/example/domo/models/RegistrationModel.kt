@@ -7,7 +7,7 @@ import database.EmployeeDao
 import entities.Employee
 import entities.ErrorMessage
 import entities.PostItem
-import entities.TaskWithErrorMessage
+import entities.TaskWithEmployee
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -22,13 +22,14 @@ class RegistrationModel @Inject constructor(
     private val remoteRepository: RegistrationRemoteRepository
 ) {
 
-    fun registration(employee: Employee, task: TaskWithErrorMessage) {
-        remoteRepository.registration(employee, object : TaskWithErrorMessage {
-            override fun onSuccess(arg: Unit) {
+    fun registration(employee: Employee, task: TaskWithEmployee) {
+        remoteRepository.registration(employee, object : TaskWithEmployee {
+            override fun onSuccess(arg: Employee?) {
                 CoroutineScope(IO).launch {
+                    employeeDao.deleteAll()
                     employeeDao.insert(employee)
                     withContext(Main) {
-                        task.onSuccess(Unit)
+                        task.onSuccess(employee)
                     }
                 }
             }

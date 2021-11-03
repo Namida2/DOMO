@@ -10,7 +10,7 @@ class WaiterMainActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_waiter_main)
+        setContentView(R.layout.fragmnet_order)
 
     }
 }

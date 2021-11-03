@@ -1,6 +1,7 @@
 package com.example.domo.views
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,9 +27,10 @@ class LogInFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        viewModel = ViewModelProvider(requireActivity(), ViewModelFactory(context.appComponent)).get(
-            LogInViewModel::class.java
-        )
+        viewModel =
+            ViewModelProvider(requireActivity(), ViewModelFactory(context.appComponent)).get(
+                LogInViewModel::class.java
+            )
     }
 
     override fun onCreateView(
@@ -49,8 +51,7 @@ class LogInFragment : Fragment() {
             logInButton.setOnClickListener {
                 if (requireContext().isNetworkConnected()) {
                     viewModel?.signIn(email.text.toString(), password.text.toString())
-                }
-                else requireContext().createDialog(
+                } else requireContext().createDialog(
                     ErrorMessage(
                         R.string.defaultTitle,
                         R.string.networkConnectionMessage
@@ -68,7 +69,8 @@ class LogInFragment : Fragment() {
                     ProcessAlertDialog.show(parentFragmentManager, "")
                 }
                 is LogInViewModelStates.Success -> {
-
+                    ProcessAlertDialog.onSuccess()
+                    requireContext().startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
                 }
                 else -> {
                     if (it is LogInViewModelStates.Default) return@observe

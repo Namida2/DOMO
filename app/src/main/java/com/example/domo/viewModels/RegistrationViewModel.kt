@@ -87,8 +87,8 @@ class RegistrationViewModel(private val model: RegistrationModel) : ViewModel() 
         val employee = Employee(email, name, selectedPost, password)
         model.registration(
             employee,
-            object : TaskWithErrorMessage {
-                override fun onSuccess(arg: Unit) {
+            object : TaskWithEmployee {
+                override fun onSuccess(arg: Employee?) {
                     state.value = RegistrationViewModelStates.Valid(employee)
                 }
                 override fun onError(arg: ErrorMessage) {

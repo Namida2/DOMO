@@ -11,6 +11,7 @@ import constants.FirestoreConstants.DOCUMENT_DOMO
 import entities.Employee
 import entities.ErrorMessage
 import entities.Task
+import entities.TaskWithEmployee
 import javax.inject.Inject
 
 class RegistrationRemoteRepository @Inject constructor(
@@ -27,7 +28,7 @@ class RegistrationRemoteRepository @Inject constructor(
 
     fun registration(
         employee: Employee,
-        task: Task<Unit, Unit, ErrorMessage, Unit>
+        task: TaskWithEmployee
     ) {
         auth.fetchSignInMethodsForEmail(employee.email)
             .addOnCompleteListener {
@@ -53,7 +54,7 @@ class RegistrationRemoteRepository @Inject constructor(
 
     private fun createNewEmployee(
         employee: Employee,
-        task: Task<Unit, Unit, ErrorMessage, Unit>
+        task: TaskWithEmployee
     ) {
         auth.createUserWithEmailAndPassword(employee.email, employee.password)
             .addOnCompleteListener {
@@ -61,20 +62,20 @@ class RegistrationRemoteRepository @Inject constructor(
                     addEmployeeToCollection(employee, task)
                 } else {
                     log("${this}: ${it.exception.toString()}")
-                    task.onSuccess(Unit)
+                    task.onSuccess(employee)
                 }
             }
     }
 
     private fun addEmployeeToCollection(
         employee: Employee,
-        task: Task<Unit, Unit, ErrorMessage, Unit>
+        task: TaskWithEmployee
     ) {
         fireStore.runTransaction {
             it.set(employeesCollectionRef.document(employee.email), employee)
         }.addOnCompleteListener {
             if (it.isSuccessful)
-                task.onSuccess(Unit)
+                task.onSuccess(employee)
             else {
                 log("${this}: ${it.exception.toString()}")
                 auth.currentUser?.delete()
