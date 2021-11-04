@@ -1,16 +1,19 @@
 package com.example.domo.views
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.NavHostFragment
 import com.example.domo.R
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.domo.databinding.ActivityWaiterMainBinding
 
-class WaiterMainActivity: AppCompatActivity() {
+class WaiterMainActivity : AppCompatActivity() {
 
+    lateinit var binding: ActivityWaiterMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragmnet_order)
-
+        binding = ActivityWaiterMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 }

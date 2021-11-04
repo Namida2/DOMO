@@ -16,8 +16,6 @@ class AuthorizationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAuthorizationBinding
     private val viewModel: LogInViewModel by viewModels { ViewModelFactory(appComponent) }
 
-    private var navController: NavController? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAuthorizationBinding.inflate(layoutInflater)

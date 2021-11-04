@@ -2,20 +2,21 @@ package com.example.domo.views
 
 import android.content.Context
 import android.os.Bundle
-import android.util.TypedValue
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.GridLayoutManager
-import application.appComponent
 import com.example.domo.R
 import com.example.domo.adapters.TablesAdapter
 import com.example.domo.adapters.itemDecorations.TablesItemDecorations
 import com.example.domo.databinding.FragmentTablesBinding
-import com.example.domo.viewModels.RegistrationViewModel
-import com.example.domo.viewModels.ViewModelFactory
+import com.google.android.material.transition.Hold
+import tools.Animations
 
 class TablesFragment : Fragment() {
 
@@ -41,15 +42,47 @@ class TablesFragment : Fragment() {
     ): View? {
         binding = FragmentTablesBinding.inflate(inflater)
         with(binding.tablesContainerRecyclerView) {
-            layoutManager = GridLayoutManager(container?.context, spanCount).apply {  }
+            layoutManager = GridLayoutManager(container?.context, spanCount).apply { }
             adapter = TablesAdapter(tablesCount)
-            addItemDecoration(TablesItemDecorations(
-                smallMargin!!,
-                largeMargin!!,
-                topTablesMargin!!)
+            addItemDecoration(
+                TablesItemDecorations(
+                    smallMargin!!,
+                    largeMargin!!,
+                    topTablesMargin!!
+                )
+            )
+        }
+        binding.view.setOnClickListener {
+            val fragmentExtras =
+                FragmentNavigatorExtras(
+                    binding.view to "end",
+                )
+            findNavController().navigate(
+                R.id.action_tablesFragment2_to_orderFragment,
+                null,
+                null,
+                fragmentExtras
             )
         }
 
         return binding.root
     }
+
+
+
+//    override fun onResume() {
+//        val activity = requireActivity() as WaiterMainActivity
+//        Animations.showToolBar(activity.binding.appBar).start()
+//        //Animations.showView(activity.binding.bottomNavigation).start()
+//        super.onResume()
+//    }
+//
+//    override fun onStop() {
+//        log(this.toString())
+//        val activity = requireActivity() as WaiterMainActivity
+//        Animations.hideView(activity.binding.appBar).start()
+//        Animations.hideView(activity.binding.bottomNavigation).start()
+//        super.onStop()
+//    }
+
 }

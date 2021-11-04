@@ -29,4 +29,13 @@ object Animations {
         }
     }
 
+    fun slideUp(view: View, distance: Float, duration: Long = 150, startDelay: Long = 0): ObjectAnimator {
+        val translationY = PropertyValuesHolder.ofFloat(View.Y, distance, 1f)
+        return ObjectAnimator.ofPropertyValuesHolder(view, translationY ).apply {
+            interpolator = LinearInterpolator()
+            this.duration = duration
+            this.startDelay = startDelay
+        }
+    }
+
 }
