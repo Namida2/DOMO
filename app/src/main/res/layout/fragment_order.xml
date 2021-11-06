@@ -17,6 +17,7 @@
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
+                android:alpha="0"
                 android:transitionName="orderToolBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,6 +30,7 @@
                     android:layout_height="wrap_content">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/tableIndoContainer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="28dp"
@@ -104,12 +106,6 @@
                 </androidx.coordinatorlayout.widget.CoordinatorLayout>
             </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.AppBarLayout>
-
-        <View
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@color/black"
-            android:layout_marginTop="500dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:visibility="gone"

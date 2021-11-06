@@ -12,7 +12,7 @@
             android:transitionName="start"
             android:layout_marginTop="400dp"
             android:layout_width="100dp"
-            android:background="@color/black"
+            android:background="@drawable/bg_black_round"
             android:layout_height="100dp"/>
 
         <androidx.recyclerview.widget.RecyclerView

@@ -1,5 +1,6 @@
 package com.example.domo.views
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.transition.TransitionInflater
@@ -35,6 +36,7 @@ class TablesFragment : Fragment() {
         topTablesMargin = resources.getDimensionPixelSize(R.dimen.top_tables_margin)
     }
 
+    @SuppressLint("ResourceType")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,29 +62,14 @@ class TablesFragment : Fragment() {
             findNavController().navigate(
                 R.id.action_tablesFragment2_to_orderFragment,
                 null,
-                null,
+                navOptions { anim {
+                    enter = R.anim.anim_slide_in_left
+                } },
                 fragmentExtras
             )
         }
 
         return binding.root
     }
-
-
-
-//    override fun onResume() {
-//        val activity = requireActivity() as WaiterMainActivity
-//        Animations.showToolBar(activity.binding.appBar).start()
-//        //Animations.showView(activity.binding.bottomNavigation).start()
-//        super.onResume()
-//    }
-//
-//    override fun onStop() {
-//        log(this.toString())
-//        val activity = requireActivity() as WaiterMainActivity
-//        Animations.hideView(activity.binding.appBar).start()
-//        Animations.hideView(activity.binding.bottomNavigation).start()
-//        super.onStop()
-//    }
 
 }

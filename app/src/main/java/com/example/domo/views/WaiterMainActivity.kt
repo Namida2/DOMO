@@ -15,5 +15,8 @@ class WaiterMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityWaiterMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //TODO: Add shared ViewModel
+
     }
 }
