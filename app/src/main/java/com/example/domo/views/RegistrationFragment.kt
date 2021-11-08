@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -52,8 +53,13 @@ class RegistrationFragment : Fragment() {
     ): View? {
         binding.lifecycleOwner = viewLifecycleOwner
         observeViewModelState()
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
+        view?.doOnPreDraw { startPostponedEnterTransition() }
     }
 
     private fun initBindings(inflater: LayoutInflater) {

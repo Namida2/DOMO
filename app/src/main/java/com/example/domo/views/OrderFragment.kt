@@ -1,43 +1,35 @@
 package com.example.domo.views
 
-import android.R.transition
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
-import android.transition.Fade
-import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.transition.doOnEnd
-import androidx.core.transition.doOnStart
 import androidx.fragment.app.Fragment
 import com.example.domo.R
 import com.example.domo.databinding.FragmentOrderBinding
+import com.google.android.material.transition.MaterialContainerTransform
 import tools.Animations
 
 class OrderFragment : Fragment() {
     private lateinit var binding: FragmentOrderBinding
 
+    @SuppressLint("ResourceType")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentOrderBinding.inflate(layoutInflater)
-        sharedElementEnterTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.transition_fragnet_order).apply {
-            doOnEnd {
-                Animations.showView(binding.toolbar, 250).start()
-            }
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            drawingViewId = R.id.nav_host_fragment
+            duration = 300
+            scrimColor = Color.TRANSPARENT
+            setAllContainerColors(Color.TRANSPARENT)
         }
-        sharedElementReturnTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.transition_fragnet_order).apply {
-            doOnStart {
-                Animations.hideView(binding.toolbar, 5000).start()
-            }
-        }
-
         // TODO: add transition with recyclerView
-        enterTransition = TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.slide_bottom)
         return binding.root
     }
-
 
 }

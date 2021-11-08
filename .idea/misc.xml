@@ -9,6 +9,7 @@
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/bg_error_dialog.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/bg_error_dialog_button.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/bg_process_dialog.xml" value="0.2586805555555556" />
+        <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/bg_rounded_white_90.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/ic_add.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/ic_arrow_left.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/ic_arrow_left_white.xml" value="0.2586805555555556" />
@@ -27,10 +28,10 @@
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/dialog_message.xml" value="0.24791666666666667" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/dialog_process.xml" value="0.5" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_log_in.xml" value="1.1" />
-        <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_order.xml" value="0.24791666666666667" />
+        <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_order.xml" value="0.25" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_orders.xml" value="0.23258196721311475" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_registration.xml" value="0.23599726775956284" />
-        <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_tables.xml" value="0.23668032786885246" />
+        <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_tables.xml" value="0.22" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragmnet_order.xml" value="0.33" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/layout_order_item.xml" value="0.33" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/layout_post_card.xml" value="0.24791666666666667" />

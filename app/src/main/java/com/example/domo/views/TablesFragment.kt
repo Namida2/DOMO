@@ -3,10 +3,15 @@ package com.example.domo.views
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.service.autofill.ImageTransformation
+import android.transition.Fade
 import android.transition.TransitionInflater
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -15,9 +20,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.domo.R
 import com.example.domo.adapters.TablesAdapter
 import com.example.domo.adapters.itemDecorations.TablesItemDecorations
+import com.example.domo.databinding.FragmentOrderBinding
 import com.example.domo.databinding.FragmentTablesBinding
-import com.google.android.material.transition.Hold
-import tools.Animations
+import com.google.android.material.transition.MaterialElevationScale
+
 
 class TablesFragment : Fragment() {
 
@@ -44,8 +50,27 @@ class TablesFragment : Fragment() {
     ): View? {
         binding = FragmentTablesBinding.inflate(inflater)
         with(binding.tablesContainerRecyclerView) {
-            layoutManager = GridLayoutManager(container?.context, spanCount).apply { }
-            adapter = TablesAdapter(tablesCount)
+            exitTransition = MaterialElevationScale(false).apply {
+                duration = 300
+            }
+            //TODO: Add transition callback to set transition name to view
+            layoutManager = GridLayoutManager(container?.context, spanCount)
+            adapter = TablesAdapter(tablesCount) {
+                it?.transitionName = "start"
+                val fragmentExtras =
+                    FragmentNavigatorExtras(
+                        it!! to "end",
+                    )
+                findNavController().navigate(
+                    R.id.action_tablesFragment2_to_orderFragment,
+                    null,
+                    navOptions { anim{
+                        exit = R.anim.dialog_hide
+                        popEnter = R.anim.dialog_hide
+                    } },
+                    fragmentExtras
+                )
+            }
             addItemDecoration(
                 TablesItemDecorations(
                     smallMargin!!,
@@ -54,22 +79,13 @@ class TablesFragment : Fragment() {
                 )
             )
         }
-        binding.view.setOnClickListener {
-            val fragmentExtras =
-                FragmentNavigatorExtras(
-                    binding.view to "end",
-                )
-            findNavController().navigate(
-                R.id.action_tablesFragment2_to_orderFragment,
-                null,
-                navOptions { anim {
-                    enter = R.anim.anim_slide_in_left
-                } },
-                fragmentExtras
-            )
-        }
 
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
+    }
 }

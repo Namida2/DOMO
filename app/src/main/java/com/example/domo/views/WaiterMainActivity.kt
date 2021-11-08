@@ -18,5 +18,6 @@ class WaiterMainActivity : AppCompatActivity() {
 
         //TODO: Add shared ViewModel
 
+        //TODO: Study "8. Add Container Transform transition from email address chip to card view" in codeLabs
     }
 }

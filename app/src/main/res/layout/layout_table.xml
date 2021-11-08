@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:id="@+id/table_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:background="@drawable/bg_black_round">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/table_container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="42dp"
-            android:fontFamily="@font/montserrat_regular"
-            android:text="Столик"
-            android:textColor="@color/white"
-            android:textSize="16sp"/>
+            android:orientation="vertical"
+            android:elevation="8dp"
+            android:background="@drawable/bg_black_round"
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/table_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/title"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="40dp"
-            android:fontFamily="@font/montserrat_regular"
-            android:text="17"
-            android:textColor="@color/white"
-            android:textSize="36sp"/>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="42dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="42dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Столик"
+                android:textSize="18sp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/table_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="40dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="17"
+                android:textSize="36sp"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
 </layout>
