@@ -6,11 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import com.example.domo.R
 import com.example.domo.databinding.FragmentOrderBinding
 import com.google.android.material.transition.MaterialContainerTransform
-import tools.Animations
+import extentions.Animations.prepareShow
 
 class OrderFragment : Fragment() {
     private lateinit var binding: FragmentOrderBinding
@@ -25,11 +26,18 @@ class OrderFragment : Fragment() {
         sharedElementEnterTransition = MaterialContainerTransform().apply {
             drawingViewId = R.id.nav_host_fragment
             duration = 300
-            scrimColor = Color.TRANSPARENT
-            setAllContainerColors(Color.TRANSPARENT)
+                //scrimColor = Color.TRANSPARENT
+            //setAllContainerColors(Color.TRANSPARENT)
         }
+        postponeEnterTransition()
         // TODO: add transition with recyclerView
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.doOnPreDraw {
+            startPostponedEnterTransition()
+        }
+    }
 }
