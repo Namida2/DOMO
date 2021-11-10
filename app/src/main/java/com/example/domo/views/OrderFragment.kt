@@ -30,7 +30,6 @@ class OrderFragment : Fragment() {
             //setAllContainerColors(Color.TRANSPARENT)
         }
         postponeEnterTransition()
-        // TODO: add transition with recyclerView
         return binding.root
     }
 

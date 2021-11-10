@@ -28,14 +28,6 @@
         <item name="cornerSizeBottomLeft">24dp</item>
     </style>
 
-
-
-    <style name="bottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
-        <item name="colorPrimary">@color/white</item>
-        <item name="android:background">@drawable/bg_rounded_white_90</item>
-    </style>
-
-
     <style name="alertDialogStyle"
         parent="Theme.AppCompat.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>

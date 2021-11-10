@@ -14,14 +14,13 @@ sealed class SplashScreenStates {
     class EmployeeExists(var employee: Employee) : SplashScreenStates()
     object EmployeeDoesNotExit : SplashScreenStates()
 }
-
+//TODO: Read the menu and same it to a local data source
 class SplashScreenViewModel(
     private val model: SplashScreenModel
 ) : ViewModel() {
     private var _state: MutableLiveData<SplashScreenStates> =
         MutableLiveData(SplashScreenStates.DefaultState)
     val state = _state
-
     fun getCurrentEmployee() {
         viewModelScope.launch {
             _state.value = SplashScreenStates.CheckingForCurrentEmployee

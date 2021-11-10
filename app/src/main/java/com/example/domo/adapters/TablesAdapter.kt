@@ -25,7 +25,7 @@ class TablesAdapter(private val tablesCount: Int, val navigateToOrderFragment: (
     override fun onBindViewHolder(holder: TableViewHolder, position: Int) {
         holder.binding.tableNumber.text = position.toString()
         holder.binding.tableContainer.tag = position
-        if(position == 5) holder.binding.root.transitionName = "start"
+        holder.binding.root.transitionName = position.toString()
     }
 
     override fun getItemCount(): Int = tablesCount

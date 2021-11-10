@@ -13,6 +13,7 @@
         <com.google.android.material.card.MaterialCardView
             style="@style/cardViewStyle"
             android:elevation="8dp"
+            app:cardElevation="8dp"
             android:layout_width="match_parent"
             app:cardPreventCornerOverlap="false"
             android:layout_height="wrap_content">

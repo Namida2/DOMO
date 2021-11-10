@@ -53,10 +53,8 @@ class TablesFragment : Fragment() {
             exitTransition = MaterialElevationScale(false).apply {
                 duration = 300
             }
-            //TODO: Add transition callback to set transition name to view
             layoutManager = GridLayoutManager(container?.context, spanCount)
             adapter = TablesAdapter(tablesCount) {
-                it?.transitionName = "start"
                 val fragmentExtras =
                     FragmentNavigatorExtras(
                         it!! to "end",

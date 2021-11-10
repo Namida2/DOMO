@@ -9,6 +9,7 @@
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/bg_error_dialog.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/bg_error_dialog_button.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/bg_process_dialog.xml" value="0.2586805555555556" />
+        <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/bg_rounded_white_24.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/bg_rounded_white_90.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/ic_add.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/ic_arrow_left.xml" value="0.2586805555555556" />
@@ -23,7 +24,7 @@
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/activity_sign_in.xml" value="0.4504731861198738" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/activity_splash_screen.xml" value="0.16" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/activity_test_tab_layout.xml" value="0.24791666666666667" />
-        <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/activity_waiter_main.xml" value="0.14" />
+        <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/activity_waiter_main.xml" value="0.25" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/dialog_error.xml" value="0.24791666666666667" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/dialog_message.xml" value="0.24791666666666667" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/dialog_process.xml" value="0.5" />
