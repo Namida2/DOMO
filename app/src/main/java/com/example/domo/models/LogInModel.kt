@@ -1,7 +1,7 @@
 package com.example.domo.models
 
 import com.example.domo.models.remoteRepository.LogInRemoteRepository
-import database.EmployeeDao
+import database.daos.EmployeeDao
 import entities.Employee
 import entities.ErrorMessage
 import entities.TaskWithEmployee

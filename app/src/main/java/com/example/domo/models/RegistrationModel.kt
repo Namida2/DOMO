@@ -3,7 +3,7 @@ package com.example.domo.models
 import android.view.View
 import com.example.domo.models.remoteRepository.RegistrationRemoteRepository
 import constants.EmployeePosts
-import database.EmployeeDao
+import database.daos.EmployeeDao
 import entities.Employee
 import entities.ErrorMessage
 import entities.PostItem

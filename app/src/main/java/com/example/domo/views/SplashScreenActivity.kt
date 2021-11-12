@@ -12,18 +12,23 @@ import com.example.domo.databinding.ActivitySplashScreenBinding
 import com.example.domo.viewModels.SplashScreenStates
 import com.example.domo.viewModels.SplashScreenViewModel
 import com.example.domo.viewModels.ViewModelFactory
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import constants.EmployeePosts.ADMINISTRATOR
 import constants.EmployeePosts.COOK
 import constants.EmployeePosts.WAITER
+import constants.FirestoreConstants.COLLECTION_RESTAURANTS
 import database.Database
-import database.EmployeeDao
+import database.daos.EmployeeDao
 import javax.inject.Inject
 
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivitySplashScreenBinding
     private val viewModel: SplashScreenViewModel by viewModels { ViewModelFactory(appComponent) }
+
+    val db = FirebaseFirestore.getInstance()
 
     @Inject
     lateinit var database: Database
@@ -33,15 +38,24 @@ class SplashScreenActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
-        appComponent.inject(this)
         super.onCreate(savedInstanceState)
+        appComponent.inject(this)
         viewModel.getCurrentEmployee()
-        binding = ActivitySplashScreenBinding.inflate(layoutInflater)
-        binding.lifecycleOwner = this
-        setContentView(binding.root)
-        subscribeToViewModelState()
+        //subscribeToViewModelState()
         //TODO: Add bottomSheetDialogMenu
+
+
+        val db = FirebaseFirestore.getInstance()
+
+        db.runTransaction {
+            db.collection(COLLECTION_RESTAURANTS).get().addOnCompleteListener {
+
+            }
+        }
     }
+
+    private fun readMenuCategories(): Task<QuerySnapshot>
+    = db.collection(COLLECTION_RESTAURANTS).get()
 
     private fun subscribeToViewModelState() {
         viewModel.state.observe(this) { state ->

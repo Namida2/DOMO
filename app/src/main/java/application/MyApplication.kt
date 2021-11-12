@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import database.Database
-import database.EmployeeDao
 import di.AppComponent
 import di.DaggerAppComponent
 import entities.Employee

@@ -4,7 +4,7 @@ import com.example.domo.models.remoteRepository.SplashScreenRemoteRepository
 import com.example.domo.views.log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import database.EmployeeDao
+import database.daos.EmployeeDao
 import entities.Employee
 import entities.Task
 import kotlinx.coroutines.CoroutineScope

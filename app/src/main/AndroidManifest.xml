@@ -11,6 +11,7 @@
         android:name="application.MyApplication"
         android:theme="@style/Theme.DOMO">
         <activity
+            android:theme="@style/splashScreenStyle"
             android:name=".views.SplashScreenActivity"
             android:exported="true">
             <intent-filter>

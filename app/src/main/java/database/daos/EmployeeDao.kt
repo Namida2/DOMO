@@ -1,4 +1,4 @@
-package database
+package database.daos
 
 import androidx.room.*
 import entities.Employee

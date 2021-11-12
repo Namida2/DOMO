@@ -2,6 +2,7 @@ package database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import database.daos.EmployeeDao
 import entities.Employee
 
 @Database(entities = [Employee::class], version = 1, exportSchema = false)

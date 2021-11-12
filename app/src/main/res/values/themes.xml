@@ -15,6 +15,10 @@
 
     </style>
 
+    <style name="splashScreenStyle" parent="Theme.DOMO">
+        <item name="android:windowBackground">@drawable/layout_splash_screen</item>
+    </style>
+
     <style name="cardViewStyle" parent="Widget.MaterialComponents.CardView">
         <item name="shapeAppearance">@style/cardViewStyleShapeAppearance</item>
         <item name="cardBackgroundColor">@color/black</item>
