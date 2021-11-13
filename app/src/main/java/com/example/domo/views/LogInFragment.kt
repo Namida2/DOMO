@@ -9,13 +9,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import application.appComponent
 import com.example.domo.R
 import com.example.domo.databinding.FragmentLogInBinding
 import com.example.domo.viewModels.LogInViewModel
 import com.example.domo.viewModels.LogInViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
 import entities.ErrorMessage
+import extentions.appComponent
 import extentions.createDialog
 import extentions.isNetworkConnected
 import tools.dialogs.ProcessAlertDialog

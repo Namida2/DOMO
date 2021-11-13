@@ -5,8 +5,27 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
 import androidx.fragment.app.DialogFragment
+import application.MyApplication
+import di.AppComponent
+import entities.Employee
 import entities.ErrorMessage
 import tools.dialogs.MessageAlertDialog
+
+val Context.appComponent: AppComponent
+    get() = when(this) {
+        is MyApplication -> _appComponent
+        else -> this.applicationContext.appComponent
+    }
+var Context.employee: Employee?
+    get() = when(this){
+        is MyApplication -> _employee
+        else -> this.applicationContext.employee
+    }
+    set(value) = when(this) {
+        is MyApplication -> _employee = value
+        else -> this.applicationContext.employee = value
+    }
+
 
 fun Context.createDialog(message: ErrorMessage): DialogFragment? =
     MessageAlertDialog.getNewInstance<Unit>(

@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
+
 import com.example.domo.databinding.ActivityAuthorizationBinding
 import com.example.domo.viewModels.LogInViewModel
-import android.util.DisplayMetrics
-import application.appComponent
+
 import com.example.domo.viewModels.ViewModelFactory
+import extentions.appComponent
 
 class AuthorizationActivity : AppCompatActivity() {
 
