@@ -1,5 +1,6 @@
 package com.example.domo.models
 
+import com.example.domo.models.interfaces.LogInModelInterface
 import com.example.domo.models.remoteRepository.LogInRemoteRepository
 import database.daos.EmployeeDao
 import entities.Employee
@@ -16,21 +17,22 @@ import javax.inject.Inject
 class LogInModel @Inject constructor(
     private val employeeDao: EmployeeDao,
     private val remoteRepository: LogInRemoteRepository
-) {
-    fun signIn(email: String, password: String, task: TaskWithEmployee) {
-        remoteRepository.signIn(email, password, object: TaskWithEmployee {
-            override fun onSuccess(employee: Employee?) {
+): LogInModelInterface {
+    override fun signIn(email: String, password: String, task: TaskWithEmployee) {
+        remoteRepository.signIn(email, password,  object: TaskWithEmployee {
+            override fun onSuccess(arg: Employee) {
                 CoroutineScope(IO).launch {
                     employeeDao.deleteAll()
-                    employeeDao.insert(employee!!)
+                    employeeDao.insert(arg)
                     withContext(Main) {
-                        task.onSuccess(employee)
+                        task.onSuccess(arg)
                     }
                 }
             }
-            override fun onError(arg: ErrorMessage) {
-               task.onError(arg)
+            override fun onError(arg: ErrorMessage?) {
+                task.onError(arg)
             }
+
         })
     }
 }

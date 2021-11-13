@@ -3,6 +3,7 @@ package application
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import com.example.domo.models.MenuService
 import database.Database
 import di.AppComponent
 import di.DaggerAppComponent

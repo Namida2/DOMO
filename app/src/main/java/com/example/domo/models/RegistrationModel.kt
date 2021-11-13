@@ -1,6 +1,7 @@
 package com.example.domo.models
 
 import android.view.View
+import com.example.domo.models.interfaces.RegistrationModelInterface
 import com.example.domo.models.remoteRepository.RegistrationRemoteRepository
 import constants.EmployeePosts
 import database.daos.EmployeeDao
@@ -19,12 +20,11 @@ import javax.inject.Singleton
 @Singleton
 class RegistrationModel @Inject constructor(
     private val employeeDao: EmployeeDao,
-    private val remoteRepository: RegistrationRemoteRepository
-) {
-
-    fun registration(employee: Employee, task: TaskWithEmployee) {
+    private val remoteRepository: RegistrationRemoteRepository,
+) : RegistrationModelInterface {
+    override fun registration(employee: Employee, task: TaskWithEmployee) {
         remoteRepository.registration(employee, object : TaskWithEmployee {
-            override fun onSuccess(arg: Employee?) {
+            override fun onSuccess(arg: Employee) {
                 CoroutineScope(IO).launch {
                     employeeDao.deleteAll()
                     employeeDao.insert(employee)
@@ -34,13 +34,13 @@ class RegistrationModel @Inject constructor(
                 }
             }
 
-            override fun onError(message: ErrorMessage) {
+            override fun onError(message: ErrorMessage?) {
                 task.onError(message)
             }
         })
     }
 
-    fun getPostItems(): MutableList<PostItem> =
+    override fun getPostItems(): MutableList<PostItem> =
         mutableListOf(
             PostItem(EmployeePosts.COOK, View.VISIBLE),
             PostItem(EmployeePosts.WAITER, View.INVISIBLE),

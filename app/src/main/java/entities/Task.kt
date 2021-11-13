@@ -1,7 +1,7 @@
 package entities
 
-typealias TaskWithEmployee = Task<Employee?, Unit, ErrorMessage>
-interface Task<ASuccess, RSuccess, AError> {
+typealias TaskWithEmployee = Task<Employee, Unit>
+interface Task<ASuccess, RSuccess> {
     fun onSuccess(arg: ASuccess): RSuccess
-    fun onError(arg: AError)
+    fun onError(arg: ErrorMessage? = null)
 }

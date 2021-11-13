@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domo.R
 import com.example.domo.models.RegistrationModel
+import com.example.domo.models.interfaces.RegistrationModelInterface
 import constants.EmployeePosts
 import entities.*
 import extentions.isEmptyField
@@ -59,7 +60,7 @@ sealed class RegistrationViewModelStates {
     class Valid(val employee: Employee) : RegistrationViewModelStates()
 }
 
-class RegistrationViewModel(private val model: RegistrationModel) : ViewModel() {
+class RegistrationViewModel(private val model: RegistrationModelInterface) : ViewModel() {
 
     var selectedPost: String = EmployeePosts.COOK
     private val MIN_PASSWORD_LENGH = 6
@@ -88,11 +89,11 @@ class RegistrationViewModel(private val model: RegistrationModel) : ViewModel() 
         model.registration(
             employee,
             object : TaskWithEmployee {
-                override fun onSuccess(arg: Employee?) {
+                override fun onSuccess(arg: Employee) {
                     state.value = RegistrationViewModelStates.Valid(employee)
                 }
-                override fun onError(arg: ErrorMessage) {
-                    when (arg.titleId) {
+                override fun onError(arg: ErrorMessage?) {
+                    when (arg!!.titleId) {
                         R.string.emailAlreadyExitTitle -> {
                             state.value = RegistrationViewModelStates.EmailAlreadyExists
                         }

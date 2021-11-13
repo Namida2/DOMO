@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domo.R
 import com.example.domo.models.LogInModel
+import com.example.domo.models.interfaces.LogInModelInterface
 import entities.Employee
 import entities.ErrorMessage
 import entities.TaskWithEmployee
@@ -32,7 +33,7 @@ sealed class LogInViewModelStates {
 }
 
 class LogInViewModel(
-    private val model: LogInModel
+    private val model: LogInModelInterface
 ) : ViewModel() {
     private var _state = MutableLiveData<LogInViewModelStates>(LogInViewModelStates.Default)
     val state = _state
@@ -43,10 +44,10 @@ class LogInViewModel(
             state.value = LogInViewModelStates.EmptyField; return
         }
         model.signIn(email, password, object : TaskWithEmployee {
-            override fun onSuccess(arg: Employee?) {
-                state.value = LogInViewModelStates.Success(arg!!)
+            override fun onSuccess(arg: Employee) {
+                state.value = LogInViewModelStates.Success(arg)
             }
-            override fun onError(arg: ErrorMessage) {
+            override fun onError(arg: ErrorMessage?) {
                 state.value = LogInViewModelStates.WrongEmailOrPassword.apply { errorMessage = arg }
             }
         })

@@ -3,8 +3,9 @@ package com.example.domo.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domo.models.SplashScreenModel
+import com.example.domo.models.interfaces.SplashScreenModelInterface
 import entities.Employee
+import entities.ErrorMessage
 import entities.Task
 import kotlinx.coroutines.launch
 
@@ -16,7 +17,7 @@ sealed class SplashScreenStates {
 }
 //TODO: Read the menu and same it to a local data source
 class SplashScreenViewModel(
-    private val model: SplashScreenModel
+    private val model: SplashScreenModelInterface
 ) : ViewModel() {
     private var _state: MutableLiveData<SplashScreenStates> =
         MutableLiveData(SplashScreenStates.DefaultState)
@@ -24,11 +25,11 @@ class SplashScreenViewModel(
     fun getCurrentEmployee() {
         viewModelScope.launch {
             _state.value = SplashScreenStates.CheckingForCurrentEmployee
-            model.getCurrentEmployee(object : Task<Employee, Unit, Unit> {
+            model.getCurrentEmployee(object : Task<Employee, Unit> {
                 override fun onSuccess(arg: Employee) {
                     state.value = SplashScreenStates.EmployeeExists(arg)
                 }
-                override fun onError(arg: Unit) {
+                override fun onError(arg: ErrorMessage?) {
                     state.value = SplashScreenStates.EmployeeDoesNotExit
                 }
             })
