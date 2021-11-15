@@ -4,4 +4,5 @@ import entities.TaskWithEmployee
 
 interface SplashScreenModelInterface {
     fun getCurrentEmployee(task: TaskWithEmployee)
+    fun redMenu()
 }

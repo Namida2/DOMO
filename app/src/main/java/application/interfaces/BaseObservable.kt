@@ -1,4 +1,4 @@
-package extentions.interfaces
+package application.interfaces
 
 interface BaseObservable<Observer> {
     fun addObserver(observer: Observer)

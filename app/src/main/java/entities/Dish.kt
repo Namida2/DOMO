@@ -2,7 +2,7 @@ package entities
 
 import androidx.room.Entity
 
-@Entity(tableName = "dishes")
+@Entity(tableName = "menu")
 data class Dish(
     var name: String,
     val categoryName: String,

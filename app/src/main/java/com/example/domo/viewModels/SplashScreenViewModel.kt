@@ -3,6 +3,8 @@ package com.example.domo.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import application.interfaces.MenuHolderStates
+import com.example.domo.models.MenuService
 import com.example.domo.models.interfaces.SplashScreenModelInterface
 import entities.Employee
 import entities.ErrorMessage
@@ -15,7 +17,7 @@ sealed class SplashScreenStates {
     class EmployeeExists(var employee: Employee) : SplashScreenStates()
     object EmployeeDoesNotExit : SplashScreenStates()
 }
-//TODO: Read the menu and same it to a local data source
+//TODO: Read the menu and save it to a local data source
 class SplashScreenViewModel(
     private val model: SplashScreenModelInterface
 ) : ViewModel() {

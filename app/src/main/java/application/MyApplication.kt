@@ -1,12 +1,12 @@
 package application
 
 import android.app.Application
-import android.content.Context
 import androidx.room.Room
-import com.example.domo.models.MenuService
+import application.interfaces.MenuHolder
 import database.Database
 import di.AppComponent
 import di.DaggerAppComponent
+import entities.Dish
 import entities.Employee
 
 class MyApplication: Application() {

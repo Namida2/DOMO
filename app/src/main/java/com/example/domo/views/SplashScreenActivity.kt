@@ -50,7 +50,6 @@ class SplashScreenActivity : AppCompatActivity() {
         appComponent.inject(this)
         viewModel.getCurrentEmployee()
         subscribeToViewModelState()
-        //TODO: Add bottomSheetDialogMenu
 
 //        log(FirebaseAuth.getInstance().currentUser.toString())
 //

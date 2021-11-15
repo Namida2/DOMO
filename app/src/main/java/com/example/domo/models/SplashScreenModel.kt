@@ -1,10 +1,13 @@
 package com.example.domo.models
 
+import android.content.SharedPreferences
+import application.interfaces.MenuHolder
 import com.example.domo.models.interfaces.SplashScreenModelInterface
 import com.example.domo.models.remoteRepository.SplashScreenRemoteRepository
 import com.example.domo.views.log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import database.daos.MenuDao
 import database.daos.EmployeeDao
 import entities.Employee
 import entities.Task
@@ -19,10 +22,14 @@ import javax.inject.Singleton
 
 @Singleton
 class SplashScreenModel @Inject constructor(
+    private var menuDao: MenuDao,
     private var auth: FirebaseAuth,
+    private var menuHolder: MenuHolder,
     private var employeeDao: EmployeeDao,
+    //TODO: Add sharedPreferences in the appGraph
+    private var sharedPreferences: SharedPreferences,
     private var remoteRepository: SplashScreenRemoteRepository,
-): SplashScreenModelInterface {
+) : SplashScreenModelInterface {
     override fun getCurrentEmployee(task: TaskWithEmployee) {
         val currentUser = auth.currentUser
         if (currentUser == null) {
@@ -30,6 +37,10 @@ class SplashScreenModel @Inject constructor(
             return
         }
         readEmployeeData(currentUser, task)
+    }
+
+    override fun redMenu() {
+        //TODO: ReadMenu
     }
 
     private fun readEmployeeData(currentUser: FirebaseUser, task: Task<Employee, Unit>) {

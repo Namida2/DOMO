@@ -2,7 +2,6 @@ package di
 
 import android.content.Context
 import com.example.domo.models.LogInModel
-import com.example.domo.models.MenuService
 import com.example.domo.models.RegistrationModel
 import com.example.domo.models.SplashScreenModel
 import com.example.domo.views.SplashScreenActivity

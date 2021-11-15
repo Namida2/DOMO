@@ -11,4 +11,8 @@ class LocalRepositoryModule {
     @Singleton
     fun provideEmployeeDao(database: Database) = database.employeeDao()
 
+    @Provides
+    @Singleton
+    fun provideMenuDao(database: Database) = database.menuDao()
+
 }

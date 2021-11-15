@@ -6,9 +6,9 @@ import androidx.room.Query
 import entities.Dish
 
 @Dao
-interface DishDao {
+interface MenuDao {
 
-    @Query("SELECT * FROM dishes")
+    @Query("SELECT * FROM menu")
     suspend fun readAll(): List<Dish>
 
     @Insert
