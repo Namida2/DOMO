@@ -3,7 +3,6 @@ package com.example.domo.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domo.R
-import com.example.domo.models.LogInModel
 import com.example.domo.models.interfaces.LogInModelInterface
 import entities.Employee
 import entities.ErrorMessage
@@ -47,8 +46,8 @@ class LogInViewModel(
             override fun onSuccess(arg: Employee) {
                 state.value = LogInViewModelStates.Success(arg)
             }
-            override fun onError(arg: ErrorMessage?) {
-                state.value = LogInViewModelStates.WrongEmailOrPassword.apply { errorMessage = arg }
+            override fun onError(message: ErrorMessage?) {
+                state.value = LogInViewModelStates.WrongEmailOrPassword.apply { errorMessage = message }
             }
         })
     }

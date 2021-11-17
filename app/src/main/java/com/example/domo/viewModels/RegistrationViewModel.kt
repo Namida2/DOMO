@@ -3,7 +3,6 @@ package com.example.domo.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domo.R
-import com.example.domo.models.RegistrationModel
 import com.example.domo.models.interfaces.RegistrationModelInterface
 import constants.EmployeePosts
 import entities.*
@@ -92,8 +91,8 @@ class RegistrationViewModel(private val model: RegistrationModelInterface) : Vie
                 override fun onSuccess(arg: Employee) {
                     state.value = RegistrationViewModelStates.Valid(employee)
                 }
-                override fun onError(arg: ErrorMessage?) {
-                    when (arg!!.titleId) {
+                override fun onError(message: ErrorMessage?) {
+                    when (message!!.titleId) {
                         R.string.emailAlreadyExitTitle -> {
                             state.value = RegistrationViewModelStates.EmailAlreadyExists
                         }

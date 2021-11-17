@@ -3,8 +3,6 @@ package com.example.domo.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import application.interfaces.MenuHolderStates
-import com.example.domo.models.MenuService
 import com.example.domo.models.interfaces.SplashScreenModelInterface
 import entities.Employee
 import entities.ErrorMessage
@@ -24,6 +22,11 @@ class SplashScreenViewModel(
     private var _state: MutableLiveData<SplashScreenStates> =
         MutableLiveData(SplashScreenStates.DefaultState)
     val state = _state
+
+    init {
+        model.readMenu()
+    }
+
     fun getCurrentEmployee() {
         viewModelScope.launch {
             _state.value = SplashScreenStates.CheckingForCurrentEmployee
@@ -31,7 +34,7 @@ class SplashScreenViewModel(
                 override fun onSuccess(arg: Employee) {
                     state.value = SplashScreenStates.EmployeeExists(arg)
                 }
-                override fun onError(arg: ErrorMessage?) {
+                override fun onError(message: ErrorMessage?) {
                     state.value = SplashScreenStates.EmployeeDoesNotExit
                 }
             })

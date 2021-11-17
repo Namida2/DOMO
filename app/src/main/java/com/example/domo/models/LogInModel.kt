@@ -29,8 +29,8 @@ class LogInModel @Inject constructor(
                     }
                 }
             }
-            override fun onError(arg: ErrorMessage?) {
-                task.onError(arg)
+            override fun onError(message: ErrorMessage?) {
+                task.onError(message)
             }
 
         })
