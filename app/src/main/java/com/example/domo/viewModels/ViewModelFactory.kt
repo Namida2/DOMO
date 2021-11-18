@@ -12,6 +12,7 @@ class ViewModelFactory (private val appComponent: AppComponent): ViewModelProvid
             SplashScreenViewModel::class.java -> SplashScreenViewModel(appComponent.provideSplashScreenModel())
             LogInViewModel::class.java -> LogInViewModel(appComponent.provideLogInModel())
             RegistrationViewModel::class.java -> RegistrationViewModel(appComponent.provideRegistrationModel())
+            WaiterActivityOrderFragmentSharedViewModel::class.java -> WaiterActivityOrderFragmentSharedViewModel()
             else -> throw IllegalArgumentException("Unknown viewModel class")
         }
         return viewModel as T

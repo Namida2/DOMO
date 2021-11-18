@@ -2,7 +2,9 @@ package com.example.domo.models.interfaces
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import entities.Category
 import entities.Dish
+import entities.Task
 
 sealed class MenuHolderStates {
     object MenuExist: MenuHolderStates()
@@ -12,6 +14,8 @@ sealed class MenuHolderStates {
 }
 
 interface MenuHolder {
-    var menuState: LiveData<MenuHolderStates>
-    var menu: List<Dish>
+    val menuState: LiveData<MenuHolderStates>
+    var menu: ArrayList<Category>
+    fun readNewMenu(onComplete: () -> Unit)
+    fun readExitingMenu()
 }

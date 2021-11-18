@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
+import androidx.core.view.MenuHost
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -22,7 +23,11 @@ import com.example.domo.adapters.TablesAdapter
 import com.example.domo.adapters.itemDecorations.TablesItemDecorations
 import com.example.domo.databinding.FragmentOrderBinding
 import com.example.domo.databinding.FragmentTablesBinding
+import com.example.domo.models.interfaces.MenuHolder
+import com.example.domo.models.interfaces.MenuHolderStates
 import com.google.android.material.transition.MaterialElevationScale
+import extentions.appComponent
+import javax.inject.Inject
 
 
 class TablesFragment : Fragment() {
@@ -35,8 +40,12 @@ class TablesFragment : Fragment() {
     private val tablesCount = 28
     private lateinit var binding: FragmentTablesBinding
 
+    @Inject
+    lateinit var menuHolder: MenuHolder
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        context.appComponent.inject(this)
         smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
         largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
         topTablesMargin = resources.getDimensionPixelSize(R.dimen.top_tables_margin)
@@ -49,6 +58,16 @@ class TablesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentTablesBinding.inflate(inflater)
+        initRecyclerView(container)
+
+        when(menuHolder.menuState.value) {
+            //is MenuHolderStates.MenuIsLoading
+        }
+
+        return binding.root
+    }
+
+    private fun initRecyclerView(container: ViewGroup?) {
         with(binding.tablesContainerRecyclerView) {
             exitTransition = MaterialElevationScale(false).apply {
                 duration = 300
@@ -77,8 +96,6 @@ class TablesFragment : Fragment() {
                 )
             )
         }
-
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

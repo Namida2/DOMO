@@ -6,6 +6,7 @@ import com.example.domo.models.LogInModel
 import com.example.domo.models.RegistrationModel
 import com.example.domo.models.SplashScreenModel
 import com.example.domo.views.SplashScreenActivity
+import com.example.domo.views.TablesFragment
 import dagger.BindsInstance
 import dagger.Component
 import database.Database
@@ -31,6 +32,7 @@ interface AppComponent {
     fun provideRegistrationModel(): RegistrationModel
     fun provideLogInModel(): LogInModel
     fun inject(splashScreenActivity: SplashScreenActivity)
+    fun inject(fragment: TablesFragment)
 
 }
 

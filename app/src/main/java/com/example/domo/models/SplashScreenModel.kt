@@ -1,6 +1,5 @@
 package com.example.domo.models
 
-import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import com.example.domo.models.interfaces.MenuHolder
 import com.example.domo.models.interfaces.SplashScreenModelInterface
@@ -9,7 +8,6 @@ import com.example.domo.views.log
 import com.google.firebase.auth.FirebaseUser
 import constants.FirestoreConstants.FIELD_MENU_VERSION
 import database.daos.EmployeeDao
-import database.daos.MenuDao
 import entities.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -21,7 +19,6 @@ import javax.inject.Singleton
 
 @Singleton
 class SplashScreenModel @Inject constructor(
-    private var menuDao: MenuDao,
     private var menuHolder: MenuHolder,
     private var employeeDao: EmployeeDao,
     private var sharedPreferences: SharedPreferences,
@@ -29,35 +26,21 @@ class SplashScreenModel @Inject constructor(
 ) : SplashScreenModelInterface {
 
     override fun readMenu() {
-        remoteRepository.readMenuVersion(object : Task<Long, Unit> {
-            override fun onSuccess(arg: Long) {
-                if(isItTheSameMenuVersion(arg)) {
-
-                } else {
-                    readNewMenu()
+        remoteRepository.readMenuVersion { version ->
+            if (isItTheSameMenuVersion(version)) {
+                log("$this: the same menu")
+                menuHolder.readExitingMenu()
+            } else {
+                log("$this: new menu")
+                menuHolder.readNewMenu {
+                    sharedPreferences.edit().putLong(FIELD_MENU_VERSION, version).apply()
                 }
             }
-            override fun onError(message: ErrorMessage?) {
-                TODO("Not yet implemented")
-            }
-        })
-    }
-
-    private fun readNewMenu() {
-        remoteRepository.readNewMenu(object : Task<List<Dish>, Unit> {
-            override fun onSuccess(arg: List<Dish>) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onError(message: ErrorMessage?) {
-                TODO("Not yet implemented")
-            }
-        })
+        }
     }
 
     private fun isItTheSameMenuVersion(version: Long): Boolean =
         sharedPreferences.getLong(FIELD_MENU_VERSION, 0) == version
-
 
     override fun getCurrentEmployee(task: TaskWithEmployee) {
         val currentUser = remoteRepository.getCurrentUser()

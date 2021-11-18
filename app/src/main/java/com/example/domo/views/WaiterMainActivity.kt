@@ -2,6 +2,7 @@ package com.example.domo.views
 
 import android.graphics.Rect
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.navigation.NavController
@@ -9,20 +10,28 @@ import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import com.example.domo.R
 import com.example.domo.databinding.ActivityWaiterMainBinding
+import com.example.domo.viewModels.ViewModelFactory
+import com.example.domo.viewModels.WaiterActivityOrderFragmentSharedViewModel
 import extentions.Animations.prepareHide
 import extentions.Animations.prepareShow
 import extentions.Animations.prepareSlideDown
 import extentions.Animations.prepareSlideUp
+import extentions.appComponent
 
 class WaiterMainActivity : AppCompatActivity(),
     NavController.OnDestinationChangedListener {
-
     private lateinit var binding: ActivityWaiterMainBinding
     private var navController: NavController? = null
+    private val sharedViewModel: WaiterActivityOrderFragmentSharedViewModel by viewModels {
+        ViewModelFactory(appComponent)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWaiterMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.lifecycleOwner = this
+        binding.sharedViewModel = sharedViewModel
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
@@ -67,6 +76,7 @@ class WaiterMainActivity : AppCompatActivity(),
             }
         }
     }
+
     private fun showNavigationUI() {
         with(binding) {
             appBar.prepareShow(appBar.height).start()
