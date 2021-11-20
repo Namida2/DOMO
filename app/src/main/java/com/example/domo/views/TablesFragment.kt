@@ -60,9 +60,6 @@ class TablesFragment : Fragment() {
         binding = FragmentTablesBinding.inflate(inflater)
         initRecyclerView(container)
 
-        when(menuHolder.menuState.value) {
-            //is MenuHolderStates.MenuIsLoading
-        }
 
         return binding.root
     }
@@ -81,10 +78,7 @@ class TablesFragment : Fragment() {
                 findNavController().navigate(
                     R.id.action_tablesFragment2_to_orderFragment,
                     null,
-                    navOptions { anim{
-                        exit = R.anim.dialog_hide
-                        popEnter = R.anim.dialog_hide
-                    } },
+                    null,
                     fragmentExtras
                 )
             }
