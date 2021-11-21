@@ -73,6 +73,7 @@ class TablesFragment : Fragment() {
             adapter = TablesAdapter(tablesCount) {
                 val fragmentExtras =
                     FragmentNavigatorExtras(
+                        //TODO: Add it to the constance
                         it!! to "end",
                     )
                 findNavController().navigate(

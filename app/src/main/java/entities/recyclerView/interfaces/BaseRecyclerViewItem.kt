@@ -1,0 +1,3 @@
+package entities.recyclerView.interfaces
+
+interface BaseRecyclerViewItem
