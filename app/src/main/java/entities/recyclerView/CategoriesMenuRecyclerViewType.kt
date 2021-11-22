@@ -2,17 +2,16 @@ package entities.recyclerView
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import com.example.domo.R
 import com.example.domo.adapters.viewHoders.BaseViewHolder
 import com.example.domo.databinding.LayoutCategoryBinding
 import entities.recyclerView.interfaces.BaseRecyclerViewItem
-import entities.recyclerView.interfaces.MenuRecyclerViewItem
+import entities.recyclerView.interfaces.MenuRecyclerViewType
 
-class CategoriesMenuRecyclerViewItem :
-    MenuRecyclerViewItem<LayoutCategoryBinding, CategoriesHolder> {
-    override fun isItMe(recyclerViewItem: BaseRecyclerViewItem) {
-        TODO("Not yet implemented")
-    }
+class CategoriesMenuRecyclerViewType :
+    MenuRecyclerViewType<LayoutCategoryBinding, CategoriesHolder> {
+
 
     override fun getViewHolder(
         inflater: LayoutInflater,
@@ -22,11 +21,18 @@ class CategoriesMenuRecyclerViewItem :
     }
 
     override fun getLayoutId(): Int = R.layout.layout_category
+    override fun getDiffCallback(): DiffUtil.ItemCallback<CategoriesHolder> {
+        TODO("Not yet implemented")
+    }
+
+    override fun isItMe(recyclerViewItem: BaseRecyclerViewItem): Boolean {
+        TODO("Not yet implemented")
+    }
 
 }
 
 class CategoriesMenuViewHolder(
-    private val binding: LayoutCategoryBinding
+    override val binding: LayoutCategoryBinding
 ): BaseViewHolder<LayoutCategoryBinding, CategoriesHolder>(binding){
 
     override fun onBind(item: CategoriesHolder) {

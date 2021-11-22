@@ -3,20 +3,31 @@ package com.example.domo.adapters.diffCallbacks
 import androidx.recyclerview.widget.DiffUtil
 import androidx.viewbinding.ViewBinding
 import entities.recyclerView.interfaces.BaseRecyclerViewItem
-import entities.recyclerView.interfaces.MenuRecyclerViewItem
+import entities.recyclerView.interfaces.MenuRecyclerViewType
 
-class MenuAdapterDiffCallback: DiffUtil.ItemCallback<MenuRecyclerViewItem<ViewBinding, BaseRecyclerViewItem>>() {
+class MenuAdapterDiffCallback(
+    private val recyclerViewTypes: List<MenuRecyclerViewType<out ViewBinding, out BaseRecyclerViewItem>>,
+) : DiffUtil.ItemCallback<BaseRecyclerViewItem>() {
     override fun areItemsTheSame(
-        oldItem: MenuRecyclerViewItem<ViewBinding, BaseRecyclerViewItem>,
-        newItem: MenuRecyclerViewItem<ViewBinding, BaseRecyclerViewItem>,
-    ): Boolean {
-        TODO("Not yet implemented")
-    }
+        oldItem: BaseRecyclerViewItem,
+        newItem: BaseRecyclerViewItem,
+    ): Boolean =
+        if (newItem::class != newItem::class) false
+        else getDiffCallback(newItem).areItemsTheSame(oldItem, newItem)
+
 
     override fun areContentsTheSame(
-        oldItem: MenuRecyclerViewItem<ViewBinding, BaseRecyclerViewItem>,
-        newItem: MenuRecyclerViewItem<ViewBinding, BaseRecyclerViewItem>,
-    ): Boolean {
-        TODO("Not yet implemented")
+        oldItem: BaseRecyclerViewItem,
+        newItem: BaseRecyclerViewItem,
+    ): Boolean =
+        if (newItem::class != newItem::class) false
+        else getDiffCallback(newItem).areContentsTheSame(oldItem, newItem)
+
+    private fun getDiffCallback(
+        item: BaseRecyclerViewItem,
+    ): DiffUtil.ItemCallback<BaseRecyclerViewItem> {
+        return recyclerViewTypes.find { it.isItMe(item) }?.getDiffCallback() as DiffUtil.ItemCallback<BaseRecyclerViewItem>
+            ?: throw IllegalArgumentException("DiffCallback not found for this item: $item")
     }
+
 }

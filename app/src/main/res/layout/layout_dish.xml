@@ -6,7 +6,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_rounded_16_white_stroke">
 
-        <com.google.android.material.textview.MaterialTextView
+        <TextView
             android:id="@+id/dishName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -14,9 +14,10 @@
             android:layout_marginStart="16sp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            android:gravity="start"
             android:layout_marginBottom="8dp"
             android:layout_toStartOf="@id/dishInfoContainer"
-            android:text="Томато мисо рамен с креветкой"
+            android:text="Тa"
             android:textColor="@color/black"
             android:textSize="16dp"
             app:fontFamily="@font/montserrat_semi_bold" />
