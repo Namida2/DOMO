@@ -2,12 +2,14 @@ package com.example.domo.views
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.domo.R
 import com.example.domo.databinding.FragmentOrderBinding
@@ -35,7 +37,7 @@ class OrderFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        menuDialogBottomSheetDialog = MenuBottomSheetDialog()
+        menuDialogBottomSheetDialog = MenuBottomSheetDialog(sharedViewModel)
         binding = FragmentOrderBinding.inflate(layoutInflater)
         sharedElementEnterTransition = MaterialContainerTransform().apply {
             drawingViewId = R.id.nav_host_fragment
@@ -57,7 +59,8 @@ class OrderFragment : Fragment() {
         sharedViewModel.states.observe(viewLifecycleOwner) {
             when(it) {
                 is SharedViewModelStates.ShowingMenuDialog -> {
-                    menuDialogBottomSheetDialog?.show(parentFragmentManager, "")
+                    if(!menuDialogBottomSheetDialog?.isAdded!!)
+                        menuDialogBottomSheetDialog?.show(parentFragmentManager, "")
                 }
                 else -> {} //DefaultState
             }

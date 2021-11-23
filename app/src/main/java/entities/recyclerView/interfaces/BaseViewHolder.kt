@@ -1,7 +1,6 @@
-package com.example.domo.adapters.viewHoders
+package entities.recyclerView.interfaces
 
 import androidx.recyclerview.widget.RecyclerView
-import entities.recyclerView.interfaces.BaseRecyclerViewItem
 
 
 abstract class BaseViewHolder<ViewBinding : androidx.viewbinding.ViewBinding, Item : BaseRecyclerViewItem>(

@@ -3,8 +3,13 @@ package di
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.domo.models.LogInModel
+import com.example.domo.models.MenuDialogModel
 import com.example.domo.models.RegistrationModel
 import com.example.domo.models.SplashScreenModel
+import com.example.domo.models.interfaces.LogInModelInterface
+import com.example.domo.models.interfaces.MenuDialogInterface
+import com.example.domo.models.interfaces.RegistrationModelInterface
+import com.example.domo.models.interfaces.SplashScreenModelInterface
 import com.example.domo.views.SplashScreenActivity
 import com.example.domo.views.TablesFragment
 import com.example.domo.views.dialogs.MenuBottomSheetDialog
@@ -29,9 +34,10 @@ interface AppComponent {
         ): AppComponent
     }
 
-    fun provideSplashScreenModel(): SplashScreenModel
-    fun provideRegistrationModel(): RegistrationModel
-    fun provideLogInModel(): LogInModel
+    fun provideSplashScreenModel(): SplashScreenModelInterface
+    fun provideRegistrationModel(): RegistrationModelInterface
+    fun provideLogInModel(): LogInModelInterface
+    fun provideMenuDialogModel(): MenuDialogInterface
     fun inject(splashScreenActivity: SplashScreenActivity)
     fun inject(fragment: TablesFragment)
     fun inject(fragment: MenuBottomSheetDialog)

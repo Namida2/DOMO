@@ -5,11 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
 import com.example.domo.adapters.diffCallbacks.MenuAdapterDiffCallback
-import com.example.domo.adapters.viewHoders.BaseViewHolder
+import entities.recyclerView.interfaces.BaseViewHolder
 import entities.recyclerView.interfaces.BaseRecyclerViewItem
 import entities.recyclerView.interfaces.MenuRecyclerViewType
 
-//TODO: Implements view holders with a common BaseViewHolder
 class MenuAdapter(
     private var recyclerViewTypes: List<MenuRecyclerViewType<out ViewBinding, out BaseRecyclerViewItem>>,
 ) : ListAdapter<BaseRecyclerViewItem, BaseViewHolder<ViewBinding, BaseRecyclerViewItem>>(

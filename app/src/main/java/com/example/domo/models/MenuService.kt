@@ -4,24 +4,31 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.domo.models.interfaces.MenuHolder
 import com.example.domo.models.interfaces.MenuHolderStates
+import com.example.domo.models.interfaces.MenuLocalRepository
 import com.example.domo.views.log
 import com.google.firebase.firestore.FirebaseFirestore
 import constants.FirestoreConstants
 import database.daos.MenuDao
 import entities.Category
+import entities.CategoryName
 import entities.Dish
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class MenuService @Inject constructor(
     private var menuDao: MenuDao,
-    private val fireStore: FirebaseFirestore) : MenuHolder {
+    private val fireStore: FirebaseFirestore,
+) : MenuHolder, MenuLocalRepository {
+
     private val menuCollectionRef =
-        fireStore.collection(FirestoreConstants.COLLECTION_RESTAURANTS).document(FirestoreConstants.DOCUMENT_DOMO)
+        fireStore.collection(FirestoreConstants.COLLECTION_RESTAURANTS)
+            .document(FirestoreConstants.DOCUMENT_DOMO)
             .collection(FirestoreConstants.COLLECTION_MENU)
     private val _menuState: MutableLiveData<MenuHolderStates> =
         MutableLiveData(MenuHolderStates.Default)
@@ -46,7 +53,7 @@ class MenuService @Inject constructor(
     private fun readDishes(
         category: String,
         isItLastCategory: Boolean = false,
-        onComplete: () -> Unit
+        onComplete: () -> Unit,
     ) {
         val dishesCollectionRef =
             menuCollectionRef.document(category).collection(FirestoreConstants.COLLECTION_DISHES)
@@ -55,7 +62,7 @@ class MenuService @Inject constructor(
             for (document in it)
                 dishes.add(document.toObject(Dish::class.java))
             menu.add(Category(category, dishes))
-            if(isItLastCategory) onMenuLoadingFinish(onComplete)
+            if (isItLastCategory) onMenuLoadingFinish(onComplete)
         }.addOnFailureListener {
             log("$this: ${it.message}")
             onMenuLoadingFinish(onComplete)
@@ -63,23 +70,20 @@ class MenuService @Inject constructor(
     }
 
     private fun onMenuLoadingFinish(onComplete: () -> Unit) {
-        if(menu.isEmpty()) _menuState.value = MenuHolderStates.MenuEmpty
-        else {
-            _menuState.value = MenuHolderStates.MenuExist
-            CoroutineScope(IO).launch {
-                menuDao.insert(getAllDishes())
-            }
+        CoroutineScope(IO).launch {
+            menuDao.insert(getAllDishes())
         }
+        setMenuServiceState()
         onComplete()
     }
 
-    private fun getAllDishes(): List<Dish> {
-        val arrayList = ArrayList<Dish>()
-        menu.forEach {
-            arrayList.addAll(it.dishes)
-        }
-        return arrayList
+    private fun setMenuServiceState() {
+        if (menu.isEmpty()) _menuState.value = MenuHolderStates.MenuEmpty
+        else _menuState.value = MenuHolderStates.MenuExist
     }
+
+    private fun getAllDishes(): List<Dish> =
+        menu.map { it.dishes }.flatten()
 
     override fun readExitingMenu() {
         CoroutineScope(IO).launch {
@@ -89,9 +93,16 @@ class MenuService @Inject constructor(
                 categories.add(it.categoryName)
             }
             categories.forEach { category ->
-                var dishes = allDishes.filter { it.categoryName == category }
+                val dishes = allDishes.filter { it.categoryName == category }
                 menu.add(Category(category, dishes))
+            }
+            withContext(Main) {
+                setMenuServiceState()
             }
         }
     }
+
+    override fun getAllCategories(): List<CategoryName> =
+        menu.map { it.name }.map { CategoryName(it) }
+
 }

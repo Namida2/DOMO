@@ -1,10 +1,7 @@
 package di.modules
 
 import com.example.domo.models.*
-import com.example.domo.models.interfaces.LogInModelInterface
-import com.example.domo.models.interfaces.MenuHolder
-import com.example.domo.models.interfaces.RegistrationModelInterface
-import com.example.domo.models.interfaces.SplashScreenModelInterface
+import com.example.domo.models.interfaces.*
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton
@@ -23,4 +20,10 @@ interface ModelsModule {
     @Binds
     @Singleton
     fun bindMenuHolder(menuHolder: MenuService): MenuHolder
+    @Binds
+    @Singleton
+    fun bindMenuLocalRepository(menuHolder: MenuService): MenuLocalRepository
+    @Binds
+    @Singleton
+    fun bindMenuDialogModule(menuDialogModel: MenuDialogModel): MenuDialogInterface
 }

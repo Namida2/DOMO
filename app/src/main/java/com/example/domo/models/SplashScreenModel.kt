@@ -2,6 +2,7 @@ package com.example.domo.models
 
 import android.content.SharedPreferences
 import com.example.domo.models.interfaces.MenuHolder
+import com.example.domo.models.interfaces.MenuLocalRepository
 import com.example.domo.models.interfaces.SplashScreenModelInterface
 import com.example.domo.models.remoteRepository.interfaces.SSRemoteRepositoryInterface
 import com.example.domo.views.log
@@ -19,7 +20,7 @@ import javax.inject.Singleton
 
 @Singleton
 class SplashScreenModel @Inject constructor(
-    private var menuHolder: MenuHolder,
+    private var menuHolder: MenuLocalRepository,
     private var employeeDao: EmployeeDao,
     private var sharedPreferences: SharedPreferences,
     private var remoteRepository: SSRemoteRepositoryInterface,

@@ -1,7 +1,7 @@
-package entities.recyclerView
+package entities
 
 import entities.recyclerView.interfaces.BaseRecyclerViewItem
 
 data class CategoriesHolder(
-    var categories: List<String>,
+    var categories: List<CategoryName>,
 ) : BaseRecyclerViewItem

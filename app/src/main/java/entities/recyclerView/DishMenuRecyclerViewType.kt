@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.example.domo.R
-import com.example.domo.adapters.viewHoders.BaseViewHolder
+import entities.recyclerView.interfaces.BaseViewHolder
 import com.example.domo.databinding.LayoutDishBinding
 import entities.Dish
 import entities.recyclerView.interfaces.BaseRecyclerViewItem
