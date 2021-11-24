@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-<LinearLayout android:orientation="horizontal"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-        <com.google.android.material.chip.Chip
-            android:id="@+id/categoryName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:chipSurfaceColor="@color/black"
-            android:text="Рамен"
-            android:textColor="@color/white"/>
-    </LinearLayout>
 
-</layout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/categoryName"
+        android:layout_alignParentStart="true"
+        app:chipSurfaceColor="@color/black"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Рамен"
+        android:background="@drawable/bg_black_round"
+        android:textSize="14sp" />
+</RelativeLayout>

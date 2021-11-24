@@ -9,7 +9,7 @@ import entities.recyclerView.interfaces.BaseViewHolder
 import entities.recyclerView.interfaces.BaseRecyclerViewItem
 import entities.recyclerView.interfaces.MenuRecyclerViewType
 
-class MenuAdapter(
+class MenuItemsAdapter(
     private var recyclerViewTypes: List<MenuRecyclerViewType<out ViewBinding, out BaseRecyclerViewItem>>,
 ) : ListAdapter<BaseRecyclerViewItem, BaseViewHolder<ViewBinding, BaseRecyclerViewItem>>(
     MenuAdapterDiffCallback(recyclerViewTypes)
@@ -23,7 +23,6 @@ class MenuAdapter(
             LayoutInflater.from(parent.context),
             parent
         ) as BaseViewHolder<ViewBinding, BaseRecyclerViewItem>
-
     }
 
     override fun onBindViewHolder(

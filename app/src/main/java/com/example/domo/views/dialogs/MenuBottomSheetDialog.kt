@@ -9,14 +9,15 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domo.adapters.MenuAdapter
+import com.example.domo.adapters.MenuItemsAdapter
 import com.example.domo.databinding.DialogMenuBinding
 import com.example.domo.viewModels.MenuDialogStates
 import com.example.domo.viewModels.MenuDialogViewModel
 import com.example.domo.viewModels.ViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import entities.interfaces.OnDismissListener
-import entities.recyclerView.CategoryRecyclerViewType
+import entities.recyclerView.CategoriesMenuRecyclerViewType
+import entities.recyclerView.CategoryLargeRecyclerViewType
 import entities.recyclerView.DishMenuRecyclerViewType
 import extentions.appComponent
 
@@ -26,9 +27,10 @@ class MenuBottomSheetDialog(
 
     private lateinit var binding: DialogMenuBinding
     private lateinit var viewModel: MenuDialogViewModel
-    private var menuAdapter = MenuAdapter(
+    private var menuAdapter = MenuItemsAdapter(
         listOf(
-            CategoryRecyclerViewType(),
+            CategoriesMenuRecyclerViewType(),
+            CategoryLargeRecyclerViewType(),
             DishMenuRecyclerViewType()
         )
     )
@@ -63,7 +65,7 @@ class MenuBottomSheetDialog(
 
     private fun initRecyclerView() {
         with(binding.menuRecyclerView) {
-            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+            setHasFixedSize(true)
             adapter = menuAdapter
         }
     }

@@ -4,15 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.example.domo.R
-import com.example.domo.databinding.LayoutCategoryBinding
 import com.example.domo.databinding.LayoutCatehoryLargeBinding
 import entities.CategoryName
 import entities.recyclerView.interfaces.BaseRecyclerViewItem
 import entities.recyclerView.interfaces.BaseViewHolder
 import entities.recyclerView.interfaces.MenuRecyclerViewType
 
-class CategoryRecyclerViewType:
-    MenuRecyclerViewType<LayoutCategoryBinding, CategoryName> {
+class CategoryLargeRecyclerViewType : MenuRecyclerViewType<LayoutCatehoryLargeBinding, CategoryName> {
 
     override fun isItMe(recyclerViewItem: BaseRecyclerViewItem): Boolean =
         recyclerViewItem is CategoryName
@@ -20,9 +18,9 @@ class CategoryRecyclerViewType:
     override fun getViewHolder(
         inflater: LayoutInflater,
         parent: ViewGroup,
-    ): BaseViewHolder<LayoutCategoryBinding, CategoryName> {
-        return CategoryViewHolder(
-            LayoutCategoryBinding.inflate(inflater, parent, false)
+    ): BaseViewHolder<LayoutCatehoryLargeBinding, CategoryName> {
+        return CategoryLargeViewHolder(
+            LayoutCatehoryLargeBinding.inflate(inflater, parent, false)
         )
     }
 
@@ -38,9 +36,9 @@ class CategoryRecyclerViewType:
     }
 }
 
-class CategoryViewHolder(
-    override val binding: LayoutCategoryBinding,
-) : BaseViewHolder<LayoutCategoryBinding, CategoryName>(binding) {
+class CategoryLargeViewHolder(
+    override val binding: LayoutCatehoryLargeBinding,
+) : BaseViewHolder<LayoutCatehoryLargeBinding, CategoryName>(binding) {
 
     override fun onBind(item: CategoryName) {
         binding.categoryName.text = item.name

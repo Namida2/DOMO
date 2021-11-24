@@ -39,6 +39,7 @@ class MenuDialogViewModel(
     }
 
     private fun getRecyclerViewItems(): List<BaseRecyclerViewItem> =
+        listOf(model.menuCategories) +
         model.menu.map {
             listOf(CategoryName(it.name)) + it.dishes
         }.flatten()
