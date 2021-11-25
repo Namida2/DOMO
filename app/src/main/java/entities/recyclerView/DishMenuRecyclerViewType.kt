@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.example.domo.R
 import entities.recyclerView.interfaces.BaseViewHolder
 import com.example.domo.databinding.LayoutDishBinding
-import entities.Dish
+import entities.menu.Dish
 import entities.recyclerView.interfaces.BaseRecyclerViewItem
 import entities.recyclerView.interfaces.MenuRecyclerViewType
 

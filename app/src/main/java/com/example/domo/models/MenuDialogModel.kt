@@ -2,7 +2,7 @@ package com.example.domo.models
 
 import com.example.domo.models.interfaces.MenuDialogInterface
 import com.example.domo.models.interfaces.MenuHolder
-import entities.CategoriesHolder
+import entities.menu.CategoriesHolder
 import javax.inject.Inject
 
 class MenuDialogModel @Inject constructor(

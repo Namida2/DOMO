@@ -1,30 +1,21 @@
-package com.example.domo.views
+package com.example.domo.views.fragments
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.service.autofill.ImageTransformation
-import android.transition.Fade
-import android.transition.TransitionInflater
-import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import androidx.core.view.MenuHost
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navOptions
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.domo.R
 import com.example.domo.adapters.TablesAdapter
 import com.example.domo.adapters.itemDecorations.TablesItemDecorations
-import com.example.domo.databinding.FragmentOrderBinding
 import com.example.domo.databinding.FragmentTablesBinding
 import com.example.domo.models.interfaces.MenuHolder
-import com.example.domo.models.interfaces.MenuHolderStates
 import com.google.android.material.transition.MaterialElevationScale
 import extentions.appComponent
 import javax.inject.Inject
@@ -55,12 +46,10 @@ class TablesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentTablesBinding.inflate(inflater)
         initRecyclerView(container)
-
-
         return binding.root
     }
 
@@ -70,19 +59,7 @@ class TablesFragment : Fragment() {
                 duration = 300
             }
             layoutManager = GridLayoutManager(container?.context, spanCount)
-            adapter = TablesAdapter(tablesCount) {
-                val fragmentExtras =
-                    FragmentNavigatorExtras(
-                        //TODO: Add it to the constance
-                        it!! to "end",
-                    )
-                findNavController().navigate(
-                    R.id.action_tablesFragment2_to_orderFragment,
-                    null,
-                    null,
-                    fragmentExtras
-                )
-            }
+            adapter = TablesAdapter(tablesCount, ::onTableClick)
             addItemDecoration(
                 TablesItemDecorations(
                     smallMargin!!,
@@ -91,6 +68,17 @@ class TablesFragment : Fragment() {
                 )
             )
         }
+    }
+
+    private fun onTableClick(item: View) {
+        val direction = TablesFragmentDirections
+            .actionTablesFragmentToOrderFragment(item.tag as Int)
+        val fragmentExtras =
+            FragmentNavigatorExtras(
+                //TODO: Add it to constants
+                item to "end",
+            )
+        findNavController().navigate(direction, fragmentExtras)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

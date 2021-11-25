@@ -1,4 +1,4 @@
-package com.example.domo.views
+package com.example.domo.views.fragments.authorisation
 
 import android.content.Context
 import android.content.Intent
@@ -10,17 +10,13 @@ import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.domo.R
-import com.example.domo.adapters.itemDecorations.PostItemDecoration
-import com.example.domo.adapters.PostItemsAdapter
 import com.example.domo.databinding.FragmentRegistrationBinding
 import com.example.domo.viewModels.RegistrationViewModel
 import com.example.domo.viewModels.RegistrationViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
+import com.example.domo.views.activities.SplashScreenActivity
 import entities.ErrorMessage
-import entities.Task
 import extentions.appComponent
 import extentions.createDialog
 import extentions.isNetworkConnected

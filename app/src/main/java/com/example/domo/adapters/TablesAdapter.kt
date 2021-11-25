@@ -3,15 +3,13 @@ package com.example.domo.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domo.R
 import com.example.domo.databinding.LayoutTableBinding
-import com.example.domo.views.log
 
-class TablesAdapter(private val tablesCount: Int, val navigateToOrderFragment: (view: View?) -> Unit): RecyclerView.Adapter<TablesAdapter.TableViewHolder>(), View.OnClickListener {
+class TablesAdapter(
+    private val tablesCount: Int,
+    val navigateToOrderFragment: (view: View) -> Unit,
+) : RecyclerView.Adapter<TablesAdapter.TableViewHolder>(), View.OnClickListener {
 
     class TableViewHolder(val binding: LayoutTableBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -30,7 +28,7 @@ class TablesAdapter(private val tablesCount: Int, val navigateToOrderFragment: (
 
     override fun getItemCount(): Int = tablesCount
 
-    override fun onClick(view: View?) {
+    override fun onClick(view: View) {
         navigateToOrderFragment(view)
     }
 

@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import com.example.domo.models.interfaces.MenuHolder
 import com.example.domo.models.interfaces.MenuHolderStates
 import com.example.domo.models.interfaces.MenuLocalRepository
-import com.example.domo.views.log
+import com.example.domo.views.activities.log
 import com.google.firebase.firestore.FirebaseFirestore
 import constants.FirestoreConstants
 import database.daos.MenuDao
-import entities.Category
-import entities.CategoryName
-import entities.Dish
+import entities.menu.Category
+import entities.menu.CategoryName
+import entities.menu.Dish
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main

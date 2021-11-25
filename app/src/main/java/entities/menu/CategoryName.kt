@@ -1,4 +1,4 @@
-package entities
+package entities.menu
 
 import entities.recyclerView.interfaces.BaseRecyclerViewItem
 

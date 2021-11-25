@@ -1,11 +1,10 @@
 package com.example.domo.models
 
 import android.content.SharedPreferences
-import com.example.domo.models.interfaces.MenuHolder
 import com.example.domo.models.interfaces.MenuLocalRepository
 import com.example.domo.models.interfaces.SplashScreenModelInterface
 import com.example.domo.models.remoteRepository.interfaces.SSRemoteRepositoryInterface
-import com.example.domo.views.log
+import com.example.domo.views.activities.log
 import com.google.firebase.auth.FirebaseUser
 import constants.FirestoreConstants.FIELD_MENU_VERSION
 import database.daos.EmployeeDao

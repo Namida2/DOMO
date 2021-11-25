@@ -1,10 +1,8 @@
 package com.example.domo.models.interfaces
 
 import androidx.lifecycle.LiveData
-import entities.CategoriesHolder
-import entities.Category
-import entities.CategoryName
-import entities.recyclerView.CategoryViewHolder
+import entities.menu.CategoriesHolder
+import entities.menu.Category
 
 interface MenuDialogInterface {
     val menuState: LiveData<MenuHolderStates>

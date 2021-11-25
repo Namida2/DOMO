@@ -1,4 +1,4 @@
-package com.example.domo.views
+package com.example.domo.views.fragments.authorisation
 
 import android.content.Context
 import android.content.Intent
@@ -14,10 +14,10 @@ import com.example.domo.databinding.FragmentLogInBinding
 import com.example.domo.viewModels.LogInViewModel
 import com.example.domo.viewModels.LogInViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
+import com.example.domo.views.activities.SplashScreenActivity
 import entities.ErrorMessage
 import extentions.appComponent
 import extentions.createDialog
-import extentions.isNetworkConnected
 import tools.dialogs.ProcessAlertDialog
 
 class LogInFragment : Fragment() {

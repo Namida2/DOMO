@@ -1,7 +1,7 @@
-package com.example.domo.models.remoteRepository
+package com.example.domo.models.remoteRepository.authorisation
 
 import com.example.domo.R
-import com.example.domo.views.log
+import com.example.domo.views.activities.log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore

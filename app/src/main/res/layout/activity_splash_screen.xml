@@ -6,7 +6,7 @@
             android:id="@+id/sceneRoot"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".views.SplashScreenActivity"
+            tools:context=".views.activities.SplashScreenActivity"
             android:background="@color/black">
                 <LinearLayout
                     android:id="@+id/top_card"

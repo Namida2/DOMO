@@ -1,34 +1,20 @@
-package com.example.domo.views
+package com.example.domo.views.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.domo.viewModels.SplashScreenStates
-import com.example.domo.viewModels.SplashScreenViewModel
+import com.example.domo.viewModels.activities.SplashScreenStates
+import com.example.domo.viewModels.activities.SplashScreenViewModel
 import com.example.domo.viewModels.ViewModelFactory
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.Transaction
+import com.example.domo.views.fragments.authorisation.AuthorizationActivity
 import constants.EmployeePosts.ADMINISTRATOR
 import constants.EmployeePosts.COOK
 import constants.EmployeePosts.WAITER
-import constants.FirestoreConstants.COLLECTION_DISHES
-import constants.FirestoreConstants.COLLECTION_MENU
-import constants.FirestoreConstants.COLLECTION_RESTAURANTS
-import constants.FirestoreConstants.DOCUMENT_DOMO
-import database.Database
-import database.daos.EmployeeDao
-import entities.Dish
 import extentions.appComponent
 import extentions.employee
-import javax.inject.Inject
 
 
 class SplashScreenActivity : AppCompatActivity() {

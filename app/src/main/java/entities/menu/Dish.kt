@@ -1,4 +1,4 @@
-package entities
+package entities.menu
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

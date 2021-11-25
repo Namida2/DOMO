@@ -1,8 +1,8 @@
-package com.example.domo.models
+package com.example.domo.models.authorisation
 
 import android.view.View
 import com.example.domo.models.interfaces.RegistrationModelInterface
-import com.example.domo.models.remoteRepository.RegistrationRemoteRepository
+import com.example.domo.models.remoteRepository.authorisation.RegistrationRemoteRepository
 import constants.EmployeePosts
 import database.daos.EmployeeDao
 import entities.Employee

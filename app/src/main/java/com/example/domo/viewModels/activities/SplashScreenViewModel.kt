@@ -1,4 +1,4 @@
-package com.example.domo.viewModels
+package com.example.domo.viewModels.activities
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

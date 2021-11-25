@@ -5,8 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.example.domo.R
 import com.example.domo.databinding.LayoutCategoryBinding
-import com.example.domo.databinding.LayoutCatehoryLargeBinding
-import entities.CategoryName
+import entities.menu.CategoryName
 import entities.recyclerView.interfaces.BaseRecyclerViewItem
 import entities.recyclerView.interfaces.BaseViewHolder
 import entities.recyclerView.interfaces.MenuRecyclerViewType

@@ -1,7 +1,7 @@
-package com.example.domo.models
+package com.example.domo.models.authorisation
 
 import com.example.domo.models.interfaces.LogInModelInterface
-import com.example.domo.models.remoteRepository.LogInRemoteRepository
+import com.example.domo.models.remoteRepository.authorisation.LogInRemoteRepository
 import database.daos.EmployeeDao
 import entities.Employee
 import entities.ErrorMessage

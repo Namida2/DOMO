@@ -3,12 +3,11 @@ package entities.recyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.domo.R
 import com.example.domo.adapters.MenuItemsAdapter
 import com.example.domo.databinding.LayoutCategoriesContainerBinding
-import entities.CategoriesHolder
+import entities.menu.CategoriesHolder
 import entities.recyclerView.interfaces.BaseRecyclerViewItem
 import entities.recyclerView.interfaces.BaseViewHolder
 import entities.recyclerView.interfaces.MenuRecyclerViewType
@@ -58,7 +57,7 @@ class CategoriesMenuViewHolder(
     init {
         with(binding.containerRecyclerView) {
             adapter = itemsAdapter
-            layoutManager = GridLayoutManager(context, 2, GridLayoutManager.HORIZONTAL, false)
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
             setHasFixedSize(true)
         }
     }

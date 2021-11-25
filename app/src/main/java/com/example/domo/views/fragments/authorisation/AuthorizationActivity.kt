@@ -1,4 +1,4 @@
-package com.example.domo.views
+package com.example.domo.views.fragments.authorisation
 
 import android.os.Bundle
 import android.view.WindowManager

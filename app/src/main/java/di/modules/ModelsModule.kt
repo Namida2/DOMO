@@ -1,6 +1,8 @@
 package di.modules
 
 import com.example.domo.models.*
+import com.example.domo.models.authorisation.LogInModel
+import com.example.domo.models.authorisation.RegistrationModel
 import com.example.domo.models.interfaces.*
 import dagger.Binds
 import dagger.Module

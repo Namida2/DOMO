@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domo.models.interfaces.MenuDialogInterface
 import com.example.domo.models.interfaces.MenuHolderStates
-import entities.CategoryName
+import entities.menu.CategoryName
 import entities.recyclerView.interfaces.BaseRecyclerViewItem
 
 sealed class MenuDialogStates {
@@ -30,18 +30,21 @@ class MenuDialogViewModel(
                         MenuHolderStates.MenuExist -> {
                             _state.value = MenuDialogStates.MenuExists(getRecyclerViewItems())
                         }
-                        else -> { }//Default state
+                        else -> {
+                        }//Default state
                     }
                 }
-            is MenuHolderStates.MenuExist -> _state.value = MenuDialogStates.MenuExists(getRecyclerViewItems())
-            else -> { } //TODO: Somehow remove the Default state
+            is MenuHolderStates.MenuExist -> _state.value =
+                MenuDialogStates.MenuExists(getRecyclerViewItems())
+            else -> {
+            } //TODO: Somehow remove the Default state
         }
     }
 
     private fun getRecyclerViewItems(): List<BaseRecyclerViewItem> =
         listOf(model.menuCategories) +
-        model.menu.map {
-            listOf(CategoryName(it.name)) + it.dishes
-        }.flatten()
+                model.menu.map {
+                    listOf(CategoryName(it.name)) + it.dishes
+                }.flatten()
 
 }

@@ -1,10 +1,7 @@
 package com.example.domo.models.remoteRepository.interfaces
 
 import com.google.firebase.auth.FirebaseUser
-import entities.Category
-import entities.Dish
 import entities.Employee
-import entities.Task
 
 interface SSRemoteRepositoryInterface {
     fun signOut()

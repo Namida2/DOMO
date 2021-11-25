@@ -7,7 +7,7 @@ import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.example.domo.R
 import com.example.domo.databinding.DialogMessageBinding
-import com.example.domo.views.log
+import com.example.domo.views.activities.log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay

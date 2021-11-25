@@ -7,9 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.domo.R
 import com.example.domo.adapters.MenuItemsAdapter
+import com.example.domo.adapters.itemDecorations.MenuItemDecorations
 import com.example.domo.databinding.DialogMenuBinding
 import com.example.domo.viewModels.MenuDialogStates
 import com.example.domo.viewModels.MenuDialogViewModel
@@ -22,8 +22,11 @@ import entities.recyclerView.DishMenuRecyclerViewType
 import extentions.appComponent
 
 class MenuBottomSheetDialog(
-    private val onDismissListener: OnDismissListener
+    private val onDismissListener: OnDismissListener,
 ) : BottomSheetDialogFragment() {
+
+    private var smallMargin: Int? = null
+    private var largeMargin: Int? = null
 
     private lateinit var binding: DialogMenuBinding
     private lateinit var viewModel: MenuDialogViewModel
@@ -37,6 +40,8 @@ class MenuBottomSheetDialog(
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
+        largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
         viewModel =
             ViewModelProvider(requireActivity(), ViewModelFactory(context.appComponent)).get(
                 MenuDialogViewModel::class.java)
@@ -59,6 +64,7 @@ class MenuBottomSheetDialog(
                 is MenuDialogStates.MenuExists -> {
                     menuAdapter.submitList(it.items)
                 }
+                else -> {} //other things
             }
         }
     }
@@ -67,6 +73,9 @@ class MenuBottomSheetDialog(
         with(binding.menuRecyclerView) {
             setHasFixedSize(true)
             adapter = menuAdapter
+            addItemDecoration(
+                MenuItemDecorations(smallMargin!!, largeMargin!!)
+            )
         }
     }
 
@@ -74,4 +83,5 @@ class MenuBottomSheetDialog(
         super.onDismiss(dialog)
         onDismissListener.onDismiss()
     }
+
 }

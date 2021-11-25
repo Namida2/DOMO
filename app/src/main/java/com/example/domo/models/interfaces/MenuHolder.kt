@@ -1,11 +1,8 @@
 package com.example.domo.models.interfaces
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import entities.Category
-import entities.CategoryName
-import entities.Dish
-import entities.Task
+import entities.menu.Category
+import entities.menu.CategoryName
 
 sealed class MenuHolderStates {
     object MenuExist: MenuHolderStates()

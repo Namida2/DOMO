@@ -1,15 +1,17 @@
-package com.example.domo.views
+package com.example.domo.views.activities
 
 import android.graphics.Rect
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
+import androidx.core.animation.doOnStart
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import com.example.domo.R
 import com.example.domo.databinding.ActivityWaiterMainBinding
+
 import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.viewModels.WaiterActivityOrderFragmentSharedViewModel
 import extentions.Animations.prepareHide
@@ -65,7 +67,7 @@ class WaiterMainActivity : AppCompatActivity(),
                 bottomNavigation.prepareSlideDown(bottomNavigation.height).apply {
                     doOnEnd {
                         bottomAppBar.prepareSlideUp(bottomAppBar.height).apply {
-                            doOnEnd { menuFba.show() }
+                            doOnStart { menuFba.show() }
                         }.start()
                     }
                 }.start()

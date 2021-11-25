@@ -1,7 +1,7 @@
-package com.example.domo.models.remoteRepository
+package com.example.domo.models.remoteRepository.authorisation
 
 import com.example.domo.R
-import com.example.domo.views.log
+import com.example.domo.views.activities.log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -10,7 +10,6 @@ import constants.FirestoreConstants.COLLECTION_RESTAURANTS
 import constants.FirestoreConstants.DOCUMENT_DOMO
 import entities.Employee
 import entities.ErrorMessage
-import entities.Task
 import entities.TaskWithEmployee
 import javax.inject.Inject
 
