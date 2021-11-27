@@ -1,5 +1,6 @@
 package com.example.domo.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,7 @@ import com.example.domo.databinding.LayoutTableBinding
 
 class TablesAdapter(
     private val tablesCount: Int,
-    val navigateToOrderFragment: (view: View) -> Unit,
+    val navigateToOrderFragment: (viewOwner: ViewOwner) -> Unit,
 ) : RecyclerView.Adapter<TablesAdapter.TableViewHolder>(), View.OnClickListener {
 
     class TableViewHolder(val binding: LayoutTableBinding) : RecyclerView.ViewHolder(binding.root)
@@ -29,8 +30,11 @@ class TablesAdapter(
     override fun getItemCount(): Int = tablesCount
 
     override fun onClick(view: View) {
-        navigateToOrderFragment(view)
+        navigateToOrderFragment(ViewOwner(view))
     }
 
+    class ViewOwner(private val view: View) {
+        fun getView(context: Context): View = view
+    }
 
 }

@@ -8,7 +8,7 @@ import database.daos.EmployeeDao
 import entities.Employee
 import entities.ErrorMessage
 import entities.PostItem
-import entities.TaskWithEmployee
+import entities.tools.TaskWithEmployee
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main

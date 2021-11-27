@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.domo.models.interfaces.MenuHolder
 import com.example.domo.models.interfaces.MenuHolderStates
 import com.example.domo.models.interfaces.MenuLocalRepository
+import com.example.domo.models.remoteRepository.FirestoreReferences.menuCollectionRef
 import com.example.domo.views.activities.log
 import com.google.firebase.firestore.FirebaseFirestore
 import constants.FirestoreConstants
@@ -26,10 +27,6 @@ class MenuService @Inject constructor(
     private val fireStore: FirebaseFirestore,
 ) : MenuHolder, MenuLocalRepository {
 
-    private val menuCollectionRef =
-        fireStore.collection(FirestoreConstants.COLLECTION_RESTAURANTS)
-            .document(FirestoreConstants.DOCUMENT_DOMO)
-            .collection(FirestoreConstants.COLLECTION_MENU)
     private val _menuState: MutableLiveData<MenuHolderStates> =
         MutableLiveData(MenuHolderStates.Default)
     override val menuState: LiveData<MenuHolderStates> = _menuState

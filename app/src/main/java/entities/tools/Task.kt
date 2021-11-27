@@ -1,4 +1,7 @@
-package entities
+package entities.tools
+
+import entities.Employee
+import entities.ErrorMessage
 
 typealias TaskWithEmployee = Task<Employee, Unit>
 interface Task<ASuccess, RSuccess> {

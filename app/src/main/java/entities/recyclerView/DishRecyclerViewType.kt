@@ -1,18 +1,20 @@
 package entities.recyclerView
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.example.domo.R
 import entities.recyclerView.interfaces.BaseViewHolder
 import com.example.domo.databinding.LayoutDishBinding
+import com.example.domo.generated.callback.OnClickListener
 import entities.menu.Dish
 import entities.recyclerView.interfaces.BaseRecyclerViewItem
 import entities.recyclerView.interfaces.MenuRecyclerViewType
 
-class DishMenuRecyclerViewType(
-    //callbacks
-) : MenuRecyclerViewType<LayoutDishBinding, Dish> {
+class DishRecyclerViewType(
+    private val onDishSelected: (dishId: Int) -> Unit,
+) : MenuRecyclerViewType<LayoutDishBinding, Dish>, View.OnClickListener {
 
     private val diffCallback = object : DiffUtil.ItemCallback<Dish>() {
         override fun areItemsTheSame(oldItem: Dish, newItem: Dish): Boolean = oldItem == newItem
@@ -26,11 +28,16 @@ class DishMenuRecyclerViewType(
         inflater: LayoutInflater,
         parent: ViewGroup,
     ): BaseViewHolder<LayoutDishBinding, Dish> {
-        //setCallbacks
-        return DishViewHolder(LayoutDishBinding.inflate(inflater, parent, false))
+        val binding = LayoutDishBinding.inflate(inflater, parent, false)
+        binding.root.setOnClickListener(this)
+        return DishViewHolder(binding)
     }
 
     override fun getDiffCallback(): DiffUtil.ItemCallback<Dish> = diffCallback
+
+    override fun onClick(view: View?) {
+        onDishSelected.invoke(view?.tag as Int)
+    }
 
 }
 
@@ -43,6 +50,7 @@ class DishViewHolder(
             dishName.text = item.name
             dishConst.text = item.cost
             dishWeight.text = item.weight
+            root.tag = item.id
         }
     }
 

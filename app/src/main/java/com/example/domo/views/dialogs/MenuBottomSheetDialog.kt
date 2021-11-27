@@ -18,7 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import entities.interfaces.OnDismissListener
 import entities.recyclerView.CategoriesMenuRecyclerViewType
 import entities.recyclerView.CategoryLargeRecyclerViewType
-import entities.recyclerView.DishMenuRecyclerViewType
+import entities.recyclerView.DishRecyclerViewType
 import extentions.appComponent
 
 class MenuBottomSheetDialog(
@@ -30,13 +30,8 @@ class MenuBottomSheetDialog(
 
     private lateinit var binding: DialogMenuBinding
     private lateinit var viewModel: MenuDialogViewModel
-    private var menuAdapter = MenuItemsAdapter(
-        listOf(
-            CategoriesMenuRecyclerViewType(),
-            CategoryLargeRecyclerViewType(),
-            DishMenuRecyclerViewType()
-        )
-    )
+    private var dishDialog = DishAlertDialog()
+    private var menuAdapter: MenuItemsAdapter? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -45,6 +40,13 @@ class MenuBottomSheetDialog(
         viewModel =
             ViewModelProvider(requireActivity(), ViewModelFactory(context.appComponent)).get(
                 MenuDialogViewModel::class.java)
+        menuAdapter = MenuItemsAdapter(
+            listOf(
+                CategoriesMenuRecyclerViewType(),
+                CategoryLargeRecyclerViewType(),
+                DishRecyclerViewType(viewModel::onDishClick)
+            )
+        )
         binding = DialogMenuBinding.inflate(layoutInflater)
         initRecyclerView()
     }
@@ -55,6 +57,7 @@ class MenuBottomSheetDialog(
         savedInstanceState: Bundle?,
     ): View? {
         observeViewModelStates()
+        observeDishEvent()
         return binding.root
     }
 
@@ -62,7 +65,7 @@ class MenuBottomSheetDialog(
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is MenuDialogStates.MenuExists -> {
-                    menuAdapter.submitList(it.items)
+                    menuAdapter?.submitList(it.items)
                 }
                 else -> {} //other things
             }
@@ -78,6 +81,14 @@ class MenuBottomSheetDialog(
             )
         }
     }
+
+    private fun observeDishEvent() {
+        viewModel.onDishSelected.observe(viewLifecycleOwner) {
+            if(dishDialog.isAdded) return@observe
+            dishDialog.show(parentFragmentManager, "")
+        }
+    }
+
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)

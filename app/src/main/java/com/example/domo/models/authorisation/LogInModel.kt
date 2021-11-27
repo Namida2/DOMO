@@ -5,7 +5,7 @@ import com.example.domo.models.remoteRepository.authorisation.LogInRemoteReposit
 import database.daos.EmployeeDao
 import entities.Employee
 import entities.ErrorMessage
-import entities.TaskWithEmployee
+import entities.tools.TaskWithEmployee
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -16,10 +16,10 @@ import javax.inject.Inject
 
 class LogInModel @Inject constructor(
     private val employeeDao: EmployeeDao,
-    private val remoteRepository: LogInRemoteRepository
-): LogInModelInterface {
+    private val remoteRepository: LogInRemoteRepository,
+) : LogInModelInterface {
     override fun signIn(email: String, password: String, task: TaskWithEmployee) {
-        remoteRepository.signIn(email, password,  object: TaskWithEmployee {
+        remoteRepository.signIn(email, password, object : TaskWithEmployee {
             override fun onSuccess(arg: Employee) {
                 CoroutineScope(IO).launch {
                     employeeDao.deleteAll()

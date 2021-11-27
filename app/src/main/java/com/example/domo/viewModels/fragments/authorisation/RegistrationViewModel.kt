@@ -6,6 +6,7 @@ import com.example.domo.R
 import com.example.domo.models.interfaces.RegistrationModelInterface
 import constants.EmployeePosts
 import entities.*
+import entities.tools.TaskWithEmployee
 import extentions.isEmptyField
 import extentions.isValidEmail
 
@@ -91,6 +92,7 @@ class RegistrationViewModel(private val model: RegistrationModelInterface) : Vie
                 override fun onSuccess(arg: Employee) {
                     state.value = RegistrationViewModelStates.Valid(employee)
                 }
+
                 override fun onError(message: ErrorMessage?) {
                     when (message!!.titleId) {
                         R.string.emailAlreadyExitTitle -> {
@@ -105,9 +107,11 @@ class RegistrationViewModel(private val model: RegistrationModelInterface) : Vie
         )
 
     }
+
     fun resetState() {
         state.value = RegistrationViewModelStates.Default
     }
+
     fun getPostItems(): MutableList<PostItem> = model.getPostItems()
 }
 

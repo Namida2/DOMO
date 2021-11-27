@@ -10,12 +10,12 @@ import constants.FirestoreConstants.COLLECTION_RESTAURANTS
 import constants.FirestoreConstants.DOCUMENT_DOMO
 import entities.Employee
 import entities.ErrorMessage
-import entities.TaskWithEmployee
+import entities.tools.TaskWithEmployee
 import javax.inject.Inject
 
 class RegistrationRemoteRepository @Inject constructor(
     private val auth: FirebaseAuth,
-    private val fireStore: FirebaseFirestore
+    private val fireStore: FirebaseFirestore,
 ) {
     private val emailAlreadyExistsTitle = R.string.emailAlreadyExitTitle
     private val emailAlreadyExistsMessage = R.string.emailAlreadyExistMessage
@@ -27,7 +27,7 @@ class RegistrationRemoteRepository @Inject constructor(
 
     fun registration(
         employee: Employee,
-        task: TaskWithEmployee
+        task: TaskWithEmployee,
     ) {
         auth.fetchSignInMethodsForEmail(employee.email)
             .addOnCompleteListener {
@@ -48,12 +48,11 @@ class RegistrationRemoteRepository @Inject constructor(
                     log("${this}: ${it.exception.toString()}")
                 }
             }
-
     }
 
     private fun createNewEmployee(
         employee: Employee,
-        task: TaskWithEmployee
+        task: TaskWithEmployee,
     ) {
         auth.createUserWithEmailAndPassword(employee.email, employee.password)
             .addOnCompleteListener {
@@ -68,7 +67,7 @@ class RegistrationRemoteRepository @Inject constructor(
 
     private fun addEmployeeToCollection(
         employee: Employee,
-        task: TaskWithEmployee
+        task: TaskWithEmployee,
     ) {
         fireStore.runTransaction {
             it.set(employeesCollectionRef.document(employee.email), employee)

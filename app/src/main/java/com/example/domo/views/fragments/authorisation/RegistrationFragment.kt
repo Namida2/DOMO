@@ -10,7 +10,11 @@ import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.domo.R
+import com.example.domo.adapters.PostItemsAdapter
+import com.example.domo.adapters.itemDecorations.PostItemDecoration
 import com.example.domo.databinding.FragmentRegistrationBinding
 import com.example.domo.viewModels.RegistrationViewModel
 import com.example.domo.viewModels.RegistrationViewModelStates

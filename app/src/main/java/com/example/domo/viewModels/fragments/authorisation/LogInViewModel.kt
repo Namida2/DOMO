@@ -6,7 +6,7 @@ import com.example.domo.R
 import com.example.domo.models.interfaces.LogInModelInterface
 import entities.Employee
 import entities.ErrorMessage
-import entities.TaskWithEmployee
+import entities.tools.TaskWithEmployee
 import extentions.isEmptyField
 
 sealed class LogInViewModelStates {

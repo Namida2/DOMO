@@ -18,6 +18,7 @@ import com.example.domo.views.activities.SplashScreenActivity
 import entities.ErrorMessage
 import extentions.appComponent
 import extentions.createDialog
+import extentions.isNetworkConnected
 import tools.dialogs.ProcessAlertDialog
 
 class LogInFragment : Fragment() {

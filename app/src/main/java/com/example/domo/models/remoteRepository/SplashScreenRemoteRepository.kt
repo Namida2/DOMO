@@ -1,5 +1,7 @@
 package com.example.domo.models.remoteRepository
 
+import com.example.domo.models.remoteRepository.FirestoreReferences.employeesCollectionRef
+import com.example.domo.models.remoteRepository.FirestoreReferences.menuDocumentRef
 import com.example.domo.models.remoteRepository.interfaces.SSRemoteRepositoryInterface
 import com.example.domo.views.activities.log
 import com.google.firebase.auth.FirebaseAuth
@@ -21,14 +23,6 @@ class SplashScreenRemoteRepository @Inject constructor(
     private val auth: FirebaseAuth,
     private val fireStore: FirebaseFirestore,
 ) : SSRemoteRepositoryInterface {
-
-    private val employeesCollectionRef: CollectionReference =
-        fireStore.collection(FirestoreConstants.COLLECTION_RESTAURANTS)
-            .document(FirestoreConstants.DOCUMENT_DOMO)
-            .collection(FirestoreConstants.COLLECTION_EMPLOYEES)
-    private val menuDocumentRef =
-        fireStore.collection(COLLECTION_RESTAURANTS).document(DOCUMENT_DOMO)
-            .collection(COLLECTION_DATA).document(DOCUMENT_MENU)
 
     override fun getCurrentUser(): FirebaseUser? = auth.currentUser
 

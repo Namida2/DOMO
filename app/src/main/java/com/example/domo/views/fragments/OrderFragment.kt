@@ -27,8 +27,9 @@ class OrderFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        sharedViewModel = ViewModelProvider(requireActivity(), ViewModelFactory(context.appComponent)).get(
-            WaiterActivityOrderFragmentSharedViewModel::class.java)
+        //TODO: Add a delegate for viewModels
+        sharedViewModel = ViewModelProvider(requireActivity(),
+            ViewModelFactory(context.appComponent))[WaiterActivityOrderFragmentSharedViewModel::class.java]
     }
 
     @SuppressLint("ResourceType")
@@ -62,12 +63,13 @@ class OrderFragment : Fragment() {
 
     private fun observeViewModelStates() {
         sharedViewModel.states.observe(viewLifecycleOwner) {
-            when(it) {
+            when (it) {
                 is SharedViewModelStates.ShowingMenuDialog -> {
-                    if(!menuBottomSheetDialog?.isAdded!!)
+                    if (!menuBottomSheetDialog?.isAdded!!)
                         menuBottomSheetDialog?.show(parentFragmentManager, "")
                 }
-                else -> {} //DefaultState
+                else -> {
+                } //DefaultState
             }
         }
     }

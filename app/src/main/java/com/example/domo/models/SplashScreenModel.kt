@@ -9,6 +9,8 @@ import com.google.firebase.auth.FirebaseUser
 import constants.FirestoreConstants.FIELD_MENU_VERSION
 import database.daos.EmployeeDao
 import entities.*
+import entities.tools.Task
+import entities.tools.TaskWithEmployee
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,13 +16,15 @@ import com.example.domo.R
 import com.example.domo.adapters.TablesAdapter
 import com.example.domo.adapters.itemDecorations.TablesItemDecorations
 import com.example.domo.databinding.FragmentTablesBinding
-import com.example.domo.models.interfaces.MenuHolder
+import com.example.domo.viewModels.ViewModelFactory
+import com.example.domo.viewModels.fragments.TablesViewModel
 import com.google.android.material.transition.MaterialElevationScale
 import extentions.appComponent
-import javax.inject.Inject
 
 
 class TablesFragment : Fragment() {
+
+    private lateinit var viewModel: TablesViewModel
 
     private var smallMargin: Int? = null
     private var largeMargin: Int? = null
@@ -31,12 +34,12 @@ class TablesFragment : Fragment() {
     private val tablesCount = 28
     private lateinit var binding: FragmentTablesBinding
 
-    @Inject
-    lateinit var menuHolder: MenuHolder
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        context.appComponent.inject(this)
+        viewModel =
+            ViewModelProvider(requireActivity(),
+                ViewModelFactory(context.appComponent))[TablesViewModel::class.java]
         smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
         largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
         topTablesMargin = resources.getDimensionPixelSize(R.dimen.top_tables_margin)
@@ -50,6 +53,7 @@ class TablesFragment : Fragment() {
     ): View? {
         binding = FragmentTablesBinding.inflate(inflater)
         initRecyclerView(container)
+        observeTablesEvent()
         return binding.root
     }
 
@@ -59,7 +63,7 @@ class TablesFragment : Fragment() {
                 duration = 300
             }
             layoutManager = GridLayoutManager(container?.context, spanCount)
-            adapter = TablesAdapter(tablesCount, ::onTableClick)
+            adapter = TablesAdapter(tablesCount, viewModel::onTableClick)
             addItemDecoration(
                 TablesItemDecorations(
                     smallMargin!!,
@@ -70,7 +74,15 @@ class TablesFragment : Fragment() {
         }
     }
 
-    private fun onTableClick(item: View) {
+    private fun observeTablesEvent() {
+        viewModel.onTableSelected.observe(viewLifecycleOwner) {
+            it.getData()?.let { viewOwner ->
+                startOrderFragment(viewOwner.getView(requireContext()))
+            }
+        }
+    }
+
+    private fun startOrderFragment(item: View) {
         val direction = TablesFragmentDirections
             .actionTablesFragmentToOrderFragment(item.tag as Int)
         val fragmentExtras =
@@ -85,5 +97,10 @@ class TablesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.resetState()
     }
 }
