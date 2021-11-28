@@ -15,7 +15,8 @@ sealed class MenuDialogStates {
     class MenuExists(
         val items: List<BaseRecyclerViewItem>,
     ) : MenuDialogStates()
-    object ShowingDishDialog: MenuDialogStates()
+
+    object ShowingDishDialog : MenuDialogStates()
 }
 
 class MenuDialogViewModel(
@@ -36,25 +37,24 @@ class MenuDialogViewModel(
                         MenuHolderStates.MenuExist -> {
                             _state.value = MenuDialogStates.MenuExists(getRecyclerViewItems())
                         }
-                        else -> { }//Default state
+                        else -> {
+                        }//Default state
                     }
                 }
             is MenuHolderStates.MenuExist -> _state.value =
                 MenuDialogStates.MenuExists(getRecyclerViewItems())
-            else -> { } //TODO: Somehow remove the Default state
+            else -> {
+            } //TODO: Somehow remove the Default state
         }
     }
 
     private fun getRecyclerViewItems(): List<BaseRecyclerViewItem> =
-        listOf(model.menuCategoriesName) +
+        listOf(model.getAllCategories()) +
                 model.menu.map {
                     listOf(CategoryName(it.name)) + it.dishes
                 }.flatten()
 
-    fun onDishClick (dishId: Int) {
+    fun onDishClick(dishId: Int) {
         _onDishSelected.value = Event(model.getDishById(dishId))
     }
-
-
-
 }

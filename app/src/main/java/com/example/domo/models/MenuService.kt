@@ -23,8 +23,7 @@ import javax.inject.Singleton
 
 @Singleton
 class MenuService @Inject constructor(
-    private var menuDao: MenuDao,
-    private val fireStore: FirebaseFirestore,
+    private var menuDao: MenuDao
 ) : MenuHolder, MenuLocalRepository {
 
     private val _menuState: MutableLiveData<MenuHolderStates> =
@@ -100,6 +99,10 @@ class MenuService @Inject constructor(
     }
 
     override fun getAllCategories(): List<CategoryName> =
-        menu.map { it.name }.map { CategoryName(it) }
+        menu.map {
+            it.name
+        }.map {
+            CategoryName(it)
+        }
 
 }

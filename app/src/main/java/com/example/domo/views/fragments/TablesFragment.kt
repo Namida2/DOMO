@@ -16,10 +16,18 @@ import com.example.domo.R
 import com.example.domo.adapters.TablesAdapter
 import com.example.domo.adapters.itemDecorations.TablesItemDecorations
 import com.example.domo.databinding.FragmentTablesBinding
+import com.example.domo.models.MenuService
+import com.example.domo.models.interfaces.MenuDialogInterface
+import com.example.domo.models.interfaces.MenuHolderStates
+import com.example.domo.models.remoteRepository.FirestoreReferences.menuCollectionRef
 import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.viewModels.fragments.TablesViewModel
+import com.example.domo.views.activities.log
 import com.google.android.material.transition.MaterialElevationScale
+import com.google.firebase.firestore.FirebaseFirestore
+import constants.FirestoreConstants.COLLECTION_DISHES
 import extentions.appComponent
+import javax.inject.Inject
 
 
 class TablesFragment : Fragment() {
@@ -34,9 +42,14 @@ class TablesFragment : Fragment() {
     private val tablesCount = 28
     private lateinit var binding: FragmentTablesBinding
 
+    @Inject
+    lateinit var menuService: MenuDialogInterface
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
+        context.appComponent.inject(this)
+
         viewModel =
             ViewModelProvider(requireActivity(),
                 ViewModelFactory(context.appComponent))[TablesViewModel::class.java]
