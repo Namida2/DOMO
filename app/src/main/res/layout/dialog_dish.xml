@@ -1,71 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <data>
 
-        <TextView
-            android:id="@+id/dish_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="56dp"
-            android:fontFamily="@font/montserrat_semi_bold"
-            android:text="Гёдза с мраморной говядиной "
-            android:textColor="@color/black"
-            android:textSize="16dp" />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@id/dish_name"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/ic_cancel" />
-    </RelativeLayout>
+        <variable
+            name="viewModel"
+            type="com.example.domo.viewModels.dialogs.DishDialogViewModel" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_rounded_white_24"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/dishname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="16dp"
-            android:fontFamily="@font/montserrat_semi_bold"
-            android:text="Количество порцый: "
-            android:textColor="@color/black"
-            android:textSize="16dp" />
-
-        <LinearLayout
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:orientation="vertical"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <NumberPicker
-                android:theme="@style/dishCountNumberPicker"
-                android:id="@+id/countNumberPicker"
+            <TextView
+                android:id="@+id/dish_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="56dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="56dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:gravity="center"
+                android:maxLines="2"
+                android:text="Гёдза с мраморной говядиной"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
+
+            <ImageButton
+                android:id="@+id/closeDialogButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/dish_name"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/white"
+                android:minHeight="0dp"
+                android:src="@drawable/ic_cancel" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:text="Порцый: "
+                android:textColor="@color/black"
+                android:textSize="16dp" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:overScrollMode="always" />
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="vertical">
 
+                <NumberPicker
+                    android:id="@+id/countNumberPicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:overScrollMode="always"
+                    android:theme="@style/dishCountNumberPicker" />
+            </LinearLayout>
         </LinearLayout>
 
+        <EditText
+            android:id="@+id/commentary"
+            style="@style/editTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_edit_text"
+            android:hint="Комментарий"
+            android:inputType="text"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:textColor="@color/black" />
+
+        <Button
+            android:onClick="@{view -> viewModel.onAddButtonClick(view)}"
+            android:id="@+id/addDishButton"
+            style="@style/buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="32sp"
+            android:drawableEnd="@drawable/ic_arrow_left_white"
+            android:gravity="left|center"
+            android:paddingStart="24dp"
+            android:text="Добавить в заказ" />
 
     </LinearLayout>
-
-</LinearLayout>
+</layout>

@@ -84,11 +84,12 @@ class MenuBottomSheetDialog(
 
     private fun observeDishEvent() {
         viewModel.onDishSelected.observe(viewLifecycleOwner) {
-            if(dishDialog.isAdded) return@observe
+            val dish = it.getData()
+            if(dishDialog.isAdded || dish == null) return@observe
+            dishDialog.dish = dish
             dishDialog.show(parentFragmentManager, "")
         }
     }
-
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)

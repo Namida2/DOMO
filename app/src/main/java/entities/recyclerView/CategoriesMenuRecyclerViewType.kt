@@ -7,46 +7,46 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.domo.R
 import com.example.domo.adapters.MenuItemsAdapter
 import com.example.domo.databinding.LayoutCategoriesContainerBinding
-import entities.menu.CategoriesHolder
+import entities.menu.CategoriesNameHolder
 import entities.recyclerView.interfaces.BaseRecyclerViewItem
 import entities.recyclerView.interfaces.BaseViewHolder
 import entities.recyclerView.interfaces.MenuRecyclerViewType
 
 class CategoriesMenuRecyclerViewType :
-    MenuRecyclerViewType<LayoutCategoriesContainerBinding, CategoriesHolder> {
+    MenuRecyclerViewType<LayoutCategoriesContainerBinding, CategoriesNameHolder> {
 
     override fun getViewHolder(
         inflater: LayoutInflater,
         parent: ViewGroup,
-    ): BaseViewHolder<LayoutCategoriesContainerBinding, CategoriesHolder> =
+    ): BaseViewHolder<LayoutCategoriesContainerBinding, CategoriesNameHolder> =
         CategoriesMenuViewHolder(
             LayoutCategoriesContainerBinding.inflate(inflater, parent, false)
         )
 
     override fun getLayoutId(): Int = R.layout.layout_categories_container
-    override fun getDiffCallback(): DiffUtil.ItemCallback<CategoriesHolder> = diffCallback
+    override fun getDiffCallback(): DiffUtil.ItemCallback<CategoriesNameHolder> = diffCallback
 
-    private val diffCallback = object : DiffUtil.ItemCallback<CategoriesHolder>() {
+    private val diffCallback = object : DiffUtil.ItemCallback<CategoriesNameHolder>() {
         override fun areItemsTheSame(
-            oldItem: CategoriesHolder,
-            newItem: CategoriesHolder,
+            oldItem: CategoriesNameHolder,
+            newItem: CategoriesNameHolder,
         ): Boolean = oldItem == newItem
 
         override fun areContentsTheSame(
-            oldItem: CategoriesHolder,
-            newItem: CategoriesHolder,
+            oldItem: CategoriesNameHolder,
+            newItem: CategoriesNameHolder,
         ): Boolean = oldItem == newItem
 
     }
 
     override fun isItMe(recyclerViewItem: BaseRecyclerViewItem): Boolean =
-        recyclerViewItem is CategoriesHolder
+        recyclerViewItem is CategoriesNameHolder
 
 }
 
 class CategoriesMenuViewHolder(
     override val binding: LayoutCategoriesContainerBinding,
-) : BaseViewHolder<LayoutCategoriesContainerBinding, CategoriesHolder>(binding) {
+) : BaseViewHolder<LayoutCategoriesContainerBinding, CategoriesNameHolder>(binding) {
 
     private var itemsAdapter = MenuItemsAdapter(
         listOf(
@@ -62,7 +62,7 @@ class CategoriesMenuViewHolder(
         }
     }
 
-    override fun onBind(item: CategoriesHolder) {
+    override fun onBind(item: CategoriesNameHolder) {
         itemsAdapter.submitList(item.categories)
     }
 }

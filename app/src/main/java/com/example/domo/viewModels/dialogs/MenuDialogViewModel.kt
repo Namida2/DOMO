@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.domo.models.interfaces.MenuDialogInterface
 import com.example.domo.models.interfaces.MenuHolderStates
 import entities.menu.CategoryName
+import entities.menu.Dish
 import entities.recyclerView.interfaces.BaseRecyclerViewItem
 import entities.tools.Event
 
@@ -24,8 +25,8 @@ class MenuDialogViewModel(
         MutableLiveData(MenuDialogStates.Default)
     val state: LiveData<MenuDialogStates> = _state
 
-    private var _onDishSelected: MutableLiveData<Event<Int>> = MutableLiveData()
-    val onDishSelected: LiveData<Event<Int>> = _onDishSelected
+    private var _onDishSelected: MutableLiveData<Event<Dish>> = MutableLiveData()
+    val onDishSelected: LiveData<Event<Dish>> = _onDishSelected
 
     init {
         when (model.menuState.value) {
@@ -45,13 +46,13 @@ class MenuDialogViewModel(
     }
 
     private fun getRecyclerViewItems(): List<BaseRecyclerViewItem> =
-        listOf(model.menuCategories) +
+        listOf(model.menuCategoriesName) +
                 model.menu.map {
                     listOf(CategoryName(it.name)) + it.dishes
                 }.flatten()
 
     fun onDishClick (dishId: Int) {
-        _onDishSelected.value = Event(dishId)
+        _onDishSelected.value = Event(model.getDishById(dishId))
     }
 
 

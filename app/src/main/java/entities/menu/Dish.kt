@@ -10,10 +10,11 @@ data class Dish(
     var name: String = "",
     val categoryName: String = "",
     val cost: String = "",
-    val weight: String ="",
-): BaseRecyclerViewItem {
+    val weight: String = "",
+) : BaseRecyclerViewItem {
     companion object {
-        var dishesCount = 0
+        private var dishesCount = 0
             get() = field++
     }
+
 }
