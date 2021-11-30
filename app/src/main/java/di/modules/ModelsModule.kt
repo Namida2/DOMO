@@ -6,6 +6,7 @@ import com.example.domo.models.authorisation.RegistrationModel
 import com.example.domo.models.interfaces.*
 import dagger.Binds
 import dagger.Module
+import entities.interfaces.OrderServiceInterface
 import javax.inject.Singleton
 
 @Module
@@ -28,4 +29,7 @@ interface ModelsModule {
     @Binds
     @Singleton
     fun bindMenuDialogModule(menuDialogModel: MenuDialogModel): MenuDialogInterface
+    @Binds
+    @Singleton
+    fun bindOrderService(orderService: OrdersService): OrderServiceInterface<OrderServiceSub>
 }

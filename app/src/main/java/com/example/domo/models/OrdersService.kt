@@ -1,15 +1,16 @@
 package com.example.domo.models
 
-import entities.interfaces.BaseObservable
 import entities.interfaces.OrderServiceInterface
 import entities.order.Order
+import entities.order.OrderItem
 import javax.inject.Inject
-import javax.inject.Singleton
 
 typealias OrderServiceSub = (orders: List<Order>) -> Unit
-//TODO: Add entities and realisation // STOPPED //
-@Singleton
-class OrdersService @Inject constructor(): OrderServiceInterface<OrderServiceSub> {
+
+class OrdersService @Inject constructor() :
+    OrderServiceInterface<@kotlin.jvm.JvmSuppressWildcards OrderServiceSub> {
+
+    override var currentOrder: Order? = null
     private var orders = mutableSetOf<Order>()
     private var subscribers = mutableSetOf<OrderServiceSub>()
 
@@ -27,12 +28,29 @@ class OrdersService @Inject constructor(): OrderServiceInterface<OrderServiceSub
         }
     }
 
-    override fun addOrder(order: Order) {
-        orders.add(order)
-        var a = mutableMapOf<Order, Int>()
+    override fun addOrderItem(orderItem: OrderItem): Boolean =
+        currentOrder?.addOrderItem(orderItem) //TODO: Add exceptions to constants
+            ?: throw IllegalStateException("Current order has not been initialised.")
+
+    override fun removeOrder(order: Order) {
+        orders.remove(order)
+    }
+//
+//    override fun getOrder(tableId: Int): Order =
+//        orders.find {
+//            it.tableId == tableId
+//        } ?: Order(tableId).also {
+//            orders.add(it)
+//        }
+
+    override fun confirmCurrentOrder() {
+        orders.add(currentOrder!!)
+        notifyChanges()
     }
 
-    override fun removeOrder(tableId: Int) {
-        TODO("Not yet implemented")
+    override fun initCurrentOrder(tableId: Int, guestCount: Int) {
+        if(currentOrder != null) return
+        currentOrder = Order(tableId, guestCount)
     }
+
 }

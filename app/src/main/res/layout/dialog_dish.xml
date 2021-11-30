@@ -32,7 +32,7 @@
                 android:maxLines="2"
                 android:text="Гёдза с мраморной говядиной"
                 android:textColor="@color/black"
-                android:textSize="16dp" />
+                android:textSize="18dp" />
 
             <ImageButton
                 android:id="@+id/closeDialogButton"
@@ -47,39 +47,20 @@
                 android:src="@drawable/ic_cancel" />
         </RelativeLayout>
 
-        <LinearLayout
+
+        <NumberPicker
+            android:id="@+id/countNumberPicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:onValueChange="@{(view, aldValue, newValue) -> viewModel.onCountChanged(newValue)}"
+            android:orientation="horizontal"
+            android:overScrollMode="always"
+            android:theme="@style/dishCountNumberPicker" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="16dp"
-                android:fontFamily="@font/montserrat_semi_bold"
-                android:text="Порцый: "
-                android:textColor="@color/black"
-                android:textSize="16dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:orientation="vertical">
-
-                <NumberPicker
-                    android:id="@+id/countNumberPicker"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:overScrollMode="always"
-                    android:theme="@style/dishCountNumberPicker" />
-            </LinearLayout>
-        </LinearLayout>
 
         <EditText
             android:id="@+id/commentary"
@@ -92,12 +73,12 @@
             android:background="@drawable/bg_edit_text"
             android:hint="Комментарий"
             android:inputType="text"
+            android:onTextChanged="@{(charSequence, start, before, count) -> viewModel.onCommentaryChanged(charSequence)}"
             android:paddingStart="24dp"
             android:paddingEnd="24dp"
             android:textColor="@color/black" />
 
         <Button
-            android:onClick="@{view -> viewModel.onAddButtonClick(view)}"
             android:id="@+id/addDishButton"
             style="@style/buttonStyle"
             android:layout_width="match_parent"
@@ -108,6 +89,7 @@
             android:layout_marginBottom="32sp"
             android:drawableEnd="@drawable/ic_arrow_left_white"
             android:gravity="left|center"
+            android:onClick="@{view -> viewModel.onAddButtonClick(view)}"
             android:paddingStart="24dp"
             android:text="Добавить в заказ" />
 
