@@ -32,4 +32,7 @@ interface ModelsModule {
     @Binds
     @Singleton
     fun bindOrderService(orderService: OrdersService): OrderServiceInterface<OrderServiceSub>
+    @Binds
+    @Singleton
+    fun waiterActOrderFragModel(model: WaiterActOrderFragModel): WaiterActOrderFragSharedViewModelInterface
 }

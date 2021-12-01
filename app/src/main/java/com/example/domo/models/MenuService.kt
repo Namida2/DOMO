@@ -7,7 +7,6 @@ import com.example.domo.models.interfaces.MenuHolderStates
 import com.example.domo.models.interfaces.MenuLocalRepository
 import com.example.domo.models.remoteRepository.FirestoreReferences.menuCollectionRef
 import com.example.domo.views.activities.log
-import com.google.firebase.firestore.FirebaseFirestore
 import constants.FirestoreConstants
 import database.daos.MenuDao
 import entities.menu.Category
@@ -23,7 +22,7 @@ import javax.inject.Singleton
 
 @Singleton
 class MenuService @Inject constructor(
-    private var menuDao: MenuDao
+    private var menuDao: MenuDao,
 ) : MenuHolder, MenuLocalRepository {
 
     private val _menuState: MutableLiveData<MenuHolderStates> =
@@ -104,5 +103,16 @@ class MenuService @Inject constructor(
         }.map {
             CategoryName(it)
         }
+
+    override fun getDishById(dishId: Int): Dish? {
+        var dish: Dish? = null
+        menu.find { category ->
+            dish = category.dishes.find {
+                it.id == dishId
+            }
+            dish == null
+        }
+        return dish
+    }
 
 }

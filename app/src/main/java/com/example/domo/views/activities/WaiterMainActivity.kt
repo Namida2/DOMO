@@ -13,7 +13,7 @@ import com.example.domo.R
 import com.example.domo.databinding.ActivityWaiterMainBinding
 
 import com.example.domo.viewModels.ViewModelFactory
-import com.example.domo.viewModels.WaiterActivityOrderFragmentSharedViewModel
+import com.example.domo.viewModels.shared.WaiterActOrderFragSharedViewModel
 import extentions.Animations.prepareHide
 import extentions.Animations.prepareShow
 import extentions.Animations.prepareSlideDown
@@ -24,7 +24,7 @@ class WaiterMainActivity : AppCompatActivity(),
     NavController.OnDestinationChangedListener {
     private lateinit var binding: ActivityWaiterMainBinding
     private var navController: NavController? = null
-    private val sharedViewModel: WaiterActivityOrderFragmentSharedViewModel by viewModels {
+    private val sharedViewModel: WaiterActOrderFragSharedViewModel by viewModels {
         ViewModelFactory(appComponent)
     }
 

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="sharedViewModel"
-            type="com.example.domo.viewModels.WaiterActivityOrderFragmentSharedViewModel" />
+            type="com.example.domo.viewModels.shared.WaiterActOrderFragSharedViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -73,6 +73,7 @@
                 app:fabAlignmentMode="end"
                 app:fabAnimationMode="scale"
                 app:hideOnScroll="true"
+                app:navigationOnClickListener="@{view -> sharedViewModel.onNavigationIconClickListener(view)}"
                 android:layout_gravity="bottom"
                 app:navigationIcon="@drawable/ic_menu">
                 <TextView

@@ -11,6 +11,9 @@ class OrdersService @Inject constructor() :
     OrderServiceInterface<@kotlin.jvm.JvmSuppressWildcards OrderServiceSub> {
 
     override var currentOrder: Order? = null
+    get() =
+        field ?: throw IllegalStateException("Order has not been initialized yet.")
+
     private var orders = mutableSetOf<Order>()
     private var subscribers = mutableSetOf<OrderServiceSub>()
 
@@ -35,7 +38,7 @@ class OrdersService @Inject constructor() :
     override fun removeOrder(order: Order) {
         orders.remove(order)
     }
-//
+
 //    override fun getOrder(tableId: Int): Order =
 //        orders.find {
 //            it.tableId == tableId
@@ -49,8 +52,14 @@ class OrdersService @Inject constructor() :
     }
 
     override fun initCurrentOrder(tableId: Int, guestCount: Int) {
-        if(currentOrder != null) return
-        currentOrder = Order(tableId, guestCount)
+        val result: Order? = orders.find { it.tableId == tableId }
+        currentOrder = result?.also {
+            it.guestsCount = guestCount
+        } ?: Order(tableId, guestCount)
+    }
+
+    override fun changeGuestsCount(newCount: Int) {
+        TODO("Not yet implemented")
     }
 
 }

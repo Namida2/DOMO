@@ -9,4 +9,5 @@ interface OrderServiceInterface<Subscriber> : BaseObservable<Subscriber>{
     fun removeOrder(order: Order)
     fun confirmCurrentOrder()
     fun initCurrentOrder(tableId: Int, guestCount: Int)
+    fun changeGuestsCount(newCount: Int)
 }

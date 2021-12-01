@@ -72,10 +72,6 @@ class MenuBottomSheetDialog(
         }
     }
 
-    fun setOrderInfo(tableId: Int, guestCount: Int) {
-        dishDialog.setOrderInfo(tableId, guestCount)
-    }
-
     private fun initRecyclerView() {
         with(binding.menuRecyclerView) {
             setHasFixedSize(true)

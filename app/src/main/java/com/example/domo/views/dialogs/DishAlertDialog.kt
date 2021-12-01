@@ -22,9 +22,6 @@ import extentions.createDialog
 
 class DishAlertDialog : DialogFragment() {
 
-    private var tableId: Int = 0
-    private var guestCount: Int = 0
-
     private val maxCountValue = 20
     private val minCountValue = 1
 
@@ -51,7 +48,6 @@ class DishAlertDialog : DialogFragment() {
             requireActivity(), ViewModelFactory(context.appComponent)
         )[DishDialogViewModel::class.java]
         viewModel.dish = dish
-        viewModel.setOrderInfo(tableId, guestCount)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -66,11 +62,7 @@ class DishAlertDialog : DialogFragment() {
         binding = DialogDishBinding.inflate(layoutInflater)
         binding?.viewModel = viewModel
         initViews(binding!!)
-    }
-
-    fun setOrderInfo(tableId: Int, guestCount: Int) {
-        this.tableId = tableId
-        this.guestCount = guestCount
+        initViews(binding!!)
     }
 
     override fun onDismiss(dialog: DialogInterface) {
@@ -84,7 +76,4 @@ class DishAlertDialog : DialogFragment() {
         binding.countNumberPicker.minValue = minCountValue
     }
 
-    override fun getTheme(): Int {
-        return R.style.alertDialogStyle
-    }
 }
