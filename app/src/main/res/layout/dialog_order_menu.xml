@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center|top"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="120dp"
+            android:background="@drawable/bg_black_round" />
+
+        <Button
+            android:id="@+id/acceptOrderButton"
+            style="@style/buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawableTint="@color/white"
+            android:gravity="left|center"
+            android:paddingStart="24dp"
+            android:text="Принять этот заказ"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/changeGuestCountButton"
+            style="@style/buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawableTint="@color/white"
+            android:gravity="left|center"
+            android:paddingStart="24dp"
+            android:text="Сменить количество гостей"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/line" />
+
+        <Button
+            android:id="@+id/goToNewTableButton"
+            style="@style/buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawableTint="@color/white"
+            android:gravity="left|center"
+            android:paddingStart="24dp"
+            android:text="Перенести на другой столик"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/line"
+            tools:layout_editor_absoluteX="16dp" />
+    </LinearLayout>
+</layout>

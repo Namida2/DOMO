@@ -4,8 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.domo.viewModels.activities.SplashScreenViewModel
 import com.example.domo.viewModels.dialogs.DishDialogViewModel
+import com.example.domo.viewModels.dialogs.OrderMenuDialogViewModel
 import com.example.domo.viewModels.fragments.TablesViewModel
 import com.example.domo.viewModels.shared.WaiterActOrderFragSharedViewModel
+import com.example.domo.views.dialogs.OrderMenuBottomSheetDialog
 import di.AppComponent
 
 class ViewModelFactory(private val appComponent: AppComponent) : ViewModelProvider.Factory {
@@ -20,6 +22,7 @@ class ViewModelFactory(private val appComponent: AppComponent) : ViewModelProvid
             MenuDialogViewModel::class.java -> MenuDialogViewModel(appComponent.provideMenuDialogModel())
             TablesViewModel::class.java -> TablesViewModel()
             DishDialogViewModel::class.java -> DishDialogViewModel(appComponent.provideOrderService())
+            OrderMenuDialogViewModel::class.java -> OrderMenuDialogViewModel()
             else -> throw IllegalArgumentException("Unknown viewModel class")
         }
         return viewModel as T

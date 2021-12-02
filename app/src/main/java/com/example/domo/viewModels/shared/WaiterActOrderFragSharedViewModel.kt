@@ -10,6 +10,7 @@ import entities.order.OrderItem
 
 sealed class SharedViewModelStates {
     class ShowingMenuDialog (val fba: View): SharedViewModelStates()
+    object ShowingOrderMenuDialog: SharedViewModelStates()
     object Default: SharedViewModelStates()
 }
 
@@ -31,7 +32,7 @@ class WaiterActOrderFragSharedViewModel (
 
     //TODO: Add the OrderMenuBottomSheetDialog and confirming of the current order // STOPPED //
     fun onNavigationIconClickListener(view: View) {
-
+        _states.value = SharedViewModelStates.ShowingOrderMenuDialog
     }
 
     override fun onDismiss() {

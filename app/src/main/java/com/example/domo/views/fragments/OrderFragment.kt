@@ -121,8 +121,10 @@ class OrderFragment : Fragment() {
                     if (!menuBottomSheetDialog?.isAdded!!)
                         menuBottomSheetDialog?.show(parentFragmentManager, "")
                 }
-                else -> {
-                } //DefaultState
+                is SharedViewModelStates.ShowingOrderMenuDialog -> {
+
+                }
+                else -> {} //DefaultState
             }
         }
     }
