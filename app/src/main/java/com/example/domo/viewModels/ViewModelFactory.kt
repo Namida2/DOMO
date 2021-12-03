@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.domo.viewModels.activities.SplashScreenViewModel
 import com.example.domo.viewModels.dialogs.DishDialogViewModel
+import com.example.domo.viewModels.dialogs.MenuDialogViewModel
 import com.example.domo.viewModels.dialogs.OrderMenuDialogViewModel
 import com.example.domo.viewModels.fragments.TablesViewModel
 import com.example.domo.viewModels.shared.WaiterActOrderFragSharedViewModel
-import com.example.domo.views.dialogs.OrderMenuBottomSheetDialog
 import di.AppComponent
 
 class ViewModelFactory(private val appComponent: AppComponent) : ViewModelProvider.Factory {

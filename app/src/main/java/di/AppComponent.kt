@@ -34,7 +34,7 @@ interface AppComponent {
     fun provideSplashScreenModel(): SplashScreenModelInterface
     fun provideRegistrationModel(): RegistrationModelInterface
     fun provideLogInModel(): LogInModelInterface
-    fun provideMenuDialogModel(): MenuDialogInterface
+    fun provideMenuDialogModel(): MenuDialogModelInterface
     fun provideOrderService(): OrderServiceInterface<OrderServiceSub>
     fun provideWaiterActOrderFragModel(): WaiterActOrderFragSharedViewModelInterface
 

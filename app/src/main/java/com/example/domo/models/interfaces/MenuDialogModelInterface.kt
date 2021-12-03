@@ -6,7 +6,7 @@ import entities.menu.Category
 import entities.menu.CategoryName
 import entities.menu.Dish
 
-interface MenuDialogInterface {
+interface MenuDialogModelInterface {
     val menuState: LiveData<MenuHolderStates>
     val menu: List<Category>
     fun getDishById(id: Int): Dish

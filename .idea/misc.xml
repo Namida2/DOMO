@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3880208333333333" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/bg_black_raunded.xml" value="0.2586805555555556" />
+        <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/bg_black_round.xml" value="0.25601374570446733" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/bg_edit_text.xml" value="0.3880208333333333" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/bg_error_dialog.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/bg_error_dialog_button.xml" value="0.2586805555555556" />
@@ -41,7 +42,7 @@
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/dialog_order_menu.xml" value="0.33" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/dialog_process.xml" value="0.25" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_log_in.xml" value="1.1" />
-        <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_order.xml" value="0.25" />
+        <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_order.xml" value="0.3033811949976841" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_orders.xml" value="0.23258196721311475" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_registration.xml" value="0.23599726775956284" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_tables.xml" value="0.22" />

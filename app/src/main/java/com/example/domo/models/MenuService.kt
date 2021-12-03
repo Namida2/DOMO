@@ -110,7 +110,7 @@ class MenuService @Inject constructor(
             dish = category.dishes.find {
                 it.id == dishId
             }
-            dish == null
+            dish != null
         }
         return dish
     }

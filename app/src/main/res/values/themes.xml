@@ -15,6 +15,17 @@
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
     </style>
 
+
+    <style name="appBarLayoutStyle" parent="TextAppearance.MaterialComponents.Button">
+        <item name="shapeAppearance">@style/aaa</item>
+        <item name="android:background">@color/blue</item>
+    </style>
+    <style name="aaa" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+    </style>
+
+
     <style name="dishCountNumberPicker">
         <item name="android:fontFamily">@font/montserrat_semi_bold</item>
         <item name="android:textSize">18sp</item>
@@ -33,7 +44,6 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">24dp</item>
     </style>
-
 
     <style name="splashScreenStyle" parent="Theme.DOMO">
         <item name="android:windowBackground">@drawable/layout_splash_screen</item>
@@ -98,7 +108,7 @@
     </style>
 
     <style name="buttonShapeAppearance" parent="ShapeAppearance.MaterialComponents.MediumComponent">
-        <item name="cornerSize">90dp</item>
+        <item name="cornerSize">16dp</item>
         <item name="cornerFamily">rounded</item>
     </style>
 

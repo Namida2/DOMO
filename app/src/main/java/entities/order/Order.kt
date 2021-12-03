@@ -1,5 +1,6 @@
 package entities.order
 
+//TODO: Add a "one-to-many" relation
 data class Order(
     val tableId: Int,
     var guestsCount: Int,

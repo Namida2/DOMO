@@ -1,9 +1,9 @@
-package com.example.domo.viewModels
+package com.example.domo.viewModels.dialogs
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.domo.models.interfaces.MenuDialogInterface
+import com.example.domo.models.interfaces.MenuDialogModelInterface
 import com.example.domo.models.interfaces.MenuHolderStates
 import entities.menu.CategoryName
 import entities.menu.Dish
@@ -20,7 +20,7 @@ sealed class MenuDialogStates {
 }
 
 class MenuDialogViewModel(
-    private val model: MenuDialogInterface,
+    private val model: MenuDialogModelInterface,
 ) : ViewModel() {
     private var _state: MutableLiveData<MenuDialogStates> =
         MutableLiveData(MenuDialogStates.Default)

@@ -3,6 +3,7 @@ package di.modules
 import com.example.domo.models.*
 import com.example.domo.models.authorisation.LogInModel
 import com.example.domo.models.authorisation.RegistrationModel
+import com.example.domo.models.dialogs.MenuDialogModel
 import com.example.domo.models.interfaces.*
 import dagger.Binds
 import dagger.Module
@@ -28,7 +29,7 @@ interface ModelsModule {
     fun bindMenuLocalRepository(menuHolder: MenuService): MenuLocalRepository
     @Binds
     @Singleton
-    fun bindMenuDialogModule(menuDialogModel: MenuDialogModel): MenuDialogInterface
+    fun bindMenuDialogModule(menuDialogModel: MenuDialogModel): MenuDialogModelInterface
     @Binds
     @Singleton
     fun bindOrderService(orderService: OrdersService): OrderServiceInterface<OrderServiceSub>

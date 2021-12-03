@@ -1,6 +1,6 @@
-package com.example.domo.models
+package com.example.domo.models.dialogs
 
-import com.example.domo.models.interfaces.MenuDialogInterface
+import com.example.domo.models.interfaces.MenuDialogModelInterface
 import com.example.domo.models.interfaces.MenuHolder
 import entities.menu.CategoriesNameHolder
 import entities.menu.Dish
@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class MenuDialogModel @Inject constructor(
     private val menuHolder: MenuHolder,
-) : MenuDialogInterface {
+) : MenuDialogModelInterface {
     override val menu = menuHolder.menu
     override val menuState = menuHolder.menuState
     override fun getAllCategories(): CategoriesNameHolder =

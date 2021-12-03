@@ -1,125 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/rootCoordinationLayout"
         android:layout_width="match_parent"
-        android:transitionName="end"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:id="@+id/rootCoordinationLayout">
-
-        <com.google.android.material.card.MaterialCardView
-            style="@style/cardViewStyle"
-            android:elevation="8dp"
-            app:cardElevation="8dp"
-            android:layout_width="match_parent"
-            app:cardPreventCornerOverlap="false"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.appbar.AppBarLayout
-                android:background="@android:color/transparent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:elevation="0dp">
-
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/toolbar"
-                    android:background="@android:color/transparent"
-                    android:transitionName="orderToolBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:elevation="0dp"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    app:navigationIconTint="@color/white"
-                    app:navigationIcon="@drawable/ic_arrow_left">
-
-                    <LinearLayout
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/tableInfoContainer"
-                            android:layout_width="wrap_content"
-                            android:layout_marginEnd="72dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="28dp"
-                            android:layout_marginBottom="28dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                            <TextView
-                                android:id="@+id/textView"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:text="Столик"
-                                android:textColor="@color/white"
-                                android:textSize="16dp"
-                                app:layout_constraintStart_toEndOf="@+id/guest_avatar"
-                                app:layout_constraintTop_toTopOf="@+id/guest_avatar" />
-
-                            <TextView
-                                android:id="@+id/table_number"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:text="17"
-                                android:textColor="@color/white"
-                                android:textSize="32dp"
-                                app:layout_constraintBottom_toBottomOf="@+id/guest_avatar"
-                                app:layout_constraintEnd_toEndOf="@+id/textView"
-                                app:layout_constraintStart_toStartOf="@+id/textView"
-                                app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-                            <ImageView
-                                android:id="@+id/guest_avatar"
-                                android:layout_width="62dp"
-                                android:layout_height="72dp"
-                                android:layout_centerHorizontal="true"
-                                android:src="@drawable/ic_avatar_0"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/textView3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:text="Гостей"
-                                android:textColor="@color/white"
-                                android:textSize="16dp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/textView"
-                                app:layout_constraintTop_toTopOf="@+id/textView" />
-
-                            <TextView
-                                android:id="@+id/guests_count"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:fontFamily="@font/montserrat_regular"
-                                android:text="1"
-                                android:textColor="@color/white"
-                                android:textSize="32dp"
-                                app:layout_constraintBottom_toBottomOf="@+id/guest_avatar"
-                                app:layout_constraintEnd_toEndOf="@+id/textView3"
-                                app:layout_constraintStart_toStartOf="@+id/textView3"
-                                app:layout_constraintTop_toBottomOf="@+id/textView3" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </LinearLayout>
-                </com.google.android.material.appbar.MaterialToolbar>
-            </com.google.android.material.appbar.AppBarLayout>
-        </com.google.android.material.card.MaterialCardView>
-
+        android:transitionName="end">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/order_recycler_view"
@@ -128,5 +17,105 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/layout_order_item" />
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_top_card"
+            app:elevation="2dp">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:transitionName="orderToolBar"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:navigationIcon="@drawable/ic_arrow_left"
+                app:navigationIconTint="@color/white">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/tableInfoContainer"
+                        android:layout_width="wrap_content"
+                        android:layout_marginEnd="72dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:text="Столик"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            app:layout_constraintStart_toEndOf="@+id/guest_avatar"
+                            app:layout_constraintTop_toTopOf="@+id/guest_avatar" />
+
+                        <TextView
+                            android:id="@+id/table_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="32dp"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:text="17"
+                            android:textColor="@color/white"
+                            android:textSize="24dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/guest_avatar"
+                            app:layout_constraintEnd_toEndOf="@+id/textView"
+                            app:layout_constraintStart_toStartOf="@+id/textView"
+                            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+                        <ImageView
+                            android:id="@+id/guest_avatar"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/ic_avatar_0"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:text="Гостей"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toEndOf="@+id/textView"
+                            app:layout_constraintTop_toTopOf="@+id/textView" />
+
+                        <TextView
+                            android:id="@+id/guests_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="32dp"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:text="1"
+                            android:textColor="@color/white"
+                            android:textSize="24dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/guest_avatar"
+                            app:layout_constraintEnd_toEndOf="@+id/textView3"
+                            app:layout_constraintStart_toStartOf="@+id/textView3"
+                            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

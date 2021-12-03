@@ -11,8 +11,8 @@ import com.example.domo.R
 import com.example.domo.adapters.MenuItemsAdapter
 import com.example.domo.adapters.itemDecorations.MenuItemDecorations
 import com.example.domo.databinding.DialogMenuBinding
-import com.example.domo.viewModels.MenuDialogStates
-import com.example.domo.viewModels.MenuDialogViewModel
+import com.example.domo.viewModels.dialogs.MenuDialogStates
+import com.example.domo.viewModels.dialogs.MenuDialogViewModel
 import com.example.domo.viewModels.ViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import entities.interfaces.OnDismissListener

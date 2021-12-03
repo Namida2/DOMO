@@ -26,7 +26,7 @@
                 android:layout_marginEnd="42dp"
                 android:fontFamily="@font/montserrat_regular"
                 android:text="Гостей"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="@color/black"/>
 
             <TextView
@@ -34,11 +34,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="42dp"
                 android:fontFamily="@font/montserrat_regular"
                 android:text="17"
-                android:textSize="36sp"
+                android:textSize="32sp"
                 android:textColor="@color/black"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

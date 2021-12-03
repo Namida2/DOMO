@@ -7,10 +7,9 @@ import javax.inject.Inject
 
 class WaiterActOrderFragModel @Inject constructor (
     private val orderService: OrderServiceInterface<OrderServiceSub>
-): WaiterActOrderFragSharedViewModelInterface {
-    override fun initCurrentOrder(tableId: Int, guestCount: Int) {
-        orderService.initCurrentOrder(tableId, guestCount)
-    }
+): WaiterActOrderFragSharedViewModelInterface, OrderServiceInterface<OrderServiceSub> by orderService {
+
     override fun getCurrentOrderItems(): Set<OrderItem>
     = orderService.currentOrder?.orderItems?.toSet()!!
+
 }

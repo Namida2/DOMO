@@ -65,7 +65,7 @@
             app:labelVisibilityMode="labeled"
             app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
             app:menu="@menu/menu_waiter" />
-
+<!--TODO: Add hiding this view when recyclerView scrolling in OrderFragment-->
             <com.google.android.material.bottomappbar.BottomAppBar
                 android:id="@+id/bottomAppBar"
                 style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
@@ -74,7 +74,7 @@
                 app:fabAlignmentMode="end"
                 app:fabAnimationMode="scale"
                 app:hideOnScroll="true"
-                app:navigationOnClickListener="@{view -> sharedViewModel.onNavigationIconClickListener(view)}"
+                app:navigationOnClickListener="@{view -> sharedViewModel.onNavigationIconClickListener()}"
                 android:layout_gravity="bottom"
                 app:navigationIcon="@drawable/ic_menu">
                 <TextView
