@@ -1,11 +1,11 @@
 package com.example.domo.viewModels.dialogs
 
+import android.view.View
 import androidx.lifecycle.ViewModel
 
-class OrderMenuDialogViewModel (
-        ): ViewModel() {
+class OrderMenuDialogViewModel: ViewModel() {
 
-    fun onConfirmOrderButtonClick() {
+    fun onConfirmOrderButtonClick(view: View) {
 
     }
 }

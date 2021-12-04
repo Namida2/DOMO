@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.example.domo.models.OrderServiceSub
 import com.example.domo.models.interfaces.*
 import com.example.domo.views.activities.SplashScreenActivity
+import com.example.domo.views.activities.WaiterMainActivity
 import com.example.domo.views.dialogs.MenuBottomSheetDialog
 import com.example.domo.views.fragments.OrderFragment
 import com.example.domo.views.fragments.TablesFragment
@@ -38,7 +39,7 @@ interface AppComponent {
     fun provideOrderService(): OrderServiceInterface<OrderServiceSub>
     fun provideWaiterActOrderFragModel(): WaiterActOrderFragSharedViewModelInterface
 
-    fun inject(splashScreenActivity: SplashScreenActivity)
+    fun inject(activity: WaiterMainActivity)
     fun inject(fragment: TablesFragment)
     fun inject(fragment: MenuBottomSheetDialog)
     fun inject(fragment: OrderFragment)

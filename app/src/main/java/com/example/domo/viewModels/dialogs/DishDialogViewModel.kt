@@ -39,8 +39,9 @@ class DishDialogViewModel(
 
     fun onAddButtonClick(view: View) {
         view.isActivated = false
-        val resultOfAdding = ordersService.addOrderItem(
-            OrderItem(dish!!.id, dishesCount, commentary)
+        val tableId = ordersService.currentOrder?.tableId!!
+        val resultOfAdding = ordersService.addOrderItem (
+            OrderItem(dish!!.id, tableId, dishesCount, commentary)
         )
         if (!resultOfAdding) {
             _state.value = DishDialogVMStates.DishAlreadyAdded
