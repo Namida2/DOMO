@@ -17,6 +17,6 @@ class LocalRepositoryModule {
 
     @Provides
     @Singleton
-    fun provideOOrderDao(database: Database) = database.orderDao()
+    fun provideOrderDao(database: Database) = database.orderDao()
 
 }

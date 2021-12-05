@@ -83,6 +83,7 @@ class OrderFragment : Fragment() {
     private fun initDialogs() {
         menuBottomSheetDialog = MenuBottomSheetDialog(sharedViewModel)
         orderMenuDialog = OrderMenuBottomSheetDialog(sharedViewModel)
+        //TODO: Fix this // STOPPED //
         guestCountDialog = GuestsCountBottomSheetDialog {
             binding.guestsCount.text = it.toString()
             sharedViewModel.initCurrentOrder(tableId, it)

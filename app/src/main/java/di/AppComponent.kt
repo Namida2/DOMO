@@ -38,6 +38,7 @@ interface AppComponent {
     fun provideMenuDialogModel(): MenuDialogModelInterface
     fun provideOrderService(): OrderServiceInterface<OrderServiceSub>
     fun provideWaiterActOrderFragModel(): WaiterActOrderFragSharedViewModelInterface
+    fun provideOrderMenuDialogViewModel(): OrderMenuDialogModelInterface
 
     fun inject(activity: WaiterMainActivity)
     fun inject(fragment: TablesFragment)

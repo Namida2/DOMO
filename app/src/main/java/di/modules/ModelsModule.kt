@@ -4,6 +4,7 @@ import com.example.domo.models.*
 import com.example.domo.models.authorisation.LogInModel
 import com.example.domo.models.authorisation.RegistrationModel
 import com.example.domo.models.dialogs.MenuDialogModel
+import com.example.domo.models.dialogs.OrderMenuDialogModel
 import com.example.domo.models.interfaces.*
 import dagger.Binds
 import dagger.Module
@@ -35,5 +36,8 @@ interface ModelsModule {
     fun bindOrderService(orderService: OrdersService): OrderServiceInterface<OrderServiceSub>
     @Binds
     @Singleton
-    fun waiterActOrderFragModel(model: WaiterActOrderFragModel): WaiterActOrderFragSharedViewModelInterface
+    fun bindWaiterActOrderFragModel(model: WaiterActOrderFragModel): WaiterActOrderFragSharedViewModelInterface
+    @Binds
+    @Singleton
+    fun bindOrderMenuDialogModel(model: OrderMenuDialogModel): OrderMenuDialogModelInterface
 }

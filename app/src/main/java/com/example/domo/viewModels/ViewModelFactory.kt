@@ -22,7 +22,7 @@ class ViewModelFactory(private val appComponent: AppComponent) : ViewModelProvid
             MenuDialogViewModel::class.java -> MenuDialogViewModel(appComponent.provideMenuDialogModel())
             TablesViewModel::class.java -> TablesViewModel()
             DishDialogViewModel::class.java -> DishDialogViewModel(appComponent.provideOrderService())
-            OrderMenuDialogViewModel::class.java -> OrderMenuDialogViewModel()
+            OrderMenuDialogViewModel::class.java -> OrderMenuDialogViewModel(appComponent.provideOrderMenuDialogViewModel())
             else -> throw IllegalArgumentException("Unknown viewModel class")
         }
         return viewModel as T

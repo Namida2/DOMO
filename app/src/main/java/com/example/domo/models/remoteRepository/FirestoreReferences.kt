@@ -21,5 +21,9 @@ object FirestoreReferences {
         fireStore.collection(FirestoreConstants.COLLECTION_RESTAURANTS)
             .document(FirestoreConstants.DOCUMENT_DOMO)
             .collection(FirestoreConstants.COLLECTION_MENU)
+    val ordersCollectionRef =
+        fireStore.collection(FirestoreConstants.COLLECTION_RESTAURANTS)
+            .document(FirestoreConstants.DOCUMENT_DOMO)
+            .collection(FirestoreConstants.COLLECTION_ORDERS)
 
 }

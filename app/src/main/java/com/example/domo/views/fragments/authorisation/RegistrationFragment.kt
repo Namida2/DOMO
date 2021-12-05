@@ -22,7 +22,7 @@ import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.views.activities.SplashScreenActivity
 import entities.ErrorMessage
 import extentions.appComponent
-import extentions.createDialog
+import extentions.createMessageDialog
 import extentions.isNetworkConnected
 import tools.dialogs.ProcessAlertDialog
 
@@ -90,7 +90,7 @@ class RegistrationFragment : Fragment() {
                         confirmPasswordEditText.text.toString(),
                     )
                 }
-            else requireContext().createDialog(
+            else requireContext().createMessageDialog(
                 ErrorMessage(
                     R.string.defaultTitle,
                     R.string.networkConnectionMessage
@@ -113,7 +113,7 @@ class RegistrationFragment : Fragment() {
                 else -> {
                     if (it is RegistrationViewModelStates.Default) return@observe
                     ProcessAlertDialog.dismiss()
-                    dialog = requireContext().createDialog(it.errorMessage!!)
+                    dialog = requireContext().createMessageDialog(it.errorMessage!!)
                 }
             }
             dialog?.show(parentFragmentManager, "")

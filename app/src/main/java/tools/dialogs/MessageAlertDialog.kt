@@ -7,7 +7,7 @@ import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.example.domo.R
 import com.example.domo.databinding.DialogMessageBinding
-import com.example.domo.views.activities.log
+import extentions.logD
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 class MessageAlertDialog(
     private val title: String,
     private val message: String,
-    private val action: (() -> Unit)? = null
+    private val action: (() -> Unit)? = null,
 ) : DialogFragment() {
 
     private val DISMISS_TIME: Long = 140
@@ -27,20 +27,21 @@ class MessageAlertDialog(
         fun <T> getNewInstance(
             title: String,
             message: String,
-            action: (() -> Unit)? = null
+            action: (() -> Unit)? = null,
         ): MessageAlertDialog? {
             if (isExist.get()) {
-                log("$this: dialog already exists.")
+                logD("$this: Dialog already exists.")
                 return null
             }
             return MessageAlertDialog(title, message, action)
         }
-
     }
+
     override fun onAttach(context: Context) {
         isExist.set(true)
         super.onAttach(context)
     }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val binding = DialogMessageBinding.inflate(layoutInflater)
         val builder = AlertDialog.Builder(context, R.style.alertDialogStyle)

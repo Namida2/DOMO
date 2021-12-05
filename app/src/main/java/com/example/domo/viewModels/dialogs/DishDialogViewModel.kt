@@ -6,12 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domo.R
 import com.example.domo.models.OrderServiceSub
-import com.example.domo.views.activities.log
 import entities.ErrorMessage
 import entities.interfaces.OrderServiceInterface
 import entities.menu.Dish
 import entities.order.OrderItem
-import entities.tools.Event
+import extentions.logD
 
 sealed class DishDialogVMStates {
     open var errorMessage: ErrorMessage? = null
@@ -34,6 +33,11 @@ class DishDialogViewModel(
     val state: LiveData<DishDialogVMStates> = _state
 
     var dish: Dish? = null
+    set(value) {
+        field = value
+        dishesCount = 1
+        commentary = ""
+    }
     private var dishesCount = 1
     private var commentary = ""
 
@@ -41,7 +45,7 @@ class DishDialogViewModel(
         view.isActivated = false
         val tableId = ordersService.currentOrder?.tableId!!
         val resultOfAdding = ordersService.addOrderItem (
-            OrderItem(dish!!.id, tableId, dishesCount, commentary)
+            OrderItem(tableId, dish!!.id, dishesCount, commentary)
         )
         if (!resultOfAdding) {
             _state.value = DishDialogVMStates.DishAlreadyAdded
@@ -49,7 +53,7 @@ class DishDialogViewModel(
         }
         else _state.value = DishDialogVMStates.DishSuccessfulAdded
         _state.value = DishDialogVMStates.Default
-        log(ordersService.currentOrder.toString())
+        logD(ordersService.currentOrder.toString())
     }
 
     fun onCountChanged(newCount: Int) {

@@ -4,13 +4,14 @@ import android.content.SharedPreferences
 import com.example.domo.models.interfaces.MenuLocalRepository
 import com.example.domo.models.interfaces.SplashScreenModelInterface
 import com.example.domo.models.remoteRepository.interfaces.SSRemoteRepositoryInterface
-import com.example.domo.views.activities.log
 import com.google.firebase.auth.FirebaseUser
 import constants.FirestoreConstants.FIELD_MENU_VERSION
 import database.daos.EmployeeDao
 import entities.*
 import entities.tools.Task
 import entities.tools.TaskWithEmployee
+import extentions.logD
+import extentions.logE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -30,10 +31,10 @@ class SplashScreenModel @Inject constructor(
     override fun readMenu() {
         remoteRepository.readMenuVersion { version ->
             if (isItTheSameMenuVersion(version)) {
-                log("$this: the same menu")
+                logD("$this: The same menu")
                 menuHolder.readExitingMenu()
             } else {
-                log("$this: new menu")
+                logD("$this: New menu")
                 menuHolder.readNewMenu {
                     sharedPreferences.edit().putLong(FIELD_MENU_VERSION, version).apply()
                 }
@@ -73,7 +74,7 @@ class SplashScreenModel @Inject constructor(
                     else task.onSuccess(employee)
                 }
             } else {
-                log("$this: ${firebaseAuthTask.exception.toString()}")
+                logE("$this: ${firebaseAuthTask.exception.toString()}")
                 task.onError()
             }
         }

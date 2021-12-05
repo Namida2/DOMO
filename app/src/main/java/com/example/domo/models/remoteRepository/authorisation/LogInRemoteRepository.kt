@@ -2,25 +2,32 @@ package com.example.domo.models.remoteRepository.authorisation
 
 import com.example.domo.R
 import com.example.domo.models.remoteRepository.FirestoreReferences.employeesCollectionRef
-import com.example.domo.views.activities.log
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import entities.Employee
 import entities.ErrorMessage
 import entities.tools.TaskWithEmployee
+import extentions.logE
 import javax.inject.Inject
 
 class LogInRemoteRepository @Inject constructor(
     private val auth: FirebaseAuth,
-    private val fireStore: FirebaseFirestore,
 ) {
+
+    private val permissionErrorMessage = ErrorMessage(
+        R.string.permissionErrorTitle,
+        R.string.permissionErrorMessage
+    )
+    private val defaultErrorMessage = ErrorMessage(
+        R.string.defaultTitle,
+        R.string.defaultMessage
+    )
 
     fun signIn(email: String, password: String, task: TaskWithEmployee) {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 readCurrentEmployee(email, task)
             } else {
-                log("$this: ${it.exception}")
+                logE("$this: ${it.exception}")
                 task.onError(
                     ErrorMessage(
                         R.string.wrongEmailOrPasswordTitle,
@@ -36,23 +43,17 @@ class LogInRemoteRepository @Inject constructor(
         employeesCollectionRef.document(email).get().addOnCompleteListener {
             if (it.isSuccessful) {
                 val employee = it.result?.toObject(Employee::class.java)
-                if (employee == null) {
+                if(employee == null) {
+                    task.onError(defaultErrorMessage)
+                    return@addOnCompleteListener
+                }
+                if (!employee.permission) {
                     auth.signOut()
-                    task.onError(
-                        ErrorMessage(
-                            R.string.permissionErrorTitle,
-                            R.string.permissionErrorMessage
-                        )
-                    )
+                    task.onError(permissionErrorMessage)
                 } else task.onSuccess(employee)
             } else {
-                log("$this: ${it.exception}")
-                task.onError(
-                    ErrorMessage(
-                        R.string.defaultTitle,
-                        R.string.defaultMessage
-                    )
-                )
+                logE("$this: ${it.exception}")
+                task.onError(defaultErrorMessage)
             }
         }
     }

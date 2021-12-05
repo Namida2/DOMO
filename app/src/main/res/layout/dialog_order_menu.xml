@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <data>
-        <variable
-            name="viewModel"
-            type="com.example.domo.viewModels.dialogs.OrderMenuDialogViewModel" />
-    </data>
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -30,7 +24,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:onClick="@{view -> viewModel.onConfirmOrderButtonClick(view)}"
             android:drawableEnd="@drawable/ic_arrow_right"
             android:drawableTint="@color/white"
             android:gravity="left|center"

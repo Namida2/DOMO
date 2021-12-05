@@ -6,12 +6,12 @@ import com.example.domo.models.interfaces.MenuHolder
 import com.example.domo.models.interfaces.MenuHolderStates
 import com.example.domo.models.interfaces.MenuLocalRepository
 import com.example.domo.models.remoteRepository.FirestoreReferences.menuCollectionRef
-import com.example.domo.views.activities.log
 import constants.FirestoreConstants
 import database.daos.MenuDao
 import entities.menu.Category
 import entities.menu.CategoryName
 import entities.menu.Dish
+import extentions.logE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -40,7 +40,7 @@ class MenuService @Inject constructor(
                 else
                     readDishes(it.documents[i].id, onComplete = onComplete)
         }.addOnFailureListener {
-            log("$this: ${it.message}")
+            logE("$this: ${it.message}")
             onMenuLoadingFinish(onComplete)
         }
     }
@@ -59,7 +59,7 @@ class MenuService @Inject constructor(
             menu.add(Category(category, dishes))
             if (isItLastCategory) onMenuLoadingFinish(onComplete)
         }.addOnFailureListener {
-            log("$this: ${it.message}")
+            logE("$this: ${it.message}")
             onMenuLoadingFinish(onComplete)
         }
     }

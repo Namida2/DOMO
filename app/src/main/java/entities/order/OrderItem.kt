@@ -1,24 +1,21 @@
 package entities.order
 
 import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
-import androidx.room.ProvidedTypeConverter
 import entities.recyclerView.interfaces.BaseRecyclerViewItem
 
 @Entity(tableName = "order_items", primaryKeys = ["tableId", "dishId", "commentary"])
-data class OrderItem (
-    val tableId: Int,
+data class OrderItem(
+    val tableId: Int, //for local data source
     override val dishId: Int,
     override val count: Int,
     override val commentary: String,
     override val isReady: Boolean = false,
-): BaseRecyclerViewItem, BaseOrderItem {
+) : BaseRecyclerViewItem, BaseOrderItem {
     override fun equals(other: Any?): Boolean =
         if (other !is OrderItem) false
-        else dishId == other.dishId && commentary == other.commentary
+        else tableId == other.tableId && dishId == other.dishId && commentary == other.commentary
 
-    override fun hashCode(): Int = "$dishId: $commentary".hashCode()
+    override fun hashCode(): Int = "$tableId: $dishId: $commentary".hashCode()
 }
 
 //for fireStore

@@ -52,7 +52,3 @@ class SplashScreenActivity : AppCompatActivity() {
         }
     }
 }
-
-fun Any.log(message: String) {
-    Log.d("MyLogging", message)
-}

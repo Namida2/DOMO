@@ -41,50 +41,17 @@ class WaiterMainActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        binding = ActivityWaiterMainBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
-//        binding.lifecycleOwner = this
-//        binding.sharedViewModel = sharedViewModel
-//
-//        val navHostFragment =
-//            supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
-//        navController = navHostFragment.navController.apply {
-//            addOnDestinationChangedListener(this@WaiterMainActivity)
-//        }
+        binding = ActivityWaiterMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.lifecycleOwner = this
+        binding.sharedViewModel = sharedViewModel
 
-        appComponent.inject(this)
-        CoroutineScope(IO).launch {
-            insert()
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
+        navController = navHostFragment.navController.apply {
+            addOnDestinationChangedListener(this@WaiterMainActivity)
         }
     }
-
-    suspend fun insert() {
-        val order1 = Order(OrderInfo(1, 1), getListOrderItems1().toMutableSet())
-        val order2 = Order(OrderInfo(2, 1), getListOrderItems2().toMutableSet())
-        orderDao.insert(order1)
-        orderDao.insert(order2)
-        val readOrder = orderDao.readOrder(1)
-        log(readOrder.toString())
-        orderDao.deleteOrder(1)
-    }
-
-    private fun getListOrderItems1(): List<OrderItem> = listOf(
-        OrderItem(1, 1, 1, "aaa"),
-        OrderItem(1, 2, 1, "aaa"),
-        OrderItem(1, 3, 1, "aaa"),
-        OrderItem(1, 4, 1, "aaa"),
-        OrderItem(1, 5, 1, "aaa"),
-        OrderItem(1, 6, 1, "aaa"),
-    )
-    private fun getListOrderItems2(): List<OrderItem> = listOf(
-        OrderItem(2, 1, 1, "xxx"),
-        OrderItem(2, 2, 1, "xxx"),
-        OrderItem(2, 3, 1, "xxx"),
-        OrderItem(2, 4, 1, "xxx"),
-        OrderItem(2, 5, 1, "xxx"),
-        OrderItem(2, 6, 1, "xxx"),
-    )
-
 
     override fun onDestinationChanged(
         controller: NavController,

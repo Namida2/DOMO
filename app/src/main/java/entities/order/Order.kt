@@ -3,7 +3,7 @@ package entities.order
 import androidx.room.*
 
 //TODO: Add a "one-to-many" relation
-data class Order(
+data class Order (
     @Embedded val orderInfo: OrderInfo,
     @Relation(
         parentColumn = "tableId",

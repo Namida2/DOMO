@@ -10,24 +10,25 @@ import di.AppComponent
 import entities.Employee
 import entities.ErrorMessage
 import tools.dialogs.MessageAlertDialog
+import tools.dialogs.ProcessAlertDialog
 
 val Context.appComponent: AppComponent
-    get() = when(this) {
+    get() = when (this) {
         is MyApplication -> _appComponent
         else -> this.applicationContext.appComponent
     }
 var Context.employee: Employee?
-    get() = when(this){
+    get() = when (this) {
         is MyApplication -> _employee
         else -> this.applicationContext.employee
     }
-    set(value) = when(this) {
+    set(value) = when (this) {
         is MyApplication -> _employee = value
         else -> this.applicationContext.employee = value
     }
 
 
-fun Context.createDialog(message: ErrorMessage): DialogFragment? =
+fun Context.createMessageDialog(message: ErrorMessage): DialogFragment? =
     MessageAlertDialog.getNewInstance<Unit>(
         this.resources.getString(message.titleId),
         this.resources.getString(message.messageId)

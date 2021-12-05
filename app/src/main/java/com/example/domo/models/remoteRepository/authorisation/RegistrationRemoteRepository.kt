@@ -1,7 +1,6 @@
 package com.example.domo.models.remoteRepository.authorisation
 
 import com.example.domo.R
-import com.example.domo.views.activities.log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -11,6 +10,8 @@ import constants.FirestoreConstants.DOCUMENT_DOMO
 import entities.Employee
 import entities.ErrorMessage
 import entities.tools.TaskWithEmployee
+import extentions.logD
+import extentions.logE
 import javax.inject.Inject
 
 class RegistrationRemoteRepository @Inject constructor(
@@ -33,10 +34,10 @@ class RegistrationRemoteRepository @Inject constructor(
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     if (it.result!!.signInMethods!!.isEmpty()) {
-                        log("${this}: New email")
+                        logD("${this}: New email")
                         createNewEmployee(employee, task)
                     } else {
-                        log("${this}: Email already exits")
+                        logE("${this}: Email already exits")
                         task.onError(
                             ErrorMessage(
                                 emailAlreadyExistsTitle,
@@ -45,7 +46,7 @@ class RegistrationRemoteRepository @Inject constructor(
                         )
                     }
                 } else {
-                    log("${this}: ${it.exception.toString()}")
+                    logE("${this}: ${it.exception.toString()}")
                 }
             }
     }
@@ -59,7 +60,7 @@ class RegistrationRemoteRepository @Inject constructor(
                 if (it.isSuccessful) {
                     addEmployeeToCollection(employee, task)
                 } else {
-                    log("${this}: ${it.exception.toString()}")
+                    logE("${this}: ${it.exception.toString()}")
                     task.onSuccess(employee)
                 }
             }
@@ -75,7 +76,7 @@ class RegistrationRemoteRepository @Inject constructor(
             if (it.isSuccessful)
                 task.onSuccess(employee)
             else {
-                log("${this}: ${it.exception.toString()}")
+                logE("${this}: ${it.exception.toString()}")
                 auth.currentUser?.delete()
                 task.onError(
                     ErrorMessage(

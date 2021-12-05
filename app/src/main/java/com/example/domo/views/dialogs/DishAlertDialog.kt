@@ -5,9 +5,6 @@ import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,7 +15,7 @@ import com.example.domo.viewModels.dialogs.DishDialogVMStates
 import com.example.domo.viewModels.dialogs.DishDialogViewModel
 import entities.menu.Dish
 import extentions.appComponent
-import extentions.createDialog
+import extentions.createMessageDialog
 
 class DishAlertDialog : DialogFragment() {
 
@@ -32,7 +29,7 @@ class DishAlertDialog : DialogFragment() {
     private val observer = Observer<DishDialogVMStates> {
         when(it) {
             is DishDialogVMStates.DishAlreadyAdded -> {
-                requireContext().createDialog(it.errorMessage!!)
+                requireContext().createMessageDialog(it.errorMessage!!)
                     ?.show(parentFragmentManager, "")
             }
             is DishDialogVMStates.DishSuccessfulAdded -> {
