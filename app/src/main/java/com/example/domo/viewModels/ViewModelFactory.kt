@@ -10,8 +10,8 @@ import com.example.domo.viewModels.fragments.TablesViewModel
 import com.example.domo.viewModels.shared.WaiterActOrderFragSharedViewModel
 import di.AppComponent
 
-class ViewModelFactory(private val appComponent: AppComponent) : ViewModelProvider.Factory {
-
+object ViewModelFactory : ViewModelProvider.Factory {
+    lateinit var appComponent: AppComponent
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val viewModel = when (modelClass) {
             SplashScreenViewModel::class.java -> SplashScreenViewModel(appComponent.provideSplashScreenModel())

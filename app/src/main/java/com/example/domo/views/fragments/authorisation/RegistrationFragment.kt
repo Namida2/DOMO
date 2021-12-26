@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domo.R
@@ -21,7 +21,6 @@ import com.example.domo.viewModels.RegistrationViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.views.activities.SplashScreenActivity
 import entities.ErrorMessage
-import extentions.appComponent
 import extentions.createMessageDialog
 import extentions.isNetworkConnected
 import tools.dialogs.ProcessAlertDialog
@@ -31,16 +30,12 @@ class RegistrationFragment : Fragment() {
     private var smallMargin: Int? = null
     private var largeMargin: Int? = null
 
-    private var viewModel: RegistrationViewModel? = null
+    private val viewModel: RegistrationViewModel by viewModels { ViewModelFactory }
     lateinit var binding: FragmentRegistrationBinding
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        viewModel =
-            ViewModelProvider(requireActivity(), ViewModelFactory(context.appComponent)).get(
-                RegistrationViewModel::class.java
-            )
-        viewModel?.resetState()
+        viewModel.resetState()
         smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
         largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
         initBindings(layoutInflater)
@@ -49,7 +44,7 @@ class RegistrationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         binding.lifecycleOwner = viewLifecycleOwner
         observeViewModelState()
@@ -59,7 +54,7 @@ class RegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
-        view?.doOnPreDraw { startPostponedEnterTransition() }
+        view.doOnPreDraw { startPostponedEnterTransition() }
     }
 
     private fun initBindings(inflater: LayoutInflater) {
@@ -68,9 +63,9 @@ class RegistrationFragment : Fragment() {
 
         with(binding.postsRecyclerView) {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-            adapter = viewModel?.getPostItems()?.let {
+            adapter = viewModel.getPostItems().let {
                 PostItemsAdapter(it) { post ->
-                    viewModel?.selectedPost = post
+                    viewModel.selectedPost = post
                 }
             }
             addItemDecoration(
@@ -100,7 +95,7 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun observeViewModelState() {
-        viewModel?.state?.observe(viewLifecycleOwner) {
+        viewModel.state.observe(viewLifecycleOwner) {
             var dialog: DialogFragment? = null
             when (it) {
                 is RegistrationViewModelStates.Validating -> {

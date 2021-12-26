@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.example.domo.models.CurrentOrderServiceSub
 import com.example.domo.models.interfaces.WaiterActOrderFragSharedViewModelInterface
 import entities.interfaces.OnDismissListener
+import entities.order.Order
+import entities.order.OrderInfo
 import entities.order.OrderItem
 import entities.tools.Event
 
@@ -27,9 +29,11 @@ sealed class OrderItemsRecyclerViewStates {
 class WaiterActOrderFragSharedViewModel(
     private val model: WaiterActOrderFragSharedViewModelInterface,
 ) : ViewModel(), OnDismissListener {
+
     private val _states: MutableLiveData<SharedViewModelStates> = MutableLiveData(
         SharedViewModelStates.Default)
     val states: LiveData<SharedViewModelStates> = _states
+
     private val _currentOrderChangedEvent: MutableLiveData<CurrentOrderChangeEvent> =
         MutableLiveData()
     val currentOrderChangedEvent: LiveData<CurrentOrderChangeEvent> = _currentOrderChangedEvent
@@ -47,9 +51,14 @@ class WaiterActOrderFragSharedViewModel(
         model.subscribeToCurrentOrderChangers(currentOrderSubscriber)
     }
 
-    fun getCurrentOrderItems(): Set<OrderItem> = model.getCurrentOrderItems()
+    fun getCurrentOrder(): Order =
+        model.currentOrder!!
 
-    //TODO: Add the OrderMenuBottomSheetDialog and confirming of the current order // STOPPED //
+    fun changeGuestsCount(newGuestsCount: Int) {
+        model.changeGuestsCount(newGuestsCount)
+    }
+
+    //TODO: Add the OrderMenuBottomSheetDialog and confirming of the current order
     fun onNavigationIconClickListener() {
         _states.value = SharedViewModelStates.ShowingOrderMenuDialog
     }

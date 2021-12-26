@@ -105,7 +105,6 @@ class RegistrationViewModel(private val model: RegistrationModelInterface) : Vie
                 }
             }
         )
-
     }
 
     fun resetState() {

@@ -15,6 +15,7 @@ class GuestsCountBottomSheetDialog(
 ): BottomSheetDialogFragment() {
 
     private var binding: DialogGuestCountBinding? = null
+    private val defaultMaxCount = 16
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -34,7 +35,7 @@ class GuestsCountBottomSheetDialog(
         with(binding!!.guestsCountRecyclerView) {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = GuestsCountAdapter(16) {
+            adapter = GuestsCountAdapter(defaultMaxCount) {
                 onCountSelected(it)
                 this@GuestsCountBottomSheetDialog.dismiss()
             }

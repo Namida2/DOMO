@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.domo.databinding.DialogOrderMenuBinding
 import com.example.domo.viewModels.ViewModelFactory
@@ -24,13 +25,7 @@ class OrderMenuBottomSheetDialog(private val onDismissListener: OnDismissListene
     BottomSheetDialogFragment() {
 
     private var binding: DialogOrderMenuBinding? = null
-    private lateinit var viewModel: OrderMenuDialogViewModel
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        viewModel = ViewModelProvider(requireActivity(),
-            ViewModelFactory(context.appComponent))[OrderMenuDialogViewModel::class.java]
-    }
+    private val viewModel: OrderMenuDialogViewModel by viewModels {  ViewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -2,6 +2,7 @@ package application
 
 import android.app.Application
 import androidx.room.Room
+import com.example.domo.viewModels.ViewModelFactory
 
 import constants.SharedPreferencesConstants
 import database.Database
@@ -22,6 +23,11 @@ class MyApplication : Application() {
             ).build(),
             getSharedPreferences(SharedPreferencesConstants.DB_SETTINGS, MODE_PRIVATE)
         )
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        ViewModelFactory.appComponent = _appComponent
     }
 }
 

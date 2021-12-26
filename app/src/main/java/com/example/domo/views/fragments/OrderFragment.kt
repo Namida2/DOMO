@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +35,7 @@ import javax.inject.Inject
 class OrderFragment : Fragment() {
 
     private var tableId = 0
+    private val defaultGuestsCount = 1
 
     private val transformDuration = 300L
     private val guestCountDelay = 400L
@@ -44,7 +45,7 @@ class OrderFragment : Fragment() {
     private var orderMenuDialog: OrderMenuBottomSheetDialog? = null
 
     private lateinit var binding: FragmentOrderBinding
-    private lateinit var sharedViewModel: WaiterActOrderFragSharedViewModel
+    private val sharedViewModel: WaiterActOrderFragSharedViewModel by activityViewModels { ViewModelFactory }
     private val args: OrderFragmentArgs by navArgs()
 
     @Inject
@@ -54,8 +55,6 @@ class OrderFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         //TODO: Add a delegate for viewModels
-        sharedViewModel = ViewModelProvider(requireActivity(),
-            ViewModelFactory(context.appComponent))[WaiterActOrderFragSharedViewModel::class.java]
         context.appComponent.inject(this)
         adapter = MenuItemsAdapter(
             listOf(orderItemRecyclerViewType)
@@ -68,13 +67,13 @@ class OrderFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        initBinding()
-        initDialogs()
-        observeCurrentOrderChanges()
         sharedElementEnterTransition = MaterialContainerTransform().apply {
             drawingViewId = R.id.nav_host_fragment
             duration = transformDuration
         }
+        initBinding()
+        initDialogs()
+        observeCurrentOrderChanges()
         postponeEnterTransition()
         observeViewModelStates()
         return binding.root
@@ -83,11 +82,9 @@ class OrderFragment : Fragment() {
     private fun initDialogs() {
         menuBottomSheetDialog = MenuBottomSheetDialog(sharedViewModel)
         orderMenuDialog = OrderMenuBottomSheetDialog(sharedViewModel)
-        //TODO: Fix this // STOPPED //
         guestCountDialog = GuestsCountBottomSheetDialog {
             binding.guestsCount.text = it.toString()
-            sharedViewModel.initCurrentOrder(tableId, it)
-            adapter?.submitList(sharedViewModel.getCurrentOrderItems().toList())
+            sharedViewModel.changeGuestsCount(it)
         }
     }
 
@@ -96,7 +93,19 @@ class OrderFragment : Fragment() {
         tableId = args.tableNumber
         with(binding) {
             tableNumber.text = tableId.toString()
+            intiOrderData()
+        }
+    }
+
+    private fun intiOrderData() {
+        with(binding) {
             orderRecyclerView.adapter = adapter
+            sharedViewModel.initCurrentOrder(tableId, defaultGuestsCount)
+
+            val currentOrder = sharedViewModel.getCurrentOrder()
+            binding.guestsCount.text = currentOrder.guestsCount.toString()
+            adapter?.submitList(currentOrder.orderItems.toList())
+
             orderRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             orderRecyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener() {
@@ -140,7 +149,7 @@ class OrderFragment : Fragment() {
                 }
                 is SharedViewModelStates.ShowingOrderMenuDialog -> {
                     if (!orderMenuDialog?.isAdded!!)
-                    orderMenuDialog?.show(parentFragmentManager, "")
+                        orderMenuDialog?.show(parentFragmentManager, "")
                 }
                 else -> {} //DefaultState
             }

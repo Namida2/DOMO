@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.domo.R
@@ -25,7 +26,7 @@ class DishAlertDialog : DialogFragment() {
     var dish: Dish? = null
 
     private var binding: DialogDishBinding? = null
-    private lateinit var viewModel: DishDialogViewModel
+    private val viewModel: DishDialogViewModel by viewModels { ViewModelFactory }
     private val observer = Observer<DishDialogVMStates> {
         when(it) {
             is DishDialogVMStates.DishAlreadyAdded -> {
@@ -41,9 +42,6 @@ class DishAlertDialog : DialogFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        viewModel = ViewModelProvider(
-            requireActivity(), ViewModelFactory(context.appComponent)
-        )[DishDialogViewModel::class.java]
         viewModel.dish = dish
     }
 

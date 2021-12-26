@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -26,7 +27,7 @@ import javax.inject.Inject
 
 class TablesFragment : Fragment() {
 
-    private lateinit var viewModel: TablesViewModel
+    private val viewModel: TablesViewModel by viewModels { ViewModelFactory }
 
     private var smallMargin: Int? = null
     private var largeMargin: Int? = null
@@ -36,17 +37,8 @@ class TablesFragment : Fragment() {
     private val tablesCount = 28
     private lateinit var binding: FragmentTablesBinding
 
-    @Inject
-    lateinit var menuServiceModel: MenuDialogModelInterface
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
-        context.appComponent.inject(this)
-
-        viewModel =
-            ViewModelProvider(requireActivity(),
-                ViewModelFactory(context.appComponent))[TablesViewModel::class.java]
         smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
         largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
         topTablesMargin = resources.getDimensionPixelSize(R.dimen.top_tables_margin)

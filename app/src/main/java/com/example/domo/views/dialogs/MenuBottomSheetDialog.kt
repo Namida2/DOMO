@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.domo.R
 import com.example.domo.adapters.MenuItemsAdapter
@@ -29,7 +30,7 @@ class MenuBottomSheetDialog(
     private var largeMargin: Int? = null
 
     private lateinit var binding: DialogMenuBinding
-    private lateinit var viewModel: MenuDialogViewModel
+    private val viewModel: MenuDialogViewModel by viewModels {ViewModelFactory}
     private var dishDialog = DishAlertDialog()
     private var menuAdapter: MenuItemsAdapter? = null
 
@@ -37,9 +38,6 @@ class MenuBottomSheetDialog(
         super.onAttach(context)
         smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
         largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
-        viewModel =
-            ViewModelProvider(requireActivity(), ViewModelFactory(context.appComponent)).get(
-                MenuDialogViewModel::class.java)
         menuAdapter = MenuItemsAdapter(
             listOf(
                 CategoriesMenuRecyclerViewType(),

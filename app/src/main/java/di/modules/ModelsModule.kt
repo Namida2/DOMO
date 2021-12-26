@@ -16,27 +16,35 @@ interface ModelsModule {
     @Binds
     @Singleton
     fun bindSplashScreenModel(model: SplashScreenModel): SplashScreenModelInterface
+
     @Binds
     @Singleton
     fun bindRegistrationModel(model: RegistrationModel): RegistrationModelInterface
+
     @Binds
     @Singleton
     fun bindLoginModel(model: LogInModel): LogInModelInterface
+
     @Binds
     @Singleton
     fun bindMenuHolder(menuHolder: MenuService): MenuHolder
+
     @Binds
     @Singleton
     fun bindMenuLocalRepository(menuHolder: MenuService): MenuLocalRepository
+
     @Binds
     @Singleton
     fun bindMenuDialogModule(menuDialogModel: MenuDialogModel): MenuDialogModelInterface
+
     @Binds
     @Singleton
     fun bindOrderService(orderService: OrdersService): OrderServiceInterface<OrderServiceSub>
+
     @Binds
     @Singleton
     fun bindWaiterActOrderFragModel(model: WaiterActOrderFragModel): WaiterActOrderFragSharedViewModelInterface
+
     @Binds
     @Singleton
     fun bindOrderMenuDialogModel(model: OrderMenuDialogModel): OrderMenuDialogModelInterface

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.domo.R
@@ -24,22 +25,14 @@ import tools.dialogs.ProcessAlertDialog
 class LogInFragment : Fragment() {
 
     private lateinit var binding: FragmentLogInBinding
-    private var viewModel: LogInViewModel? = null
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        viewModel =
-            ViewModelProvider(requireActivity(), ViewModelFactory(context.appComponent)).get(
-                LogInViewModel::class.java
-            )
-    }
+    private val viewModel: LogInViewModel by viewModels { ViewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel?.resetState()
+        viewModel.resetState()
         binding = FragmentLogInBinding.inflate(layoutInflater)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -64,7 +57,7 @@ class LogInFragment : Fragment() {
             }
         }
 
-        viewModel?.state?.observe(viewLifecycleOwner) {
+        viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is LogInViewModelStates.Validating -> {
                     ProcessAlertDialog.show(parentFragmentManager, "")
@@ -82,6 +75,4 @@ class LogInFragment : Fragment() {
             }
         }
     }
-
-
 }

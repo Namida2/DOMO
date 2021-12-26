@@ -19,7 +19,7 @@ import extentions.employee
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    private val viewModel: SplashScreenViewModel by viewModels { ViewModelFactory(appComponent) }
+    private val viewModel: SplashScreenViewModel by viewModels { ViewModelFactory }
 
     @SuppressLint("SetTextI18n", "CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {

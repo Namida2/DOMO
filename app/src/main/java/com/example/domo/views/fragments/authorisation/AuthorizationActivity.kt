@@ -14,7 +14,7 @@ import extentions.appComponent
 class AuthorizationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthorizationBinding
-    private val viewModel: LogInViewModel by viewModels { ViewModelFactory(appComponent) }
+    private val viewModel: LogInViewModel by viewModels { ViewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
