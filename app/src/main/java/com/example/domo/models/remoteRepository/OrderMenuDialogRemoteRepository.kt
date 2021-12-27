@@ -37,7 +37,6 @@ class OrderMenuDialogRemoteRepository @Inject constructor(
                 task.onError()
             }
         }
-
     }
 
     private fun setOrderItems(
@@ -63,11 +62,17 @@ class OrderMenuDialogRemoteRepository @Inject constructor(
         collectionOrderItemsRef.get().addOnSuccessListener {
             for (i in 0 .. it.documents.lastIndex) {
                 collectionOrderItemsRef.document(it.documents[i].id).delete().addOnSuccessListener { _ ->
-                    if(i == it.documents.lastIndex)
+                    logD(i.toString())
+                    if(i == it.documents.lastIndex) {
+                        logD(i.toString())
                         onComplete.invoke()
+                    }
                 }
             }
+            if (it.documents.lastIndex == -1)
+                onComplete.invoke()
         }.addOnFailureListener {
+            onComplete.invoke()
             logD("$this: ${it.message}")
         }
     }
