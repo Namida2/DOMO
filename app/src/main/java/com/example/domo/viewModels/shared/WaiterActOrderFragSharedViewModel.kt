@@ -8,7 +8,6 @@ import com.example.domo.models.CurrentOrderServiceSub
 import com.example.domo.models.interfaces.WaiterActOrderFragSharedViewModelInterface
 import entities.interfaces.OnDismissListener
 import entities.order.Order
-import entities.order.OrderInfo
 import entities.order.OrderItem
 import entities.tools.Event
 

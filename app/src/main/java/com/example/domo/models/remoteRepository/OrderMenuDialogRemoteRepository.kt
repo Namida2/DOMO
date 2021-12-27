@@ -2,9 +2,7 @@ package com.example.domo.models.remoteRepository
 
 import com.example.domo.models.remoteRepository.FirestoreReferences.ordersCollectionRef
 import com.example.domo.models.remoteRepository.interfaces.OrderMenuDialogRemoteRepositoryInterface
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Transaction
+import com.google.firebase.firestore.*
 import constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
 import constants.FirestoreConstants.DOCUMENT_ORDER_ITEM_DELIMITER
 import constants.FirestoreConstants.FIELD_GUESTS_COUNT
@@ -22,19 +20,24 @@ class OrderMenuDialogRemoteRepository @Inject constructor(
     private val guestCountData = mutableMapOf<String, Int>()
 
     override fun insertCurrentOrder(order: Order, task: SimpleTask) {
-        firestore.runTransaction {
-            val orderDocumentRef = ordersCollectionRef
-                .document(order.tableId.toString())
-            guestCountData[FIELD_GUESTS_COUNT] = order.guestsCount
-            it.set(orderDocumentRef, guestCountData)
-            setOrderItems(it, orderDocumentRef, order)
-        }.addOnSuccessListener {
-            logD("$this: Insertion was successful.")
-            task.onSuccess(Unit)
-        }.addOnFailureListener {
-            it.message?.let { it1 -> logE(it1) }
-            task.onError()
+        val orderDocumentRef = ordersCollectionRef
+            .document(order.tableId.toString())
+        removeAldOrderItems(
+            orderDocumentRef.collection(COLLECTION_ORDER_ITEMS),
+        ) {
+            firestore.runTransaction {
+                guestCountData[FIELD_GUESTS_COUNT] = order.guestsCount
+                it.set(orderDocumentRef, guestCountData)
+                setOrderItems(it, orderDocumentRef, order)
+            }.addOnSuccessListener {
+                logD("$this: Insertion was successful.")
+                task.onSuccess(Unit)
+            }.addOnFailureListener {
+                it.message?.let { it1 -> logE(it1) }
+                task.onError()
+            }
         }
+
     }
 
     private fun setOrderItems(
@@ -52,5 +55,20 @@ class OrderMenuDialogRemoteRepository @Inject constructor(
         }
     }
 
-
+    private fun removeAldOrderItems(
+        collectionOrderItemsRef: CollectionReference,
+        onComplete: () -> Unit
+    ) {
+        // TODO: // STOPPED 0 //
+        collectionOrderItemsRef.get().addOnSuccessListener {
+            for (i in 0 .. it.documents.lastIndex) {
+                collectionOrderItemsRef.document(it.documents[i].id).delete().addOnSuccessListener { _ ->
+                    if(i == it.documents.lastIndex)
+                        onComplete.invoke()
+                }
+            }
+        }.addOnFailureListener {
+            logD("$this: ${it.message}")
+        }
+    }
 }

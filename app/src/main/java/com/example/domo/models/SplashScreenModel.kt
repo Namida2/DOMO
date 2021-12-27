@@ -21,7 +21,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
-//TODO: Add the OrderDao and reading newOrders if they exist // STOPPED //
+//TODO: Add the OrderDao and reading newOrders if they exist // STOPPED 1 //
 @Singleton
 class SplashScreenModel @Inject constructor(
     private var menuHolder: MenuLocalRepository,
@@ -81,4 +81,5 @@ class SplashScreenModel @Inject constructor(
             }
         }
     }
+
 }

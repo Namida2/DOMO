@@ -67,7 +67,7 @@
             app:hideOnScroll="true"
             app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
             app:menu="@menu/menu_waiter" />
-        <!--TODO: Add hiding this view when recyclerView scrolling in OrderFragment-->
+
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottomAppBar"
             style="@style/Widget.MaterialComponents.BottomAppBar.Colored"

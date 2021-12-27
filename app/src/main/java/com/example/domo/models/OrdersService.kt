@@ -51,7 +51,7 @@ class OrdersService @Inject constructor() :
     }
 
     override fun addOrderItem(orderItem: OrderItem): Boolean =
-        currentOrder?.addOrderItem(orderItem)
+        currentOrder?.orderItems?.add(orderItem)
             .also { notifyChangesOfCurrentOrder() } //TODO: Add exceptions to constants
             ?: throw IllegalStateException(currentOrderExceptionMessage)
 
@@ -74,9 +74,7 @@ class OrdersService @Inject constructor() :
         val result: Order? = orders.find {
             it.tableId == tableId
         }
-        currentOrder = result?.copy(
-            orderInfo = result.orderInfo.copy(),
-        ) ?: Order(tableId, guestCount)
+        currentOrder = result?.copy() ?: Order(tableId, guestCount)
 
         val newOrderItems = mutableSetOf<OrderItem>()
         result?.orderItems?.forEach {

@@ -26,7 +26,7 @@
                 android:text="@string/defaultTitle"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -42,7 +42,7 @@
                 android:text="Пароль должен быть больше 6 символов."
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
         </RelativeLayout>
         <View
             android:id="@+id/category"
@@ -61,7 +61,7 @@
             android:layout_below="@id/category"
             android:text="Ok"
             android:textColor="@color/blue"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
     </RelativeLayout>
 
 </layout>

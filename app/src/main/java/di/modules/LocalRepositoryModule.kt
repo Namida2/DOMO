@@ -15,8 +15,4 @@ class LocalRepositoryModule {
     @Singleton
     fun provideMenuDao(database: Database) = database.menuDao()
 
-    @Provides
-    @Singleton
-    fun provideOrderDao(database: Database) = database.orderDao()
-
 }
