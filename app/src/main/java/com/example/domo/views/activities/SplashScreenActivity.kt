@@ -10,6 +10,7 @@ import com.example.domo.viewModels.activities.SplashScreenStates
 import com.example.domo.viewModels.activities.SplashScreenViewModel
 import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.views.fragments.authorisation.AuthorizationActivity
+import com.example.feature_splashscreen.MainActivity
 import constants.EmployeePosts.ADMINISTRATOR
 import constants.EmployeePosts.COOK
 import constants.EmployeePosts.WAITER
@@ -24,6 +25,7 @@ class SplashScreenActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n", "CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //startActivity(Intent(this, MainActivity::class.java))
         viewModel.getCurrentEmployee()
         subscribeToViewModelState()
     }
