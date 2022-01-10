@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domo.R
 import com.example.domo.models.OrderServiceSub
-import entities.ErrorMessage
+import entities.tools.ErrorMessage
 import entities.interfaces.OrderServiceInterface
 import entities.menu.Dish
 import entities.order.OrderItem

@@ -20,7 +20,7 @@ import com.example.domo.viewModels.RegistrationViewModel
 import com.example.domo.viewModels.RegistrationViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.views.activities.SplashScreenActivity
-import entities.ErrorMessage
+import entities.tools.ErrorMessage
 import extentions.createMessageDialog
 import extentions.isNetworkConnected
 import tools.dialogs.ProcessAlertDialog

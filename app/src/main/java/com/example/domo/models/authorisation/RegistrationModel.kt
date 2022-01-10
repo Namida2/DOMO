@@ -3,12 +3,12 @@ package com.example.domo.models.authorisation
 import android.view.View
 import com.example.domo.models.interfaces.RegistrationModelInterface
 import com.example.domo.models.remoteRepository.authorisation.RegistrationRemoteRepository
-import constants.EmployeePosts
+import entities.constants.EmployeePosts
 import database.daos.EmployeeDao
-import entities.Employee
-import entities.ErrorMessage
+import entities.tools.ErrorMessage
 import entities.PostItem
 import entities.tools.TaskWithEmployee
+import entities.Employee
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main

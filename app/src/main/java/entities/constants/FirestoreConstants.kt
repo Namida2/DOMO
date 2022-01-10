@@ -1,4 +1,4 @@
-package constants
+package entities.constants
 
 
 object FirestoreConstants {

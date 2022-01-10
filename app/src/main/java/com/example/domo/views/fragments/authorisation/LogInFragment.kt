@@ -1,6 +1,5 @@
 package com.example.domo.views.fragments.authorisation
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.domo.R
 import com.example.domo.databinding.FragmentLogInBinding
@@ -16,8 +14,7 @@ import com.example.domo.viewModels.LogInViewModel
 import com.example.domo.viewModels.LogInViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.views.activities.SplashScreenActivity
-import entities.ErrorMessage
-import extentions.appComponent
+import entities.tools.ErrorMessage
 import extentions.createMessageDialog
 import extentions.isNetworkConnected
 import tools.dialogs.ProcessAlertDialog

@@ -3,7 +3,7 @@ package com.example.domo.models.remoteRepository
 import android.annotation.SuppressLint
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import constants.FirestoreConstants
+import entities.constants.FirestoreConstants
 
 object FirestoreReferences {
     @SuppressLint("StaticFieldLeak")

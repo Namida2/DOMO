@@ -5,17 +5,15 @@ import com.example.domo.models.remoteRepository.FirestoreReferences.menuDocument
 import com.example.domo.models.remoteRepository.interfaces.SSRemoteRepositoryInterface
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
-import constants.FirestoreConstants.FIELD_MENU_VERSION
 import entities.Employee
+import entities.constants.FirestoreConstants.FIELD_MENU_VERSION
 import extentions.logE
 import javax.inject.Inject
 
 
 class SplashScreenRemoteRepository @Inject constructor(
     private val auth: FirebaseAuth,
-    private val fireStore: FirebaseFirestore,
 ) : SSRemoteRepositoryInterface {
 
     private val defaultMenuVersion = -1L

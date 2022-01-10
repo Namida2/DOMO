@@ -5,11 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.example.domo.R
-import entities.recyclerView.interfaces.BaseViewHolder
 import com.example.domo.databinding.LayoutDishBinding
-import com.example.domo.generated.callback.OnClickListener
 import entities.menu.Dish
 import entities.recyclerView.interfaces.BaseRecyclerViewItem
+import entities.recyclerView.interfaces.BaseViewHolder
 import entities.recyclerView.interfaces.MenuRecyclerViewType
 
 class DishRecyclerViewType(
@@ -24,6 +23,7 @@ class DishRecyclerViewType(
     override fun getLayoutId(): Int = R.layout.layout_dish
 
     override fun isItMe(recyclerViewItem: BaseRecyclerViewItem): Boolean = recyclerViewItem is Dish
+
     override fun getViewHolder(
         inflater: LayoutInflater,
         parent: ViewGroup,

@@ -6,10 +6,10 @@ import entities.menu.CategoryName
 import entities.menu.Dish
 
 sealed class MenuHolderStates {
-    object MenuExist: MenuHolderStates()
-    object MenuEmpty: MenuHolderStates()
-    object MenuIsLoading: MenuHolderStates()
-    object Default: MenuHolderStates()
+    object MenuExist : MenuHolderStates()
+    object MenuEmpty : MenuHolderStates()
+    object MenuIsLoading : MenuHolderStates()
+    object Default : MenuHolderStates()
 }
 
 interface MenuLocalRepository {

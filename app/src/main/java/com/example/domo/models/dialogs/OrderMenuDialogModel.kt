@@ -3,7 +3,7 @@ package com.example.domo.models.dialogs
 import com.example.domo.models.OrderServiceSub
 import com.example.domo.models.interfaces.OrderMenuDialogModelInterface
 import com.example.domo.models.remoteRepository.interfaces.OrderMenuDialogRemoteRepositoryInterface
-import entities.ErrorMessage
+import entities.tools.ErrorMessage
 import entities.interfaces.OrderServiceInterface
 import entities.tools.SimpleTask
 import javax.inject.Inject

@@ -2,11 +2,11 @@ package com.example.domo.models
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import entities.constants.FirestoreConstants
 import com.example.domo.models.interfaces.MenuHolder
 import com.example.domo.models.interfaces.MenuHolderStates
 import com.example.domo.models.interfaces.MenuLocalRepository
 import com.example.domo.models.remoteRepository.FirestoreReferences.menuCollectionRef
-import constants.FirestoreConstants
 import database.daos.MenuDao
 import entities.menu.Category
 import entities.menu.CategoryName

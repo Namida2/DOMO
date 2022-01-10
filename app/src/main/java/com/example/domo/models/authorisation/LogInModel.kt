@@ -3,9 +3,9 @@ package com.example.domo.models.authorisation
 import com.example.domo.models.interfaces.LogInModelInterface
 import com.example.domo.models.remoteRepository.authorisation.LogInRemoteRepository
 import database.daos.EmployeeDao
-import entities.Employee
-import entities.ErrorMessage
+import entities.tools.ErrorMessage
 import entities.tools.TaskWithEmployee
+import entities.Employee
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main

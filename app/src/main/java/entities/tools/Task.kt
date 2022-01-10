@@ -1,7 +1,6 @@
 package entities.tools
 
 import entities.Employee
-import entities.ErrorMessage
 
 typealias TaskWithEmployee = Task<Employee, Unit>
 typealias SimpleTask = Task<Unit, Unit>

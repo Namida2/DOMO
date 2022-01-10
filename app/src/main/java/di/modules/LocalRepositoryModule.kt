@@ -8,11 +8,9 @@ import javax.inject.Singleton
 @Module
 class LocalRepositoryModule {
     @Provides
-    @Singleton
     fun provideEmployeeDao(database: Database) = database.employeeDao()
 
     @Provides
-    @Singleton
     fun provideMenuDao(database: Database) = database.menuDao()
 
 }

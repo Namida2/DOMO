@@ -86,7 +86,7 @@ class TablesFragment : Fragment() {
             .actionTablesFragmentToOrderFragment(item.tag as Int)
         val fragmentExtras =
             FragmentNavigatorExtras(
-                //TODO: Add it to constants
+                //TODO: Add it to com.example.core.domain.constants
                 item to "end",
             )
         findNavController().navigate(direction, fragmentExtras)

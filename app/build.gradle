@@ -41,6 +41,7 @@ android {
 
 dependencies {
     implementation project(':feature-splashscreen')
+    //implementation project(':waiter-core')
 
     implementation platform (Firebase.firebaseBom)
     implementation (Firebase.firebaseAuth)
@@ -52,6 +53,7 @@ dependencies {
     implementation (Navigation.navigationUiKtx)
 
     implementation (Dagger.dagger)
+
     kapt (Dagger.compiler)
     implementation (Fragment.fragmentKtx)
     implementation (Activity.activityKtx)

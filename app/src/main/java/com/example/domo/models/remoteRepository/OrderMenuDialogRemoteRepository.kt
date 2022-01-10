@@ -3,9 +3,9 @@ package com.example.domo.models.remoteRepository
 import com.example.domo.models.remoteRepository.FirestoreReferences.ordersCollectionRef
 import com.example.domo.models.remoteRepository.interfaces.OrderMenuDialogRemoteRepositoryInterface
 import com.google.firebase.firestore.*
-import constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
-import constants.FirestoreConstants.DOCUMENT_ORDER_ITEM_DELIMITER
-import constants.FirestoreConstants.FIELD_GUESTS_COUNT
+import entities.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
+import entities.constants.FirestoreConstants.DOCUMENT_ORDER_ITEM_DELIMITER
+import entities.constants.FirestoreConstants.FIELD_GUESTS_COUNT
 import entities.order.BaseOrderItem
 import entities.order.Order
 import entities.tools.SimpleTask

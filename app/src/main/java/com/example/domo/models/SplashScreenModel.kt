@@ -5,7 +5,7 @@ import com.example.domo.models.interfaces.MenuLocalRepository
 import com.example.domo.models.interfaces.SplashScreenModelInterface
 import com.example.domo.models.remoteRepository.interfaces.SSRemoteRepositoryInterface
 import com.google.firebase.auth.FirebaseUser
-import constants.FirestoreConstants.FIELD_MENU_VERSION
+import entities.constants.FirestoreConstants.FIELD_MENU_VERSION
 import database.daos.EmployeeDao
 import entities.*
 import entities.tools.Task

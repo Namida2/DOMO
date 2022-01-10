@@ -8,9 +8,8 @@ import androidx.fragment.app.DialogFragment
 import application.MyApplication
 import di.AppComponent
 import entities.Employee
-import entities.ErrorMessage
+import entities.tools.ErrorMessage
 import tools.dialogs.MessageAlertDialog
-import tools.dialogs.ProcessAlertDialog
 
 val Context.appComponent: AppComponent
     get() = when (this) {

@@ -9,3 +9,4 @@ dependencyResolutionManagement {
 rootProject.name = "DOMO"
 include ':app'
 include ':feature-splashscreen'
+include ':waiter-core'

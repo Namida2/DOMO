@@ -3,13 +3,11 @@ package application
 import android.app.Application
 import androidx.room.Room
 import com.example.domo.viewModels.ViewModelFactory
-
-import constants.SharedPreferencesConstants
 import database.Database
 import di.AppComponent
 import di.DaggerAppComponent
-
 import entities.Employee
+import entities.constants.SharedPreferencesConstants
 
 class MyApplication : Application() {
     var _employee: Employee? = null

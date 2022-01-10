@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domo.models.interfaces.SplashScreenModelInterface
 import entities.Employee
-import entities.ErrorMessage
+import entities.tools.ErrorMessage
 import entities.tools.Task
 import kotlinx.coroutines.launch
 
@@ -17,7 +17,7 @@ sealed class SplashScreenStates {
 }
 
 class SplashScreenViewModel(
-    private val model: SplashScreenModelInterface,
+    private val model: SplashScreenModelInterface
 ) : ViewModel() {
     private var _state: MutableLiveData<SplashScreenStates> =
         MutableLiveData(SplashScreenStates.DefaultState)

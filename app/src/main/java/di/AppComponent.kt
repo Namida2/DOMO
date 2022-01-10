@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.domo.models.OrderServiceSub
 import com.example.domo.models.interfaces.*
-import com.example.domo.views.activities.SplashScreenActivity
 import com.example.domo.views.activities.WaiterMainActivity
 import com.example.domo.views.dialogs.MenuBottomSheetDialog
 import com.example.domo.views.fragments.OrderFragment
@@ -46,7 +45,3 @@ interface AppComponent {
     fun inject(fragment: OrderFragment)
 
 }
-
-
-
-

@@ -52,7 +52,7 @@ class OrdersService @Inject constructor() :
 
     override fun addOrderItem(orderItem: OrderItem): Boolean =
         currentOrder?.orderItems?.add(orderItem)
-            .also { notifyChangesOfCurrentOrder() } //TODO: Add exceptions to constants
+            .also { notifyChangesOfCurrentOrder() } //TODO: Add exceptions to com.example.core.domain.constants
             ?: throw IllegalStateException(currentOrderExceptionMessage)
 
     override fun removeOrder(order: Order) {

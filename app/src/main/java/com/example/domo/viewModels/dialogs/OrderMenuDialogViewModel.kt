@@ -5,9 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domo.models.interfaces.OrderMenuDialogModelInterface
-import entities.ErrorMessage
+import entities.tools.ErrorMessage
 import entities.tools.SimpleTask
-import entities.tools.Task
 import tools.dialogs.ErrorMessages.somethingWrongMessage
 
 sealed class OrderMenuDialogVMStates {

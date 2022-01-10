@@ -3,9 +3,9 @@ package com.example.domo.models.remoteRepository.authorisation
 import com.example.domo.R
 import com.example.domo.models.remoteRepository.FirestoreReferences.employeesCollectionRef
 import com.google.firebase.auth.FirebaseAuth
-import entities.Employee
-import entities.ErrorMessage
+import entities.tools.ErrorMessage
 import entities.tools.TaskWithEmployee
+import entities.Employee
 import extentions.logE
 import javax.inject.Inject
 

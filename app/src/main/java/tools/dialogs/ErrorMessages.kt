@@ -1,7 +1,7 @@
 package tools.dialogs
 
 import com.example.domo.R
-import entities.ErrorMessage
+import entities.tools.ErrorMessage
 
 object ErrorMessages {
     val networkConnectionMessage = ErrorMessage(

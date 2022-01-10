@@ -4,12 +4,12 @@ import com.example.domo.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import constants.FirestoreConstants.COLLECTION_EMPLOYEES
-import constants.FirestoreConstants.COLLECTION_RESTAURANTS
-import constants.FirestoreConstants.DOCUMENT_DOMO
-import entities.Employee
-import entities.ErrorMessage
+import entities.constants.FirestoreConstants.COLLECTION_EMPLOYEES
+import entities.constants.FirestoreConstants.COLLECTION_RESTAURANTS
+import entities.constants.FirestoreConstants.DOCUMENT_DOMO
+import entities.tools.ErrorMessage
 import entities.tools.TaskWithEmployee
+import entities.Employee
 import extentions.logD
 import extentions.logE
 import javax.inject.Inject

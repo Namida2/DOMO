@@ -8,14 +8,12 @@ import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.domo.R
 import com.example.domo.databinding.DialogDishBinding
 import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.viewModels.dialogs.DishDialogVMStates
 import com.example.domo.viewModels.dialogs.DishDialogViewModel
 import entities.menu.Dish
-import extentions.appComponent
 import extentions.createMessageDialog
 
 class DishAlertDialog : DialogFragment() {
@@ -28,7 +26,7 @@ class DishAlertDialog : DialogFragment() {
     private var binding: DialogDishBinding? = null
     private val viewModel: DishDialogViewModel by viewModels { ViewModelFactory }
     private val observer = Observer<DishDialogVMStates> {
-        when(it) {
+        when (it) {
             is DishDialogVMStates.DishAlreadyAdded -> {
                 requireContext().createMessageDialog(it.errorMessage!!)
                     ?.show(parentFragmentManager, "")

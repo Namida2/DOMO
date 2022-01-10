@@ -1,4 +1,4 @@
-package constants
+package entities.constants
 
 object EmployeePosts {
     const val WAITER = "официант"

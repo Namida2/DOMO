@@ -3,18 +3,15 @@ package com.example.domo.views.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.viewModels.activities.SplashScreenStates
 import com.example.domo.viewModels.activities.SplashScreenViewModel
-import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.views.fragments.authorisation.AuthorizationActivity
-import com.example.feature_splashscreen.MainActivity
-import constants.EmployeePosts.ADMINISTRATOR
-import constants.EmployeePosts.COOK
-import constants.EmployeePosts.WAITER
-import extentions.appComponent
+import entities.constants.EmployeePosts.ADMINISTRATOR
+import entities.constants.EmployeePosts.COOK
+import entities.constants.EmployeePosts.WAITER
 import extentions.employee
 
 
@@ -29,6 +26,7 @@ class SplashScreenActivity : AppCompatActivity() {
         viewModel.getCurrentEmployee()
         subscribeToViewModelState()
     }
+
     private fun subscribeToViewModelState() {
         viewModel.state.observe(this) { state ->
             when (state) {
