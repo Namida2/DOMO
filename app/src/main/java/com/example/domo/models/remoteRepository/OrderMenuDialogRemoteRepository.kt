@@ -1,16 +1,16 @@
 package com.example.domo.models.remoteRepository
 
-import com.example.domo.models.remoteRepository.FirestoreReferences.ordersCollectionRef
+import com.example.waiter_core.domain.tools.FirestoreReferences.ordersCollectionRef
 import com.example.domo.models.remoteRepository.interfaces.OrderMenuDialogRemoteRepositoryInterface
 import com.google.firebase.firestore.*
-import entities.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
-import entities.constants.FirestoreConstants.DOCUMENT_ORDER_ITEM_DELIMITER
-import entities.constants.FirestoreConstants.FIELD_GUESTS_COUNT
-import entities.order.BaseOrderItem
-import entities.order.Order
-import entities.tools.SimpleTask
-import extentions.logD
-import extentions.logE
+import com.example.waiter_core.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
+import com.example.waiter_core.domain.tools.constants.FirestoreConstants.DOCUMENT_ORDER_ITEM_DELIMITER
+import com.example.waiter_core.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
+import com.example.waiter_core.domain.order.BaseOrderItem
+import com.example.waiter_core.domain.order.Order
+import com.example.waiter_core.domain.tools.SimpleTask
+import com.example.waiter_core.domain.tools.extentions.logD
+import com.example.waiter_core.domain.tools.extentions.logE
 import javax.inject.Inject
 
 class OrderMenuDialogRemoteRepository @Inject constructor(

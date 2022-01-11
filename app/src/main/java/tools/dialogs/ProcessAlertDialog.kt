@@ -10,9 +10,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import extentions.Animations
-import extentions.Animations.prepareHide
-import extentions.Animations.prepareShow
+import com.example.waiter_core.domain.tools.extentions.Animations.prepareHide
+import com.example.waiter_core.domain.tools.extentions.Animations.prepareShow
 
 object ProcessAlertDialog : DialogFragment() {
 

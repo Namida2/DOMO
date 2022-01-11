@@ -10,7 +10,7 @@ import com.example.domo.views.fragments.OrderFragment
 import com.example.domo.views.fragments.TablesFragment
 import dagger.BindsInstance
 import dagger.Component
-import database.Database
+import com.example.waiter_core.data.database.Database
 import di.modules.FirebaseModule
 import di.modules.LocalRepositoryModule
 import di.modules.ModelsModule

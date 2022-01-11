@@ -3,10 +3,10 @@ package application
 import android.app.Application
 import androidx.room.Room
 import com.example.domo.viewModels.ViewModelFactory
-import database.Database
+import com.example.waiter_core.data.database.Database
 import di.AppComponent
 import di.DaggerAppComponent
-import entities.Employee
+import com.example.waiter_core.domain.Employee
 import entities.constants.SharedPreferencesConstants
 
 class MyApplication : Application() {

@@ -1,6 +1,6 @@
 package entities.menu
 
-import entities.recyclerView.interfaces.BaseRecyclerViewItem
+import com.example.waiter_core.domain.recyclerView.interfaces.BaseRecyclerViewItem
 
 data class CategoriesNameHolder(
     var categories: List<CategoryName>

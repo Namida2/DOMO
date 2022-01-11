@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -28,15 +29,32 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation platform (Firebase.firebaseBom)
+    implementation (Firebase.firebaseAuth)
+    implementation (Firebase.firebaseFirestore)
+    implementation (Firebase.firebaseAnalytics)
+
+    implementation (Dagger.dagger)
+    kapt (Dagger.compiler)
+
+    implementation (Room.roomRuntime)
+    annotationProcessor (Room.compiler)
+    implementation (Room.roomKtx)
+    kapt (Room.compiler)
+
+    implementation (AndroidX.core)
+    implementation (AndroidX.appcompat)
+    implementation (Material.material)
+    implementation (AndroidX.constraintLayout)
+    testImplementation (Tests.junit)
+    androidTestImplementation (Tests.testExtJunit)
+    androidTestImplementation (Tests.testEspresso)
 }

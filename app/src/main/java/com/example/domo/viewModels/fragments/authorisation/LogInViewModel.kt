@@ -4,10 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domo.R
 import com.example.domo.models.interfaces.LogInModelInterface
-import entities.tools.ErrorMessage
-import entities.tools.TaskWithEmployee
-import entities.Employee
-import extentions.isEmptyField
+import com.example.waiter_core.domain.tools.ErrorMessage
+import com.example.waiter_core.domain.tools.TaskWithEmployee
+import com.example.waiter_core.domain.Employee
+import com.example.waiter_core.domain.tools.extentions.isEmptyField
 
 sealed class LogInViewModelStates {
     open var errorMessage: ErrorMessage? = null

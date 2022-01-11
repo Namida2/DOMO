@@ -1,7 +1,7 @@
 package tools.dialogs
 
 import com.example.domo.R
-import entities.tools.ErrorMessage
+import com.example.waiter_core.domain.tools.ErrorMessage
 
 object ErrorMessages {
     val networkConnectionMessage = ErrorMessage(

@@ -4,14 +4,14 @@ import com.example.domo.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import entities.constants.FirestoreConstants.COLLECTION_EMPLOYEES
-import entities.constants.FirestoreConstants.COLLECTION_RESTAURANTS
-import entities.constants.FirestoreConstants.DOCUMENT_DOMO
-import entities.tools.ErrorMessage
-import entities.tools.TaskWithEmployee
-import entities.Employee
-import extentions.logD
-import extentions.logE
+import com.example.waiter_core.domain.tools.constants.FirestoreConstants.COLLECTION_EMPLOYEES
+import com.example.waiter_core.domain.tools.constants.FirestoreConstants.COLLECTION_RESTAURANTS
+import com.example.waiter_core.domain.tools.constants.FirestoreConstants.DOCUMENT_DOMO
+import com.example.waiter_core.domain.tools.ErrorMessage
+import com.example.waiter_core.domain.tools.TaskWithEmployee
+import com.example.waiter_core.domain.Employee
+import com.example.waiter_core.domain.tools.extentions.logD
+import com.example.waiter_core.domain.tools.extentions.logE
 import javax.inject.Inject
 
 class RegistrationRemoteRepository @Inject constructor(

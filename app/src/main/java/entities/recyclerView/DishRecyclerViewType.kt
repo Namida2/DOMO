@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.example.domo.R
 import com.example.domo.databinding.LayoutDishBinding
-import entities.menu.Dish
-import entities.recyclerView.interfaces.BaseRecyclerViewItem
-import entities.recyclerView.interfaces.BaseViewHolder
-import entities.recyclerView.interfaces.MenuRecyclerViewType
+import com.example.waiter_core.domain.menu.Dish
+import com.example.waiter_core.domain.recyclerView.interfaces.BaseRecyclerViewItem
+import com.example.waiter_core.domain.recyclerView.interfaces.BaseViewHolder
+import com.example.waiter_core.domain.recyclerView.interfaces.MenuRecyclerViewType
 
 class DishRecyclerViewType(
     private val onDishSelected: (dishId: Int) -> Unit,

@@ -7,7 +7,7 @@ import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.example.domo.R
 import com.example.domo.databinding.DialogMessageBinding
-import extentions.logD
+import com.example.waiter_core.domain.tools.extentions.logD
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay

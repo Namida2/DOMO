@@ -7,8 +7,8 @@ import android.util.Log
 import androidx.fragment.app.DialogFragment
 import application.MyApplication
 import di.AppComponent
-import entities.Employee
-import entities.tools.ErrorMessage
+import com.example.waiter_core.domain.Employee
+import com.example.waiter_core.domain.tools.ErrorMessage
 import tools.dialogs.MessageAlertDialog
 
 val Context.appComponent: AppComponent

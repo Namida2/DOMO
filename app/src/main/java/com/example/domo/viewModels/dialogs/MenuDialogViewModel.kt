@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import com.example.domo.models.interfaces.MenuDialogModelInterface
 import com.example.domo.models.interfaces.MenuHolderStates
 import entities.menu.CategoryName
-import entities.menu.Dish
-import entities.recyclerView.interfaces.BaseRecyclerViewItem
-import entities.tools.Event
+import com.example.waiter_core.domain.menu.Dish
+import com.example.waiter_core.domain.recyclerView.interfaces.BaseRecyclerViewItem
+import com.example.waiter_core.domain.tools.Event
 
 sealed class MenuDialogStates {
     object Default : MenuDialogStates()

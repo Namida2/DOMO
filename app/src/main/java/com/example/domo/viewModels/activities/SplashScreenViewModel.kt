@@ -4,9 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domo.models.interfaces.SplashScreenModelInterface
-import entities.Employee
-import entities.tools.ErrorMessage
-import entities.tools.Task
+import com.example.waiter_core.domain.Employee
+import com.example.waiter_core.domain.tools.ErrorMessage
+import com.example.waiter_core.domain.tools.Task
 import kotlinx.coroutines.launch
 
 sealed class SplashScreenStates {

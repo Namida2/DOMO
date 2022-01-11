@@ -1,6 +1,6 @@
 package com.example.domo.models.interfaces
 
-import entities.tools.TaskWithEmployee
+import com.example.waiter_core.domain.tools.TaskWithEmployee
 
 interface LogInModelInterface {
     fun signIn(email: String, password: String, task: TaskWithEmployee)

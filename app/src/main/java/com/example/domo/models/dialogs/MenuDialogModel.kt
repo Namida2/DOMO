@@ -3,7 +3,7 @@ package com.example.domo.models.dialogs
 import com.example.domo.models.interfaces.MenuDialogModelInterface
 import com.example.domo.models.interfaces.MenuHolder
 import entities.menu.CategoriesNameHolder
-import entities.menu.Dish
+import com.example.waiter_core.domain.menu.Dish
 import javax.inject.Inject
 
 class MenuDialogModel @Inject constructor(

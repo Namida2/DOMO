@@ -1,11 +1,9 @@
 package com.example.domo.views.activities
 
 import android.graphics.Rect
-import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
@@ -17,11 +15,10 @@ import com.example.domo.databinding.ActivityWaiterMainBinding
 
 import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.viewModels.shared.WaiterActOrderFragSharedViewModel
-import extentions.Animations.prepareHide
-import extentions.Animations.prepareShow
-import extentions.Animations.prepareSlideDown
-import extentions.Animations.prepareSlideUp
-import javax.inject.Inject
+import com.example.waiter_core.domain.tools.extentions.Animations.prepareHide
+import com.example.waiter_core.domain.tools.extentions.Animations.prepareShow
+import com.example.waiter_core.domain.tools.extentions.Animations.prepareSlideDown
+import com.example.waiter_core.domain.tools.extentions.Animations.prepareSlideUp
 
 class WaiterMainActivity : AppCompatActivity(),
     NavController.OnDestinationChangedListener {

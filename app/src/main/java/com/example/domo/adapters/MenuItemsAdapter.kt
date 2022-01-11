@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
 import com.example.domo.adapters.diffCallbacks.MenuAdapterDiffCallback
-import entities.recyclerView.interfaces.BaseViewHolder
-import entities.recyclerView.interfaces.BaseRecyclerViewItem
-import entities.recyclerView.interfaces.MenuRecyclerViewType
+import com.example.waiter_core.domain.recyclerView.interfaces.BaseViewHolder
+import com.example.waiter_core.domain.recyclerView.interfaces.BaseRecyclerViewItem
+import com.example.waiter_core.domain.recyclerView.interfaces.MenuRecyclerViewType
 
 class MenuItemsAdapter(
     private var recyclerViewTypes: List<MenuRecyclerViewType<out ViewBinding, out BaseRecyclerViewItem>>,

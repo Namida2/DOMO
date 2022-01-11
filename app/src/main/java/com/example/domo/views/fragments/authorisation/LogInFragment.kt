@@ -14,7 +14,7 @@ import com.example.domo.viewModels.LogInViewModel
 import com.example.domo.viewModels.LogInViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.views.activities.SplashScreenActivity
-import entities.tools.ErrorMessage
+import com.example.waiter_core.domain.tools.ErrorMessage
 import extentions.createMessageDialog
 import extentions.isNetworkConnected
 import tools.dialogs.ProcessAlertDialog

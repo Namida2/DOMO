@@ -1,6 +1,6 @@
 package com.example.domo.models.interfaces
 
-import entities.tools.SimpleTask
+import com.example.waiter_core.domain.tools.SimpleTask
 
 interface OrderMenuDialogModelInterface {
     fun insertCurrentOrder(task: SimpleTask)

@@ -2,16 +2,16 @@ package com.example.domo.models
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import entities.constants.FirestoreConstants
+import com.example.waiter_core.domain.tools.constants.FirestoreConstants
 import com.example.domo.models.interfaces.MenuHolder
 import com.example.domo.models.interfaces.MenuHolderStates
 import com.example.domo.models.interfaces.MenuLocalRepository
-import com.example.domo.models.remoteRepository.FirestoreReferences.menuCollectionRef
-import database.daos.MenuDao
+import com.example.waiter_core.domain.tools.FirestoreReferences.menuCollectionRef
+import com.example.waiter_core.data.database.daos.MenuDao
 import entities.menu.Category
 import entities.menu.CategoryName
-import entities.menu.Dish
-import extentions.logE
+import com.example.waiter_core.domain.menu.Dish
+import com.example.waiter_core.domain.tools.extentions.logE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main

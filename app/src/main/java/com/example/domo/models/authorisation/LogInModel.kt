@@ -2,10 +2,10 @@ package com.example.domo.models.authorisation
 
 import com.example.domo.models.interfaces.LogInModelInterface
 import com.example.domo.models.remoteRepository.authorisation.LogInRemoteRepository
-import database.daos.EmployeeDao
-import entities.tools.ErrorMessage
-import entities.tools.TaskWithEmployee
-import entities.Employee
+import com.example.waiter_core.data.database.daos.EmployeeDao
+import com.example.waiter_core.domain.tools.ErrorMessage
+import com.example.waiter_core.domain.tools.TaskWithEmployee
+import com.example.waiter_core.domain.Employee
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main

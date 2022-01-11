@@ -2,14 +2,15 @@ package com.example.domo.viewModels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import entities.tools.ErrorMessage
+import com.example.waiter_core.domain.tools.ErrorMessage
 import com.example.domo.R
 import com.example.domo.models.interfaces.RegistrationModelInterface
+import com.example.waiter_core.domain.Employee
 import entities.constants.EmployeePosts
 import entities.*
-import entities.tools.TaskWithEmployee
-import extentions.isEmptyField
-import extentions.isValidEmail
+import com.example.waiter_core.domain.tools.TaskWithEmployee
+import com.example.waiter_core.domain.tools.extentions.isEmptyField
+import com.example.waiter_core.domain.tools.extentions.isValidEmail
 
 sealed class RegistrationViewModelStates {
     open var errorMessage: ErrorMessage? = null

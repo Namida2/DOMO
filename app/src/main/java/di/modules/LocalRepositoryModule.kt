@@ -2,8 +2,7 @@ package di.modules
 
 import dagger.Module
 import dagger.Provides
-import database.Database
-import javax.inject.Singleton
+import com.example.waiter_core.data.database.Database
 
 @Module
 class LocalRepositoryModule {
