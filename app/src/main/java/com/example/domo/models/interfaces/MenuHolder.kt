@@ -1,8 +1,8 @@
 package com.example.domo.models.interfaces
 
 import androidx.lifecycle.LiveData
-import entities.menu.Category
-import entities.menu.CategoryName
+import com.example.waiter_core.domain.menu.Category
+import com.example.waiter_core.domain.menu.CategoryName
 import com.example.waiter_core.domain.menu.Dish
 
 sealed class MenuHolderStates {

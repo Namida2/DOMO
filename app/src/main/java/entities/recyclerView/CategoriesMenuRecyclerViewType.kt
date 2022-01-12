@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.domo.R
 import com.example.domo.adapters.MenuItemsAdapter
 import com.example.domo.databinding.LayoutCategoriesContainerBinding
-import entities.menu.CategoriesNameHolder
+import com.example.waiter_core.domain.menu.CategoriesNameHolder
 import com.example.waiter_core.domain.recyclerView.interfaces.BaseRecyclerViewItem
 import com.example.waiter_core.domain.recyclerView.interfaces.BaseViewHolder
 import com.example.waiter_core.domain.recyclerView.interfaces.MenuRecyclerViewType

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.example.domo.R
 import com.example.domo.databinding.LayoutCatehoryLargeBinding
-import entities.menu.CategoryName
+import com.example.waiter_core.domain.menu.CategoryName
 import com.example.waiter_core.domain.recyclerView.interfaces.BaseRecyclerViewItem
 import com.example.waiter_core.domain.recyclerView.interfaces.BaseViewHolder
 import com.example.waiter_core.domain.recyclerView.interfaces.MenuRecyclerViewType

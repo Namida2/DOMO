@@ -8,9 +8,9 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.toObject
 import javax.inject.Inject
 
-class SplashScreenRemoteRepositoryImpl @Inject constructor(
+class UsersRemoteRepositiryImpl @Inject constructor(
     private val auth: FirebaseAuth
-) : SplashScreenRemoteRepository {
+) : UsersRemoteRepositiry {
 
     private val defaultMenuVersion = -1L
     override fun getCurrentUser(): FirebaseUser? = auth.currentUser
@@ -34,7 +34,7 @@ class SplashScreenRemoteRepositoryImpl @Inject constructor(
 
 }
 
-interface SplashScreenRemoteRepository {
+interface UsersRemoteRepositiry {
     fun signOut()
     fun getCurrentUser(): FirebaseUser?
     fun readCurrentEmployee(email: String, onComplete: (employee: Employee?) -> Unit)

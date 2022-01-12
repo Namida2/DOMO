@@ -3,6 +3,7 @@ package com.example.feature_splashscreen.presentation
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.feature_splashscreen.domain.ReadMenuUseCase
 import com.example.waiter_core.domain.Employee
 import com.example.waiter_core.domain.tools.ErrorMessage
 import com.example.waiter_core.domain.tools.Task
@@ -15,19 +16,21 @@ sealed class SplashScreenStates {
     object EmployeeDoesNotExit : SplashScreenStates()
 }
 
+//TODO: Add the useCase // STOPPED_1 //
 class SplashScreenViewModel(
     //private val model: SplashScreenModelInterface
+    private val model: ReadMenuUseCase
 
 ) : ViewModel() {
     private var _state: MutableLiveData<SplashScreenStates> =
         MutableLiveData(SplashScreenStates.DefaultState)
     val state = _state
 
-//    init {
-//        model.readMenu()
-//    }
-//
-//    fun getCurrentEmployee() {
+    init {
+        model.readMenu()
+    }
+
+    fun getCurrentEmployee() {
 //        viewModelScope.launch {
 //            _state.value = SplashScreenStates.CheckingForCurrentEmployee
 //            model.getCurrentEmployee(object : Task<Employee, Unit> {
@@ -40,5 +43,5 @@ class SplashScreenViewModel(
 //                }
 //            })
 //        }
-//    }
+    }
 }
