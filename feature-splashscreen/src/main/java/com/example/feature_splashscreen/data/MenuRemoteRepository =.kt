@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 sealed class MenuHolderStates {
     class MenuExist(
-        val menu: ArrayList<Category>,
+        val menuService: MenuService,
     ) : MenuHolderStates()
     object MenuEmpty : MenuHolderStates()
     object MenuIsLoading : MenuHolderStates()
@@ -119,8 +119,10 @@ class MenuRemoteRepositoryImpl @Inject constructor(
 
     private fun setMenuServiceState() {
         if (menu.isEmpty()) _menuState.value = MenuHolderStates.MenuEmpty
-        else _menuState.value = MenuHolderStates.MenuExist(menu)
-        menuService.setMenu(menu)
+        else {
+            menuService.setMenu(menu)
+            _menuState.value = MenuHolderStates.MenuExist(menuService)
+        }
     }
 
 }
