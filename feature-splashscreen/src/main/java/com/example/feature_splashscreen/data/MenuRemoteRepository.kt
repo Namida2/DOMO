@@ -20,6 +20,7 @@ sealed class MenuHolderStates {
     class MenuExist(
         val menuService: MenuService,
     ) : MenuHolderStates()
+
     object MenuEmpty : MenuHolderStates()
     object MenuIsLoading : MenuHolderStates()
     object Default : MenuHolderStates()
@@ -29,7 +30,6 @@ sealed class MenuHolderStates {
 class MenuRemoteRepositoryImpl @Inject constructor(
     override var menuService: MenuService,
     private var menuDao: MenuDao,
-    private var sharedPreferences: SharedPreferences,
 ) : MenuRemoteRepository {
 
     private val defaultMenuVersion = -1L
@@ -81,7 +81,6 @@ class MenuRemoteRepositoryImpl @Inject constructor(
         onComplete()
     }
 
-
     private fun getAllDishes(): List<Dish> =
         menu.map { it.dishes }.flatten()
 
@@ -124,7 +123,6 @@ class MenuRemoteRepositoryImpl @Inject constructor(
             _menuState.value = MenuHolderStates.MenuExist(menuService)
         }
     }
-
 }
 
 interface MenuRemoteRepository {

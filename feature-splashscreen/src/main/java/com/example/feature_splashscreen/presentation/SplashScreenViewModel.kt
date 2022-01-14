@@ -18,9 +18,7 @@ sealed class SplashScreenStates {
 
 //TODO: Add the useCase // STOPPED_1 //
 class SplashScreenViewModel(
-    //private val model: SplashScreenModelInterface
     private val model: ReadMenuUseCase
-
 ) : ViewModel() {
     private var _state: MutableLiveData<SplashScreenStates> =
         MutableLiveData(SplashScreenStates.DefaultState)

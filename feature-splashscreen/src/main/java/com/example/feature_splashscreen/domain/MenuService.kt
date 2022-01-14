@@ -16,7 +16,6 @@ class MenuService @Inject constructor() {
         }.map {
             CategoryName(it)
         }
-
     fun getDishById(dishId: Int): Dish? {
         var dish: Dish? = null
         menu.find { category ->
@@ -27,8 +26,7 @@ class MenuService @Inject constructor() {
         }
         return dish
     }
-
-    fun setMenu(menu: ArrayList<Category> ) {
+    fun setMenu(menu: ArrayList<Category>) {
         this.menu = menu
     }
 

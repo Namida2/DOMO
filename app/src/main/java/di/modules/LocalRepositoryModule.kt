@@ -11,5 +11,4 @@ class LocalRepositoryModule {
 
     @Provides
     fun provideMenuDao(database: Database) = database.menuDao()
-
 }

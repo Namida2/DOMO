@@ -27,6 +27,4 @@ object ViewModelFactory : ViewModelProvider.Factory {
         }
         return viewModel as T
     }
-
-
 }
