@@ -1,26 +1,25 @@
 package com.example.feature_splashscreen.presentation
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStore
-import com.example.feature_splashscreen.domain.di.SplashScreenDepsHolder
+import com.example.feature_splashscreen.domain.di.DaggerSplashScreenAppComponent
+import com.example.feature_splashscreen.domain.di.SplashScreenDepsStore
 
 class SplashScreenActivity : AppCompatActivity() {
 
     private val viewModel: SplashScreenViewModel by viewModels {
         object: ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//                val viewModel = when (modelClass) {
-//                    SplashScreenViewModel::class.java ->
-//                        SplashScreenViewModel(SplashScreenDepsHolder.deps)
-//                }
-                return viewModel as T
-            }
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T =
+                SplashScreenViewModel(
+                    DaggerSplashScreenAppComponent.builder().putDeps(
+                        SplashScreenDepsStore.deps!!
+                    ).build().provideReadMenuUseCase()
+                ) as T
+
         }
     }
 

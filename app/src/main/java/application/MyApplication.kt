@@ -3,7 +3,7 @@ package application
 import android.app.Application
 import androidx.room.Room
 import com.example.domo.viewModels.ViewModelFactory
-import com.example.feature_splashscreen.domain.di.SplashScreenDepsHolder
+import com.example.feature_splashscreen.domain.di.SplashScreenDepsStore
 import com.example.waiter_core.data.database.Database
 import di.AppComponent
 import di.DaggerAppComponent
@@ -26,7 +26,7 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        SplashScreenDepsHolder.deps = _appComponent
+        SplashScreenDepsStore.deps = _appComponent
         ViewModelFactory.appComponent = _appComponent
     }
 }
