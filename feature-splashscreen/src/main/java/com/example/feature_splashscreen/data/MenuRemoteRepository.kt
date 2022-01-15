@@ -1,6 +1,5 @@
 package com.example.feature_splashscreen.data
 
-import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.feature_splashscreen.domain.MenuService
@@ -16,30 +15,16 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-sealed class MenuHolderStates {
-    class MenuExist(
-        val menuService: MenuService,
-    ) : MenuHolderStates()
-
-    object MenuEmpty : MenuHolderStates()
-    object MenuIsLoading : MenuHolderStates()
-    object Default : MenuHolderStates()
-}
-
 //TODO: Implement an observable pattern // STOPPED_0 //
 class MenuRemoteRepositoryImpl @Inject constructor(
     override var menuService: MenuService,
-    private var menuDao: MenuDao,
 ) : MenuRemoteRepository {
 
     private val defaultMenuVersion = -1L
-    private val _menuState: MutableLiveData<MenuHolderStates> =
-        MutableLiveData(MenuHolderStates.Default)
-    val menuState: LiveData<MenuHolderStates> = _menuState
     private val menu: ArrayList<Category> = ArrayList()
 
-    override fun readNewMenu(onComplete: () -> Unit) {
-        _menuState.value = MenuHolderStates.MenuIsLoading
+    override fun readNewMenu(onComplete: (menuService: MenuService) -> Unit) {
+        menuService.setMenuServiceStateAsLoading()
         FirestoreReferences.menuCollectionRef.get().addOnSuccessListener {
             val categoriesCount: Int = it.size()
             for (i in 0 until categoriesCount)
@@ -56,7 +41,7 @@ class MenuRemoteRepositoryImpl @Inject constructor(
     private fun readDishes(
         category: String,
         isItLastCategory: Boolean = false,
-        onComplete: () -> Unit,
+        onComplete: (menuService: MenuService) -> Unit,
     ) {
         val dishesCollectionRef =
             FirestoreReferences.menuCollectionRef.document(category)
@@ -73,32 +58,9 @@ class MenuRemoteRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun onMenuLoadingFinish(onComplete: () -> Unit) {
-        CoroutineScope(Dispatchers.IO).launch {
-            menuDao.insert(getAllDishes())
-        }
-        setMenuServiceState()
-        onComplete()
-    }
-
-    private fun getAllDishes(): List<Dish> =
-        menu.map { it.dishes }.flatten()
-
-    override fun readExitingMenu() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val categories: MutableSet<String> = mutableSetOf()
-            val allDishes = menuDao.readAll()
-            allDishes.forEach {
-                categories.add(it.categoryName)
-            }
-            categories.forEach { category ->
-                val dishes = allDishes.filter { it.categoryName == category }
-                menu.add(Category(category, dishes))
-            }
-            withContext(Dispatchers.Main) {
-                setMenuServiceState()
-            }
-        }
+    private fun onMenuLoadingFinish(onComplete: (menuService: MenuService) -> Unit) {
+        menuService.setMenuServiceState(menu)
+        onComplete(menuService)
     }
 
     override fun readMenuVersion(onComplete: (version: Long) -> Unit) {
@@ -115,19 +77,10 @@ class MenuRemoteRepositoryImpl @Inject constructor(
             onComplete(defaultMenuVersion)
         }
     }
-
-    private fun setMenuServiceState() {
-        if (menu.isEmpty()) _menuState.value = MenuHolderStates.MenuEmpty
-        else {
-            menuService.setMenu(menu)
-            _menuState.value = MenuHolderStates.MenuExist(menuService)
-        }
-    }
 }
 
 interface MenuRemoteRepository {
     var menuService: MenuService
-    fun readNewMenu(onComplete: () -> Unit)
-    fun readExitingMenu()
+    fun readNewMenu(onComplete: (menuService: MenuService) -> Unit)
     fun readMenuVersion(onComplete: (version: Long) -> Unit)
 }

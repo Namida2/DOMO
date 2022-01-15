@@ -1,14 +1,31 @@
 package com.example.feature_splashscreen.domain
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.waiter_core.domain.menu.Category
 import com.example.waiter_core.domain.menu.CategoryName
 import com.example.waiter_core.domain.menu.Dish
 import javax.inject.Inject
+import javax.inject.Singleton
 
 
+sealed class MenuServiceStates {
+    class MenuExists(
+        val menuService: MenuService,
+    ) : MenuServiceStates()
+    object MenuIsEmpty : MenuServiceStates()
+    object MenuIsLoading : MenuServiceStates()
+    object Default : MenuServiceStates()
+}
+
+@Singleton
 class MenuService @Inject constructor() {
 
-    private var menu: ArrayList<Category> = ArrayList()
+    var menu: ArrayList<Category> = ArrayList()
+
+    private val _menuState: MutableLiveData<MenuServiceStates> =
+        MutableLiveData(MenuServiceStates.Default)
+    val menuState: LiveData<MenuServiceStates> = _menuState
 
     fun getAllCategories(): List<CategoryName> =
         menu.map {
@@ -16,6 +33,7 @@ class MenuService @Inject constructor() {
         }.map {
             CategoryName(it)
         }
+
     fun getDishById(dishId: Int): Dish? {
         var dish: Dish? = null
         menu.find { category ->
@@ -26,8 +44,16 @@ class MenuService @Inject constructor() {
         }
         return dish
     }
-    fun setMenu(menu: ArrayList<Category>) {
-        this.menu = menu
+
+    fun setMenuServiceState(menu: ArrayList<Category>?) {
+        if (menu.isNullOrEmpty()) _menuState.value = MenuServiceStates.MenuIsEmpty
+        else {
+            this.menu = menu
+            _menuState.value = MenuServiceStates.MenuExists(this)
+        }
+    }
+    fun setMenuServiceStateAsLoading() {
+        _menuState.value = MenuServiceStates.MenuIsLoading
     }
 
 }

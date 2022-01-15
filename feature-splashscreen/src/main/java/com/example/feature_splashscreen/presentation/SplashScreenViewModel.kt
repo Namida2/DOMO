@@ -3,6 +3,7 @@ package com.example.feature_splashscreen.presentation
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.feature_splashscreen.domain.GetCurrentEmployeeUseCase
 import com.example.feature_splashscreen.domain.ReadMenuUseCase
 import com.example.waiter_core.domain.Employee
 import com.example.waiter_core.domain.tools.ErrorMessage
@@ -18,28 +19,29 @@ sealed class SplashScreenStates {
 
 //TODO: Add the useCase // STOPPED_1 //
 class SplashScreenViewModel(
-    private val model: ReadMenuUseCase
+    private val readMenuUseCase: ReadMenuUseCase,
+    private val getCurrentEmployeeUseCase: GetCurrentEmployeeUseCase
 ) : ViewModel() {
     private var _state: MutableLiveData<SplashScreenStates> =
         MutableLiveData(SplashScreenStates.DefaultState)
     val state = _state
 
     init {
-        model.readMenu()
+        readMenuUseCase.readMenu()
     }
 
     fun getCurrentEmployee() {
-//        viewModelScope.launch {
-//            _state.value = SplashScreenStates.CheckingForCurrentEmployee
-//            model.getCurrentEmployee(object : Task<Employee, Unit> {
-//                override fun onSuccess(arg: Employee) {
-//                    state.value = SplashScreenStates.EmployeeExists(arg)
-//                }
-//
-//                override fun onError(message: ErrorMessage?) {
-//                    state.value = SplashScreenStates.EmployeeDoesNotExit
-//                }
-//            })
-//        }
+        viewModelScope.launch {
+            _state.value = SplashScreenStates.CheckingForCurrentEmployee
+            getCurrentEmployeeUseCase.getCurrentEmployee(object : Task<Employee, Unit> {
+                override fun onSuccess(arg: Employee) {
+                    state.value = SplashScreenStates.EmployeeExists(arg)
+                }
+
+                override fun onError(message: ErrorMessage?) {
+                    state.value = SplashScreenStates.EmployeeDoesNotExit
+                }
+            })
+        }
     }
 }

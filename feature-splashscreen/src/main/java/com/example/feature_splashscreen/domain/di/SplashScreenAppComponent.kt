@@ -15,13 +15,14 @@ import javax.inject.Singleton
     modules = [UseCasesModule::class, LocalRepositoryModule::class, RemoteRepositoryModule::class],
     dependencies = [SplashScreenAppComponentDeps::class] )
 interface SplashScreenAppComponent {
-    fun provideReadMenuUseCase(): ReadMenuUseCase
 
     @Component.Builder
     interface Builder {
         fun putDeps(deps: SplashScreenAppComponentDeps): Builder
         fun build(): SplashScreenAppComponent
     }
+
+    fun provideReadMenuUseCase(): ReadMenuUseCase
 }
 
 interface SplashScreenAppComponentDeps {
