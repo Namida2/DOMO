@@ -17,9 +17,8 @@ sealed class SplashScreenStates {
     object EmployeeDoesNotExit : SplashScreenStates()
 }
 
-//TODO: Add the useCase // STOPPED_1 //
 class SplashScreenViewModel(
-    private val readMenuUseCase: ReadMenuUseCase,
+    readMenuUseCase: ReadMenuUseCase,
     private val getCurrentEmployeeUseCase: GetCurrentEmployeeUseCase
 ) : ViewModel() {
     private var _state: MutableLiveData<SplashScreenStates> =

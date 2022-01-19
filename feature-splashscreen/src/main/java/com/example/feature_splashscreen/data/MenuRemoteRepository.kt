@@ -1,21 +1,13 @@
 package com.example.feature_splashscreen.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.feature_splashscreen.domain.MenuService
-import com.example.waiter_core.data.database.daos.MenuDao
 import com.example.waiter_core.domain.menu.Category
 import com.example.waiter_core.domain.menu.Dish
 import com.example.waiter_core.domain.tools.FirestoreReferences
 import com.example.waiter_core.domain.tools.constants.FirestoreConstants
 import com.example.waiter_core.domain.tools.extentions.logE
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-//TODO: Implement an observable pattern // STOPPED_0 //
 class MenuRemoteRepositoryImpl @Inject constructor(
     override var menuService: MenuService,
 ) : MenuRemoteRepository {

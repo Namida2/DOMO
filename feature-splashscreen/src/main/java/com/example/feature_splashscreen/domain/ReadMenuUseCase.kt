@@ -3,8 +3,6 @@ package com.example.feature_splashscreen.domain
 import android.content.SharedPreferences
 import com.example.feature_splashscreen.data.MenuLocalRepository
 import com.example.feature_splashscreen.data.MenuRemoteRepository
-import com.example.feature_splashscreen.data.UsersRemoteRepositiry
-import com.example.waiter_core.data.database.daos.EmployeeDao
 import com.example.waiter_core.domain.tools.constants.FirestoreConstants
 import com.example.waiter_core.domain.tools.extentions.logD
 import javax.inject.Inject

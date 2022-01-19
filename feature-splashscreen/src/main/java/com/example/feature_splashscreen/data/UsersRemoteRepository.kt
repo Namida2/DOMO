@@ -3,21 +3,16 @@ package com.example.feature_splashscreen.data
 import com.example.waiter_core.data.database.daos.EmployeeDao
 import com.example.waiter_core.domain.Employee
 import com.example.waiter_core.domain.tools.FirestoreReferences.employeesCollectionRef
-import com.example.waiter_core.domain.tools.Task
 import com.example.waiter_core.domain.tools.extentions.logE
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.toObject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class UsersRemoteRepositoryImpl @Inject constructor(
     private val auth: FirebaseAuth,
     private val employeeDao: EmployeeDao,
-) : UsersRemoteRepositiry {
+) : UsersRemoteRepository {
 
     private val defaultMenuVersion = -1L
     override fun getCurrentUser(): FirebaseUser? = auth.currentUser
@@ -66,7 +61,7 @@ class UsersRemoteRepositoryImpl @Inject constructor(
 
 }
 
-interface UsersRemoteRepositiry {
+interface UsersRemoteRepository {
     fun signOut()
     fun getCurrentUser(): FirebaseUser?
     fun readCurrentEmployee(email: String, onComplete: (employee: Employee?) -> Unit)
