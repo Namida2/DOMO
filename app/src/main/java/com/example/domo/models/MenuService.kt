@@ -20,6 +20,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
+//TODO: Add the OrderDao and reading newOrders if they exist // STOPPED 1 //
 @Singleton
 class MenuService @Inject constructor(
     private var menuDao: MenuDao,

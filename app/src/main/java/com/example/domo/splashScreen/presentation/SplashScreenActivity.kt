@@ -18,7 +18,7 @@ import extentions.employee
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    //TODO: Implement the authorisation and registration module.
+    //TODO: Implement the authorisation and registration module // STOPPED //
     private val viewModel: SplashScreenViewModel by viewModels {
         object : ViewModelProvider.Factory {
             val appComponent = DaggerSplashScreenAppComponent.builder().putDeps(

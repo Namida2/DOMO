@@ -42,7 +42,7 @@ class MenuDialogViewModel(
                 }
             is MenuHolderStates.MenuExist -> _state.value =
                 MenuDialogStates.MenuExists(getRecyclerViewItems())
-            else -> {} //TODO: Somehow remove the Default state
+            else -> {}
         }
     }
 
