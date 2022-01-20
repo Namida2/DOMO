@@ -1,8 +1,8 @@
-package com.example.feature_splashscreen.domain
+package com.example.domo.splashScreen.domain
 
 import android.content.SharedPreferences
-import com.example.feature_splashscreen.data.MenuLocalRepository
-import com.example.feature_splashscreen.data.MenuRemoteRepository
+import com.example.domo.splashScreen.data.MenuLocalRepository
+import com.example.domo.splashScreen.data.MenuRemoteRepository
 import com.example.waiter_core.domain.tools.constants.FirestoreConstants
 import com.example.waiter_core.domain.tools.extentions.logD
 import javax.inject.Inject

@@ -1,8 +1,8 @@
-package com.example.feature_splashscreen.domain.di.modules
+package com.example.domo.splashScreen.domain.di.modules
 
-import com.example.feature_splashscreen.data.MenuLocalRepository
-import com.example.feature_splashscreen.data.MenuLocalRepositoryImpl
-import com.example.feature_splashscreen.domain.MenuService
+import com.example.domo.splashScreen.data.MenuLocalRepository
+import com.example.domo.splashScreen.data.MenuLocalRepositoryImpl
+import com.example.domo.splashScreen.domain.MenuService
 import com.example.waiter_core.data.database.Database
 import com.example.waiter_core.data.database.daos.EmployeeDao
 import com.example.waiter_core.data.database.daos.MenuDao

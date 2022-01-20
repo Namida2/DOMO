@@ -3,7 +3,7 @@ package application
 import android.app.Application
 import androidx.room.Room
 import com.example.domo.viewModels.ViewModelFactory
-import com.example.feature_splashscreen.domain.di.SplashScreenDepsStore
+import com.example.domo.splashScreen.domain.di.SplashScreenDepsStore
 import com.example.waiter_core.data.database.Database
 import di.AppComponent
 import di.DaggerAppComponent

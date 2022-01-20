@@ -1,6 +1,6 @@
-package com.example.feature_splashscreen.data
+package com.example.domo.splashScreen.data
 
-import com.example.feature_splashscreen.domain.MenuService
+import com.example.domo.splashScreen.domain.MenuService
 import com.example.waiter_core.domain.menu.Category
 import com.example.waiter_core.domain.menu.Dish
 import com.example.waiter_core.domain.tools.FirestoreReferences

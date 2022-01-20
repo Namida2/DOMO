@@ -1,11 +1,11 @@
-package com.example.feature_splashscreen.domain.di
+package com.example.domo.splashScreen.domain.di
 
 import android.content.SharedPreferences
-import com.example.feature_splashscreen.domain.GetCurrentEmployeeUseCase
-import com.example.feature_splashscreen.domain.ReadMenuUseCase
-import com.example.feature_splashscreen.domain.di.modules.LocalRepositoryModule
-import com.example.feature_splashscreen.domain.di.modules.RemoteRepositoryModule
-import com.example.feature_splashscreen.domain.di.modules.UseCasesModule
+import com.example.domo.splashScreen.domain.GetCurrentEmployeeUseCase
+import com.example.domo.splashScreen.domain.ReadMenuUseCase
+import com.example.domo.splashScreen.domain.di.modules.LocalRepositoryModule
+import com.example.domo.splashScreen.domain.di.modules.RemoteRepositoryModule
+import com.example.domo.splashScreen.domain.di.modules.UseCasesModule
 import com.example.waiter_core.data.database.Database
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

@@ -1,6 +1,6 @@
-package com.example.feature_splashscreen.domain
+package com.example.domo.splashScreen.domain
 
-import com.example.feature_splashscreen.data.UsersRemoteRepository
+import com.example.domo.splashScreen.data.UsersRemoteRepository
 import com.example.waiter_core.domain.tools.TaskWithEmployee
 import javax.inject.Inject
 
@@ -14,9 +14,8 @@ class GetCurrentEmployeeUseCaseImpl @Inject constructor(
             task.onError()
             return
         }
-        //readEmployeeData(currentUser, task)
+        usersRemoteRepository.readEmployeeData(currentUser, task)
     }
-
 }
 
 interface GetCurrentEmployeeUseCase {

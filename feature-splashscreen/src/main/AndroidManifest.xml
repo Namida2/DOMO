@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DOMO">
         <activity
-            android:name=".presentation.SplashScreenActivity"
+            android:name="com.example.domo.splashScreen.presentation.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

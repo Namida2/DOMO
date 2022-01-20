@@ -1,10 +1,10 @@
-package com.example.feature_splashscreen.presentation
+package com.example.domo.splashScreen.presentation
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.feature_splashscreen.domain.GetCurrentEmployeeUseCase
-import com.example.feature_splashscreen.domain.ReadMenuUseCase
+import com.example.domo.splashScreen.domain.GetCurrentEmployeeUseCase
+import com.example.domo.splashScreen.domain.ReadMenuUseCase
 import com.example.waiter_core.domain.Employee
 import com.example.waiter_core.domain.tools.ErrorMessage
 import com.example.waiter_core.domain.tools.Task

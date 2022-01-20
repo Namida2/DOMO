@@ -1,4 +1,4 @@
-package com.example.feature_splashscreen.domain
+package com.example.domo.splashScreen.domain
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

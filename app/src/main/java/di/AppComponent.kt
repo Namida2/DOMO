@@ -8,7 +8,7 @@ import com.example.domo.views.activities.WaiterMainActivity
 import com.example.domo.views.dialogs.MenuBottomSheetDialog
 import com.example.domo.views.fragments.OrderFragment
 import com.example.domo.views.fragments.TablesFragment
-import com.example.feature_splashscreen.domain.di.SplashScreenAppComponentDeps
+import com.example.domo.splashScreen.domain.di.SplashScreenAppComponentDeps
 import dagger.BindsInstance
 import dagger.Component
 import com.example.waiter_core.data.database.Database
