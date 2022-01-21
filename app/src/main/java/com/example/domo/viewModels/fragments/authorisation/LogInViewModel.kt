@@ -7,7 +7,7 @@ import com.example.domo.models.interfaces.LogInModelInterface
 import com.example.waiter_core.domain.tools.ErrorMessage
 import com.example.waiter_core.domain.tools.TaskWithEmployee
 import com.example.waiter_core.domain.Employee
-import com.example.waiter_core.domain.tools.extentions.isEmptyField
+import com.example.waiter_core.domain.tools.extensions.isEmptyField
 
 sealed class LogInViewModelStates {
     open var errorMessage: ErrorMessage? = null

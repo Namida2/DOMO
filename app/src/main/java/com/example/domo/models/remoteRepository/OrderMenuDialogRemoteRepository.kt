@@ -9,8 +9,8 @@ import com.example.waiter_core.domain.tools.constants.FirestoreConstants.FIELD_G
 import com.example.waiter_core.domain.order.BaseOrderItem
 import com.example.waiter_core.domain.order.Order
 import com.example.waiter_core.domain.tools.SimpleTask
-import com.example.waiter_core.domain.tools.extentions.logD
-import com.example.waiter_core.domain.tools.extentions.logE
+import com.example.waiter_core.domain.tools.extensions.logD
+import com.example.waiter_core.domain.tools.extensions.logE
 import javax.inject.Inject
 
 class OrderMenuDialogRemoteRepository @Inject constructor(

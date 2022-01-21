@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import com.example.domo.splashScreen.data.MenuLocalRepository
 import com.example.domo.splashScreen.data.MenuRemoteRepository
 import com.example.waiter_core.domain.tools.constants.FirestoreConstants
-import com.example.waiter_core.domain.tools.extentions.logD
+import com.example.waiter_core.domain.tools.extensions.logD
 import javax.inject.Inject
 
 class ReadMenuUseCaseImpl @Inject constructor(

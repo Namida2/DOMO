@@ -6,7 +6,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.example.waiter_core.domain.tools.ErrorMessage
 import com.example.waiter_core.domain.tools.TaskWithEmployee
 import com.example.waiter_core.domain.Employee
-import com.example.waiter_core.domain.tools.extentions.logE
+import com.example.waiter_core.domain.tools.extensions.logE
 import javax.inject.Inject
 
 class LogInRemoteRepository @Inject constructor(

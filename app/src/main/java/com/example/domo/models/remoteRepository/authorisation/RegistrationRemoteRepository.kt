@@ -10,8 +10,8 @@ import com.example.waiter_core.domain.tools.constants.FirestoreConstants.DOCUMEN
 import com.example.waiter_core.domain.tools.ErrorMessage
 import com.example.waiter_core.domain.tools.TaskWithEmployee
 import com.example.waiter_core.domain.Employee
-import com.example.waiter_core.domain.tools.extentions.logD
-import com.example.waiter_core.domain.tools.extentions.logE
+import com.example.waiter_core.domain.tools.extensions.logD
+import com.example.waiter_core.domain.tools.extensions.logE
 import javax.inject.Inject
 
 class RegistrationRemoteRepository @Inject constructor(

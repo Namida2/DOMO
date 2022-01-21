@@ -1,4 +1,4 @@
-package com.example.waiter_core.domain.tools.extentions
+package com.example.waiter_core.domain.tools.extensions
 
 import android.util.Log
 

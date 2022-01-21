@@ -10,15 +10,17 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.domo.splashScreen.domain.di.DaggerSplashScreenAppComponent
 import com.example.domo.splashScreen.domain.di.SplashScreenDepsStore
 import com.example.domo.views.activities.WaiterMainActivity
-import com.example.domo.views.fragments.authorisation.AuthorizationActivity
+import com.example.domo.views.activities.AuthorizationActivity
+import com.example.waiter_core.domain.tools.ErrorMessage
+import com.example.waiter_core.domain.tools.dialogs.MessageAlertDialog
 import entities.constants.EmployeePosts.ADMINISTRATOR
 import entities.constants.EmployeePosts.COOK
 import entities.constants.EmployeePosts.WAITER
+import extentions.createMessageDialog
 import extentions.employee
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    //TODO: Implement the authorisation and registration module // STOPPED //
     private val viewModel: SplashScreenViewModel by viewModels {
         object : ViewModelProvider.Factory {
             val appComponent = DaggerSplashScreenAppComponent.builder().putDeps(
@@ -48,6 +50,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 is SplashScreenStates.EmployeeDoesNotExit ->
                     startActivity(Intent(this, AuthorizationActivity::class.java))
                 is SplashScreenStates.EmployeeExists -> {
+                    //Set an employee in the extension field
                     employee = state.employee
                     when (employee?.post) {
                         COOK ->
@@ -57,6 +60,10 @@ class SplashScreenActivity : AppCompatActivity() {
                         ADMINISTRATOR ->
                             startActivity(Intent(this, WaiterMainActivity::class.java))
                     }
+                }
+                is SplashScreenStates.PermissionError -> {
+                    createMessageDialog(state.message)
+                        ?.show(supportFragmentManager, "")
                 }
                 else -> {
                 }//DefaultState

@@ -10,7 +10,7 @@ import com.example.waiter_core.domain.tools.ErrorMessage
 import entities.interfaces.OrderServiceInterface
 import com.example.waiter_core.domain.menu.Dish
 import com.example.waiter_core.domain.order.OrderItem
-import com.example.waiter_core.domain.tools.extentions.logD
+import com.example.waiter_core.domain.tools.extensions.logD
 
 sealed class DishDialogVMStates {
     open var errorMessage: ErrorMessage? = null

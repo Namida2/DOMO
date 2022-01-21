@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.domo.views.fragments.authorisation.AuthorizationActivity"/>
+        <activity android:name="com.example.domo.views.activities.AuthorizationActivity"/>
         <activity android:name=".views.activities.WaiterMainActivity"/>
     </application>
 

@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.toObject
 import com.example.waiter_core.domain.Employee
 import com.example.waiter_core.domain.tools.constants.FirestoreConstants.FIELD_MENU_VERSION
-import com.example.waiter_core.domain.tools.extentions.logE
+import com.example.waiter_core.domain.tools.extensions.logE
 import javax.inject.Inject
 
 

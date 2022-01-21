@@ -5,7 +5,7 @@ import com.example.waiter_core.domain.Employee
 import com.example.waiter_core.domain.tools.FirestoreReferences.employeesCollectionRef
 import com.example.waiter_core.domain.tools.Task
 import com.example.waiter_core.domain.tools.TaskWithEmployee
-import com.example.waiter_core.domain.tools.extentions.logE
+import com.example.waiter_core.domain.tools.extensions.logE
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.toObject
@@ -49,6 +49,8 @@ class UsersRemoteRepositoryImpl @Inject constructor(
         }
     }
 
+    //TODO: First Call this method. This is necessary to check the current permission // STOPPED //
+    //TODO: Implement the authorisation and registration module
     override fun readCurrentEmployee(email: String, onComplete: (employee: Employee?) -> Unit) {
         employeesCollectionRef.document(email).get().addOnCompleteListener { task ->
             if (task.isSuccessful) {

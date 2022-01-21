@@ -9,8 +9,8 @@ import com.example.waiter_core.domain.Employee
 import entities.constants.EmployeePosts
 import entities.*
 import com.example.waiter_core.domain.tools.TaskWithEmployee
-import com.example.waiter_core.domain.tools.extentions.isEmptyField
-import com.example.waiter_core.domain.tools.extentions.isValidEmail
+import com.example.waiter_core.domain.tools.extensions.isEmptyField
+import com.example.waiter_core.domain.tools.extensions.isValidEmail
 
 sealed class RegistrationViewModelStates {
     open var errorMessage: ErrorMessage? = null

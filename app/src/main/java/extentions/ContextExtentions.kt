@@ -9,7 +9,7 @@ import application.MyApplication
 import di.AppComponent
 import com.example.waiter_core.domain.Employee
 import com.example.waiter_core.domain.tools.ErrorMessage
-import tools.dialogs.MessageAlertDialog
+import com.example.waiter_core.domain.tools.dialogs.MessageAlertDialog
 
 val Context.appComponent: AppComponent
     get() = when (this) {
@@ -27,10 +27,11 @@ var Context.employee: Employee?
     }
 
 
-fun Context.createMessageDialog(message: ErrorMessage): DialogFragment? =
+fun Context.createMessageDialog(message: ErrorMessage, action: (() -> Unit)? = null): DialogFragment? =
     MessageAlertDialog.getNewInstance<Unit>(
         this.resources.getString(message.titleId),
-        this.resources.getString(message.messageId)
+        this.resources.getString(message.messageId),
+        action
     )
 
 fun Context.isNetworkConnected(): Boolean {

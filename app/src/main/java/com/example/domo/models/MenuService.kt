@@ -11,7 +11,7 @@ import com.example.waiter_core.data.database.daos.MenuDao
 import com.example.waiter_core.domain.menu.Category
 import com.example.waiter_core.domain.menu.CategoryName
 import com.example.waiter_core.domain.menu.Dish
-import com.example.waiter_core.domain.tools.extentions.logE
+import com.example.waiter_core.domain.tools.extensions.logE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -20,7 +20,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
-//TODO: Add the OrderDao and reading newOrders if they exist // STOPPED 1 //
+//TODO: Add the OrderDao and reading newOrders if they exist
 @Singleton
 class MenuService @Inject constructor(
     private var menuDao: MenuDao,

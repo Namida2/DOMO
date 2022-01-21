@@ -16,10 +16,10 @@ import com.example.domo.R
 import com.example.domo.adapters.PostItemsAdapter
 import com.example.domo.adapters.itemDecorations.PostItemDecoration
 import com.example.domo.databinding.FragmentRegistrationBinding
+import com.example.domo.splashScreen.presentation.SplashScreenActivity
 import com.example.domo.viewModels.RegistrationViewModel
 import com.example.domo.viewModels.RegistrationViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
-import com.example.domo.views.activities.SplashScreenActivity
 import com.example.waiter_core.domain.tools.ErrorMessage
 import extentions.createMessageDialog
 import extentions.isNetworkConnected
@@ -102,7 +102,8 @@ class RegistrationFragment : Fragment() {
                     ProcessAlertDialog.show(parentFragmentManager, "")
                 }
                 is RegistrationViewModelStates.Valid -> {
-                    ProcessAlertDialog.onSuccess()
+                    //Can not perform this action after onSaveInstanceState (it's about dismiss)
+                    //ProcessAlertDialog.onSuccess()
                     startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
                 }
                 else -> {

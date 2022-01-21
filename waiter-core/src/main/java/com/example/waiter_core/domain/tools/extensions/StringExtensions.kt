@@ -1,4 +1,4 @@
-package com.example.waiter_core.domain.tools.extentions
+package com.example.waiter_core.domain.tools.extensions
 
 fun isEmptyField(vararg strings: String): Boolean {
     strings.forEach {

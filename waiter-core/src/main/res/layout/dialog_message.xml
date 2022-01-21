@@ -12,7 +12,7 @@
             android:id="@+id/containerText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_error_dialog">
+            android:background="@drawable/bg_dialog_message">
 
             <TextView
                 android:id="@+id/titleTextView"

@@ -1,13 +1,13 @@
-package tools.dialogs
+package com.example.waiter_core.domain.tools.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
-import com.example.domo.R
-import com.example.domo.databinding.DialogMessageBinding
-import com.example.waiter_core.domain.tools.extentions.logD
+import com.example.waiter_core.R
+import com.example.waiter_core.databinding.DialogMessageBinding
+import com.example.waiter_core.domain.tools.extensions.logD
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay

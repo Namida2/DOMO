@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.viewModels.activities.SplashScreenStates
 import com.example.domo.viewModels.activities.SplashScreenViewModel
-import com.example.domo.views.fragments.authorisation.AuthorizationActivity
 import entities.constants.EmployeePosts.ADMINISTRATOR
 import entities.constants.EmployeePosts.COOK
 import entities.constants.EmployeePosts.WAITER

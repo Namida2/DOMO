@@ -11,8 +11,8 @@ import com.example.waiter_core.data.database.daos.EmployeeDao
 import entities.*
 import com.example.waiter_core.domain.tools.Task
 import com.example.waiter_core.domain.tools.TaskWithEmployee
-import com.example.waiter_core.domain.tools.extentions.logD
-import com.example.waiter_core.domain.tools.extentions.logE
+import com.example.waiter_core.domain.tools.extensions.logD
+import com.example.waiter_core.domain.tools.extensions.logE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
