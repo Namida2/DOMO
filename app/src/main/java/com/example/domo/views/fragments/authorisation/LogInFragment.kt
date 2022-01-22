@@ -10,10 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.domo.R
 import com.example.domo.databinding.FragmentLogInBinding
+import com.example.domo.splashScreen.presentation.SplashScreenActivity
 import com.example.domo.viewModels.LogInViewModel
 import com.example.domo.viewModels.LogInViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
-import com.example.domo.views.activities.SplashScreenActivity
 import com.example.waiter_core.domain.tools.ErrorMessage
 import extentions.createMessageDialog
 import extentions.isNetworkConnected

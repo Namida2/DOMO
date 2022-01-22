@@ -22,9 +22,35 @@ class UsersRemoteRepositoryImpl @Inject constructor(
 
     override fun getCurrentUser(): FirebaseUser? = auth.currentUser
 
+    //TODO: First Call this method. This is necessary to check the current permission // STOPPED //
+    //TODO: Implement the authorisation and registration module
+    override fun readCurrentEmployee(currentUser: FirebaseUser, task: TaskWithEmployee) {
+        employeesCollectionRef.document(currentUser.email.toString()).get().addOnSuccessListener { response ->
+            val str = currentUser.email
+            val a = str?.length
+            val employee = response.toObject<Employee>()
+            if(employee == null) {
+                task.onError()
+                return@addOnSuccessListener
+            }
+            saveNewEmployeeData(employee, task)
+        }.addOnFailureListener {
+            logE("$this: ${it.message}")
+            task.onError()
+        }
+    }
 
-    override fun saveNewEmployeeData(currentUser: FirebaseUser, task: TaskWithEmployee) {
+    override fun saveNewEmployeeData(newEmployee: Employee, task: TaskWithEmployee) {
         //TODO: Save the employee data if they differ
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val currentEmployee = employeeDao.readCurrentEmployee()
+            if (currentEmployee == null || currentEmployee != newEmployee) {
+                employeeDao.deleteAll()
+                employeeDao.insert(newEmployee)
+            }
+            task.onSuccess(newEmployee)
+        }
 //        currentUser.reload().addOnCompleteListener { firebaseAuthTask ->
 //            if (firebaseAuthTask.isSuccessful) {
 //                CoroutineScope(Dispatchers.Main).launch {
@@ -47,24 +73,8 @@ class UsersRemoteRepositoryImpl @Inject constructor(
 //                logE("$this: ${firebaseAuthTask.exception.toString()}")
 //                task.onError()
 //            }
-//        }
     }
 
-    //TODO: First Call this method. This is necessary to check the current permission // STOPPED //
-    //TODO: Implement the authorisation and registration module
-    override fun readCurrentEmployee(currentUser: FirebaseUser, task: TaskWithEmployee) {
-        employeesCollectionRef.document(currentUser.email.toString()).get().addOnSuccessListener { response ->
-            val employee = response.toObject<Employee>()
-            if(employee == null) {
-                task.onError()
-                return@addOnSuccessListener
-            }
-            task.onSuccess(employee)
-        }.addOnFailureListener {
-            logE("$this: ${it.message}")
-            task.onError()
-        }
-    }
 
     override fun signOut() {
         auth.signOut()
@@ -76,5 +86,5 @@ interface UsersRemoteRepository {
     fun signOut()
     fun getCurrentUser(): FirebaseUser?
     fun readCurrentEmployee(currentUser: FirebaseUser, task: TaskWithEmployee)
-    fun saveNewEmployeeData(currentUser: FirebaseUser, task: TaskWithEmployee)
+    fun saveNewEmployeeData(newEmployee: Employee, task: TaskWithEmployee)
 }

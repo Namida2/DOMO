@@ -80,7 +80,8 @@ class RegistrationFragment : Fragment() {
                 with(binding) {
                     viewModel?.validation(
                         nameEditText.text.toString(),
-                        emailEditText.text.toString(),
+                        //TODO: Important thing
+                        emailEditText.text.toString().lowercase(),
                         passwordEditText.text.toString(),
                         confirmPasswordEditText.text.toString(),
                     )

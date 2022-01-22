@@ -19,7 +19,7 @@ class MenuLocalRepositoryImpl @Inject constructor(
     private var menu: ArrayList<Category> = ArrayList()
 
     override fun readExitingMenu() {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(IO).launch {
             val categories: MutableSet<String> = mutableSetOf()
             val allDishes = menuDao.readAll()
             allDishes.forEach {
