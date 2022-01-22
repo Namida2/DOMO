@@ -14,7 +14,7 @@ class GetCurrentEmployeeUseCaseImpl @Inject constructor(
             task.onError()
             return
         }
-        usersRemoteRepository.readEmployeeData(currentUser, task)
+        usersRemoteRepository.readCurrentEmployee(currentUser, task)
     }
 }
 

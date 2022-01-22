@@ -23,43 +23,46 @@ class UsersRemoteRepositoryImpl @Inject constructor(
     override fun getCurrentUser(): FirebaseUser? = auth.currentUser
 
 
-    override fun readEmployeeData(currentUser: FirebaseUser, task: TaskWithEmployee) {
-        currentUser.reload().addOnCompleteListener { firebaseAuthTask ->
-            if (firebaseAuthTask.isSuccessful) {
-                CoroutineScope(Dispatchers.Main).launch {
-                    val readEmployee = async(Dispatchers.IO) {
-                        return@async employeeDao.readCurrentEmployee()
-                    }
-                    val employee = readEmployee.await()
-                    if (employee == null)
-                        if (currentUser.email != null)
-                            readCurrentEmployee(currentUser.email!!) {
-                                if (it == null) {
-                                    auth.signOut()
-                                    task.onError()
-                                } else task.onSuccess(it)
-                            }
-                        else task.onError()
-                    else task.onSuccess(employee)
-                }
-            } else {
-                logE("$this: ${firebaseAuthTask.exception.toString()}")
-                task.onError()
-            }
-        }
+    override fun saveNewEmployeeData(currentUser: FirebaseUser, task: TaskWithEmployee) {
+        //TODO: Save the employee data if they differ
+//        currentUser.reload().addOnCompleteListener { firebaseAuthTask ->
+//            if (firebaseAuthTask.isSuccessful) {
+//                CoroutineScope(Dispatchers.Main).launch {
+//                    val readEmployee = async(Dispatchers.IO) {
+//                        return@async employeeDao.readCurrentEmployee()
+//                    }
+//                    val employee = readEmployee.await()
+//                    if (employee == null)
+//                        if (currentUser.email != null)
+//                            readCurrentEmployee(currentUser.email!!) {
+//                                if (it == null) {
+//                                    auth.signOut()
+//                                    task.onError()
+//                                } else task.onSuccess(it)
+//                            }
+//                        else task.onError()
+//                    else task.onSuccess(employee)
+//                }
+//            } else {
+//                logE("$this: ${firebaseAuthTask.exception.toString()}")
+//                task.onError()
+//            }
+//        }
     }
 
     //TODO: First Call this method. This is necessary to check the current permission // STOPPED //
     //TODO: Implement the authorisation and registration module
-    override fun readCurrentEmployee(email: String, onComplete: (employee: Employee?) -> Unit) {
-        employeesCollectionRef.document(email).get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val employee = task.result?.toObject<Employee>()
-                onComplete(employee)
-            } else {
-                logE("$this: ${task.exception}")
-                onComplete(null)
+    override fun readCurrentEmployee(currentUser: FirebaseUser, task: TaskWithEmployee) {
+        employeesCollectionRef.document(currentUser.email.toString()).get().addOnSuccessListener { response ->
+            val employee = response.toObject<Employee>()
+            if(employee == null) {
+                task.onError()
+                return@addOnSuccessListener
             }
+            task.onSuccess(employee)
+        }.addOnFailureListener {
+            logE("$this: ${it.message}")
+            task.onError()
         }
     }
 
@@ -72,6 +75,6 @@ class UsersRemoteRepositoryImpl @Inject constructor(
 interface UsersRemoteRepository {
     fun signOut()
     fun getCurrentUser(): FirebaseUser?
-    fun readCurrentEmployee(email: String, onComplete: (employee: Employee?) -> Unit)
-    fun readEmployeeData(currentUser: FirebaseUser, task: Task<Employee, Unit>)
+    fun readCurrentEmployee(currentUser: FirebaseUser, task: TaskWithEmployee)
+    fun saveNewEmployeeData(currentUser: FirebaseUser, task: TaskWithEmployee)
 }
