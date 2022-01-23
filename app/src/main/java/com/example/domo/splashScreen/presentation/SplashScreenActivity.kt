@@ -12,12 +12,14 @@ import com.example.domo.splashScreen.domain.di.SplashScreenDepsStore
 import com.example.domo.views.activities.WaiterMainActivity
 import com.example.domo.views.activities.AuthorizationActivity
 import com.example.waiter_core.domain.tools.ErrorMessage
+import com.example.waiter_core.domain.tools.ErrorMessages.networkConnectionMessage
 import com.example.waiter_core.domain.tools.dialogs.MessageAlertDialog
 import entities.constants.EmployeePosts.ADMINISTRATOR
 import entities.constants.EmployeePosts.COOK
 import entities.constants.EmployeePosts.WAITER
 import extentions.createMessageDialog
 import extentions.employee
+import extentions.isNetworkConnected
 
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -37,8 +39,12 @@ class SplashScreenActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n", "CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getCurrentEmployee()
         subscribeToViewModelState()
+        if(isNetworkConnected())
+            viewModel.getCurrentEmployee()
+        else createMessageDialog(networkConnectionMessage) {
+            this.finish()
+        }?.show(supportFragmentManager, "")
     }
 
     private fun subscribeToViewModelState() {

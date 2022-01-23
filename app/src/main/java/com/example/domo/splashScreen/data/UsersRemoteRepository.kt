@@ -1,9 +1,10 @@
 package com.example.domo.splashScreen.data
 
+import com.example.firebase_auth_core.domain.extensions.readEmployeeByEmail
 import com.example.waiter_core.data.database.daos.EmployeeDao
 import com.example.waiter_core.domain.Employee
+import com.example.waiter_core.domain.tools.ErrorMessage
 import com.example.waiter_core.domain.tools.FirestoreReferences.employeesCollectionRef
-import com.example.waiter_core.domain.tools.Task
 import com.example.waiter_core.domain.tools.TaskWithEmployee
 import com.example.waiter_core.domain.tools.extensions.logE
 import com.google.firebase.auth.FirebaseAuth
@@ -11,7 +12,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,19 +25,14 @@ class UsersRemoteRepositoryImpl @Inject constructor(
     //TODO: First Call this method. This is necessary to check the current permission // STOPPED //
     //TODO: Implement the authorisation and registration module
     override fun readCurrentEmployee(currentUser: FirebaseUser, task: TaskWithEmployee) {
-        employeesCollectionRef.document(currentUser.email.toString()).get().addOnSuccessListener { response ->
-            val str = currentUser.email
-            val a = str?.length
-            val employee = response.toObject<Employee>()
-            if(employee == null) {
-                task.onError()
-                return@addOnSuccessListener
+        currentUser.email?.readEmployeeByEmail(this.toString(), object : TaskWithEmployee {
+            override fun onSuccess(arg: Employee) {
+                saveNewEmployeeData(arg, task)
             }
-            saveNewEmployeeData(employee, task)
-        }.addOnFailureListener {
-            logE("$this: ${it.message}")
-            task.onError()
-        }
+            override fun onError(message: ErrorMessage?) {
+                task.onError()
+            }
+        })
     }
 
     override fun saveNewEmployeeData(newEmployee: Employee, task: TaskWithEmployee) {
@@ -74,7 +69,6 @@ class UsersRemoteRepositoryImpl @Inject constructor(
 //                task.onError()
 //            }
     }
-
 
     override fun signOut() {
         auth.signOut()

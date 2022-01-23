@@ -1,17 +1,18 @@
-package com.example.domo.models.remoteRepository.authorisation
+package com.example.authorisation.data
 
-import com.example.domo.R
-import com.example.waiter_core.domain.tools.FirestoreReferences.employeesCollectionRef
-import com.google.firebase.auth.FirebaseAuth
-import com.example.waiter_core.domain.tools.ErrorMessage
-import com.example.waiter_core.domain.tools.TaskWithEmployee
+import com.example.authorisation.R
+import com.example.firebase_auth_core.domain.extensions.readEmployeeByEmail
 import com.example.waiter_core.domain.Employee
+import com.example.waiter_core.domain.tools.ErrorMessage
+import com.example.waiter_core.domain.tools.FirestoreReferences
+import com.example.waiter_core.domain.tools.TaskWithEmployee
 import com.example.waiter_core.domain.tools.extensions.logE
+import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
 
-class LogInRemoteRepository @Inject constructor(
-    private val auth: FirebaseAuth,
-) {
+class UsersRemoteRepositoryImpl @Inject constructor(
+    private val auth: FirebaseAuth
+): UsersRemoteRepository {
     private val permissionErrorMessage = ErrorMessage(
         R.string.permissionErrorTitle,
         R.string.permissionErrorMessage
@@ -21,7 +22,7 @@ class LogInRemoteRepository @Inject constructor(
         R.string.defaultMessage
     )
 
-    fun signIn(email: String, password: String, task: TaskWithEmployee) {
+    override fun logIn(email: String, password: String, task: TaskWithEmployee) {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 readCurrentEmployee(email, task)
@@ -38,7 +39,22 @@ class LogInRemoteRepository @Inject constructor(
     }
 
     private fun readCurrentEmployee(email: String, task: TaskWithEmployee) {
-        employeesCollectionRef.document(email).get().addOnCompleteListener {
+        email.readEmployeeByEmail(this.toString(), object : TaskWithEmployee {
+            override fun onSuccess(arg: Employee) {
+                if (!arg.permission) {
+                    auth.signOut()
+                    //TODO: Add a ViewModel // STOPPED //
+                    task.onError(permissionErrorMessage)
+                } else task.onSuccess(arg)
+            }
+
+            override fun onError(message: ErrorMessage?) {
+                task.onError()
+            }
+
+        })
+
+        FirestoreReferences.employeesCollectionRef.document(email).get().addOnCompleteListener {
             if (it.isSuccessful) {
                 val employee = it.result?.toObject(Employee::class.java)
                 if(employee == null) {
@@ -56,4 +72,8 @@ class LogInRemoteRepository @Inject constructor(
         }
     }
 
+}
+
+interface UsersRemoteRepository {
+    fun logIn(email: String, password: String, task: TaskWithEmployee)
 }

@@ -36,6 +36,7 @@ android {
 }
 
 dependencies {
+    implementation project(':firebase-auth-core')
     implementation project(':waiter-core')
 
     implementation platform (Firebase.firebaseBom)

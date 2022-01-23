@@ -8,6 +8,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "DOMO"
 include ':app'
-include ':feature-splashscreen'
 include ':waiter-core'
 include ':feature-authorisation'
+include ':firebase-auth-core'
