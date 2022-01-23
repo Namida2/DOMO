@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.domo.models.interfaces.OrderMenuDialogModelInterface
 import com.example.waiter_core.domain.tools.ErrorMessage
 import com.example.waiter_core.domain.tools.SimpleTask
-import tools.dialogs.ErrorMessages.somethingWrongMessage
+import com.example.waiter_core.domain.tools.ErrorMessages.somethingWrongMessage
 
 sealed class OrderMenuDialogVMStates {
     object Default: OrderMenuDialogVMStates()

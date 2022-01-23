@@ -10,7 +10,7 @@ import com.example.waiter_core.domain.Employee
 import com.example.waiter_core.domain.tools.ErrorMessage
 import com.example.waiter_core.domain.tools.Task
 import kotlinx.coroutines.launch
-import tools.dialogs.ErrorMessages.permissionErrorMessage
+import com.example.waiter_core.domain.tools.ErrorMessages.permissionErrorMessage
 
 sealed class SplashScreenStates {
     object DefaultState : SplashScreenStates()

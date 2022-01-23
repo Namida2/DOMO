@@ -14,7 +14,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import entities.interfaces.OnDismissListener
 import extentions.createMessageDialog
 import extentions.isNetworkConnected
-import tools.dialogs.ErrorMessages.networkConnectionMessage
+import com.example.waiter_core.domain.tools.ErrorMessages.networkConnectionMessage
 import tools.dialogs.ProcessAlertDialog
 
 
