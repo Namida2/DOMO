@@ -7,13 +7,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.domo.authorization.presentation.AuthorizationActivity
 import com.example.domo.splashScreen.domain.di.DaggerSplashScreenAppComponent
 import com.example.domo.splashScreen.domain.di.SplashScreenDepsStore
 import com.example.domo.views.activities.WaiterMainActivity
-import com.example.domo.views.activities.AuthorizationActivity
-import com.example.waiter_core.domain.tools.ErrorMessage
 import com.example.waiter_core.domain.tools.ErrorMessages.networkConnectionMessage
-import com.example.waiter_core.domain.tools.dialogs.MessageAlertDialog
 import entities.constants.EmployeePosts.ADMINISTRATOR
 import entities.constants.EmployeePosts.COOK
 import entities.constants.EmployeePosts.WAITER

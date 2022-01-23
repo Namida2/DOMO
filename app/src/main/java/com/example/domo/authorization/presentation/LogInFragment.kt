@@ -1,4 +1,4 @@
-package com.example.domo.views.fragments.authorisation
+package com.example.domo.authorization.presentation
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,23 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.example.domo.R
 import com.example.domo.databinding.FragmentLogInBinding
+
 import com.example.domo.splashScreen.presentation.SplashScreenActivity
-import com.example.domo.viewModels.LogInViewModel
-import com.example.domo.viewModels.LogInViewModelStates
-import com.example.domo.viewModels.ViewModelFactory
-import com.example.waiter_core.domain.tools.ErrorMessage
-import extentions.createMessageDialog
-import extentions.isNetworkConnected
+import com.example.waiter_core.domain.tools.ErrorMessages.networkConnectionMessage
 import com.example.waiter_core.domain.tools.dialogs.ProcessAlertDialog
+import com.example.waiter_core.domain.tools.extensions.createMessageDialog
+import com.example.waiter_core.domain.tools.extensions.isNetworkConnected
 
 class LogInFragment : Fragment() {
 
     private lateinit var binding: FragmentLogInBinding
-    private val viewModel: LogInViewModel by viewModels { ViewModelFactory }
+    //TODO: Add a viewModelFactory
+    private lateinit var viewModel: LogInViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,19 +35,19 @@ class LogInFragment : Fragment() {
         with(binding) {
             logInButton.setOnClickListener {
                 if (requireContext().isNetworkConnected()) {
-                    viewModel?.signIn(email.text.toString(), password.text.toString())
+                    viewModel.logIn(email.text.toString(), password.text.toString())
                 } else requireContext().createMessageDialog(
-                    ErrorMessage(
-                        R.string.defaultTitle,
-                        R.string.networkConnectionMessage
-                    )
+                   networkConnectionMessage
                 )?.show(parentFragmentManager, "")
             }
             newAccountButton.setOnClickListener {
                 //findNavController().navigate(R.id.action_logInFragment_to_registrationFragment)
             }
         }
+        observeViewModelStates()
+    }
 
+    private fun observeViewModelStates() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is LogInViewModelStates.Validating -> {

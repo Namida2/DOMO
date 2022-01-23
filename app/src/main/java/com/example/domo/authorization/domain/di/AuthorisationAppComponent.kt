@@ -1,4 +1,4 @@
-package com.example.authorisation.domain.di
+package com.example.domo.authorization.domain.di
 
 import dagger.Component
 

@@ -21,6 +21,8 @@
         </activity>
         <activity android:name="com.example.domo.views.activities.AuthorizationActivity"/>
         <activity android:name=".views.activities.WaiterMainActivity"/>
+        <activity android:name=".authorization.presentation.AuthorizationActivity"/>
+
     </application>
 
 </manifest>

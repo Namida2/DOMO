@@ -1,17 +1,18 @@
-package tools.dialogs
+package com.example.waiter_core.domain.tools.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
-import com.example.domo.R
-import com.example.domo.databinding.DialogProcessBinding
+import com.example.waiter_core.R
+import com.example.waiter_core.databinding.DialogProcessBinding
+import com.example.waiter_core.domain.tools.extensions.Animations.prepareHide
+import com.example.waiter_core.domain.tools.extensions.Animations.prepareShow
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import com.example.waiter_core.domain.tools.extensions.Animations.prepareHide
-import com.example.waiter_core.domain.tools.extensions.Animations.prepareShow
 
 object ProcessAlertDialog : DialogFragment() {
 
@@ -31,6 +32,4 @@ object ProcessAlertDialog : DialogFragment() {
             dismiss()
         }
     }
-
-
 }

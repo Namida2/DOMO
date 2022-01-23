@@ -15,7 +15,7 @@ import entities.interfaces.OnDismissListener
 import extentions.createMessageDialog
 import extentions.isNetworkConnected
 import com.example.waiter_core.domain.tools.ErrorMessages.networkConnectionMessage
-import tools.dialogs.ProcessAlertDialog
+import com.example.waiter_core.domain.tools.dialogs.ProcessAlertDialog
 
 
 class OrderMenuBottomSheetDialog(

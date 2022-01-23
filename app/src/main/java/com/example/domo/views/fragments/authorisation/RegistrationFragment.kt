@@ -23,7 +23,7 @@ import com.example.domo.viewModels.ViewModelFactory
 import com.example.waiter_core.domain.tools.ErrorMessage
 import extentions.createMessageDialog
 import extentions.isNetworkConnected
-import tools.dialogs.ProcessAlertDialog
+import com.example.waiter_core.domain.tools.dialogs.ProcessAlertDialog
 
 class RegistrationFragment : Fragment() {
 
