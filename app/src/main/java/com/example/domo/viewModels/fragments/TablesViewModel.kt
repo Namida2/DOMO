@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domo.adapters.TablesAdapter
-import com.example.waiter_core.domain.tools.Event
+import com.example.waiterCore.domain.tools.Event
 
 typealias OnTableClickEvent = Event<TablesAdapter.ViewOwner>
 

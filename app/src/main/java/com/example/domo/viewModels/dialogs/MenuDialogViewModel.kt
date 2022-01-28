@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domo.models.interfaces.MenuDialogModelInterface
 import com.example.domo.models.interfaces.MenuHolderStates
-import com.example.waiter_core.domain.menu.CategoryName
-import com.example.waiter_core.domain.menu.Dish
-import com.example.waiter_core.domain.recyclerView.interfaces.BaseRecyclerViewItem
-import com.example.waiter_core.domain.tools.Event
+import com.example.waiterCore.domain.menu.CategoryName
+import com.example.waiterCore.domain.menu.Dish
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewItem
+import com.example.waiterCore.domain.tools.Event
 
 sealed class MenuDialogStates {
     object Default : MenuDialogStates()

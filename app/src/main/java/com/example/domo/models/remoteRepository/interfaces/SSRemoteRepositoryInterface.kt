@@ -1,7 +1,7 @@
 package com.example.domo.models.remoteRepository.interfaces
 
 import com.google.firebase.auth.FirebaseUser
-import com.example.waiter_core.domain.Employee
+import com.example.waiterCore.domain.Employee
 
 interface SSRemoteRepositoryInterface {
     fun signOut()

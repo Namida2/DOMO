@@ -2,7 +2,7 @@ package com.example.domo.models
 
 import com.example.domo.models.interfaces.WaiterActOrderFragSharedViewModelInterface
 import entities.interfaces.OrderServiceInterface
-import com.example.waiter_core.domain.order.OrderItem
+import com.example.waiterCore.domain.order.OrderItem
 import javax.inject.Inject
 
 class WaiterActOrderFragModel @Inject constructor(

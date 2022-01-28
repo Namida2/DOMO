@@ -1,8 +1,8 @@
 package entities.interfaces
 
 import com.example.domo.models.CurrentOrderServiceSub
-import com.example.waiter_core.domain.order.Order
-import com.example.waiter_core.domain.order.OrderItem
+import com.example.waiterCore.domain.order.Order
+import com.example.waiterCore.domain.order.OrderItem
 
 interface OrderServiceInterface<Subscriber> : BaseObservable<Subscriber> {
     var currentOrder: Order?

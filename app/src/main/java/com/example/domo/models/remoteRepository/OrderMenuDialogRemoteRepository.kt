@@ -1,16 +1,16 @@
 package com.example.domo.models.remoteRepository
 
-import com.example.waiter_core.domain.tools.FirestoreReferences.ordersCollectionRef
+import com.example.waiterCore.domain.tools.FirestoreReferences.ordersCollectionRef
 import com.example.domo.models.remoteRepository.interfaces.OrderMenuDialogRemoteRepositoryInterface
 import com.google.firebase.firestore.*
-import com.example.waiter_core.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
-import com.example.waiter_core.domain.tools.constants.FirestoreConstants.DOCUMENT_ORDER_ITEM_DELIMITER
-import com.example.waiter_core.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
-import com.example.waiter_core.domain.order.BaseOrderItem
-import com.example.waiter_core.domain.order.Order
-import com.example.waiter_core.domain.tools.SimpleTask
-import com.example.waiter_core.domain.tools.extensions.logD
-import com.example.waiter_core.domain.tools.extensions.logE
+import com.example.waiterCore.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
+import com.example.waiterCore.domain.tools.constants.FirestoreConstants.DOCUMENT_ORDER_ITEM_DELIMITER
+import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
+import com.example.waiterCore.domain.order.BaseOrderItem
+import com.example.waiterCore.domain.order.Order
+import com.example.waiterCore.domain.tools.SimpleTask
+import com.example.waiterCore.domain.tools.extensions.logD
+import com.example.waiterCore.domain.tools.extensions.logE
 import javax.inject.Inject
 
 class OrderMenuDialogRemoteRepository @Inject constructor(

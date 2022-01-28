@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domo.splashScreen.domain.GetCurrentEmployeeUseCase
 import com.example.domo.splashScreen.domain.ReadMenuUseCase
-import com.example.waiter_core.domain.Employee
-import com.example.waiter_core.domain.tools.ErrorMessage
-import com.example.waiter_core.domain.tools.Task
+import com.example.waiterCore.domain.Employee
+import com.example.waiterCore.domain.tools.ErrorMessage
+import com.example.waiterCore.domain.tools.Task
 import kotlinx.coroutines.launch
-import com.example.waiter_core.domain.tools.ErrorMessages.permissionErrorMessage
+import com.example.waiterCore.domain.tools.ErrorMessages.permissionErrorMessage
 
 sealed class SplashScreenStates {
     object DefaultState : SplashScreenStates()

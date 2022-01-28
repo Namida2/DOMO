@@ -20,10 +20,10 @@ import com.example.domo.splashScreen.presentation.SplashScreenActivity
 import com.example.domo.viewModels.RegistrationViewModel
 import com.example.domo.viewModels.RegistrationViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
-import com.example.waiter_core.domain.tools.ErrorMessage
+import com.example.waiterCore.domain.tools.ErrorMessage
 import extentions.createMessageDialog
 import extentions.isNetworkConnected
-import com.example.waiter_core.domain.tools.dialogs.ProcessAlertDialog
+import com.example.waiterCore.domain.tools.dialogs.ProcessAlertDialog
 
 class RegistrationFragment : Fragment() {
 

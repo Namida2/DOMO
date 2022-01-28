@@ -1,11 +1,11 @@
 package com.example.domo.splashScreen.data
 
 import com.example.domo.splashScreen.domain.MenuService
-import com.example.waiter_core.domain.menu.Category
-import com.example.waiter_core.domain.menu.Dish
-import com.example.waiter_core.domain.tools.FirestoreReferences
-import com.example.waiter_core.domain.tools.constants.FirestoreConstants
-import com.example.waiter_core.domain.tools.extensions.logE
+import com.example.waiterCore.domain.menu.Category
+import com.example.waiterCore.domain.menu.Dish
+import com.example.waiterCore.domain.tools.FirestoreReferences
+import com.example.waiterCore.domain.tools.constants.FirestoreConstants
+import com.example.waiterCore.domain.tools.extensions.logE
 import javax.inject.Inject
 
 class MenuRemoteRepositoryImpl @Inject constructor(

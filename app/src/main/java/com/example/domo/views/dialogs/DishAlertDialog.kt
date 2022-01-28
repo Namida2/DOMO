@@ -13,7 +13,7 @@ import com.example.domo.databinding.DialogDishBinding
 import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.viewModels.dialogs.DishDialogVMStates
 import com.example.domo.viewModels.dialogs.DishDialogViewModel
-import com.example.waiter_core.domain.menu.Dish
+import com.example.waiterCore.domain.menu.Dish
 import extentions.createMessageDialog
 
 class DishAlertDialog : DialogFragment() {

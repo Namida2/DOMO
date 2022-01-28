@@ -7,9 +7,9 @@ import android.util.Log
 import androidx.fragment.app.DialogFragment
 import application.MyApplication
 import di.AppComponent
-import com.example.waiter_core.domain.Employee
-import com.example.waiter_core.domain.tools.ErrorMessage
-import com.example.waiter_core.domain.tools.dialogs.MessageAlertDialog
+import com.example.waiterCore.domain.Employee
+import com.example.waiterCore.domain.tools.ErrorMessage
+import com.example.waiterCore.domain.tools.dialogs.MessageAlertDialog
 
 val Context.appComponent: AppComponent
     get() = when (this) {

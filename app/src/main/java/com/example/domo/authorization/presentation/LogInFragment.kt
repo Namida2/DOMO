@@ -6,19 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.domo.databinding.FragmentLogInBinding
 
 import com.example.domo.splashScreen.presentation.SplashScreenActivity
-import com.example.waiter_core.domain.tools.ErrorMessages.networkConnectionMessage
-import com.example.waiter_core.domain.tools.dialogs.ProcessAlertDialog
-import com.example.waiter_core.domain.tools.extensions.createMessageDialog
-import com.example.waiter_core.domain.tools.extensions.isNetworkConnected
+import com.example.waiterCore.domain.tools.ErrorMessages.networkConnectionMessage
+import com.example.waiterCore.domain.tools.dialogs.ProcessAlertDialog
+import com.example.waiterCore.domain.tools.extensions.createMessageDialog
+import com.example.waiterCore.domain.tools.extensions.isNetworkConnected
 
 class LogInFragment : Fragment() {
 
     private lateinit var binding: FragmentLogInBinding
-    //TODO: Add a viewModelFactory
-    private lateinit var viewModel: LogInViewModel
+    //TODO: Add a viewModelFactory // STOPPED //
+    private var viewModel by viewModels<LogInViewModel> {  }
 
     override fun onCreateView(
         inflater: LayoutInflater,

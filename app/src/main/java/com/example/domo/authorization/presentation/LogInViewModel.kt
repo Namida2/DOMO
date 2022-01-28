@@ -2,14 +2,13 @@ package com.example.domo.authorization.presentation
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.domo.R
 import com.example.domo.authorization.domain.LogInUseCaseImpl
-import com.example.waiter_core.domain.tools.ErrorMessage
-import com.example.waiter_core.domain.tools.TaskWithEmployee
-import com.example.waiter_core.domain.Employee
-import com.example.waiter_core.domain.tools.ErrorMessages.emptyFieldMessage
-import com.example.waiter_core.domain.tools.ErrorMessages.wrongEmailOrPassword
-import com.example.waiter_core.domain.tools.extensions.isEmptyField
+import com.example.waiterCore.domain.tools.ErrorMessage
+import com.example.waiterCore.domain.tools.TaskWithEmployee
+import com.example.waiterCore.domain.Employee
+import com.example.waiterCore.domain.tools.ErrorMessages.emptyFieldMessage
+import com.example.waiterCore.domain.tools.ErrorMessages.wrongEmailOrPassword
+import com.example.waiterCore.domain.tools.extensions.isEmptyField
 
 sealed class LogInViewModelStates {
     open var errorMessage: ErrorMessage? = null

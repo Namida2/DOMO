@@ -1,8 +1,8 @@
 package com.example.domo.authorization.domain
 
 import com.example.domo.authorization.data.UsersRemoteRepository
-import com.example.waiter_core.data.database.daos.EmployeeDao
-import com.example.waiter_core.domain.tools.TaskWithEmployee
+import com.example.waiterCore.data.database.daos.EmployeeDao
+import com.example.waiterCore.domain.tools.TaskWithEmployee
 import javax.inject.Inject
 
 class LogInUseCaseImpl @Inject constructor(

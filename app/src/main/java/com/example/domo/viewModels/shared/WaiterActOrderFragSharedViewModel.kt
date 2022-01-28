@@ -7,9 +7,9 @@ import androidx.lifecycle.ViewModel
 import com.example.domo.models.CurrentOrderServiceSub
 import com.example.domo.models.interfaces.WaiterActOrderFragSharedViewModelInterface
 import entities.interfaces.OnDismissListener
-import com.example.waiter_core.domain.order.Order
-import com.example.waiter_core.domain.order.OrderItem
-import com.example.waiter_core.domain.tools.Event
+import com.example.waiterCore.domain.order.Order
+import com.example.waiterCore.domain.order.OrderItem
+import com.example.waiterCore.domain.tools.Event
 
 typealias CurrentOrderChangeEvent = Event<List<OrderItem>>
 

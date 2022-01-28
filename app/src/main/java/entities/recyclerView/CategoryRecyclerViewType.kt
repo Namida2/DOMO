@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.example.domo.R
 import com.example.domo.databinding.LayoutCategoryBinding
-import com.example.waiter_core.domain.menu.CategoryName
-import com.example.waiter_core.domain.recyclerView.interfaces.BaseRecyclerViewItem
-import com.example.waiter_core.domain.recyclerView.interfaces.BaseViewHolder
-import com.example.waiter_core.domain.recyclerView.interfaces.MenuRecyclerViewType
+import com.example.waiterCore.domain.menu.CategoryName
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewItem
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
+import com.example.waiterCore.domain.recyclerView.interfaces.MenuRecyclerViewType
 
 class CategoryRecyclerViewType:
     MenuRecyclerViewType<LayoutCategoryBinding, CategoryName> {

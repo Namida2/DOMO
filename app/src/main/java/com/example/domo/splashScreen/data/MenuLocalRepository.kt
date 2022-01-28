@@ -1,9 +1,9 @@
 package com.example.domo.splashScreen.data
 
 import com.example.domo.splashScreen.domain.MenuService
-import com.example.waiter_core.data.database.daos.MenuDao
-import com.example.waiter_core.domain.menu.Category
-import com.example.waiter_core.domain.menu.Dish
+import com.example.waiterCore.data.database.daos.MenuDao
+import com.example.waiterCore.domain.menu.Category
+import com.example.waiterCore.domain.menu.Dish
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO

@@ -1,12 +1,12 @@
 package com.example.domo.models.remoteRepository.authorisation
 
 import com.example.domo.R
-import com.example.waiter_core.domain.tools.FirestoreReferences.employeesCollectionRef
+import com.example.waiterCore.domain.tools.FirestoreReferences.employeesCollectionRef
 import com.google.firebase.auth.FirebaseAuth
-import com.example.waiter_core.domain.tools.ErrorMessage
-import com.example.waiter_core.domain.tools.TaskWithEmployee
-import com.example.waiter_core.domain.Employee
-import com.example.waiter_core.domain.tools.extensions.logE
+import com.example.waiterCore.domain.tools.ErrorMessage
+import com.example.waiterCore.domain.tools.TaskWithEmployee
+import com.example.waiterCore.domain.Employee
+import com.example.waiterCore.domain.tools.extensions.logE
 import javax.inject.Inject
 
 class LogInRemoteRepository @Inject constructor(

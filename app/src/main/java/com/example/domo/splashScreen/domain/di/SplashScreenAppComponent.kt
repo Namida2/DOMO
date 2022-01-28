@@ -6,7 +6,7 @@ import com.example.domo.splashScreen.domain.ReadMenuUseCase
 import com.example.domo.splashScreen.domain.di.modules.LocalRepositoryModule
 import com.example.domo.splashScreen.domain.di.modules.RemoteRepositoryModule
 import com.example.domo.splashScreen.domain.di.modules.UseCasesModule
-import com.example.waiter_core.data.database.Database
+import com.example.waiterCore.data.database.Database
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Component

@@ -2,9 +2,9 @@ package com.example.domo.splashScreen.domain
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.waiter_core.domain.menu.Category
-import com.example.waiter_core.domain.menu.CategoryName
-import com.example.waiter_core.domain.menu.Dish
+import com.example.waiterCore.domain.menu.Category
+import com.example.waiterCore.domain.menu.CategoryName
+import com.example.waiterCore.domain.menu.Dish
 import javax.inject.Inject
 import javax.inject.Singleton
 

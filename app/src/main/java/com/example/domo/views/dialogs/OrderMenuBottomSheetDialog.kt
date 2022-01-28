@@ -14,8 +14,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import entities.interfaces.OnDismissListener
 import extentions.createMessageDialog
 import extentions.isNetworkConnected
-import com.example.waiter_core.domain.tools.ErrorMessages.networkConnectionMessage
-import com.example.waiter_core.domain.tools.dialogs.ProcessAlertDialog
+import com.example.waiterCore.domain.tools.ErrorMessages.networkConnectionMessage
+import com.example.waiterCore.domain.tools.dialogs.ProcessAlertDialog
 
 
 class OrderMenuBottomSheetDialog(

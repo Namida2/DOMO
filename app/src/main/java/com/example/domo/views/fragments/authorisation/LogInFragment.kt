@@ -7,17 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.domo.R
 import com.example.domo.databinding.FragmentLogInBinding
 import com.example.domo.splashScreen.presentation.SplashScreenActivity
 import com.example.domo.viewModels.LogInViewModel
 import com.example.domo.viewModels.LogInViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
-import com.example.waiter_core.domain.tools.ErrorMessage
+import com.example.waiterCore.domain.tools.ErrorMessage
 import extentions.createMessageDialog
 import extentions.isNetworkConnected
-import com.example.waiter_core.domain.tools.dialogs.ProcessAlertDialog
+import com.example.waiterCore.domain.tools.dialogs.ProcessAlertDialog
 
 class LogInFragment : Fragment() {
 

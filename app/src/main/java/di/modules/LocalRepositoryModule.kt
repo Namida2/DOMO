@@ -2,7 +2,7 @@ package di.modules
 
 import dagger.Module
 import dagger.Provides
-import com.example.waiter_core.data.database.Database
+import com.example.waiterCore.data.database.Database
 
 @Module
 class LocalRepositoryModule {

@@ -15,10 +15,10 @@ import com.example.domo.databinding.ActivityWaiterMainBinding
 
 import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.viewModels.shared.WaiterActOrderFragSharedViewModel
-import com.example.waiter_core.domain.tools.extensions.Animations.prepareHide
-import com.example.waiter_core.domain.tools.extensions.Animations.prepareShow
-import com.example.waiter_core.domain.tools.extensions.Animations.prepareSlideDown
-import com.example.waiter_core.domain.tools.extensions.Animations.prepareSlideUp
+import com.example.waiterCore.domain.tools.extensions.Animations.prepareHide
+import com.example.waiterCore.domain.tools.extensions.Animations.prepareShow
+import com.example.waiterCore.domain.tools.extensions.Animations.prepareSlideDown
+import com.example.waiterCore.domain.tools.extensions.Animations.prepareSlideUp
 
 class WaiterMainActivity : AppCompatActivity(),
     NavController.OnDestinationChangedListener {

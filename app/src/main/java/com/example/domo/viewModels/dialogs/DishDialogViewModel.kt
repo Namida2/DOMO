@@ -6,11 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domo.R
 import com.example.domo.models.OrderServiceSub
-import com.example.waiter_core.domain.tools.ErrorMessage
+import com.example.waiterCore.domain.tools.ErrorMessage
 import entities.interfaces.OrderServiceInterface
-import com.example.waiter_core.domain.menu.Dish
-import com.example.waiter_core.domain.order.OrderItem
-import com.example.waiter_core.domain.tools.extensions.logD
+import com.example.waiterCore.domain.menu.Dish
+import com.example.waiterCore.domain.order.OrderItem
+import com.example.waiterCore.domain.tools.extensions.logD
 
 sealed class DishDialogVMStates {
     open var errorMessage: ErrorMessage? = null

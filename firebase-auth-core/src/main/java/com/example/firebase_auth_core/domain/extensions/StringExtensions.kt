@@ -1,10 +1,10 @@
 package com.example.firebase_auth_core.domain.extensions
 
-import com.example.waiter_core.domain.Employee
-import com.example.waiter_core.domain.tools.ErrorMessages.networkConnectionMessage
-import com.example.waiter_core.domain.tools.FirestoreReferences.employeesCollectionRef
-import com.example.waiter_core.domain.tools.TaskWithEmployee
-import com.example.waiter_core.domain.tools.extensions.logE
+import com.example.waiterCore.domain.Employee
+import com.example.waiterCore.domain.tools.ErrorMessages.networkConnectionMessage
+import com.example.waiterCore.domain.tools.FirestoreReferences.employeesCollectionRef
+import com.example.waiterCore.domain.tools.TaskWithEmployee
+import com.example.waiterCore.domain.tools.extensions.logE
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.firestore.ktx.toObject
 

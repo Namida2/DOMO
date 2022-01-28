@@ -4,11 +4,11 @@ import android.view.View
 import com.example.domo.models.interfaces.RegistrationModelInterface
 import com.example.domo.models.remoteRepository.authorisation.RegistrationRemoteRepository
 import entities.constants.EmployeePosts
-import com.example.waiter_core.data.database.daos.EmployeeDao
-import com.example.waiter_core.domain.tools.ErrorMessage
+import com.example.waiterCore.data.database.daos.EmployeeDao
+import com.example.waiterCore.domain.tools.ErrorMessage
 import entities.PostItem
-import com.example.waiter_core.domain.tools.TaskWithEmployee
-import com.example.waiter_core.domain.Employee
+import com.example.waiterCore.domain.tools.TaskWithEmployee
+import com.example.waiterCore.domain.Employee
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main

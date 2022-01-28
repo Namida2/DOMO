@@ -1,8 +1,8 @@
 package com.example.domo.models
 
 import entities.interfaces.OrderServiceInterface
-import com.example.waiter_core.domain.order.Order
-import com.example.waiter_core.domain.order.OrderItem
+import com.example.waiterCore.domain.order.Order
+import com.example.waiterCore.domain.order.OrderItem
 import javax.inject.Inject
 import javax.inject.Singleton
 

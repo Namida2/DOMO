@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import com.example.domo.R
 import com.example.domo.databinding.LayoutOrderItemBinding
 import com.example.domo.models.interfaces.MenuHolder
-import com.example.waiter_core.domain.order.OrderItem
-import com.example.waiter_core.domain.recyclerView.interfaces.BaseRecyclerViewItem
-import com.example.waiter_core.domain.recyclerView.interfaces.BaseViewHolder
-import com.example.waiter_core.domain.recyclerView.interfaces.MenuRecyclerViewType
+import com.example.waiterCore.domain.order.OrderItem
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewItem
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
+import com.example.waiterCore.domain.recyclerView.interfaces.MenuRecyclerViewType
 import javax.inject.Inject
 
 class OrderItemRecyclerViewType @Inject constructor(
