@@ -14,9 +14,9 @@ import com.example.domo.viewModels.LogInViewModel
 import com.example.domo.viewModels.LogInViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
 import com.example.waiterCore.domain.tools.ErrorMessage
-import extentions.createMessageDialog
-import extentions.isNetworkConnected
 import com.example.waiterCore.domain.tools.dialogs.ProcessAlertDialog
+import com.example.waiterCore.domain.tools.extensions.createMessageDialog
+import com.example.waiterCore.domain.tools.extensions.isNetworkConnected
 
 class LogInFragment : Fragment() {
 

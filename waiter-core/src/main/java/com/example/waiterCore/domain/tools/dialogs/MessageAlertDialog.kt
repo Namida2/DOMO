@@ -8,6 +8,10 @@ import androidx.fragment.app.DialogFragment
 import com.example.waiterCore.R
 import com.example.waiterCore.databinding.DialogMessageBinding
 import com.example.waiterCore.domain.tools.extensions.logD
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
 class MessageAlertDialog(
@@ -39,6 +43,7 @@ class MessageAlertDialog(
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val asd = layoutInflater
         val binding = DialogMessageBinding.inflate(layoutInflater)
         val builder = AlertDialog.Builder(context, R.style.alertDialogStyle)
         with(binding) {

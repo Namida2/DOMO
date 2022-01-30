@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        app:strokeColor="@color/black"
-        app:strokeWidth="1dp"
-        app:cardCornerRadius="16dp"
-        android:layout_height="wrap_content">
+<com.google.android.material.card.MaterialCardView android:layout_width="match_parent"
+    app:strokeColor="@color/black"
+    app:strokeWidth="1dp"
+    app:cardCornerRadius="16dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -68,4 +67,3 @@
             </LinearLayout>
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
-</layout>

@@ -1,5 +1,7 @@
 package com.example.domo.splashScreen.domain.di.modules
 
+import com.example.domo.authorization.domain.LogInUseCase
+import com.example.domo.authorization.domain.LogInUseCaseImpl
 import com.example.domo.splashScreen.domain.GetCurrentEmployeeUseCase
 import com.example.domo.splashScreen.domain.GetCurrentEmployeeUseCaseImpl
 import com.example.domo.splashScreen.domain.ReadMenuUseCase
@@ -13,4 +15,6 @@ interface UseCasesModule {
     fun bindReadMenuUseCase(useCase: ReadMenuUseCaseImpl): ReadMenuUseCase
     @Binds
     fun bindGetCurrentEmployeeUseCase(useCase: GetCurrentEmployeeUseCaseImpl): GetCurrentEmployeeUseCase
+    @Binds
+    fun bindLogInUseCase(useCase: LogInUseCaseImpl): LogInUseCase
 }

@@ -8,10 +8,11 @@ import androidx.fragment.app.DialogFragment
 import com.example.waiterCore.domain.tools.ErrorMessage
 import com.example.waiterCore.domain.tools.dialogs.MessageAlertDialog
 
-fun Context.createMessageDialog(message: ErrorMessage): DialogFragment? =
+fun Context.createMessageDialog(message: ErrorMessage, action: () -> Unit = {}): DialogFragment? =
     MessageAlertDialog.getNewInstance<Unit>(
         this.resources.getString(message.titleId),
-        this.resources.getString(message.messageId)
+        this.resources.getString(message.messageId),
+        action
     )
 
 fun Context.isNetworkConnected(): Boolean {

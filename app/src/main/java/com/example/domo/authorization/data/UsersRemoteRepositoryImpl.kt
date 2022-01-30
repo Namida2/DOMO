@@ -4,6 +4,7 @@ import com.example.firebase_auth_core.domain.extensions.readEmployeeByEmail
 import com.example.waiterCore.domain.Employee
 import com.example.waiterCore.domain.tools.ErrorMessage
 import com.example.waiterCore.domain.tools.ErrorMessages.defaultErrorMessage
+import com.example.waiterCore.domain.tools.ErrorMessages.networkConnectionMessage
 import com.example.waiterCore.domain.tools.ErrorMessages.permissionErrorMessage
 import com.example.waiterCore.domain.tools.ErrorMessages.wrongEmailOrPassword
 import com.example.waiterCore.domain.tools.FirestoreReferences.employeesCollectionRef
@@ -41,7 +42,7 @@ class UsersRemoteRepositoryImpl @Inject constructor(
             }
 
             override fun onError(message: ErrorMessage?) {
-                task.onError()
+                task.onError(message)
             }
         })
         employeesCollectionRef.document(email).get().addOnCompleteListener {

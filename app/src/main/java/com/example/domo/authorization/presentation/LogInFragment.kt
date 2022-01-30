@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.domo.databinding.FragmentLogInBinding
+import com.example.domo.splashScreen.domain.ViewModelFactory
 
 import com.example.domo.splashScreen.presentation.SplashScreenActivity
 import com.example.waiterCore.domain.tools.ErrorMessages.networkConnectionMessage
@@ -16,10 +17,9 @@ import com.example.waiterCore.domain.tools.extensions.createMessageDialog
 import com.example.waiterCore.domain.tools.extensions.isNetworkConnected
 
 class LogInFragment : Fragment() {
-
+    //TODO: Implement the registration
     private lateinit var binding: FragmentLogInBinding
-    //TODO: Add a viewModelFactory // STOPPED //
-    private var viewModel by viewModels<LogInViewModel> {  }
+    private val viewModel by viewModels<LogInViewModel> { ViewModelFactory  }
 
     override fun onCreateView(
         inflater: LayoutInflater,

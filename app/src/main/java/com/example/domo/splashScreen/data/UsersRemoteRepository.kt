@@ -43,28 +43,6 @@ class UsersRemoteRepositoryImpl @Inject constructor(
             }
             task.onSuccess(newEmployee)
         }
-//        currentUser.reload().addOnCompleteListener { firebaseAuthTask ->
-//            if (firebaseAuthTask.isSuccessful) {
-//                CoroutineScope(Dispatchers.Main).launch {
-//                    val readEmployee = async(Dispatchers.IO) {
-//                        return@async employeeDao.readCurrentEmployee()
-//                    }
-//                    val employee = readEmployee.await()
-//                    if (employee == null)
-//                        if (currentUser.email != null)
-//                            readCurrentEmployee(currentUser.email!!) {
-//                                if (it == null) {
-//                                    auth.signOut()
-//                                    task.onError()
-//                                } else task.onSuccess(it)
-//                            }
-//                        else task.onError()
-//                    else task.onSuccess(employee)
-//                }
-//            } else {
-//                logE("$this: ${firebaseAuthTask.exception.toString()}")
-//                task.onError()
-//            }
     }
 
     override fun signOut() {

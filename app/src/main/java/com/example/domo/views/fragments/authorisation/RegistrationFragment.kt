@@ -21,9 +21,9 @@ import com.example.domo.viewModels.RegistrationViewModel
 import com.example.domo.viewModels.RegistrationViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
 import com.example.waiterCore.domain.tools.ErrorMessage
-import extentions.createMessageDialog
-import extentions.isNetworkConnected
 import com.example.waiterCore.domain.tools.dialogs.ProcessAlertDialog
+import com.example.waiterCore.domain.tools.extensions.createMessageDialog
+import com.example.waiterCore.domain.tools.extensions.isNetworkConnected
 
 class RegistrationFragment : Fragment() {
 
@@ -104,7 +104,7 @@ class RegistrationFragment : Fragment() {
                 }
                 is RegistrationViewModelStates.Valid -> {
                     //Can not perform this action after onSaveInstanceState (it's about dismiss)
-                    //ProcessAlertDialog.onSuccess()
+                    //ProcessAlertDialog.onSuccess()l
                     startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
                 }
                 else -> {

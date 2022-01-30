@@ -6,7 +6,8 @@ import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.example.waiterCore.R
 import com.example.waiterCore.databinding.DialogProcessBinding
-
+import com.example.waiterCore.domain.tools.extensions.Animations.prepareHide
+import com.example.waiterCore.domain.tools.extensions.Animations.prepareShow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay

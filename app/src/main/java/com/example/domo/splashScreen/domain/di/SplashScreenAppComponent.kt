@@ -1,6 +1,7 @@
 package com.example.domo.splashScreen.domain.di
 
 import android.content.SharedPreferences
+import com.example.domo.authorization.domain.LogInUseCase
 import com.example.domo.splashScreen.domain.GetCurrentEmployeeUseCase
 import com.example.domo.splashScreen.domain.ReadMenuUseCase
 import com.example.domo.splashScreen.domain.di.modules.LocalRepositoryModule
@@ -26,6 +27,7 @@ interface SplashScreenAppComponent {
 
     fun provideReadMenuUseCase(): ReadMenuUseCase
     fun provideGetCurrentEmployeeUseCase(): GetCurrentEmployeeUseCase
+    fun provideLogInUseCase(): LogInUseCase
 
 }
 

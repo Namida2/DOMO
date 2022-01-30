@@ -14,7 +14,7 @@ import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.viewModels.dialogs.DishDialogVMStates
 import com.example.domo.viewModels.dialogs.DishDialogViewModel
 import com.example.waiterCore.domain.menu.Dish
-import extentions.createMessageDialog
+import com.example.waiterCore.domain.tools.extensions.createMessageDialog
 
 class DishAlertDialog : DialogFragment() {
 

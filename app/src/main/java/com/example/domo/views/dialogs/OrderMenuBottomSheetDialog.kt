@@ -12,10 +12,10 @@ import com.example.domo.viewModels.dialogs.OrderMenuDialogVMStates
 import com.example.domo.viewModels.dialogs.OrderMenuDialogViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import entities.interfaces.OnDismissListener
-import extentions.createMessageDialog
-import extentions.isNetworkConnected
 import com.example.waiterCore.domain.tools.ErrorMessages.networkConnectionMessage
 import com.example.waiterCore.domain.tools.dialogs.ProcessAlertDialog
+import com.example.waiterCore.domain.tools.extensions.createMessageDialog
+import com.example.waiterCore.domain.tools.extensions.isNetworkConnected
 
 
 class OrderMenuBottomSheetDialog(
