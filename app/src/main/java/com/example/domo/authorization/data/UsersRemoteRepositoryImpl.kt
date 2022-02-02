@@ -40,26 +40,10 @@ class UsersRemoteRepositoryImpl @Inject constructor(
                     task.onError(permissionErrorMessage)
                 } else task.onSuccess(arg)
             }
-
             override fun onError(message: ErrorMessage?) {
+                auth.signOut()
                 task.onError(message)
             }
         })
-        employeesCollectionRef.document(email).get().addOnCompleteListener {
-            if (it.isSuccessful) {
-                val employee = it.result?.toObject(Employee::class.java)
-                if(employee == null) {
-                    task.onError(defaultErrorMessage)
-                    return@addOnCompleteListener
-                }
-                if (!employee.permission) {
-                    auth.signOut()
-                    task.onError(permissionErrorMessage)
-                } else task.onSuccess(employee)
-            } else {
-                logE("$this: ${it.exception}")
-                task.onError(defaultErrorMessage)
-            }
-        }
     }
 }

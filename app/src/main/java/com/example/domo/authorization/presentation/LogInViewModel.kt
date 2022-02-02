@@ -1,5 +1,6 @@
 package com.example.domo.authorization.presentation
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domo.authorization.domain.LogInUseCase
@@ -16,13 +17,11 @@ sealed class LogInViewModelStates {
     object EmptyField : LogInViewModelStates() {
         override var errorMessage: ErrorMessage? = emptyFieldMessage
     }
-
     object Validating : LogInViewModelStates()
     object WrongEmailOrPassword : LogInViewModelStates() {
         override var errorMessage: ErrorMessage? = wrongEmailOrPassword
     }
-
-    class Success(employee: Employee) : LogInViewModelStates()
+    class Success(val employee: Employee) : LogInViewModelStates()
     object Default : LogInViewModelStates()
 }
 
@@ -30,27 +29,29 @@ class LogInViewModel(
     private val logInUseCaseImpl: LogInUseCase,
 ) : ViewModel() {
     private var _state = MutableLiveData<LogInViewModelStates>(LogInViewModelStates.Default)
-    val state = _state
+    val state: LiveData<LogInViewModelStates> = _state
 
     fun logIn(email: String, password: String) {
-        state.value = LogInViewModelStates.Validating
+        _state.value = LogInViewModelStates.Validating
         if (isEmptyField(email, password)) {
-            state.value = LogInViewModelStates.EmptyField; return
+            _state.value = LogInViewModelStates.EmptyField; return
         }
         logInUseCaseImpl.logIn(email, password, object : TaskWithEmployee {
             override fun onSuccess(arg: Employee) {
-                state.value = LogInViewModelStates.Success(arg)
+                _state.value = LogInViewModelStates.Success(arg)
             }
 
             override fun onError(message: ErrorMessage?) {
-                state.value =
-                    LogInViewModelStates.WrongEmailOrPassword.apply { errorMessage = message }
+                _state.value =
+                    LogInViewModelStates.WrongEmailOrPassword.apply {
+                        errorMessage = message
+                    }
             }
         })
     }
 
     fun resetState() {
-        state.value = LogInViewModelStates.Default
+        _state.value = LogInViewModelStates.Default
     }
 
 }

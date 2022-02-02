@@ -59,7 +59,6 @@ class RegistrationFragment : Fragment() {
 
     private fun initBindings(inflater: LayoutInflater) {
         binding = FragmentRegistrationBinding.inflate(inflater)
-        binding.viewModel = viewModel
 
         with(binding.postsRecyclerView) {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)

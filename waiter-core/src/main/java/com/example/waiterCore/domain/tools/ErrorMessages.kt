@@ -23,4 +23,19 @@ object ErrorMessages {
         R.string.emptyFieldTitle,
         R.string.emptyFieldMessage
     )
+
+    val tooShortPasswordMessage: ErrorMessage = ErrorMessage(
+        R.string.tooShortPasswordTitle,
+        R.string.tooShortPasswordMessage
+    )
+
+    val  emailAlreadyExistsMessage: ErrorMessage? = ErrorMessage(
+        R.string.emailAlreadyExitsTitle,
+        R.string.emailAlreadyExistsMessage
+    )
+
+    val wrongPasswordConfirmationMessage: ErrorMessage? = ErrorMessage(
+        R.string.wrongPasswordConfirmationTitle,
+        R.string.wrongPasswordConfirmationMessage
+    )
 }

@@ -33,7 +33,6 @@ class RegistrationModel @Inject constructor(
                     }
                 }
             }
-
             override fun onError(message: ErrorMessage?) {
                 task.onError(message)
             }

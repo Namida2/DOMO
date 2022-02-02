@@ -10,3 +10,4 @@ rootProject.name = "DOMO"
 include ':app'
 include ':waiter-core'
 include ':firebase-auth-core'
+include ':feature-tables'

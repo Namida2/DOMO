@@ -18,8 +18,8 @@ class RegistrationRemoteRepository @Inject constructor(
     private val auth: FirebaseAuth,
     private val fireStore: FirebaseFirestore,
 ) {
-    private val emailAlreadyExistsTitle = R.string.emailAlreadyExitTitle
-    private val emailAlreadyExistsMessage = R.string.emailAlreadyExistMessage
+    private val emailAlreadyExistsTitle = R.string.emailAlreadyExitsTitle
+    private val emailAlreadyExistsMessage = R.string.emailAlreadyExistsMessage
     private val defaultExceptionTitle = R.string.defaultTitle
     private val defaultExceptionMessage = R.string.defaultTitle
     private val employeesCollectionRef: CollectionReference =

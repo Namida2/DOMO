@@ -43,7 +43,6 @@ class MessageAlertDialog(
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val asd = layoutInflater
         val binding = DialogMessageBinding.inflate(layoutInflater)
         val builder = AlertDialog.Builder(context, R.style.alertDialogStyle)
         with(binding) {

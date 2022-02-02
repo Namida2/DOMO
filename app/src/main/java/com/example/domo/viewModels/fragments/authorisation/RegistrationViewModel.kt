@@ -40,15 +40,15 @@ sealed class RegistrationViewModelStates {
 
     object WrongPasswordConfirmation : RegistrationViewModelStates() {
         override var errorMessage: ErrorMessage? = ErrorMessage(
-            R.string.wrongConfirmPasswordTitle,
-            R.string.wrongConfirmPasswordMessage
+            R.string.wrongPasswordConfirmationTitle,
+            R.string.wrongPasswordConfirmationMessage
         )
     }
 
     object EmailAlreadyExists : RegistrationViewModelStates() {
         override var errorMessage: ErrorMessage? = ErrorMessage(
-            R.string.emailAlreadyExitTitle,
-            R.string.emailAlreadyExistMessage
+            R.string.emailAlreadyExitsTitle,
+            R.string.emailAlreadyExistsMessage
         )
     }
 
@@ -97,7 +97,7 @@ class RegistrationViewModel(private val model: RegistrationModelInterface) : Vie
 
                 override fun onError(message: ErrorMessage?) {
                     when (message!!.titleId) {
-                        R.string.emailAlreadyExitTitle -> {
+                        R.string.emailAlreadyExitsTitle -> {
                             state.value = RegistrationViewModelStates.EmailAlreadyExists
                         }
                         R.string.defaultTitle -> {

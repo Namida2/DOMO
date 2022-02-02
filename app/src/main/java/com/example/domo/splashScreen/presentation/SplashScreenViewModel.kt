@@ -33,6 +33,7 @@ class SplashScreenViewModel(
     val state: LiveData<SplashScreenStates> = _state
 
     init {
+        //TODO: Read the menu if it connected to the network
         readMenuUseCase.readMenu()
     }
 

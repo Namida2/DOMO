@@ -14,11 +14,11 @@
     <string name="emptyFieldTitle">Пустоле поле</string>
     <string name="emptyFieldMessage">Пожалуйста, заполниет все поля.</string>
 
-    <string name="wrongConfirmPasswordTitle">Неверное подтвержение пароля</string>
-    <string name="wrongConfirmPasswordMessage">Пароль в первом и во втором поле должны совпадать.</string>
+    <string name="wrongPasswordConfirmationTitle">Неверное подтвержение пароля</string>
+    <string name="wrongPasswordConfirmationMessage">Пароль в первом и во втором поле должны совпадать.</string>
 
-    <string name="emailAlreadyExitTitle">Почта уже используется</string>
-    <string name="emailAlreadyExistMessage">Пожалуйста,используйте для регистрации другую почту или вернитесь на предыдущий экран, чтобы войти.</string>
+    <string name="emailAlreadyExitsTitle">Почта уже используется</string>
+    <string name="emailAlreadyExistsMessage">Пожалуйста,используйте для регистрации другую почту или вернитесь на предыдущий экран, чтобы войти.</string>
 
     <string name="wrongEmailOrPasswordTitle">Неверный пароль или почта</string>
     <string name="wrongEmailOrPasswordMessage">Пожалуйста, проверьте правильность пароля и почты.</string>

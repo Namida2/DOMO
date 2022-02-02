@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.domo.R
 import com.example.domo.databinding.FragmentLogInBinding
 import com.example.domo.splashScreen.domain.ViewModelFactory
 
@@ -15,6 +17,7 @@ import com.example.waiterCore.domain.tools.ErrorMessages.networkConnectionMessag
 import com.example.waiterCore.domain.tools.dialogs.ProcessAlertDialog
 import com.example.waiterCore.domain.tools.extensions.createMessageDialog
 import com.example.waiterCore.domain.tools.extensions.isNetworkConnected
+import extentions.employee
 
 class LogInFragment : Fragment() {
     //TODO: Implement the registration
@@ -36,13 +39,13 @@ class LogInFragment : Fragment() {
         with(binding) {
             logInButton.setOnClickListener {
                 if (requireContext().isNetworkConnected()) {
-                    viewModel.logIn(email.text.toString(), password.text.toString())
+                    viewModel.logIn(email.text.toString().lowercase(), password.text.toString())
                 } else requireContext().createMessageDialog(
                    networkConnectionMessage
                 )?.show(parentFragmentManager, "")
             }
             newAccountButton.setOnClickListener {
-                //findNavController().navigate(R.id.action_logInFragment_to_registrationFragment)
+                findNavController().navigate(R.id.action_logInFragment_to_registrationFragment)
             }
         }
         observeViewModelStates()
@@ -56,11 +59,13 @@ class LogInFragment : Fragment() {
                 }
                 is LogInViewModelStates.Success -> {
                     ProcessAlertDialog.onSuccess()
+                    requireActivity().employee = it.employee
                     requireContext().startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
                 }
                 else -> {
                     if (it is LogInViewModelStates.Default) return@observe
                     ProcessAlertDialog.dismiss()
+                    if (it.errorMessage == null) return@observe
                     requireContext().createMessageDialog(it.errorMessage!!)
                         ?.show(parentFragmentManager, "")
                 }

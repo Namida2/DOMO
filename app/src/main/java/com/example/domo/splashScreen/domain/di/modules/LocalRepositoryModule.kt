@@ -30,4 +30,5 @@ class LocalRepositoryModule {
     @Provides
     fun provideUsersRemoteRepository(auth: FirebaseAuth): UsersRemoteRepository =
         UsersRemoteRepositoryImpl(auth)
+
 }

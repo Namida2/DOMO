@@ -24,7 +24,7 @@ import com.google.android.material.transition.MaterialElevationScale
 import extentions.appComponent
 import javax.inject.Inject
 
-
+//TODO: Start implementing this module
 class TablesFragment : Fragment() {
 
     private val viewModel: TablesViewModel by viewModels { ViewModelFactory }

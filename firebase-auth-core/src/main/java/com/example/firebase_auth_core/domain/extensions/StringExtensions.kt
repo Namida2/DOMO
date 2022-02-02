@@ -1,7 +1,9 @@
 package com.example.firebase_auth_core.domain.extensions
 
 import com.example.waiterCore.domain.Employee
+import com.example.waiterCore.domain.tools.ErrorMessages.defaultErrorMessage
 import com.example.waiterCore.domain.tools.ErrorMessages.networkConnectionMessage
+import com.example.waiterCore.domain.tools.ErrorMessages.wrongEmailOrPassword
 import com.example.waiterCore.domain.tools.FirestoreReferences.employeesCollectionRef
 import com.example.waiterCore.domain.tools.TaskWithEmployee
 import com.example.waiterCore.domain.tools.extensions.logE
@@ -13,7 +15,7 @@ fun String.readEmployeeByEmail (className: String, task: TaskWithEmployee) {
     employeesCollectionRef.document(this).get().addOnSuccessListener { response ->
         val employee = response.toObject<Employee>()
         if(employee == null) {
-            task.onError()
+            task.onError(wrongEmailOrPassword)
             return@addOnSuccessListener
         }
         task.onSuccess(employee)
@@ -21,6 +23,6 @@ fun String.readEmployeeByEmail (className: String, task: TaskWithEmployee) {
         logE("$className, email = $this: ${it.message}")
         if(it is FirebaseNetworkException)
             task.onError(networkConnectionMessage)
-        else task.onError()
+        else task.onError(defaultErrorMessage)
     }
 }
