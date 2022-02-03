@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,12 +16,9 @@ import com.example.domo.R
 import com.example.domo.adapters.TablesAdapter
 import com.example.domo.adapters.itemDecorations.TablesItemDecorations
 import com.example.domo.databinding.FragmentTablesBinding
-import com.example.domo.models.interfaces.MenuDialogModelInterface
 import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.viewModels.fragments.TablesViewModel
 import com.google.android.material.transition.MaterialElevationScale
-import extentions.appComponent
-import javax.inject.Inject
 
 //TODO: Start implementing this module
 class TablesFragment : Fragment() {

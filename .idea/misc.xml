@@ -99,8 +99,13 @@
         <entry key="..\:/Projects/Graduation/DOMO/app/src/main/res/layout/activity_splash_screen.xml" value="0.18" />
         <entry key="..\:/Projects/Graduation/DOMO/app/src/main/res/layout/activity_waiter_main.xml" value="0.25" />
         <entry key="..\:/Projects/Graduation/DOMO/app/src/main/res/layout/fragment_registration.xml" value="0.22" />
+        <entry key="..\:/Projects/Graduation/DOMO/app/src/main/res/layout/fragment_tables.xml" value="0.1671195652173913" />
+        <entry key="..\:/Projects/Graduation/DOMO/app/src/main/res/layout/layout_table.xml" value="0.1671195652173913" />
         <entry key="..\:/Projects/Graduation/DOMO/app/src/main/res/menu/manu_waiter.xml" value="0.1865740740740741" />
         <entry key="..\:/Projects/Graduation/DOMO/app/src/main/res/menu/menu_waiter.xml" value="0.1865740740740741" />
+        <entry key="..\:/Projects/Graduation/DOMO/feature-tables/src/main/res/layout/fragment_tables.xml" value="0.1671195652173913" />
+        <entry key="..\:/Projects/Graduation/DOMO/feature-tables/src/main/res/layout/layout_table.xml" value="0.12952898550724637" />
+        <entry key="..\:/Projects/Graduation/DOMO/waiter-main/src/main/res/layout/activity_waiter_main.xml" value="0.1671195652173913" />
       </map>
     </option>
   </component>

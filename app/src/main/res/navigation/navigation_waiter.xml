@@ -7,7 +7,8 @@
     <fragment
         android:id="@+id/tablesFragment"
         android:name="com.example.domo.views.fragments.TablesFragment"
-        android:label="TablesFragment">
+        android:label="TablesFragment"
+        tools:layout="@layout/fragment_tables">
         <action
             android:id="@+id/action_tablesFragment_to_orderFragment"
             app:destination="@id/orderFragment" />

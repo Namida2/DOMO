@@ -23,7 +23,6 @@ import com.example.waiterCore.domain.tools.dialogs.ProcessAlertDialog
 import com.example.waiterCore.domain.tools.extensions.createMessageDialog
 import com.example.waiterCore.domain.tools.extensions.isNetworkConnected
 
-
 class RegistrationFragment: Fragment() {
 
     private var smallMargin: Int? = null

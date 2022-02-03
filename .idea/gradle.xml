@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/feature-tables" />
             <option value="$PROJECT_DIR$/firebase-auth-core" />
             <option value="$PROJECT_DIR$/waiter-core" />
+            <option value="$PROJECT_DIR$/waiter-main" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

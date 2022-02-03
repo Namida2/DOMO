@@ -1,10 +1,10 @@
 object Versions {
-    const val firebase = "28.4.2"
+    const val firebase = "29.0.4"
     const val firebaseAnalytics = "20.0.2"
     const val recyclerView = "1.2.1"
     const val navigation = "2.3.5"
     const val dagger = "2.38.1"
-    const val activity = "1.4.0"
+    const val activity = "1.4.1"
     const val fragment = "1.4.0"
     const val coroutinesCore = "1.5.2"
     const val lifecycle = "2.4.0"
