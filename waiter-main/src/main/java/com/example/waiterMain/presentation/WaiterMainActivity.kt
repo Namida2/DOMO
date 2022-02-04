@@ -1,25 +1,32 @@
 package com.example.waiterMain.presentation
 
 import android.graphics.Rect
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
-import com.example.waiterMain.R
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.fragment.NavHostFragment
+import com.example.waiterCore.domain.tools.extensions.Animations.prepareHide
+import com.example.waiterCore.domain.tools.extensions.Animations.prepareShow
+import com.example.waiterCore.domain.tools.extensions.Animations.prepareSlideDown
+import com.example.waiterCore.domain.tools.extensions.Animations.prepareSlideUp
+import com.example.waiterMain.databinding.ActivityWaiterMainBinding
 
-class WaiterMainActivity : AppCompatActivity(),
-   // NavController.OnDestinationChangedListener
-{
+//TODO: Change the order fragment layout and implement the order fragment feature
+class WaiterMainActivity: AppCompatActivity(),
+    NavController.OnDestinationChangedListener {
     private lateinit var binding: ActivityWaiterMainBinding
     private var navController: NavController? = null
-   // private val sharedViewModel: WaiterActOrderFragSharedViewModel by viewModels { ViewModelFactory }
+//    private val sharedViewModel: WaiterActOrderFragSharedViewModel by viewModels { ViewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWaiterMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.lifecycleOwner = this
-        binding.sharedViewModel = sharedViewModel
+//        binding.lifecycleOwner = this
+//        binding.sharedViewModel = sharedViewModel
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
@@ -33,14 +40,14 @@ class WaiterMainActivity : AppCompatActivity(),
         destination: NavDestination,
         arguments: Bundle?,
     ) {
-        when (destination.id) {
-            R.id.orderFragment -> {
-                hideNavigationUI()
-            }
-            R.id.tablesFragment -> {
-                showNavigationUI()
-            }
-        }
+//        when (destination.id) {
+//            R.id.orderFragment -> {
+//                hideNavigationUI()
+//            }
+//            R.id.tablesFragment -> {
+//                showNavigationUI()
+//            }
+//        }
     }
 
     private fun hideNavigationUI() {

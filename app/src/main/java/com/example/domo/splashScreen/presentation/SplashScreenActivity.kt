@@ -7,15 +7,14 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.domo.authorization.presentation.AuthorizationActivity
 import com.example.domo.splashScreen.domain.ViewModelFactory
-import com.example.domo.views.activities.WaiterMainActivity
 import com.example.waiterCore.domain.tools.ErrorMessages.networkConnectionMessage
 import com.example.waiterCore.domain.tools.extensions.createMessageDialog
 import com.example.waiterCore.domain.tools.extensions.isNetworkConnected
+import com.example.waiterMain.presentation.WaiterMainActivity
 import entities.constants.EmployeePosts.ADMINISTRATOR
 import entities.constants.EmployeePosts.COOK
 import entities.constants.EmployeePosts.WAITER
 import extentions.employee
-
 
 class SplashScreenActivity : AppCompatActivity() {
 
