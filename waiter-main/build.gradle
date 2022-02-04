@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -33,6 +34,17 @@ android {
 dependencies {
 
     implementation project(':feature-tables')
+    implementation project(':waiter-core')
+
+    implementation (Navigation.navigationFragmentKtx)
+    implementation (Navigation.navigationUiKtx)
+
+    implementation (Fragment.fragmentKtx)
+    implementation (Activity.activityKtx)
+    implementation (Coroutines.coroutinesCore)
+    implementation (ArchComponents.viewModel)
+    implementation (ArchComponents.liveData)
+    kapt(ArchComponents.lifecycleCompiler)
 
     implementation (AndroidX.core)
     implementation (AndroidX.appcompat)
