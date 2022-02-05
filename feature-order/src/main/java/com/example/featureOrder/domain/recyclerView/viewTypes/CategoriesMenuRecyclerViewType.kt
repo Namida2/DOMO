@@ -7,11 +7,13 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.domo.R
 import com.example.domo.adapters.MenuItemsAdapter
 import com.example.domo.databinding.LayoutCategoriesContainerBinding
+import com.example.featureOrder.R
 import com.example.waiterCore.domain.menu.CategoriesNameHolder
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewItem
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
 import com.example.waiterCore.domain.recyclerView.interfaces.MenuRecyclerViewType
 
+//TODO: Add layouts
 class CategoriesMenuRecyclerViewType :
     MenuRecyclerViewType<LayoutCategoriesContainerBinding, CategoriesNameHolder> {
 
