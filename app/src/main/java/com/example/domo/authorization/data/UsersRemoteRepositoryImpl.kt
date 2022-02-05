@@ -1,13 +1,10 @@
 package com.example.domo.authorization.data
 
-import com.example.firebase_auth_core.domain.extensions.readEmployeeByEmail
+import com.example.firebaseAuthCore.domain.extensions.readEmployeeByEmail
 import com.example.waiterCore.domain.Employee
 import com.example.waiterCore.domain.tools.ErrorMessage
-import com.example.waiterCore.domain.tools.ErrorMessages.defaultErrorMessage
-import com.example.waiterCore.domain.tools.ErrorMessages.networkConnectionMessage
 import com.example.waiterCore.domain.tools.ErrorMessages.permissionErrorMessage
 import com.example.waiterCore.domain.tools.ErrorMessages.wrongEmailOrPassword
-import com.example.waiterCore.domain.tools.FirestoreReferences.employeesCollectionRef
 import com.example.waiterCore.domain.tools.TaskWithEmployee
 import com.example.waiterCore.domain.tools.extensions.logE
 import com.google.firebase.auth.FirebaseAuth

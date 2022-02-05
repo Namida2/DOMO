@@ -1,15 +1,11 @@
 package com.example.domo.splashScreen.data
 
-import com.example.firebase_auth_core.domain.extensions.readEmployeeByEmail
-import com.example.waiterCore.data.database.daos.EmployeeDao
+import com.example.firebaseAuthCore.domain.extensions.readEmployeeByEmail
 import com.example.waiterCore.domain.Employee
 import com.example.waiterCore.domain.tools.ErrorMessage
 import com.example.waiterCore.domain.tools.TaskWithEmployee
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class UsersRemoteRepositoryImpl @Inject constructor(

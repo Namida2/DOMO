@@ -1,4 +1,4 @@
-package com.example.domo.views.dialogs
+package com.example.featureOrder.presentation.order.doalogs
 
 import android.content.Context
 import android.os.Bundle
@@ -6,15 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.domo.adapters.GuestsCountAdapter
-import com.example.domo.databinding.DialogGuestCountBinding
+import com.example.featureOrder.databinding.DialogGuestsCountBinding
+import com.example.featureOrder.presentation.order.adapters.GuestsCountAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class GuestsCountBottomSheetDialog(
     private val onCountSelected: (count: Int) -> Unit
 ): BottomSheetDialogFragment() {
 
-    private var binding: DialogGuestCountBinding? = null
+    private var binding: DialogGuestsCountBinding? = null
     private val defaultMaxCount = 16
 
     override fun onAttach(context: Context) {
@@ -31,10 +31,10 @@ class GuestsCountBottomSheetDialog(
     }
 
     private fun initBinding(container: ViewGroup?,) {
-        binding = DialogGuestCountBinding.inflate(layoutInflater, container, false)
+        binding = DialogGuestsCountBinding.inflate(layoutInflater, container, false)
         with(binding!!.guestsCountRecyclerView) {
             layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(requireContext(), androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
             adapter = GuestsCountAdapter(defaultMaxCount) {
                 onCountSelected(it)
                 this@GuestsCountBottomSheetDialog.dismiss()

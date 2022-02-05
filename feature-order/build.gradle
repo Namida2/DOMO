@@ -4,11 +4,12 @@ plugins {
     id 'kotlin-kapt'
 }
 
+
 android {
     compileSdk 31
 
     defaultConfig {
-        minSdk 23
+        minSdk 24
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -36,15 +37,21 @@ android {
 }
 
 dependencies {
+    implementation project(":waiter-core")
+    
+    implementation (Dagger.dagger)
+    kapt (Dagger.compiler)
 
-    implementation project(':feature-order')
-    implementation project(':waiter-core')
+    implementation platform (Firebase.firebaseBom)
+    implementation (Firebase.firebaseAuth)
+    implementation (Firebase.firebaseFirestore)
+    implementation (Firebase.firebaseAnalytics)
 
+    implementation (RecyclerView.recyclerview)
     implementation (Navigation.navigationFragmentKtx)
     implementation (Navigation.navigationUiKtx)
 
     implementation (Fragment.fragmentKtx)
-    implementation (Activity.activityKtx)
     implementation (Coroutines.coroutinesCore)
     implementation (ArchComponents.viewModel)
     implementation (ArchComponents.liveData)
