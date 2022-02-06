@@ -1,0 +1,20 @@
+com/example/featureTables/BR.java
+ com.example.featureTables.BR
+com/example/featureTables/databinding/FragmentTablesBinding.java
+ com.example.featureTables.databinding.FragmentTablesBinding
+com/example/featureTables/DataBinderMapperImpl.java
+ com.example.featureTables.DataBinderMapperImpl
+ com.example.featureTables.DataBinderMapperImpl$InnerBrLookup
+ com.example.featureTables.DataBinderMapperImpl$InnerLayoutIdLookup
+com/example/featureTables/BuildConfig.java
+ com.example.featureTables.BuildConfig
+androidx/databinding/library/baseAdapters/BR.java
+ androidx.databinding.library.baseAdapters.BR
+androidx/databinding/DataBindingComponent.java
+ androidx.databinding.DataBindingComponent
+com/example/waiterCore/BR.java
+ com.example.waiterCore.BR
+com/example/featureTables/DataBindingTriggerClass.java
+ com.example.featureTables.DataBindingTriggerClass
+com/example/featureTables/databinding/LayoutTableBinding.java
+ com.example.featureTables.databinding.LayoutTableBinding

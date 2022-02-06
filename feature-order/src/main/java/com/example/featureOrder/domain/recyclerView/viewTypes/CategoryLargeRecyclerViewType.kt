@@ -3,14 +3,15 @@ package com.example.featureOrder.domain.recyclerView.viewTypes
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import com.example.domo.R
-import com.example.domo.databinding.LayoutCatehoryLargeBinding
+import com.example.featureOrder.R
+import com.example.featureOrder.databinding.LayoutCategoryLargeBinding
 import com.example.waiterCore.domain.menu.CategoryName
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewItem
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
 import com.example.waiterCore.domain.recyclerView.interfaces.MenuRecyclerViewType
 
-class CategoryLargeRecyclerViewType : MenuRecyclerViewType<LayoutCatehoryLargeBinding, CategoryName> {
+class CategoryLargeRecyclerViewType :
+    MenuRecyclerViewType<LayoutCategoryLargeBinding, CategoryName> {
 
     override fun isItMe(recyclerViewItem: BaseRecyclerViewItem): Boolean =
         recyclerViewItem is CategoryName
@@ -18,9 +19,9 @@ class CategoryLargeRecyclerViewType : MenuRecyclerViewType<LayoutCatehoryLargeBi
     override fun getViewHolder(
         inflater: LayoutInflater,
         parent: ViewGroup,
-    ): BaseViewHolder<LayoutCatehoryLargeBinding, CategoryName> {
+    ): BaseViewHolder<LayoutCategoryLargeBinding, CategoryName> {
         return CategoryLargeViewHolder(
-            LayoutCatehoryLargeBinding.inflate(inflater, parent, false)
+            LayoutCategoryLargeBinding.inflate(inflater, parent, false)
         )
     }
 
@@ -37,8 +38,8 @@ class CategoryLargeRecyclerViewType : MenuRecyclerViewType<LayoutCatehoryLargeBi
 }
 
 class CategoryLargeViewHolder(
-    override val binding: LayoutCatehoryLargeBinding,
-) : BaseViewHolder<LayoutCatehoryLargeBinding, CategoryName>(binding) {
+    override val binding: LayoutCategoryLargeBinding,
+) : BaseViewHolder<LayoutCategoryLargeBinding, CategoryName>(binding) {
 
     override fun onBind(item: CategoryName) {
         binding.categoryName.text = item.name

@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import com.example.domo.R
-import com.example.domo.databinding.LayoutDishBinding
+import com.example.featureOrder.R
+import com.example.featureOrder.databinding.LayoutDishBinding
 import com.example.waiterCore.domain.menu.Dish
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewItem
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
@@ -38,7 +38,6 @@ class DishRecyclerViewType(
     override fun onClick(view: View?) {
         onDishSelected.invoke(view?.tag as Int)
     }
-
 }
 
 class DishViewHolder(

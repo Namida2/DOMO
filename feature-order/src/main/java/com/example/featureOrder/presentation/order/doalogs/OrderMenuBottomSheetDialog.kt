@@ -6,16 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.featureOrder.databinding.DialogOrderMenuBinding
-import com.example.featureOrder.presentation.order.doalogs.viewModels.OrderMenuDialogVMStates
+import com.example.featureOrder.domain.interfaces.OnDismissListener
 import com.example.featureOrder.presentation.order.doalogs.viewModels.OrderMenuDialogViewModel
-import com.example.waiterCore.domain.tools.ErrorMessages.networkConnectionMessage
-import com.example.waiterCore.domain.tools.dialogs.ProcessAlertDialog
-import com.example.waiterCore.domain.tools.extensions.createMessageDialog
-import com.example.waiterCore.domain.tools.extensions.isNetworkConnected
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class OrderMenuBottomSheetDialog(
-//    private val onDismissListener: OnDismissListener,
+    private val onDismissListener: OnDismissListener,
 ) : BottomSheetDialogFragment() {
 
     private var binding: DialogOrderMenuBinding? = null
@@ -27,8 +23,8 @@ class OrderMenuBottomSheetDialog(
         savedInstanceState: Bundle?,
     ): View? {
         binding = DialogOrderMenuBinding.inflate(inflater, container, false)
-        setListeners()
-        observeViewModelStates()
+//        setListeners()
+//        observeViewModelStates()
         return binding?.root
     }
 
@@ -37,31 +33,31 @@ class OrderMenuBottomSheetDialog(
 //        onDismissListener.onDismiss()
     }
 
-    private fun setListeners() {
-        with(binding!!) {
-            acceptOrderButton.setOnClickListener {
-                if (requireContext().isNetworkConnected()) {
-                    viewModel.onConfirmOrderButtonClick(acceptOrderButton)
-                } else requireContext().createMessageDialog(networkConnectionMessage)
-            }
-        }
-    }
-
-    private fun observeViewModelStates() {
-        viewModel.state.observe(viewLifecycleOwner) {
-            when (it) {
-                is OrderMenuDialogVMStates.InsertingCurrentOrder -> {
-                    ProcessAlertDialog.show(childFragmentManager, "")
-                }
-                is OrderMenuDialogVMStates.InsertingWasSuccessful -> {
-                    ProcessAlertDialog.onSuccess()
-                }
-                is OrderMenuDialogVMStates.InsertingWasFailure -> {
-                    requireContext().createMessageDialog(it.errorMasse)
-                }
-                else -> {
-                }//Default state
-            }
-        }
-    }
+//    private fun setListeners() {
+//        with(binding!!) {
+//            acceptOrderButton.setOnClickListener {
+//                if (requireContext().isNetworkConnected()) {
+//                    viewModel.onConfirmOrderButtonClick(acceptOrderButton)
+//                } else requireContext().createMessageDialog(networkConnectionMessage)
+//            }
+//        }
+//    }
+//
+//    private fun observeViewModelStates() {
+//        viewModel.state.observe(viewLifecycleOwner) {
+//            when (it) {
+//                is OrderMenuDialogVMStates.InsertingCurrentOrder -> {
+//                    ProcessAlertDialog.show(childFragmentManager, "")
+//                }
+//                is OrderMenuDialogVMStates.InsertingWasSuccessful -> {
+//                    ProcessAlertDialog.onSuccess()
+//                }
+//                is OrderMenuDialogVMStates.InsertingWasFailure -> {
+//                    requireContext().createMessageDialog(it.errorMasse)
+//                }
+//                else -> {
+//                }//Default state
+//            }
+//        }
+//    }
 }

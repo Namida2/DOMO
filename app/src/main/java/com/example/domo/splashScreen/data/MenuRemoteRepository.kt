@@ -1,6 +1,6 @@
 package com.example.domo.splashScreen.data
 
-import com.example.domo.splashScreen.domain.MenuService
+import com.example.waiterCore.domain.menu.MenuService
 import com.example.waiterCore.domain.menu.Category
 import com.example.waiterCore.domain.menu.Dish
 import com.example.waiterCore.domain.tools.FirestoreReferences

@@ -52,6 +52,7 @@ dependencies {
     implementation (RecyclerView.recyclerview)
     implementation (Navigation.navigationFragmentKtx)
     implementation (Navigation.navigationUiKtx)
+    implementation (Navigation.navigationFeaturesSupport)
 
     implementation (Dagger.dagger)
     kapt (Dagger.compiler)

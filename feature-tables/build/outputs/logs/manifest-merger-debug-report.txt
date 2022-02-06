@@ -1,0 +1,39 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml:2:1-15:12
+INJECTED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml:2:1-15:12
+INJECTED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml:2:1-15:12
+	package
+		ADDED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml:3:5-40
+		INJECTED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml
+		INJECTED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml:2:11-69
+application
+ADDED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml:5:5-13:19
+	android:supportsRtl
+		ADDED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml:10:9-35
+	android:label
+		ADDED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml:8:9-41
+	android:roundIcon
+		ADDED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml:9:9-54
+	android:icon
+		ADDED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml:7:9-43
+	android:allowBackup
+		ADDED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml:6:9-35
+	android:theme
+		ADDED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml:11:9-42
+uses-sdk
+INJECTED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml
+INJECTED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml
+INJECTED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml
+INJECTED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml
+		ADDED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml
+		INJECTED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml
+		ADDED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml
+		INJECTED from C:\Projects\Graduate\DOMO\feature-tables\src\main\AndroidManifest.xml

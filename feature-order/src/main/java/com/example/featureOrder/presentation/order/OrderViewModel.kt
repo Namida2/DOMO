@@ -34,38 +34,38 @@ class OrderViewModel(
     private val _currentOrderChangedEvent: MutableLiveData<CurrentOrderChangeEvent> =
         MutableLiveData()
     val currentOrderChangedEvent: LiveData<CurrentOrderChangeEvent> = _currentOrderChangedEvent
-
-    private val currentOrderSubscriber: CurrentOrderServiceSub = {
-        _currentOrderChangedEvent.value = Event(it)
-    }
-
-    fun onFbaClick(fba: View) {
-        _states.value = OrderViewModelStates.ShowingMenuDialog(fba)
-    }
-
-    fun initCurrentOrder(tableId: Int, guestCount: Int) {
-        model.initCurrentOrder(tableId, guestCount)
-        model.subscribeToCurrentOrderChangers(currentOrderSubscriber)
-    }
-
-    fun getCurrentOrder(): Order =
-        model.currentOrder!!
-
-    fun changeGuestsCount(newGuestsCount: Int) {
-        model.changeGuestsCount(newGuestsCount)
-    }
-
-    //TODO: Add the OrderMenuBottomSheetDialog and confirming of the current order
-    fun onNavigationIconClickListener() {
-        _states.value = OrderViewModelStates.ShowingOrderMenuDialog
-    }
-
-    override fun onDismiss() {
-        _states.value = OrderViewModelStates.Default
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        model.unSubscribeToCurrentOrderChangers(currentOrderSubscriber)
-    }
+//
+//    private val currentOrderSubscriber: CurrentOrderServiceSub = {
+//        _currentOrderChangedEvent.value = Event(it)
+//    }
+//
+//    fun onFbaClick(fba: View) {
+//        _states.value = OrderViewModelStates.ShowingMenuDialog(fba)
+//    }
+//
+//    fun initCurrentOrder(tableId: Int, guestCount: Int) {
+//        model.initCurrentOrder(tableId, guestCount)
+//        model.subscribeToCurrentOrderChangers(currentOrderSubscriber)
+//    }
+//
+//    fun getCurrentOrder(): Order =
+//        model.currentOrder!!
+//
+//    fun changeGuestsCount(newGuestsCount: Int) {
+//        model.changeGuestsCount(newGuestsCount)
+//    }
+//
+//    //TODO: Add the OrderMenuBottomSheetDialog and confirming of the current order
+//    fun onNavigationIconClickListener() {
+//        _states.value = OrderViewModelStates.ShowingOrderMenuDialog
+//    }
+//
+//    override fun onDismiss() {
+//        _states.value = OrderViewModelStates.Default
+//    }
+//
+//    override fun onCleared() {
+//        super.onCleared()
+//        model.unSubscribeToCurrentOrderChangers(currentOrderSubscriber)
+//    }
 }

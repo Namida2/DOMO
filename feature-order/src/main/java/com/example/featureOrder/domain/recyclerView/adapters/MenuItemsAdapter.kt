@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
-import com.example.domo.adapters.diffCallbacks.MenuAdapterDiffCallback
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
+import com.example.featureOrder.domain.recyclerView.diffCalbacks.MenuAdapterDiffCallback
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewItem
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
 import com.example.waiterCore.domain.recyclerView.interfaces.MenuRecyclerViewType
 
 class MenuItemsAdapter(
@@ -24,6 +24,7 @@ class MenuItemsAdapter(
             parent
         ) as BaseViewHolder<ViewBinding, BaseRecyclerViewItem>
     }
+
 
     override fun onBindViewHolder(
         holder: BaseViewHolder<ViewBinding, BaseRecyclerViewItem>,

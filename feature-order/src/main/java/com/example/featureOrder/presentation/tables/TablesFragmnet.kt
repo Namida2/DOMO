@@ -1,4 +1,4 @@
-package com.example.featureOrder.presentation
+package com.example.featureOrder.presentation.tables
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,12 +9,17 @@ import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.featureOrder.R
-import com.example.featureTables.databinding.FragmentTablesBinding
+import com.example.featureOrder.databinding.FragmentTablesBinding
+import com.example.featureOrder.domain.TablesItemDecorations
+import com.example.featureOrder.domain.recyclerView.adapters.TablesAdapter
 import com.google.android.material.transition.MaterialElevationScale
 
 //TODO: Start implementing this module
-class TablesFragment : Fragment() {
+class TablesFragment: Fragment() {
 
     private val viewModel: TablesViewModel by viewModels()
 
@@ -71,14 +76,14 @@ class TablesFragment : Fragment() {
     }
 
     private fun startOrderFragment(item: View) {
-//        val direction = TablesFragmentDirections
-//            .actionTablesFragmentToOrderFragment(item.tag as Int)
-//        val fragmentExtras =
-//            FragmentNavigatorExtras(
-//                //TODO: Add it to com.example.core.domain.constants
-//                item to "end",
-//            )
-//        findNavController().navigate(direction, fragmentExtras)
+        val direction = TablesFragmentDirections
+            .actionTablesFragmentToOrderFragment(item.tag as Int)
+        val fragmentExtras =
+            FragmentNavigatorExtras(
+                //TODO: Add it to com.example.core.domain.constants
+                item to "end",
+            )
+        findNavController().navigate(direction, fragmentExtras)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

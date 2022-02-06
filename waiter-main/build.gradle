@@ -42,6 +42,7 @@ dependencies {
 
     implementation (Navigation.navigationFragmentKtx)
     implementation (Navigation.navigationUiKtx)
+    implementation (Navigation.navigationFeaturesSupport)
 
     implementation (Fragment.fragmentKtx)
     implementation (Activity.activityKtx)

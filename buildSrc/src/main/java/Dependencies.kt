@@ -34,6 +34,7 @@ object Navigation {
     const val navigationFragmentKtx =
         "androidx.navigation:navigation-fragment-ktx:" + Versions.navigation
     const val navigationUiKtx = "androidx.navigation:navigation-ui-ktx:" + Versions.navigation
+    const val navigationFeaturesSupport = "androidx.navigation:navigation-dynamic-features-fragment:" +  Versions.navigation
 }
 
 object Dagger {
