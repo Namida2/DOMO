@@ -22,10 +22,9 @@ class LocalRepositoryModule {
 
     @Provides
     fun provideMenuLocalRepository(
-        menuService: MenuService,
         menuDao: MenuDao,
     ): MenuLocalRepository =
-        MenuLocalRepositoryImpl(menuService, menuDao)
+        MenuLocalRepositoryImpl(menuDao)
 
     @Provides
     fun provideUsersRemoteRepository(auth: FirebaseAuth): UsersRemoteRepository =

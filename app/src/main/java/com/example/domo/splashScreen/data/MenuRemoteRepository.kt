@@ -8,15 +8,13 @@ import com.example.waiterCore.domain.tools.constants.FirestoreConstants
 import com.example.waiterCore.domain.tools.extensions.logE
 import javax.inject.Inject
 
-class MenuRemoteRepositoryImpl @Inject constructor(
-    override var menuService: MenuService,
-) : MenuRemoteRepository {
+class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
 
     private val defaultMenuVersion = -1L
     private val menu: ArrayList<Category> = ArrayList()
 
-    override fun readNewMenu(onComplete: (menuService: MenuService) -> Unit) {
-        menuService.setMenuServiceStateAsLoading()
+    override fun readNewMenu(onComplete: () -> Unit) {
+        MenuService.setMenuServiceStateAsLoading()
         FirestoreReferences.menuCollectionRef.get().addOnSuccessListener {
             val categoriesCount: Int = it.size()
             for (i in 0 until categoriesCount)
@@ -33,7 +31,7 @@ class MenuRemoteRepositoryImpl @Inject constructor(
     private fun readDishes(
         category: String,
         isItLastCategory: Boolean = false,
-        onComplete: (menuService: MenuService) -> Unit,
+        onComplete: () -> Unit,
     ) {
         val dishesCollectionRef =
             FirestoreReferences.menuCollectionRef.document(category)
@@ -50,9 +48,9 @@ class MenuRemoteRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun onMenuLoadingFinish(onComplete: (menuService: MenuService) -> Unit) {
-        menuService.setMenuServiceState(menu)
-        onComplete(menuService)
+    private fun onMenuLoadingFinish(onComplete: () -> Unit) {
+        MenuService.setMenuServiceState(menu)
+        onComplete()
     }
 
     override fun readMenuVersion(onComplete: (version: Long) -> Unit) {
@@ -72,7 +70,6 @@ class MenuRemoteRepositoryImpl @Inject constructor(
 }
 
 interface MenuRemoteRepository {
-    var menuService: MenuService
-    fun readNewMenu(onComplete: (menuService: MenuService) -> Unit)
+    fun readNewMenu(onComplete: () -> Unit)
     fun readMenuVersion(onComplete: (version: Long) -> Unit)
 }

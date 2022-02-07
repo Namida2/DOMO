@@ -23,7 +23,7 @@ class ReadMenuUseCaseImpl @Inject constructor(
                 menuRemoteRepository.readNewMenu {
                     sharedPreferences.edit().putLong(
                         FirestoreConstants.FIELD_MENU_VERSION, version).apply()
-                    menuLocalRepository.insertCurrentMenu(it)
+                    menuLocalRepository.insertCurrentMenu()
                 }
             }
         }

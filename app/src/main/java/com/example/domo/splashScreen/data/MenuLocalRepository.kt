@@ -12,7 +12,6 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MenuLocalRepositoryImpl @Inject constructor(
-    private val menuService: MenuService,
     private val menuDao: MenuDao
 ) : MenuLocalRepository {
 
@@ -30,13 +29,13 @@ class MenuLocalRepositoryImpl @Inject constructor(
                 menu.add(Category(category, dishes))
             }
             withContext(Dispatchers.Main) {
-                menuService.setMenuServiceState(menu)
+                MenuService.setMenuServiceState(menu)
             }
         }
     }
 
-    override fun insertCurrentMenu(menuService: MenuService) {
-        val dishes = getAllDishes(menuService.menu)
+    override fun insertCurrentMenu() {
+        val dishes = getAllDishes(MenuService.menu)
         CoroutineScope(IO).launch {
             menuDao.insert(dishes)
         }
@@ -49,6 +48,6 @@ class MenuLocalRepositoryImpl @Inject constructor(
 
 interface MenuLocalRepository {
     fun readExitingMenu()
-    fun insertCurrentMenu(menuService: MenuService)
+    fun insertCurrentMenu()
 }
 

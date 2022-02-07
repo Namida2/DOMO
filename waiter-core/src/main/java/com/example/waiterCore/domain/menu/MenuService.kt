@@ -14,8 +14,7 @@ sealed class MenuServiceStates {
     object Default : MenuServiceStates()
 }
 
-@Singleton
-class MenuService @Inject constructor() {
+object MenuService {
     var menu: ArrayList<Category> = ArrayList()
     private val _menuState: MutableLiveData<MenuServiceStates> =
         MutableLiveData(MenuServiceStates.Default)
