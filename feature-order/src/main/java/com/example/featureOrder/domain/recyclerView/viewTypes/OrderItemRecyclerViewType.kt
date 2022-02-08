@@ -12,9 +12,8 @@ import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
 import com.example.waiterCore.domain.recyclerView.interfaces.MenuRecyclerViewType
 import javax.inject.Inject
 
-class OrderItemRecyclerViewType @Inject constructor(
-    private val menuService: MenuService,
-): MenuRecyclerViewType<LayoutOrderItemBinding, OrderItem> {
+class OrderItemRecyclerViewType @Inject constructor()
+    : MenuRecyclerViewType<LayoutOrderItemBinding, OrderItem> {
 
     override fun isItMe(recyclerViewItem: BaseRecyclerViewItem): Boolean =
         recyclerViewItem is OrderItem
@@ -24,7 +23,7 @@ class OrderItemRecyclerViewType @Inject constructor(
         parent: ViewGroup,
     ): BaseViewHolder<LayoutOrderItemBinding, OrderItem> =
         OrderItemViewHolder(
-            menuService,
+            MenuService,
             LayoutOrderItemBinding.inflate(inflater, parent, false)
         )
 
@@ -39,7 +38,6 @@ class OrderItemRecyclerViewType @Inject constructor(
     }
 
     override fun getDiffCallback(): DiffUtil.ItemCallback<OrderItem> = diffCallback
-
 }
 
 class OrderItemViewHolder(
@@ -58,7 +56,6 @@ class OrderItemViewHolder(
             dishCount.text = item.count.toString()
             commentary.text = item.commentary
         }
-
     }
 }
 

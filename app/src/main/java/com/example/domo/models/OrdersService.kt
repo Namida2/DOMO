@@ -9,8 +9,9 @@ import javax.inject.Singleton
 typealias OrderServiceSub = (orders: List<Order>) -> Unit
 typealias CurrentOrderServiceSub = (orderItems: List<OrderItem>) -> Unit
 
+//TODO: Add use cases
 @Singleton
-class OrdersService @Inject constructor() :
+class OrdersService @Inject constructor():
     OrderServiceInterface<@kotlin.jvm.JvmSuppressWildcards OrderServiceSub> {
 
     private val currentOrderExceptionMessage = "Current order has not been initialized yet."

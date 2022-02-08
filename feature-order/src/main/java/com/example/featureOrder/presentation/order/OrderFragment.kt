@@ -10,9 +10,7 @@ import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.example.featureOrder.R
 import com.example.featureOrder.databinding.FragmentOrderBinding
-import com.example.featureOrder.domain.di.OrderAppComponentDeps
 import com.example.featureOrder.domain.di.OrderDepsStore
 import com.example.featureOrder.domain.recyclerView.adapters.MenuItemsAdapter
 import com.example.featureOrder.domain.recyclerView.viewTypes.OrderItemRecyclerViewType
@@ -78,10 +76,10 @@ class OrderFragment: Fragment() {
     private fun initDialogs() {
 //        menuBottomSheetDialog = MenuBottomSheetDialog(sharedViewModel)
 //        orderMenuDialog = OrderMenuBottomSheetDialog(sharedViewModel)
-//        guestCountDialog = GuestsCountBottomSheetDialog {
-//            binding.guestsCount.text = it.toString()
-//            sharedViewModel.changeGuestsCount(it)
-//        }
+        guestCountDialog = GuestsCountBottomSheetDialog {
+            binding.guestsCount.text = it.toString()
+            sharedViewModel.changeGuestsCount(it)
+        }
     }
 
     private fun initBinding() {
