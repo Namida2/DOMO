@@ -2,8 +2,9 @@ package com.example.waiterCore.domain.menu
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.example.waiterCore.domain.interfaces.BaseObservable
+
+typealias MenuServiceSub = (state: MenuServiceStates) -> Unit
 
 sealed class MenuServiceStates {
     class MenuExists(
@@ -14,11 +15,10 @@ sealed class MenuServiceStates {
     object Default : MenuServiceStates()
 }
 
-object MenuService {
+object MenuService: BaseObservable<MenuServiceSub> {
     var menu: ArrayList<Category> = ArrayList()
-    private val _menuState: MutableLiveData<MenuServiceStates> =
-        MutableLiveData(MenuServiceStates.Default)
-    val menuState: LiveData<MenuServiceStates> = _menuState
+
+    private var menuState: MenuServiceStates = MenuServiceStates.Default
 
     fun getAllCategories(): List<CategoryName> =
         menu.map {
@@ -39,13 +39,26 @@ object MenuService {
     }
 
     fun setMenuServiceState(menu: ArrayList<Category>?) {
-        if (menu.isNullOrEmpty()) _menuState.value = MenuServiceStates.MenuIsEmpty
+        if (menu.isNullOrEmpty()) menuState = MenuServiceStates.MenuIsEmpty
         else {
             this.menu = menu
-            _menuState.value = MenuServiceStates.MenuExists(this)
+            menuState = MenuServiceStates.MenuExists(this)
         }
     }
     fun setMenuServiceStateAsLoading() {
-        _menuState.value = MenuServiceStates.MenuIsLoading
+        menuState = MenuServiceStates.MenuIsLoading
     }
+
+    override fun subscribe(subscriber: MenuServiceSub) {
+        TODO("Not yet implemented")
+    }
+
+    override fun unSubscribe(subscriber: MenuServiceSub) {
+        TODO("Not yet implemented")
+    }
+
+    override fun notifyChanges() {
+        TODO("Not yet implemented")
+    }
+
 }

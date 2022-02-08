@@ -20,7 +20,6 @@ import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.viewModels.fragments.TablesViewModel
 import com.google.android.material.transition.MaterialElevationScale
 
-//TODO: Start implementing this module
 class TablesFragment : Fragment() {
 
     private val viewModel: TablesViewModel by viewModels { ViewModelFactory }

@@ -58,7 +58,7 @@ class OrderMenuDialogRemoteRepository @Inject constructor(
         collectionOrderItemsRef: CollectionReference,
         onComplete: () -> Unit
     ) {
-        // TODO: // STOPPED 0 //
+        // TODO: To find out if there is a better solution // STOPPED 0 //
         collectionOrderItemsRef.get().addOnSuccessListener {
             for (i in 0 .. it.documents.lastIndex) {
                 collectionOrderItemsRef.document(it.documents[i].id).delete().addOnSuccessListener { _ ->

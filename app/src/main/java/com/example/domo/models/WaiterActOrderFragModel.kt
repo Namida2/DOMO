@@ -10,6 +10,7 @@ class WaiterActOrderFragModel @Inject constructor(
 ) : WaiterActOrderFragSharedViewModelInterface,
     OrderServiceInterface<OrderServiceSub> by orderService {
 
+    //TODO: Add this method to OrderServiceInterface //STOPPED//
     override fun getCurrentOrderItems(): Set<OrderItem> =
         orderService.currentOrder?.orderItems?.toSet()!!
 

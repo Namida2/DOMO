@@ -76,10 +76,10 @@ class OrderFragment: Fragment() {
     private fun initDialogs() {
 //        menuBottomSheetDialog = MenuBottomSheetDialog(sharedViewModel)
 //        orderMenuDialog = OrderMenuBottomSheetDialog(sharedViewModel)
-        guestCountDialog = GuestsCountBottomSheetDialog {
-            binding.guestsCount.text = it.toString()
-            sharedViewModel.changeGuestsCount(it)
-        }
+//        guestCountDialog = GuestsCountBottomSheetDialog {
+//            binding.guestsCount.text = it.toString()
+//            sharedViewModel.changeGuestsCount(it)
+//        }
     }
 
     private fun initBinding() {

@@ -1,6 +1,7 @@
 package entities.interfaces
 
 import com.example.domo.models.CurrentOrderServiceSub
+import com.example.waiterCore.domain.interfaces.BaseObservable
 import com.example.waiterCore.domain.order.Order
 import com.example.waiterCore.domain.order.OrderItem
 

@@ -55,7 +55,7 @@ class OrderViewModel(
 //        model.changeGuestsCount(newGuestsCount)
 //    }
 //
-//    //TODO: Add the OrderMenuBottomSheetDialog and confirming of the current order
+//
 //    fun onNavigationIconClickListener() {
 //        _states.value = OrderViewModelStates.ShowingOrderMenuDialog
 //    }

@@ -1,4 +1,4 @@
-package entities.interfaces
+package com.example.waiterCore.domain.interfaces
 
 interface BaseObservable<Subscriber> {
     fun subscribe(subscriber: Subscriber)
