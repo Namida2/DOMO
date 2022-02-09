@@ -1,4 +1,4 @@
-package com.example.featureOrder.presentation.order.doalogs
+package com.example.featureOrder.presentation.order.doalogs.dishDialog
 
 import androidx.fragment.app.DialogFragment
 

@@ -4,12 +4,12 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.domo.models.CurrentOrderServiceSub
-import com.example.domo.models.interfaces.WaiterActOrderFragSharedViewModelInterface
-import entities.interfaces.OnDismissListener
+import com.example.domo.models.interfaces.WaiterActOrderFragSharedViewModel
+import com.example.waiterCore.domain.order.CurrentOrderServiceSub
 import com.example.waiterCore.domain.order.Order
 import com.example.waiterCore.domain.order.OrderItem
 import com.example.waiterCore.domain.tools.Event
+import entities.interfaces.OnDismissListener
 
 typealias CurrentOrderChangeEvent = Event<List<OrderItem>>
 
@@ -18,15 +18,16 @@ sealed class SharedViewModelStates {
     object ShowingOrderMenuDialog : SharedViewModelStates()
     object Default : SharedViewModelStates()
 }
+
 //TODO: Do this things
 sealed class OrderItemsRecyclerViewStates {
     object NoScrolled : OrderItemsRecyclerViewStates()
     object ScrolledDownwards : OrderItemsRecyclerViewStates()
-    object ScrolledUpwards: OrderItemsRecyclerViewStates()
+    object ScrolledUpwards : OrderItemsRecyclerViewStates()
 }
 
 class WaiterActOrderFragSharedViewModel(
-    private val model: WaiterActOrderFragSharedViewModelInterface,
+    private val model: WaiterActOrderFragSharedViewModel,
 ) : ViewModel(), OnDismissListener {
 
     private val _states: MutableLiveData<SharedViewModelStates> = MutableLiveData(

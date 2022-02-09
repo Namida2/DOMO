@@ -1,11 +1,10 @@
-package entities.interfaces
+package com.example.waiterCore.domain.interfaces
 
-import com.example.domo.models.CurrentOrderServiceSub
-import com.example.waiterCore.domain.interfaces.BaseObservable
+import com.example.waiterCore.domain.order.CurrentOrderServiceSub
 import com.example.waiterCore.domain.order.Order
 import com.example.waiterCore.domain.order.OrderItem
 
-interface OrderServiceInterface<Subscriber> : BaseObservable<Subscriber> {
+interface OrdersService<Subscriber> : BaseObservable<Subscriber> {
     var currentOrder: Order?
     var currentOrderSubscribers: MutableSet<CurrentOrderServiceSub>
     fun notifyChangesOfCurrentOrder()
@@ -16,4 +15,5 @@ interface OrderServiceInterface<Subscriber> : BaseObservable<Subscriber> {
     fun confirmCurrentOrder()
     fun initCurrentOrder(tableId: Int, guestCount: Int)
     fun changeGuestsCount(newCount: Int)
+    fun getCurrentOrderItems(): Set<OrderItem>
 }

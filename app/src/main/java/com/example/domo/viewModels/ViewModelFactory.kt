@@ -8,6 +8,7 @@ import com.example.domo.viewModels.dialogs.MenuDialogViewModel
 import com.example.domo.viewModels.dialogs.OrderMenuDialogViewModel
 import com.example.domo.viewModels.fragments.TablesViewModel
 import com.example.domo.viewModels.shared.WaiterActOrderFragSharedViewModel
+import com.example.waiterCore.domain.tools.constants.OtherStringConstants.unknownViewModelClass
 import di.AppComponent
 
 object ViewModelFactory : ViewModelProvider.Factory {
@@ -23,7 +24,7 @@ object ViewModelFactory : ViewModelProvider.Factory {
             TablesViewModel::class.java -> TablesViewModel()
             DishDialogViewModel::class.java -> DishDialogViewModel(appComponent.provideOrderService())
             OrderMenuDialogViewModel::class.java -> OrderMenuDialogViewModel(appComponent.provideOrderMenuDialogViewModel())
-            else -> throw IllegalArgumentException("Unknown viewModel class")
+            else -> throw IllegalArgumentException(unknownViewModelClass + modelClass)
         }
         return viewModel as T
     }

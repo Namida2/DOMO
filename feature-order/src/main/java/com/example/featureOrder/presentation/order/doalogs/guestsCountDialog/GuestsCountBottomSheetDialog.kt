@@ -1,4 +1,4 @@
-package com.example.featureOrder.presentation.order.doalogs
+package com.example.featureOrder.presentation.order.doalogs.guestsCountDialog
 
 import android.content.Context
 import android.os.Bundle

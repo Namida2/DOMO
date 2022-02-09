@@ -1,18 +1,15 @@
-package com.example.domo.models
+package com.example.waiterCore.domain.order
 
-import entities.interfaces.OrderServiceInterface
-import com.example.waiterCore.domain.order.Order
-import com.example.waiterCore.domain.order.OrderItem
+import com.example.waiterCore.domain.interfaces.OrdersService
 import javax.inject.Inject
 import javax.inject.Singleton
 
 typealias OrderServiceSub = (orders: List<Order>) -> Unit
 typealias CurrentOrderServiceSub = (orderItems: List<OrderItem>) -> Unit
 
-//TODO: Add use cases
 @Singleton
-class OrdersService @Inject constructor():
-    OrderServiceInterface<@kotlin.jvm.JvmSuppressWildcards OrderServiceSub> {
+class OrdersServiceImpl @Inject constructor():
+    OrdersService<@JvmSuppressWildcards OrderServiceSub> {
 
     private val currentOrderExceptionMessage = "Current order has not been initialized yet."
 
@@ -53,7 +50,8 @@ class OrdersService @Inject constructor():
 
     override fun addOrderItem(orderItem: OrderItem): Boolean =
         currentOrder?.orderItems?.add(orderItem)
-            .also { notifyChangesOfCurrentOrder() } //TODO: Add exceptions to com.example.core.domain.constants
+            .also { notifyChangesOfCurrentOrder() }
+            //TODO: Add exceptions to com.example.core.domain.constants
             ?: throw IllegalStateException(currentOrderExceptionMessage)
 
     override fun removeOrder(order: Order) {
@@ -89,5 +87,8 @@ class OrdersService @Inject constructor():
             it.guestsCount = newCount
         } ?: throw IllegalStateException(currentOrderExceptionMessage)
     }
+
+    override fun getCurrentOrderItems(): Set<OrderItem> =
+        currentOrder?.orderItems?.toSet()!!
 
 }

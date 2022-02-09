@@ -1,4 +1,4 @@
-package com.example.featureOrder.presentation.order.doalogs
+package com.example.featureOrder.presentation.order.doalogs.orderMenuDialog
 
 import android.content.DialogInterface
 import android.os.Bundle

@@ -1,8 +1,8 @@
 package com.example.waiterCore.domain.menu
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.waiterCore.domain.interfaces.BaseObservable
+import com.example.waiterCore.domain.tools.constants.OtherStringConstants.unknownDishId
+import java.lang.IllegalArgumentException
 
 typealias MenuServiceSub = (state: MenuServiceStates) -> Unit
 
@@ -10,24 +10,28 @@ sealed class MenuServiceStates {
     class MenuExists(
         val menuService: MenuService,
     ) : MenuServiceStates()
+
     object MenuIsEmpty : MenuServiceStates()
     object MenuIsLoading : MenuServiceStates()
     object Default : MenuServiceStates()
 }
 
-object MenuService: BaseObservable<MenuServiceSub> {
+object MenuService : BaseObservable<MenuServiceSub> {
     var menu: ArrayList<Category> = ArrayList()
 
-    private var menuState: MenuServiceStates = MenuServiceStates.Default
+    var menuState: MenuServiceStates = MenuServiceStates.Default
+    private var subscribers: MutableSet<MenuServiceSub> = mutableSetOf()
 
-    fun getAllCategories(): List<CategoryName> =
-        menu.map {
-            it.name
-        }.map {
-            CategoryName(it)
-        }
+    fun getAllCategories(): CategoriesNameHolder =
+        CategoriesNameHolder(
+            menu.map {
+                it.name
+            }.map {
+                CategoryName(it)
+            }
+        )
 
-    fun getDishById(dishId: Int): Dish? {
+    fun getDishById(dishId: Int): Dish {
         var dish: Dish? = null
         menu.find { category ->
             dish = category.dishes.find {
@@ -35,7 +39,7 @@ object MenuService: BaseObservable<MenuServiceSub> {
             }
             dish != null
         }
-        return dish
+        return dish ?: throw IllegalArgumentException(unknownDishId + dishId)
     }
 
     fun setMenuServiceState(menu: ArrayList<Category>?) {
@@ -44,21 +48,25 @@ object MenuService: BaseObservable<MenuServiceSub> {
             this.menu = menu
             menuState = MenuServiceStates.MenuExists(this)
         }
+        notifyChanges()
     }
+
     fun setMenuServiceStateAsLoading() {
         menuState = MenuServiceStates.MenuIsLoading
     }
 
     override fun subscribe(subscriber: MenuServiceSub) {
-        TODO("Not yet implemented")
+        subscribers.add(subscriber)
+        subscriber.invoke(menuState)
     }
 
     override fun unSubscribe(subscriber: MenuServiceSub) {
-        TODO("Not yet implemented")
+        subscribers.remove(subscriber)
     }
 
     override fun notifyChanges() {
-        TODO("Not yet implemented")
+        subscribers.forEach {
+            it.invoke(menuState)
+        }
     }
-
 }

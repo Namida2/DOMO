@@ -6,10 +6,10 @@ import com.example.domo.authorization.presentation.LogInViewModel
 import com.example.domo.registration.presentation.RegistrationViewModel
 import com.example.domo.splashScreen.domain.di.SplashScreenAppComponent
 import com.example.domo.splashScreen.presentation.SplashScreenViewModel
+import com.example.waiterCore.domain.tools.constants.OtherStringConstants.unknownViewModelClass
 
 object ViewModelFactory : ViewModelProvider.Factory {
 
-    private const val illegalArgumentExceptionMessage = "Unknown viewModel class: "
     lateinit var appComponent: SplashScreenAppComponent
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
 
@@ -25,7 +25,7 @@ object ViewModelFactory : ViewModelProvider.Factory {
                 appComponent.provideGetPostItemsUseCase(),
                 appComponent.provideRegistrationUseCase()
             )
-            else -> throw IllegalArgumentException(illegalArgumentExceptionMessage + modelClass)
+            else -> throw IllegalArgumentException(unknownViewModelClass + modelClass)
         }
 
         return viewModel as T

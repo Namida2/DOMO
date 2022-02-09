@@ -1,17 +1,14 @@
 package com.example.domo.models
 
-import com.example.domo.models.interfaces.WaiterActOrderFragSharedViewModelInterface
-import entities.interfaces.OrderServiceInterface
-import com.example.waiterCore.domain.order.OrderItem
+import com.example.domo.models.interfaces.WaiterActOrderFragSharedViewModel
+import com.example.waiterCore.domain.interfaces.OrdersService
+import com.example.waiterCore.domain.order.OrderServiceSub
 import javax.inject.Inject
 
 class WaiterActOrderFragModel @Inject constructor(
-    private val orderService: OrderServiceInterface<OrderServiceSub>,
-) : WaiterActOrderFragSharedViewModelInterface,
-    OrderServiceInterface<OrderServiceSub> by orderService {
+    private val ordersService: OrdersService<OrderServiceSub>,
+) : WaiterActOrderFragSharedViewModel,
+    OrdersService<OrderServiceSub> by ordersService
 
-    //TODO: Add this method to OrderServiceInterface //STOPPED//
-    override fun getCurrentOrderItems(): Set<OrderItem> =
-        orderService.currentOrder?.orderItems?.toSet()!!
 
-}
+
