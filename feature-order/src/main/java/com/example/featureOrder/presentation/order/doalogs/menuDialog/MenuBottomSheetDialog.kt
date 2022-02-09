@@ -15,6 +15,7 @@ import com.example.featureOrder.domain.recyclerView.adapters.MenuItemsAdapter
 import com.example.featureOrder.domain.recyclerView.itemDecorations.MenuItemDecorations
 import com.example.featureOrder.domain.recyclerView.viewTypes.CategoriesMenuRecyclerViewType
 import com.example.featureOrder.domain.recyclerView.viewTypes.CategoryLargeRecyclerViewType
+import com.example.featureOrder.domain.recyclerView.viewTypes.DishRecyclerViewType
 import com.example.featureOrder.presentation.order.doalogs.dishDialog.DishAlertDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -39,7 +40,7 @@ class MenuBottomSheetDialog(
             listOf(
                 CategoriesMenuRecyclerViewType(),
                 CategoryLargeRecyclerViewType(),
-//                DishRecyclerViewType(viewModel::onDishClick)
+                DishRecyclerViewType(viewModel::onDishClick)
             )
         )
         binding = DialogMenuBinding.inflate(layoutInflater)
