@@ -8,11 +8,9 @@ import com.example.waiterCore.domain.menu.Dish
 
 @Dao
 interface MenuDao {
-
     @Query("SELECT * FROM menu")
     suspend fun readAll(): List<Dish>
-
+    //TODO: Add 'deleteAll method'
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(dishes: List<Dish>)
-
 }

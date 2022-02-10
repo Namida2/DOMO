@@ -27,7 +27,6 @@ class MenuBottomSheetDialog(
     private var largeMargin: Int? = null
 
     private lateinit var binding: DialogMenuBinding
-    //TODO: Add this viewModel to ViewModelFactory //STOPPED//
     private val viewModel: MenuDialogViewModel by viewModels { ViewModelFactory }
     private var dishDialog = DishAlertDialog()
     private var menuAdapter: MenuItemsAdapter? = null
@@ -79,12 +78,12 @@ class MenuBottomSheetDialog(
     }
 
     private fun observeDishEvent() {
-//        viewModel.onDishSelected.observe(viewLifecycleOwner) {
-//            val dish = it.getData()
-//            if(dishDialog.isAdded || dish == null) return@observe
-//            dishDialog.dish = dish
-//            dishDialog.show(parentFragmentManager, "")
-//        }
+        viewModel.onDishSelected.observe(viewLifecycleOwner) {
+            val dish = it.getData()
+            if(dishDialog.isAdded || dish == null) return@observe
+            dishDialog.dish = dish
+            dishDialog.show(parentFragmentManager, "")
+        }
     }
 
     override fun onDismiss(dialog: DialogInterface) {

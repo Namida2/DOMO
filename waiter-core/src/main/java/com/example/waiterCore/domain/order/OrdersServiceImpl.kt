@@ -8,7 +8,7 @@ typealias OrderServiceSub = (orders: List<Order>) -> Unit
 typealias CurrentOrderServiceSub = (orderItems: List<OrderItem>) -> Unit
 
 @Singleton
-class OrdersServiceImpl @Inject constructor():
+class OrdersServiceImpl @Inject constructor() :
     OrdersService<@JvmSuppressWildcards OrderServiceSub> {
 
     private val currentOrderExceptionMessage = "Current order has not been initialized yet."
@@ -51,7 +51,7 @@ class OrdersServiceImpl @Inject constructor():
     override fun addOrderItem(orderItem: OrderItem): Boolean =
         currentOrder?.orderItems?.add(orderItem)
             .also { notifyChangesOfCurrentOrder() }
-            //TODO: Add exceptions to com.example.core.domain.constants
+        //TODO: Add exceptions to com.example.core.domain.constants
             ?: throw IllegalStateException(currentOrderExceptionMessage)
 
     override fun removeOrder(order: Order) {
@@ -60,7 +60,7 @@ class OrdersServiceImpl @Inject constructor():
 
     override fun confirmCurrentOrder() {
         orders.forEachIndexed { index, order ->
-            if(order.tableId == currentOrder?.tableId) {
+            if (order.tableId == currentOrder?.tableId) {
                 orders[index] = currentOrder!!
                 return
             }
