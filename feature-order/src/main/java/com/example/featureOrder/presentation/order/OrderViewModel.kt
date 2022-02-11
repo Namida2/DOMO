@@ -28,7 +28,7 @@ sealed class OrderItemsRecyclerViewStates {
 }
 
 class OrderViewModel(
-    private val model: OrdersService<OrderServiceSub>
+    private val ordersService: OrdersService<OrderServiceSub>
 ) : ViewModel(), OnDismissListener {
 
     private val _states: MutableLiveData<OrderViewModelStates> = MutableLiveData(
@@ -48,15 +48,15 @@ class OrderViewModel(
     }
 
     fun initCurrentOrder(tableId: Int, guestCount: Int) {
-        model.initCurrentOrder(tableId, guestCount)
-        model.subscribeToCurrentOrderChangers(currentOrderSubscriber)
+        ordersService.initCurrentOrder(tableId, guestCount)
+        ordersService.subscribeToCurrentOrderChangers(currentOrderSubscriber)
     }
 
     fun getCurrentOrder(): Order =
-        model.currentOrder!!
+        ordersService.currentOrder!!
 
     fun changeGuestsCount(newGuestsCount: Int) {
-        model.changeGuestsCount(newGuestsCount)
+        ordersService.changeGuestsCount(newGuestsCount)
     }
 
     fun onNavigationIconClickListener() {
@@ -69,6 +69,6 @@ class OrderViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        model.unSubscribeToCurrentOrderChangers(currentOrderSubscriber)
+        ordersService.unSubscribeToCurrentOrderChangers(currentOrderSubscriber)
     }
 }

@@ -1,4 +1,4 @@
-package com.example.featureOrder.domain.repositories
+package com.example.featureOrder.data.repositories
 
 import com.example.waiterCore.domain.order.BaseOrderItem
 import com.example.waiterCore.domain.order.Order
@@ -60,12 +60,12 @@ class OrderMenuDialogRemoteRepositoryImpl @Inject constructor(
         collectionOrderItemsRef: CollectionReference,
         onComplete: () -> Unit,
     ) {
-        // TODO: To find out if there is a better solution // STOPPED 0 //
+        // TODO: To find out if there is a better solution
         collectionOrderItemsRef.get().addOnSuccessListener {
             for (i in 0..it.documents.lastIndex) {
                 collectionOrderItemsRef.document(it.documents[i].id).delete()
                     .addOnSuccessListener { _ ->
-                        logD(i.toString())
+                        logD("Removed index: $i")
                         if (i == it.documents.lastIndex) {
                             logD(i.toString())
                             onComplete.invoke()

@@ -4,7 +4,7 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.featureOrder.presentation.order.doalogs.orderMenuDialog.useCases.InsertOrderUseCase
+import com.example.featureOrder.domain.useCases.InsertOrderUseCase
 import com.example.waiterCore.domain.tools.ErrorMessage
 
 import com.example.waiterCore.domain.tools.ErrorMessages.defaultErrorMessage

@@ -4,9 +4,9 @@ import com.example.featureOrder.domain.di.modules.FirebaseModule
 import com.example.featureOrder.domain.di.modules.RemoteRepositoriesModule
 import com.example.featureOrder.domain.di.modules.ServicesModule
 import com.example.featureOrder.domain.di.modules.UseCasesModule
-import com.example.featureOrder.domain.repositories.OrderMenuDialogRemoteRepository
+import com.example.featureOrder.data.repositories.OrderMenuDialogRemoteRepository
 import com.example.featureOrder.presentation.order.OrderFragment
-import com.example.featureOrder.presentation.order.doalogs.orderMenuDialog.useCases.InsertOrderUseCase
+import com.example.featureOrder.domain.useCases.InsertOrderUseCase
 import com.example.waiterCore.domain.interfaces.OrdersService
 import com.example.waiterCore.domain.menu.MenuService
 import com.example.waiterCore.domain.order.OrderServiceSub

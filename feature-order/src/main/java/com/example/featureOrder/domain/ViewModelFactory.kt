@@ -6,6 +6,7 @@ import com.example.featureOrder.domain.di.OrderDepsStore
 import com.example.featureOrder.presentation.order.OrderViewModel
 import com.example.featureOrder.presentation.order.doalogs.menuDialog.MenuDialogViewModel
 import com.example.featureOrder.presentation.order.doalogs.orderMenuDialog.OrderMenuDialogViewModel
+import com.example.featureOrder.presentation.order.doalogs.dishDialog.DishDialogViewModel
 import com.example.waiterCore.domain.menu.MenuService
 import com.example.waiterCore.domain.tools.constants.OtherStringConstants.unknownViewModelClass
 
@@ -18,6 +19,9 @@ object ViewModelFactory : ViewModelProvider.Factory {
             MenuDialogViewModel::class.java -> MenuDialogViewModel(MenuService)
             OrderMenuDialogViewModel::class.java -> OrderMenuDialogViewModel(
                 OrderDepsStore.appComponent.provideInsertOrderUseCase()
+            )
+            DishDialogViewModel::class.java -> DishDialogViewModel(
+                OrderDepsStore.appComponent.provideOrderService()
             )
             else -> throw IllegalArgumentException(unknownViewModelClass + modelClass)
         }

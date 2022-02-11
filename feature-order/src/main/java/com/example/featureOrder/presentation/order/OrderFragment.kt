@@ -32,6 +32,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+//TODO: Add CurrentOrdersFragment //STOPPED//
 class OrderFragment : Fragment() {
 
     private var tableId = 0
