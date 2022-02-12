@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:background="@drawable/bg_black_round"
+        android:background="@drawable/bg_black_rounded_24"
         android:fontFamily="@font/montserrat_semi_bold"
         android:gravity="center"
         android:paddingStart="42dp"

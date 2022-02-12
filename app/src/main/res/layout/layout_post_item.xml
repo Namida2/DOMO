@@ -2,7 +2,7 @@
     android:id="@+id/postContainer"
     android:layout_width="142dp"
     android:layout_height="172dp"
-    android:background="@drawable/bg_black_round"
+    android:background="@drawable/bg_black_rounded_24"
     android:orientation="vertical">
 
     <ImageView
