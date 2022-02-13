@@ -2,13 +2,13 @@ package com.example.featureOrder.domain.useCases
 
 import com.example.featureOrder.data.repositories.OrderMenuDialogRemoteRepository
 import com.example.waiterCore.domain.interfaces.OrdersService
-import com.example.waiterCore.domain.order.OrderServiceSub
+import com.example.waiterCore.domain.order.OrdersServiceSub
 import com.example.waiterCore.domain.tools.ErrorMessage
 import com.example.waiterCore.domain.tools.SimpleTask
 import javax.inject.Inject
 
 class InsertOrderUseCaseImpl @Inject constructor(
-    private val ordersService: OrdersService<OrderServiceSub>,
+    private val ordersService: OrdersService<OrdersServiceSub>,
     private val remoteRepository: OrderMenuDialogRemoteRepository,
 ): InsertOrderUseCase {
     override fun insertCurrentOrder(task: SimpleTask) {

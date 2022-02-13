@@ -14,7 +14,7 @@
     app:cardCornerRadius="24dp">
 
     <RelativeLayout
-        android:id="@+id/order_item_container_large"
+        android:id="@+id/orderItemContainerLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 

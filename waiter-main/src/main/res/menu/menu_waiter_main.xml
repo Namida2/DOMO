@@ -5,7 +5,7 @@
         android:icon="@drawable/ic_email"
         android:title="@string/tables"/>
     <item
-        android:id="@+id/ordersFragment"
+        android:id="@+id/currentOrdersFragment"
         android:icon="@drawable/ic_email"
         android:title="@string/orders" />
     <item

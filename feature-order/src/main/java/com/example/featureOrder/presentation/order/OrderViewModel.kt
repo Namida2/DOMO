@@ -9,7 +9,7 @@ import com.example.waiterCore.domain.interfaces.OrdersService
 import com.example.waiterCore.domain.order.CurrentOrderServiceSub
 import com.example.waiterCore.domain.order.Order
 import com.example.waiterCore.domain.order.OrderItem
-import com.example.waiterCore.domain.order.OrderServiceSub
+import com.example.waiterCore.domain.order.OrdersServiceSub
 import com.example.waiterCore.domain.tools.Event
 
 typealias CurrentOrderChangeEvent = Event<List<OrderItem>>
@@ -28,7 +28,7 @@ sealed class OrderItemsRecyclerViewStates {
 }
 
 class OrderViewModel(
-    private val ordersService: OrdersService<OrderServiceSub>
+    private val ordersService: OrdersService<OrdersServiceSub>
 ) : ViewModel(), OnDismissListener {
 
     private val _states: MutableLiveData<OrderViewModelStates> = MutableLiveData(

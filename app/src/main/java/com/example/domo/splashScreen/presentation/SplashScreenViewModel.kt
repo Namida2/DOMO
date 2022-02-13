@@ -24,6 +24,7 @@ sealed class SplashScreenStates {
     object EmployeeDoesNotExit : SplashScreenStates()
 }
 
+//TODO: Read current orders //STOPPED//
 class SplashScreenViewModel(
     readMenuUseCase: ReadMenuUseCase,
     private val getCurrentEmployeeUseCase: GetCurrentEmployeeUseCase

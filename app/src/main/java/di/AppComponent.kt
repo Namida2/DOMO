@@ -10,19 +10,19 @@ import com.example.domo.views.fragments.OrderFragment
 import com.example.domo.views.fragments.TablesFragment
 import com.example.waiterCore.data.database.Database
 import com.example.waiterCore.domain.interfaces.OrdersService
-import com.example.waiterCore.domain.order.OrderServiceSub
+import com.example.waiterCore.domain.order.OrdersServiceSub
+import com.example.waiterMain.domain.di.WaiterMainDeps
 import dagger.BindsInstance
 import dagger.Component
-import di.modules.FirebaseModule
-import di.modules.LocalRepositoryModule
-import di.modules.ModelsModule
-import di.modules.RemoteRepositoriesModule
+import di.modules.*
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [LocalRepositoryModule::class, FirebaseModule::class,
-    ModelsModule::class, RemoteRepositoriesModule::class])
-interface AppComponent : SplashScreenAppComponentDeps {
+@Component(
+    modules = [LocalRepositoryModule::class, FirebaseModule::class,
+        ModelsModule::class, RemoteRepositoriesModule::class, ServicesModule::class]
+)
+interface AppComponent : SplashScreenAppComponentDeps, WaiterMainDeps {
     @Component.Factory
     interface Factory {
         fun create(
@@ -36,9 +36,12 @@ interface AppComponent : SplashScreenAppComponentDeps {
     fun provideRegistrationModel(): RegistrationModelInterface
     fun provideLogInModel(): LogInModelInterface
     fun provideMenuDialogModel(): MenuDialogModelInterface
-    fun provideOrderService(): OrdersService<OrderServiceSub>
+
+    fun provideOrderService(): OrdersService<OrdersServiceSub>
+
     fun provideWaiterActOrderFragModel(): WaiterActOrderFragSharedViewModel
     fun provideOrderMenuDialogViewModel(): OrderMenuDialogModelInterface
+
 
     fun inject(activity: WaiterMainActivity)
     fun inject(fragment: TablesFragment)

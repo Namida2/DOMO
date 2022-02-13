@@ -8,9 +8,6 @@ import com.example.domo.models.dialogs.OrderMenuDialogModel
 import com.example.domo.models.interfaces.*
 import dagger.Binds
 import dagger.Module
-import com.example.waiterCore.domain.interfaces.OrdersService
-import com.example.waiterCore.domain.order.OrderServiceSub
-import com.example.waiterCore.domain.order.OrdersServiceImpl
 import javax.inject.Singleton
 
 @Module
@@ -38,10 +35,6 @@ interface ModelsModule {
     @Binds
     @Singleton
     fun bindMenuDialogModule(menuDialogModel: MenuDialogModel): MenuDialogModelInterface
-
-    @Binds
-    @Singleton
-    fun bindOrderService(orderService: OrdersServiceImpl): OrdersService<OrderServiceSub>
 
     @Binds
     @Singleton

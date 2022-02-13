@@ -10,10 +10,14 @@ interface OrdersService<Subscriber> : BaseObservable<Subscriber> {
     fun notifyChangesOfCurrentOrder()
     fun subscribeToCurrentOrderChangers(subscriber: CurrentOrderServiceSub)
     fun unSubscribeToCurrentOrderChangers(subscriber: CurrentOrderServiceSub)
+
     fun addOrderItem(orderItem: OrderItem): Boolean
     fun removeOrder(order: Order)
     fun confirmCurrentOrder()
     fun initCurrentOrder(tableId: Int, guestCount: Int)
     fun changeGuestsCount(newCount: Int)
     fun getCurrentOrderItems(): Set<OrderItem>
+
+    fun addOrder(order: Order)
+    fun addListOfOrders(orders: List<Order>)
 }

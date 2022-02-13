@@ -8,7 +8,7 @@ import com.example.featureOrder.R
 import com.example.waiterCore.domain.interfaces.OrdersService
 import com.example.waiterCore.domain.menu.Dish
 import com.example.waiterCore.domain.order.OrderItem
-import com.example.waiterCore.domain.order.OrderServiceSub
+import com.example.waiterCore.domain.order.OrdersServiceSub
 import com.example.waiterCore.domain.tools.ErrorMessage
 import com.example.waiterCore.domain.tools.extensions.logD
 
@@ -27,7 +27,7 @@ sealed class DishDialogVMStates {
 }
 
 class DishDialogViewModel(
-    private val ordersService: OrdersService<OrderServiceSub>,
+    private val ordersService: OrdersService<OrdersServiceSub>,
 ) : ViewModel() {
 
     private var _state = MutableLiveData<DishDialogVMStates>(DishDialogVMStates.Default)

@@ -3,12 +3,13 @@ package application
 import android.app.Application
 import androidx.room.Room
 import com.example.domo.splashScreen.domain.di.DaggerSplashScreenAppComponent
-import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.splashScreen.domain.di.SplashScreenDepsStore
+import com.example.domo.viewModels.ViewModelFactory
 import com.example.waiterCore.data.database.Database
+import com.example.waiterCore.domain.Employee
+import com.example.waiterMain.domain.di.WaiterMainDepsStore
 import di.AppComponent
 import di.DaggerAppComponent
-import com.example.waiterCore.domain.Employee
 import entities.constants.SharedPreferencesConstants
 
 class MyApplication : Application() {
@@ -27,9 +28,11 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        WaiterMainDepsStore.deps = _appComponent
         SplashScreenDepsStore.deps = _appComponent
         ViewModelFactory.appComponent = _appComponent
-        com.example.domo.splashScreen.domain.ViewModelFactory.appComponent = DaggerSplashScreenAppComponent.builder().putDeps(_appComponent).build()
+        com.example.domo.splashScreen.domain.ViewModelFactory.appComponent =
+            DaggerSplashScreenAppComponent.builder().putDeps(_appComponent).build()
     }
 }
 

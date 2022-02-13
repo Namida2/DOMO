@@ -4,20 +4,20 @@ import com.example.waiterCore.domain.interfaces.OrdersService
 import javax.inject.Inject
 import javax.inject.Singleton
 
-typealias OrderServiceSub = (orders: List<Order>) -> Unit
+typealias OrdersServiceSub = (orders: List<Order>) -> Unit
 typealias CurrentOrderServiceSub = (orderItems: List<OrderItem>) -> Unit
 
 @Singleton
 class OrdersServiceImpl @Inject constructor() :
-    OrdersService<@JvmSuppressWildcards OrderServiceSub> {
+    OrdersService<@JvmSuppressWildcards OrdersServiceSub> {
 
-    private val currentOrderExceptionMessage = "Current order has not been initialized yet."
+    private val currentOrderExceptionMessage = "Current order has not been initialized."
 
     override var currentOrder: Order? = null
         get() = field ?: throw IllegalStateException(currentOrderExceptionMessage)
 
     private var orders = mutableListOf<Order>()
-    private var subscribers = mutableSetOf<OrderServiceSub>()
+    private var subscribers = mutableSetOf<OrdersServiceSub>()
     override var currentOrderSubscribers: MutableSet<CurrentOrderServiceSub> = mutableSetOf()
 
     override fun notifyChangesOfCurrentOrder() {
@@ -26,11 +26,12 @@ class OrdersServiceImpl @Inject constructor() :
         }
     }
 
-    override fun subscribe(subscriber: OrderServiceSub) {
+    override fun subscribe(subscriber: OrdersServiceSub) {
         subscribers.add(subscriber)
+        subscriber.invoke(orders)
     }
 
-    override fun unSubscribe(subscriber: OrderServiceSub) {
+    override fun unSubscribe(subscriber: OrdersServiceSub) {
         subscribers.remove(subscriber)
     }
 
@@ -90,5 +91,13 @@ class OrdersServiceImpl @Inject constructor() :
 
     override fun getCurrentOrderItems(): Set<OrderItem> =
         currentOrder?.orderItems?.toSet()!!
+
+    override fun addOrder(order: Order) {
+        TODO("Not yet implemented")
+    }
+
+    override fun addListOfOrders(orders: List<Order>) {
+        TODO("Not yet implemented")
+    }
 
 }

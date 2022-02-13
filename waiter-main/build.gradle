@@ -38,6 +38,7 @@ android {
 dependencies {
 
     implementation project(':feature-order')
+    implementation project(':feature-currentOrders')
     implementation project(':waiter-core')
 
     implementation (Navigation.navigationFragmentKtx)

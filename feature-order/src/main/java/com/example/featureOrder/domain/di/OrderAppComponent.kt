@@ -4,24 +4,29 @@ import com.example.featureOrder.domain.di.modules.FirebaseModule
 import com.example.featureOrder.domain.di.modules.RemoteRepositoriesModule
 import com.example.featureOrder.domain.di.modules.ServicesModule
 import com.example.featureOrder.domain.di.modules.UseCasesModule
-import com.example.featureOrder.data.repositories.OrderMenuDialogRemoteRepository
 import com.example.featureOrder.presentation.order.OrderFragment
 import com.example.featureOrder.domain.useCases.InsertOrderUseCase
 import com.example.waiterCore.domain.interfaces.OrdersService
-import com.example.waiterCore.domain.menu.MenuService
-import com.example.waiterCore.domain.order.OrderServiceSub
+import com.example.waiterCore.domain.order.OrdersServiceSub
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(dependencies = [], modules = [ServicesModule::class, UseCasesModule::class, RemoteRepositoriesModule::class, FirebaseModule::class])
+@Component(
+    dependencies = [OrderAppComponentDeps::class],
+    modules = [ServicesModule::class, UseCasesModule::class, RemoteRepositoriesModule::class, FirebaseModule::class]
+)
 interface OrderAppComponent {
     @Component.Builder
     interface Builder {
-//        fun provideOrderAppComponentDeps(deps: OrderAppComponentDeps): Builder
+        fun provideOrderAppComponentDeps(deps: OrderAppComponentDeps): Builder
         fun build(): OrderAppComponent
     }
     fun inject(fragment: OrderFragment)
-    fun provideOrderService() : OrdersService<OrderServiceSub>
+    fun provideOrderService(): OrdersService<OrdersServiceSub>
     fun provideInsertOrderUseCase() : InsertOrderUseCase
+}
+
+interface OrderAppComponentDeps {
+    val ordersService: OrdersService<OrdersServiceSub>
 }
