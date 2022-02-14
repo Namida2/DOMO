@@ -27,6 +27,7 @@ sealed class SplashScreenStates {
 //TODO: Read current orders //STOPPED//
 class SplashScreenViewModel(
     readMenuUseCase: ReadMenuUseCase,
+    readOrdersUseCase: ReadOrdersUseCase,
     private val getCurrentEmployeeUseCase: GetCurrentEmployeeUseCase
 ) : ViewModel() {
     private var _state: MutableLiveData<SplashScreenStates> =
@@ -35,7 +36,10 @@ class SplashScreenViewModel(
 
     init {
         //TODO: Read the menu if it connected to the network
-        readMenuUseCase.readMenu()
+        readMenuUseCase.readMenu()//.onComplete {
+//        readOrdersUseCase.readOrders()
+//    }
+
     }
 
     fun getCurrentEmployee() {
