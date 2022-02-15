@@ -13,6 +13,7 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
     private val defaultMenuVersion = -1L
     private val menu: ArrayList<Category> = ArrayList()
 
+    //TODO: Handle the case when there is no internet connection
     override fun readNewMenu(onComplete: () -> Unit) {
         MenuService.setMenuServiceStateAsLoading()
         FirestoreReferences.menuCollectionRef.get().addOnSuccessListener {

@@ -27,7 +27,7 @@ sealed class SplashScreenStates {
 //TODO: Read current orders //STOPPED//
 class SplashScreenViewModel(
     readMenuUseCase: ReadMenuUseCase,
-    readOrdersUseCase: ReadOrdersUseCase,
+//    readOrdersUseCase: ReadOrdersUseCase,
     private val getCurrentEmployeeUseCase: GetCurrentEmployeeUseCase
 ) : ViewModel() {
     private var _state: MutableLiveData<SplashScreenStates> =

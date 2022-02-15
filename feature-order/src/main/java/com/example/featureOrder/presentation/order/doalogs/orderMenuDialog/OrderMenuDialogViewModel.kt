@@ -20,7 +20,6 @@ sealed class OrderMenuDialogVMStates {
 }
 class OrderMenuDialogViewModel(
     private val insertOrderUseCase: InsertOrderUseCase,
-//    private val model: OrderMenuDialogModelInterface,
 ) : ViewModel() {
 
     private var _state: MutableLiveData<OrderMenuDialogVMStates> = MutableLiveData(
