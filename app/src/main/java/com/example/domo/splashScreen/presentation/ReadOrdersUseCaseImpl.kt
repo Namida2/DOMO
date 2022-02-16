@@ -5,10 +5,12 @@ import com.example.waiterCore.domain.menu.MenuService
 import com.example.waiterCore.domain.menu.MenuServiceStates
 import com.example.waiterCore.domain.menu.MenuServiceSub
 import com.example.waiterCore.domain.order.Order
+import com.example.waiterCore.domain.order.OrderItem
 import com.example.waiterCore.domain.order.OrdersServiceSub
 import com.example.waiterCore.domain.tools.FirestoreReferences.ordersCollectionRef
 import com.example.waiterCore.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
 import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
+import com.example.waiterCore.domain.tools.extensions.logD
 import com.google.firebase.firestore.FirebaseFirestore
 import javax.inject.Inject
 
@@ -16,24 +18,22 @@ import javax.inject.Inject
 class ReadOrdersUseCaseImpl @Inject constructor(
     private val menuService: MenuService,
     private val ordersService: OrdersService<OrdersServiceSub>,
-    private val firestore: FirebaseFirestore
-): ReadOrdersUseCase {
+) : ReadOrdersUseCase {
 
-    private val subsciber: MenuServiceSub = object: MenuServiceSub {
+    private val subscriber: MenuServiceSub = object : MenuServiceSub {
         override fun invoke(state: MenuServiceStates) {
-            when(state) {
+            when (state) {
                 is MenuServiceStates.MenuExists -> {
-
-                    //unsubscribe
+                    readOrdersInfo()
+                    menuService.unSubscribe(this)
                 }
                 else -> {}
             }
         }
-
     }
+
     override fun readOrders() {
-        menuService.subscribe (subsciber)
-        TODO("Not yet implemented")
+        menuService.subscribe(subscriber)
     }
 
     private fun readOrdersInfo() {
@@ -43,21 +43,31 @@ class ReadOrdersUseCaseImpl @Inject constructor(
             it.documents.forEachIndexed { index, docSnapshot ->
                 val tableId = docSnapshot.id.toInt()
                 val guestsCount = docSnapshot.getLong(FIELD_GUESTS_COUNT) ?: 0
-                val order = Order(tableId, guestsCount)
+                val order = Order(tableId, guestsCount.toInt())
                 listOrders.add(order)
-                readOrderItems(docSnapshot.id, index == lastIndex)
+                readOrderItems(docSnapshot.id, order, index == lastIndex, listOrders)
             }
         }.addOnFailureListener {
-            //onError
+            logD("something wrong")
         }
     }
     //TODO: Read orders //STOPPED//
 
-    private fun readOrderItems(tableId: String, isLastDocument: Boolean) {
-        ordersCollectionRef.document(tableId).collection(COLLECTION_ORDER_ITEMS).get().addOnSuccessListener {
-
-        }.addOnCanceledListener {
-
+    private fun readOrderItems(tableId: String, order: Order, isLastDocument: Boolean, listOrders: List<Order>) {
+        ordersCollectionRef.document(tableId).collection(COLLECTION_ORDER_ITEMS).get()
+            .addOnSuccessListener {
+                val orderItems = mutableSetOf<OrderItem>()
+                it.documents.forEach { document ->
+                    document.toObject(OrderItem::class.java)?.let {
+                            it1 -> orderItems.add(it1)
+                    }
+                }
+                order.orderItems = orderItems
+                if(isLastDocument) {
+                    ordersService.addListOfOrders(listOrders)
+                }
+            }.addOnFailureListener {
+                logD("something wrong")
         }
     }
 }

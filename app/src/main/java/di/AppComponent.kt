@@ -22,7 +22,7 @@ import javax.inject.Singleton
     modules = [LocalRepositoryModule::class, FirebaseModule::class,
         ModelsModule::class, RemoteRepositoriesModule::class, ServicesModule::class]
 )
-interface AppComponent : SplashScreenAppComponentDeps, WaiterMainDeps {
+interface AppComponent : SplashScreenAppComponentDeps {
     @Component.Factory
     interface Factory {
         fun create(

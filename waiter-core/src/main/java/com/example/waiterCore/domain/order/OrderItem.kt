@@ -3,19 +3,20 @@ package com.example.waiterCore.domain.order
 import androidx.room.Entity
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewItem
 
-@Entity(tableName = "order_items", primaryKeys = ["tableId", "dishId", "commentary"])
 data class OrderItem(
-    val tableId: Int, //for local data source
+//    val tableId: Int, //for local data source
     override val dishId: Int,
     override val count: Int,
     override val commentary: String,
     override val isReady: Boolean = false,
 ) : BaseRecyclerViewItem, BaseOrderItem {
+    constructor() : this(0, 0, "")
+
     override fun equals(other: Any?): Boolean =
         if (other !is OrderItem) false
-        else tableId == other.tableId && dishId == other.dishId && commentary == other.commentary
+        else dishId == other.dishId && commentary == other.commentary
 
-    override fun hashCode(): Int = "$tableId: $dishId: $commentary".hashCode()
+    override fun hashCode(): Int = "$$dishId: $commentary".hashCode()
 }
 
 //for fireStore

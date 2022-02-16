@@ -8,7 +8,7 @@ import com.example.waiterCore.domain.Employee
 import com.example.waiterCore.domain.menu.Dish
 import com.example.waiterCore.domain.order.OrderItem
 
-@Database(entities = [Employee::class, Dish::class, OrderItem::class],
+@Database(entities = [Employee::class, Dish::class],
     version = 1,
     exportSchema = false)
 abstract class Database : RoomDatabase() {

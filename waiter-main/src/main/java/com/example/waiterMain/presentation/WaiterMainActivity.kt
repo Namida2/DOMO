@@ -21,7 +21,7 @@ import com.example.waiterMain.R
 import com.example.waiterMain.databinding.ActivityWaiterMainBinding
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
 
-//TODO: Change the order fragment layout and implement the order fragment feature
+//TODO: Add a service for listening to new orders
 class WaiterMainActivity: AppCompatActivity(),
     NavController.OnDestinationChangedListener {
     private lateinit var binding: ActivityWaiterMainBinding
@@ -46,6 +46,7 @@ class WaiterMainActivity: AppCompatActivity(),
         OrderDepsStore.deps = object: OrderAppComponentDeps {
             override val ordersService: OrdersService<OrdersServiceSub>
                 get() = WaiterMainDepsStore.deps.ordersService
+
         }
     }
 

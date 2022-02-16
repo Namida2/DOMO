@@ -16,6 +16,7 @@ object ViewModelFactory : ViewModelProvider.Factory {
         val viewModel = when (modelClass) {
             SplashScreenViewModel::class.java -> SplashScreenViewModel(
                 appComponent.provideReadMenuUseCase(),
+                appComponent.provideReadOrdersUseCase(),
                 appComponent.provideGetCurrentEmployeeUseCase()
             )
             LogInViewModel::class.java -> LogInViewModel(

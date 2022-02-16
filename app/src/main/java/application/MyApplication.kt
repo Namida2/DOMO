@@ -7,6 +7,7 @@ import com.example.domo.splashScreen.domain.di.SplashScreenDepsStore
 import com.example.domo.viewModels.ViewModelFactory
 import com.example.waiterCore.data.database.Database
 import com.example.waiterCore.domain.Employee
+import com.example.waiterCore.domain.menu.MenuService
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
 import di.AppComponent
 import di.DaggerAppComponent
@@ -28,11 +29,12 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        WaiterMainDepsStore.deps = _appComponent
         SplashScreenDepsStore.deps = _appComponent
         ViewModelFactory.appComponent = _appComponent
         com.example.domo.splashScreen.domain.ViewModelFactory.appComponent =
-            DaggerSplashScreenAppComponent.builder().putDeps(_appComponent).build()
+            DaggerSplashScreenAppComponent.builder().provideDeps(_appComponent)
+                .provideMenuService(MenuService).build()
+        WaiterMainDepsStore.deps = com.example.domo.splashScreen.domain.ViewModelFactory.appComponent
     }
 }
 

@@ -7,7 +7,6 @@ import javax.inject.Singleton
 typealias OrdersServiceSub = (orders: List<Order>) -> Unit
 typealias CurrentOrderServiceSub = (orderItems: List<OrderItem>) -> Unit
 
-@Singleton
 class OrdersServiceImpl @Inject constructor() :
     OrdersService<@JvmSuppressWildcards OrdersServiceSub> {
 
@@ -16,7 +15,7 @@ class OrdersServiceImpl @Inject constructor() :
     override var currentOrder: Order? = null
         get() = field ?: throw IllegalStateException(currentOrderExceptionMessage)
 
-    private var orders = mutableListOf<Order>()
+    var orders = mutableListOf<Order>()
     private var subscribers = mutableSetOf<OrdersServiceSub>()
     override var currentOrderSubscribers: MutableSet<CurrentOrderServiceSub> = mutableSetOf()
 
@@ -52,7 +51,6 @@ class OrdersServiceImpl @Inject constructor() :
     override fun addOrderItem(orderItem: OrderItem): Boolean =
         currentOrder?.orderItems?.add(orderItem)
             .also { notifyChangesOfCurrentOrder() }
-        //TODO: Add exceptions to com.example.core.domain.constants
             ?: throw IllegalStateException(currentOrderExceptionMessage)
 
     override fun removeOrder(order: Order) {
@@ -97,7 +95,8 @@ class OrdersServiceImpl @Inject constructor() :
     }
 
     override fun addListOfOrders(orders: List<Order>) {
-        TODO("Not yet implemented")
+        this.orders.clear()
+        this.orders.addAll(orders)
     }
 
 }
