@@ -10,12 +10,15 @@ object FirestoreConstants {
     const val COLLECTION_EMPLOYEES = "employees"
     const val COLLECTION_RESTAURANTS = "restaurants"
     const val COLLECTION_ORDER_ITEMS = "order_items"
+    const val COLLECTION_LISTENERS = "listeners"
     //Documents
     const val DOCUMENT_DOMO = "domo"
     const val DOCUMENT_MENU = "menu"
+    const val DOCUMENT_NEW_ORDERS_LISTENER = "newOrdersListener"
     //Fields
     const val FIELD_MENU_VERSION = "menuVersion"
     const val FIELD_GUESTS_COUNT = "guestsCount"
+    const val FIELD_ORDER_ID = "orderId"
     //Tools
     const val DOCUMENT_ORDER_ITEM_DELIMITER = "_"
 }

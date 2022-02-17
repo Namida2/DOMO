@@ -16,6 +16,11 @@ object Versions {
     const val junit = "4.13.2"
     const val testExtJunit = "1.1.3"
     const val testEspresso = "3.4.0"
+    const val workVersion = "2.7.1"
+}
+
+object WorkManager {
+    const val workRuntime = "androidx.work:work-runtime-ktx:" + Versions.workVersion
 }
 
 object Firebase {

@@ -25,4 +25,9 @@ object FirestoreReferences {
         fireStore.collection(FirestoreConstants.COLLECTION_RESTAURANTS)
             .document(FirestoreConstants.DOCUMENT_DOMO)
             .collection(FirestoreConstants.COLLECTION_ORDERS)
+    val newOrdersListenerDocumentRef =
+        fireStore.collection(FirestoreConstants.COLLECTION_RESTAURANTS)
+            .document(FirestoreConstants.DOCUMENT_DOMO)
+            .collection(FirestoreConstants.COLLECTION_LISTENERS)
+            .document(FirestoreConstants.DOCUMENT_NEW_ORDERS_LISTENER)
 }
