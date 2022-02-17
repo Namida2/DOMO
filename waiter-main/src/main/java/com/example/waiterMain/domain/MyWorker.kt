@@ -33,6 +33,8 @@ class MyWorker(val context: Context, params: WorkerParameters) : CoroutineWorker
                 return@addSnapshotListener
             }
 
+            //TODO: Read order
+
             if (snapshot != null && snapshot.exists()) {
                 logD("Current data: ${snapshot.data}")
                 notificationManager.notify(
