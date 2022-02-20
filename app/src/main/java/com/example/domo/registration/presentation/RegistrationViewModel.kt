@@ -18,7 +18,7 @@ import com.example.waiterCore.domain.tools.TaskWithEmployee
 import com.example.waiterCore.domain.tools.extensions.isEmptyField
 import com.example.waiterCore.domain.tools.extensions.isValidEmail
 import entities.PostItem
-import entities.constants.EmployeePosts
+import com.example.waiterCore.domain.tools.constants.EmployeePosts
 
 sealed class RegistrationViewModelStates {
     open var errorMessage: ErrorMessage? = null

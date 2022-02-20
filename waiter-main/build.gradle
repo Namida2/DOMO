@@ -10,8 +10,6 @@ android {
     defaultConfig {
         minSdk 23
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -42,6 +40,9 @@ dependencies {
     implementation project(':waiter-core')
 
     implementation (WorkManager.workRuntime)
+
+    implementation (Dagger.dagger)
+    kapt (Dagger.compiler)
 
     implementation platform (Firebase.firebaseBom)
     implementation (Firebase.firebaseAuth)

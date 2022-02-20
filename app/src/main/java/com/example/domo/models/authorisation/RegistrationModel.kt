@@ -3,7 +3,7 @@ package com.example.domo.models.authorisation
 import android.view.View
 import com.example.domo.models.interfaces.RegistrationModelInterface
 import com.example.domo.models.remoteRepository.authorisation.RegistrationRemoteRepository
-import entities.constants.EmployeePosts
+import com.example.waiterCore.domain.tools.constants.EmployeePosts
 import com.example.waiterCore.data.database.daos.EmployeeDao
 import com.example.waiterCore.domain.tools.ErrorMessage
 import entities.PostItem

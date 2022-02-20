@@ -1,5 +1,6 @@
 package com.example.domo.splashScreen.domain.di
 
+import android.content.Context
 import android.content.SharedPreferences
 import com.example.domo.authorization.domain.LogInUseCase
 
@@ -44,6 +45,7 @@ interface SplashScreenAppComponent: WaiterMainDeps {
 }
 
 interface SplashScreenAppComponentDeps {
+    val context: Context
     val sharedPreferences: SharedPreferences
     val database: Database
     val fireStore: FirebaseFirestore

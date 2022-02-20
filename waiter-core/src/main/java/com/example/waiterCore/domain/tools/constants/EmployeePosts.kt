@@ -1,4 +1,4 @@
-package entities.constants
+package com.example.waiterCore.domain.tools.constants
 
 object EmployeePosts {
     const val WAITER = "официант"

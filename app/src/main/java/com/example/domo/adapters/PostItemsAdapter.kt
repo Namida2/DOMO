@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domo.adapters.diffCallbacks.PostAdapterDiffCallback
 import com.example.domo.databinding.LayoutPostItemBinding
-import entities.constants.EmployeePosts
+import com.example.waiterCore.domain.tools.constants.EmployeePosts
 import entities.PostItem
 
 class PostItemsAdapter(

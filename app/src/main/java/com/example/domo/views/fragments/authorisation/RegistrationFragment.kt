@@ -21,6 +21,7 @@ import com.example.domo.viewModels.RegistrationViewModel
 import com.example.domo.viewModels.RegistrationViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
 import com.example.waiterCore.domain.tools.ErrorMessage
+import com.example.waiterCore.domain.tools.ErrorMessages.defaultErrorMessage
 import com.example.waiterCore.domain.tools.dialogs.ProcessAlertDialog
 import com.example.waiterCore.domain.tools.extensions.createMessageDialog
 import com.example.waiterCore.domain.tools.extensions.isNetworkConnected
@@ -77,7 +78,7 @@ class RegistrationFragment : Fragment() {
         binding.registrationButton.setOnClickListener {
             if (requireContext().isNetworkConnected())
                 with(binding) {
-                    viewModel?.validation(
+                    viewModel.validation(
                         nameEditText.text.toString(),
                         //TODO: Important thing
                         emailEditText.text.toString().lowercase(),
@@ -86,10 +87,7 @@ class RegistrationFragment : Fragment() {
                     )
                 }
             else requireContext().createMessageDialog(
-                ErrorMessage(
-                    R.string.defaultTitle,
-                    R.string.networkConnectionMessage
-                )
+                defaultErrorMessage
             )?.show(parentFragmentManager, "")
         }
     }

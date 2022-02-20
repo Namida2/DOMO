@@ -11,7 +11,7 @@ import com.example.waiterCore.domain.menu.MenuService
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
 import di.AppComponent
 import di.DaggerAppComponent
-import entities.constants.SharedPreferencesConstants
+import com.example.waiterCore.domain.tools.constants.SharedPreferencesConstants
 
 class MyApplication : Application() {
     var _employee: Employee? = null
@@ -35,6 +35,7 @@ class MyApplication : Application() {
             DaggerSplashScreenAppComponent.builder().provideDeps(_appComponent)
                 .provideMenuService(MenuService).build()
         WaiterMainDepsStore.deps = com.example.domo.splashScreen.domain.ViewModelFactory.appComponent
+        WaiterMainDepsStore.currentEmployee = _employee
     }
 }
 

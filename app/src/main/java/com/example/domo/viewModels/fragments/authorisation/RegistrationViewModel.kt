@@ -6,7 +6,7 @@ import com.example.waiterCore.domain.tools.ErrorMessage
 import com.example.domo.R
 import com.example.domo.models.interfaces.RegistrationModelInterface
 import com.example.waiterCore.domain.Employee
-import entities.constants.EmployeePosts
+import com.example.waiterCore.domain.tools.constants.EmployeePosts
 import entities.*
 import com.example.waiterCore.domain.tools.TaskWithEmployee
 import com.example.waiterCore.domain.tools.extensions.isEmptyField

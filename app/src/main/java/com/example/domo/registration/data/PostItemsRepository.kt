@@ -2,7 +2,7 @@ package com.example.domo.registration.data
 
 import android.view.View
 import entities.PostItem
-import entities.constants.EmployeePosts
+import com.example.waiterCore.domain.tools.constants.EmployeePosts
 import javax.inject.Inject
 
 class PostItemsRepository @Inject constructor(){

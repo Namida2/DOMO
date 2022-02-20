@@ -11,9 +11,9 @@ import com.example.waiterCore.domain.tools.ErrorMessages.networkConnectionMessag
 import com.example.waiterCore.domain.tools.extensions.createMessageDialog
 import com.example.waiterCore.domain.tools.extensions.isNetworkConnected
 import com.example.waiterMain.presentation.WaiterMainActivity
-import entities.constants.EmployeePosts.ADMINISTRATOR
-import entities.constants.EmployeePosts.COOK
-import entities.constants.EmployeePosts.WAITER
+import com.example.waiterCore.domain.tools.constants.EmployeePosts.ADMINISTRATOR
+import com.example.waiterCore.domain.tools.constants.EmployeePosts.COOK
+import com.example.waiterCore.domain.tools.constants.EmployeePosts.WAITER
 import extentions.employee
 
 class SplashScreenActivity : AppCompatActivity() {

@@ -14,7 +14,6 @@ import com.example.waiterCore.domain.tools.extensions.logD
 import com.google.firebase.firestore.FirebaseFirestore
 import javax.inject.Inject
 
-
 class ReadOrdersUseCaseImpl @Inject constructor(
     private val menuService: MenuService,
     private val ordersService: OrdersService<OrdersServiceSub>,
@@ -51,8 +50,6 @@ class ReadOrdersUseCaseImpl @Inject constructor(
             logD("something wrong")
         }
     }
-    //TODO: Read orders //STOPPED//
-
     private fun readOrderItems(tableId: String, order: Order, isLastDocument: Boolean, listOrders: List<Order>) {
         ordersCollectionRef.document(tableId).collection(COLLECTION_ORDER_ITEMS).get()
             .addOnSuccessListener {
