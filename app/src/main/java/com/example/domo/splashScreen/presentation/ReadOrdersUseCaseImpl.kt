@@ -32,6 +32,7 @@ class ReadOrdersUseCaseImpl @Inject constructor(
     }
 
     override fun readOrders() {
+        //TODO: Unsubscribe when viewModel is cleared
         menuService.subscribe(subscriber)
     }
 

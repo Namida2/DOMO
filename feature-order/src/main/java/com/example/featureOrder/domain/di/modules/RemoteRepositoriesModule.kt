@@ -1,7 +1,7 @@
 package com.example.featureOrder.domain.di.modules
 
-import com.example.featureOrder.data.repositories.OrderMenuDialogRemoteRepository
-import com.example.featureOrder.data.repositories.OrderMenuDialogRemoteRepositoryImpl
+import com.example.featureOrder.data.repositories.OrdersRemoteRepository
+import com.example.featureOrder.data.repositories.OrdersRemoteRepositoryImpl
 import dagger.Binds
 import dagger.Module
 
@@ -9,6 +9,6 @@ import dagger.Module
 interface RemoteRepositoriesModule {
     @Binds
     fun bindOrderMenuDialogRemoteRepository(
-        repository: OrderMenuDialogRemoteRepositoryImpl,
-    ): OrderMenuDialogRemoteRepository
+        repository: OrdersRemoteRepositoryImpl,
+    ): OrdersRemoteRepository
 }

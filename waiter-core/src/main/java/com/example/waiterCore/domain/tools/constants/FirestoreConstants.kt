@@ -19,6 +19,7 @@ object FirestoreConstants {
     const val FIELD_MENU_VERSION = "menuVersion"
     const val FIELD_GUESTS_COUNT = "guestsCount"
     const val FIELD_ORDER_ID = "orderId"
+    const val FIELD_ORDER_INFO= "orderInfo"
     //Tools
     const val DOCUMENT_ORDER_ITEM_DELIMITER = "_"
 }

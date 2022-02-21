@@ -2,22 +2,23 @@ package com.example.featureOrder.data.repositories
 
 import com.example.waiterCore.domain.order.BaseOrderItem
 import com.example.waiterCore.domain.order.Order
+import com.example.waiterCore.domain.tools.FirestoreReferences.newOrdersListenerDocumentRef
 import com.example.waiterCore.domain.tools.FirestoreReferences.ordersCollectionRef
 import com.example.waiterCore.domain.tools.SimpleTask
+import com.example.waiterCore.domain.tools.constants.FirestoreConstants
 import com.example.waiterCore.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
 import com.example.waiterCore.domain.tools.constants.FirestoreConstants.DOCUMENT_ORDER_ITEM_DELIMITER
 import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
+import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ID
+import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_ORDER_INFO
 import com.example.waiterCore.domain.tools.extensions.logD
 import com.example.waiterCore.domain.tools.extensions.logE
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Transaction
+import com.google.firebase.firestore.*
 import javax.inject.Inject
 
-class OrderMenuDialogRemoteRepositoryImpl @Inject constructor(
+class OrdersRemoteRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
-) : OrderMenuDialogRemoteRepository {
+) : OrdersRemoteRepository {
 
     private val guestCountData = mutableMapOf<String, Int>()
 
@@ -33,6 +34,7 @@ class OrderMenuDialogRemoteRepositoryImpl @Inject constructor(
                 setOrderItems(it, orderDocumentRef, order)
             }.addOnSuccessListener {
                 logD("$this: Insertion was successful.")
+                insertNewOrderDateToListener(order)
                 task.onSuccess(Unit)
             }.addOnFailureListener {
                 it.message?.let { it1 -> logE(it1) }
@@ -76,11 +78,24 @@ class OrderMenuDialogRemoteRepositoryImpl @Inject constructor(
                 onComplete.invoke()
         }.addOnFailureListener {
             onComplete.invoke()
-            logD("$this: ${it.message}")
+            logE("$this: ${it.message}")
+        }
+    }
+
+    override fun insertNewOrderDateToListener(order: Order) {
+        val newOrderData = mapOf<String, Any>(
+            FIELD_ORDER_INFO to mapOf<String, Any>(
+                FIELD_ORDER_ID to order.tableId,
+                FIELD_GUESTS_COUNT to order.guestsCount
+            )
+        )
+        newOrdersListenerDocumentRef.set(newOrderData).addOnFailureListener {
+            logE("$this: ${it.message}")
         }
     }
 }
 
-interface OrderMenuDialogRemoteRepository {
+interface OrdersRemoteRepository {
     fun insertCurrentOrder(order: Order, task: SimpleTask)
+    fun insertNewOrderDateToListener(order: Order)
 }

@@ -17,6 +17,7 @@ import com.example.waiterCore.domain.tools.FirestoreReferences.newOrdersListener
 import com.example.waiterCore.domain.tools.constants.EmployeePosts.COOK
 import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
 import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ID
+import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_ORDER_INFO
 import com.example.waiterCore.domain.tools.constants.OtherStringConstants.nullOrderInfoMessage
 import com.example.waiterCore.domain.tools.extensions.logD
 import com.example.waiterCore.domain.tools.extensions.logE
@@ -66,7 +67,8 @@ class NewOrdersWorker @Inject constructor(
             notificationManager.notify(
                 id++, createNotification(data.toString())
             )
-        val tableId = data[FIELD_ORDER_ID] as Int
+        val orderInfo = data[FIELD_ORDER_INFO] as Map<*, *>
+        val tableId = orderInfo[FIELD_ORDER_ID] as Int
         val guestCount = data[FIELD_GUESTS_COUNT] as Int
         readNewOrderUseCase.readNewOrder(
             Order(tableId, guestCount)
