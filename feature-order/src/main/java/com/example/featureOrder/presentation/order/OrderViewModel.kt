@@ -27,6 +27,7 @@ sealed class OrderItemsRecyclerViewStates {
     object ScrolledUpwards : OrderItemsRecyclerViewStates()
 }
 
+//TODO: Subscribe on the order list changes and show a loader if the order screen was opened earlier than orders were loaded //STOPPED//
 class OrderViewModel(
     private val ordersService: OrdersService<OrdersServiceSub>
 ) : ViewModel(), OnDismissListener {

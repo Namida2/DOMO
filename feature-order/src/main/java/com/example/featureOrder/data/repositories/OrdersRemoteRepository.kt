@@ -1,11 +1,9 @@
 package com.example.featureOrder.data.repositories
 
-import com.example.waiterCore.domain.order.BaseOrderItem
 import com.example.waiterCore.domain.order.Order
 import com.example.waiterCore.domain.tools.FirestoreReferences.newOrdersListenerDocumentRef
 import com.example.waiterCore.domain.tools.FirestoreReferences.ordersCollectionRef
 import com.example.waiterCore.domain.tools.SimpleTask
-import com.example.waiterCore.domain.tools.constants.FirestoreConstants
 import com.example.waiterCore.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
 import com.example.waiterCore.domain.tools.constants.FirestoreConstants.DOCUMENT_ORDER_ITEM_DELIMITER
 import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
@@ -13,7 +11,10 @@ import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_OR
 import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_ORDER_INFO
 import com.example.waiterCore.domain.tools.extensions.logD
 import com.example.waiterCore.domain.tools.extensions.logE
-import com.google.firebase.firestore.*
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Transaction
 import javax.inject.Inject
 
 class OrdersRemoteRepositoryImpl @Inject constructor(
@@ -54,7 +55,7 @@ class OrdersRemoteRepositoryImpl @Inject constructor(
             val documentOrderItemRef =
                 orderDocumentRef.collection(COLLECTION_ORDER_ITEMS)
                     .document(orderItemDocumentName)
-            transaction.set(documentOrderItemRef, it as BaseOrderItem)
+            transaction.set(documentOrderItemRef, it)
         }
     }
 
@@ -83,10 +84,11 @@ class OrdersRemoteRepositoryImpl @Inject constructor(
     }
 
     override fun insertNewOrderDateToListener(order: Order) {
+        val (tableId, guestsCount) = order
         val newOrderData = mapOf<String, Any>(
             FIELD_ORDER_INFO to mapOf<String, Any>(
-                FIELD_ORDER_ID to order.tableId,
-                FIELD_GUESTS_COUNT to order.guestsCount
+                FIELD_ORDER_ID to tableId,
+                FIELD_GUESTS_COUNT to guestsCount
             )
         )
         newOrdersListenerDocumentRef.set(newOrderData).addOnFailureListener {

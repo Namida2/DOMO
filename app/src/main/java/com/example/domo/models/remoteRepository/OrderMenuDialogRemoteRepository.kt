@@ -1,16 +1,17 @@
 package com.example.domo.models.remoteRepository
 
-import com.example.waiterCore.domain.tools.FirestoreReferences.ordersCollectionRef
 import com.example.domo.models.remoteRepository.interfaces.OrderMenuDialogRemoteRepositoryInterface
-import com.google.firebase.firestore.*
-import com.example.waiterCore.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
-import com.example.waiterCore.domain.tools.constants.FirestoreConstants.DOCUMENT_ORDER_ITEM_DELIMITER
-import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
-import com.example.waiterCore.domain.order.BaseOrderItem
 import com.example.waiterCore.domain.order.Order
+import com.example.waiterCore.domain.tools.FirestoreReferences.ordersCollectionRef
 import com.example.waiterCore.domain.tools.SimpleTask
+import com.example.waiterCore.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
+import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
 import com.example.waiterCore.domain.tools.extensions.logD
 import com.example.waiterCore.domain.tools.extensions.logE
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Transaction
 import javax.inject.Inject
 
 class OrderMenuDialogRemoteRepository @Inject constructor(
@@ -44,14 +45,14 @@ class OrderMenuDialogRemoteRepository @Inject constructor(
         orderDocumentRef: DocumentReference,
         order: Order,
     ) {
-        order.orderItems.forEach {
-            val orderItemDocumentName =
-                "${it.dishId}$DOCUMENT_ORDER_ITEM_DELIMITER${it.commentary}"
-            val documentOrderItemRef =
-                orderDocumentRef.collection(COLLECTION_ORDER_ITEMS)
-                    .document(orderItemDocumentName)
-            transaction.set(documentOrderItemRef, it as BaseOrderItem)
-        }
+//        order.orderItems.forEach {
+//            val orderItemDocumentName =
+//                "${it.dishId}$DOCUMENT_ORDER_ITEM_DELIMITER${it.commentary}"
+//            val documentOrderItemRef =
+//                orderDocumentRef.collection(COLLECTION_ORDER_ITEMS)
+//                    .document(orderItemDocumentName)
+//            transaction.set(documentOrderItemRef, it as BaseOrderItem)
+//        }
     }
 
     private fun removeAldOrderItems(
@@ -60,14 +61,15 @@ class OrderMenuDialogRemoteRepository @Inject constructor(
     ) {
         // TODO: To find out if there is a better solution // STOPPED 0 //
         collectionOrderItemsRef.get().addOnSuccessListener {
-            for (i in 0 .. it.documents.lastIndex) {
-                collectionOrderItemsRef.document(it.documents[i].id).delete().addOnSuccessListener { _ ->
-                    logD(i.toString())
-                    if(i == it.documents.lastIndex) {
+            for (i in 0..it.documents.lastIndex) {
+                collectionOrderItemsRef.document(it.documents[i].id).delete()
+                    .addOnSuccessListener { _ ->
                         logD(i.toString())
-                        onComplete.invoke()
+                        if (i == it.documents.lastIndex) {
+                            logD(i.toString())
+                            onComplete.invoke()
+                        }
                     }
-                }
             }
             if (it.documents.lastIndex == -1)
                 onComplete.invoke()

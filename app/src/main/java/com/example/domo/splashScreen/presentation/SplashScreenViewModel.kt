@@ -24,7 +24,6 @@ sealed class SplashScreenStates {
     object EmployeeDoesNotExit : SplashScreenStates()
 }
 
-//TODO: Read current orders //STOPPED//
 class SplashScreenViewModel(
     readMenuUseCase: ReadMenuUseCase,
     readOrdersUseCase: ReadOrdersUseCase,
@@ -54,5 +53,9 @@ class SplashScreenViewModel(
                 }
             })
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
     }
 }

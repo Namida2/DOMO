@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
 import com.example.featureCurrentOrders.domain.di.DaggerCurrentOrdersAppComponent
 import com.example.featureCurrentOrders.presentation.CurrentOrdersViewModel
-import com.example.waiterCore.domain.tools.constants.OtherStringConstants.unknownViewModelClass
+import com.example.waiterCore.domain.tools.constants.OtherStringConstants.UNKNOWN_VIEW_MODEL_CLASS
 
 object ViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -21,7 +21,7 @@ object ViewModelFactory : ViewModelProvider.Factory {
                         ).build()
                 }
             }
-            else -> throw IllegalArgumentException(unknownViewModelClass)
+            else -> throw IllegalArgumentException(UNKNOWN_VIEW_MODEL_CLASS)
         }
         return viewModel as T
     }

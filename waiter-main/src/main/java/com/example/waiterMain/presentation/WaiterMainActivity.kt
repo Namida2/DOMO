@@ -36,7 +36,6 @@ class WaiterMainActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         binding = ActivityWaiterMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         val navHostFragment =
             supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
         navController = navHostFragment.navController.apply {
@@ -49,6 +48,7 @@ class WaiterMainActivity : AppCompatActivity(),
     }
 
     private fun makeNewOrdersWorkRequest() {
+
         val uploadWorkRequest: WorkRequest =
             PeriodicWorkRequestBuilder<NewOrdersWorker>(1, TimeUnit.MINUTES)
                 .build()

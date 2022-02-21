@@ -58,7 +58,7 @@ class LogInFragment : Fragment() {
                     ProcessAlertDialog.show(parentFragmentManager, "")
                 }
                 is LogInViewModelStates.Success -> {
-                    ProcessAlertDialog.onSuccess()
+                    ProcessAlertDialog.dismiss()
                     requireActivity().employee = it.employee
                     requireContext().startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
                 }

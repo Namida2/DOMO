@@ -8,7 +8,7 @@ import com.example.featureOrder.presentation.order.doalogs.menuDialog.MenuDialog
 import com.example.featureOrder.presentation.order.doalogs.orderMenuDialog.OrderMenuDialogViewModel
 import com.example.featureOrder.presentation.order.doalogs.dishDialog.DishDialogViewModel
 import com.example.waiterCore.domain.menu.MenuService
-import com.example.waiterCore.domain.tools.constants.OtherStringConstants.unknownViewModelClass
+import com.example.waiterCore.domain.tools.constants.OtherStringConstants.UNKNOWN_VIEW_MODEL_CLASS
 
 object ViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -23,7 +23,7 @@ object ViewModelFactory : ViewModelProvider.Factory {
             DishDialogViewModel::class.java -> DishDialogViewModel(
                 OrderDepsStore.appComponent.provideOrderService()
             )
-            else -> throw IllegalArgumentException(unknownViewModelClass + modelClass)
+            else -> throw IllegalArgumentException(UNKNOWN_VIEW_MODEL_CLASS + modelClass)
         }
         return viewModel as T
     }

@@ -6,7 +6,7 @@ import com.example.domo.authorization.presentation.LogInViewModel
 import com.example.domo.registration.presentation.RegistrationViewModel
 import com.example.domo.splashScreen.domain.di.SplashScreenAppComponent
 import com.example.domo.splashScreen.presentation.SplashScreenViewModel
-import com.example.waiterCore.domain.tools.constants.OtherStringConstants.unknownViewModelClass
+import com.example.waiterCore.domain.tools.constants.OtherStringConstants.UNKNOWN_VIEW_MODEL_CLASS
 
 object ViewModelFactory : ViewModelProvider.Factory {
 
@@ -26,7 +26,7 @@ object ViewModelFactory : ViewModelProvider.Factory {
                 appComponent.provideGetPostItemsUseCase(),
                 appComponent.provideRegistrationUseCase()
             )
-            else -> throw IllegalArgumentException(unknownViewModelClass + modelClass)
+            else -> throw IllegalArgumentException(UNKNOWN_VIEW_MODEL_CLASS + modelClass)
         }
 
         return viewModel as T

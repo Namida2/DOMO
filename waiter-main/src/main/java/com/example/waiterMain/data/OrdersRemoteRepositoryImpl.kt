@@ -10,7 +10,7 @@ import com.example.waiterCore.domain.tools.extensions.logE
 import com.google.firebase.FirebaseNetworkException
 import javax.inject.Inject
 
-class OrdersRemoteRepositoryImpl @Inject constructor() : OrdersRemoteRepository {
+class OrdersRemoteRepositoryImpl @Inject constructor(): OrdersRemoteRepository {
 
     override fun readOrderItems(order: Order, task: TaskWithOrder) {
         val tableId = order.tableId.toString()

@@ -49,23 +49,15 @@ class OrdersServiceImpl @Inject constructor() :
     }
 
     override fun addOrderItem(orderItem: OrderItem): Boolean =
-        currentOrder?.orderItems?.add(orderItem)
+        currentOrder!!.orderItems.add(orderItem)
             .also { notifyChangesOfCurrentOrder() }
-            ?: throw IllegalStateException(currentOrderExceptionMessage)
 
     override fun removeOrder(order: Order) {
         orders.remove(order)
     }
 
     override fun confirmCurrentOrder() {
-        orders.forEachIndexed { index, order ->
-            if (order.tableId == currentOrder?.tableId) {
-                orders[index] = currentOrder!!
-                return
-            }
-        }
-        orders.add(currentOrder!!)
-        notifyChanges()
+        addOrder(currentOrder!!)
     }
 
     override fun initCurrentOrder(tableId: Int, guestCount: Int) {
@@ -90,8 +82,15 @@ class OrdersServiceImpl @Inject constructor() :
     override fun getCurrentOrderItems(): Set<OrderItem> =
         currentOrder?.orderItems?.toSet()!!
 
-    override fun addOrder(order: Order) {
-        TODO("Not yet implemented")
+    override fun addOrder(newOrder: Order) {
+        orders.forEachIndexed { index, order ->
+            if (order.tableId == newOrder.tableId) {
+                orders[index] = newOrder
+                return
+            }
+        }
+        orders.add(newOrder)
+        notifyChanges()
     }
 
     override fun addListOfOrders(orders: List<Order>) {

@@ -14,11 +14,10 @@ import com.example.waiterCore.domain.order.Order
 import com.example.waiterCore.domain.tools.ErrorMessage
 import com.example.waiterCore.domain.tools.Event
 import com.example.waiterCore.domain.tools.FirestoreReferences.newOrdersListenerDocumentRef
-import com.example.waiterCore.domain.tools.constants.EmployeePosts.COOK
 import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
 import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ID
 import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_ORDER_INFO
-import com.example.waiterCore.domain.tools.constants.OtherStringConstants.nullOrderInfoMessage
+import com.example.waiterCore.domain.tools.constants.OtherStringConstants.NULL_ORDER_INFO_MESSAGE
 import com.example.waiterCore.domain.tools.extensions.logD
 import com.example.waiterCore.domain.tools.extensions.logE
 import com.example.waiterMain.R
@@ -29,10 +28,15 @@ import javax.inject.Inject
 
 typealias ErrorMessageEvent = Event<ErrorMessage>
 
-class NewOrdersWorker @Inject constructor(
-    private val context: Context, params: WorkerParameters,
-    private val readNewOrderUseCase: ReadNewOrderUseCase
-): CoroutineWorker(context, params) {
+class NewOrdersWorker(
+    private val context: Context, params: WorkerParameters
+) : CoroutineWorker(context, params) {
+
+    private var id = 0
+    private val channelId = "0_0"
+    private lateinit var notificationManager: NotificationManager
+    private var readNewOrderUseCase: ReadNewOrderUseCase =
+        WaiterMainDepsStore.appComponent.provideReadNewOrderUseCase()
 
     companion object {
         var ordersListener: ListenerRegistration? = null
@@ -40,9 +44,6 @@ class NewOrdersWorker @Inject constructor(
         val event: LiveData<ErrorMessageEvent> = _event
     }
 
-    private val channelId = "0_0"
-    private var id = 0
-    private lateinit var notificationManager: NotificationManager
     override suspend fun doWork(): Result {
         if (ordersListener != null) return Result.retry()
         createNotificationChannel()
@@ -55,7 +56,7 @@ class NewOrdersWorker @Inject constructor(
                 snapshot != null && snapshot.exists() && snapshot.data != null -> {
                     onNewOrder(snapshot.data!!)
                 }
-                else -> logD("$this: $nullOrderInfoMessage")
+                else -> logD("$this: $NULL_ORDER_INFO_MESSAGE")
             }
 
         }
@@ -68,8 +69,8 @@ class NewOrdersWorker @Inject constructor(
                 id++, createNotification(data.toString())
             )
         val orderInfo = data[FIELD_ORDER_INFO] as Map<*, *>
-        val tableId = orderInfo[FIELD_ORDER_ID] as Int
-        val guestCount = data[FIELD_GUESTS_COUNT] as Int
+        val tableId = (orderInfo[FIELD_ORDER_ID] as Long).toInt()
+        val guestCount = (orderInfo[FIELD_GUESTS_COUNT] as Long).toInt()
         readNewOrderUseCase.readNewOrder(
             Order(tableId, guestCount)
         ) {
