@@ -16,7 +16,10 @@ import com.example.featureOrder.R
 import com.example.featureOrder.databinding.FragmentTablesBinding
 import com.example.featureOrder.domain.TablesItemDecorations
 import com.example.featureOrder.domain.recyclerView.adapters.TablesAdapter
-import com.google.android.material.transition.MaterialElevationScale
+import com.google.android.material.transition.platform.MaterialContainerTransform
+import com.google.android.material.transition.platform.MaterialElevationScale
+import com.google.android.material.transition.platform.MaterialSharedAxis
+
 
 //TODO: Start implementing this module
 class TablesFragment: Fragment() {
@@ -47,8 +50,11 @@ class TablesFragment: Fragment() {
         binding = FragmentTablesBinding.inflate(inflater)
         initRecyclerView(container)
         observeTablesEvent()
-        exitTransition = MaterialElevationScale(false).apply {
-            duration = 300
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
+            duration = 1000
+        }
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
+            duration = 1000
         }
         return binding.root
     }
@@ -83,6 +89,10 @@ class TablesFragment: Fragment() {
                 //TODO: Add it to com.example.core.domain.constants
                 item to "end",
             )
+        //TODO: Implement the second part
+        exitTransition = MaterialElevationScale(false).apply {
+            duration = 300
+        }
         findNavController().navigate(direction, fragmentExtras)
     }
 
@@ -90,6 +100,12 @@ class TablesFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
+    }
+
+    fun setTransitions() {
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply {
+            duration = 1000
+        }
     }
 
     override fun onResume() {

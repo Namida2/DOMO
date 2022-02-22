@@ -13,6 +13,7 @@ import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
 import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponentDeps
 import com.example.featureOrder.domain.di.OrderAppComponentDeps
 import com.example.featureOrder.domain.di.OrderDepsStore
+import com.example.featureOrder.presentation.tables.TablesFragment
 import com.example.waiterCore.domain.interfaces.OrdersService
 import com.example.waiterCore.domain.order.OrdersServiceSub
 import com.example.waiterCore.domain.tools.extensions.Animations.prepareHide
@@ -31,12 +32,13 @@ class WaiterMainActivity : AppCompatActivity(),
     NavController.OnDestinationChangedListener {
     private lateinit var binding: ActivityWaiterMainBinding
     private lateinit var navController: NavController
+    private lateinit var navHostFragment: NavHostFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWaiterMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val navHostFragment =
+        navHostFragment =
             supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
         navController = navHostFragment.navController.apply {
             addOnDestinationChangedListener(this@WaiterMainActivity)
@@ -96,6 +98,7 @@ class WaiterMainActivity : AppCompatActivity(),
 
     private fun setOnItemSelectedListener() {
         binding.bottomNavigation.setOnItemSelectedListener {
+            var currentFragment = navHostFragment.parentFragmentManager.fragments[0]
             when (it.itemId) {
                 R.id.tablesFragment -> {
                     navController.navigate(R.id.navigation_order)

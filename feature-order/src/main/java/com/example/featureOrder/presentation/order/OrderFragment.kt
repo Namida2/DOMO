@@ -21,9 +21,8 @@ import com.example.featureOrder.domain.recyclerView.viewTypes.OrderItemRecyclerV
 import com.example.featureOrder.presentation.order.doalogs.guestsCountDialog.GuestsCountBottomSheetDialog
 import com.example.featureOrder.presentation.order.doalogs.menuDialog.MenuBottomSheetDialog
 import com.example.featureOrder.presentation.order.doalogs.orderMenuDialog.OrderMenuBottomSheetDialog
-import com.example.waiterCore.domain.tools.extensions.Animations.prepareShow
 import com.example.waiterCore.domain.tools.extensions.Animations.prepareSlideUp
-import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.platform.MaterialContainerTransform
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.Main

@@ -4,6 +4,7 @@ import com.example.waiterCore.domain.menu.MenuService
 import com.example.waiterCore.domain.menu.Category
 import com.example.waiterCore.domain.menu.Dish
 import com.example.waiterCore.domain.tools.FirestoreReferences
+import com.example.waiterCore.domain.tools.FirestoreReferences.menuCollectionRef
 import com.example.waiterCore.domain.tools.constants.FirestoreConstants
 import com.example.waiterCore.domain.tools.extensions.logE
 import javax.inject.Inject
@@ -16,13 +17,14 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
     //TODO: Handle the case when there is no internet connection
     override fun readNewMenu(onComplete: () -> Unit) {
         MenuService.setMenuServiceStateAsLoading()
-        FirestoreReferences.menuCollectionRef.get().addOnSuccessListener {
+        menuCollectionRef.get().addOnSuccessListener {
             val categoriesCount: Int = it.size()
-            for (i in 0 until categoriesCount)
-                if (i == categoriesCount - 1)
-                    readDishes(it.documents[i].id, true, onComplete)
+            it.documents.forEachIndexed { index, documentSnapshot ->
+                if (index == categoriesCount - 1)
+                    readDishes(documentSnapshot.id, true, onComplete)
                 else
-                    readDishes(it.documents[i].id, onComplete = onComplete)
+                    readDishes(documentSnapshot.id, onComplete = onComplete)
+            }
         }.addOnFailureListener {
             logE("$this: ${it.message}")
             onMenuLoadingFinish(onComplete)
@@ -35,7 +37,7 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
         onComplete: () -> Unit,
     ) {
         val dishesCollectionRef =
-            FirestoreReferences.menuCollectionRef.document(category)
+            menuCollectionRef.document(category)
                 .collection(FirestoreConstants.COLLECTION_DISHES)
         dishesCollectionRef.get().addOnSuccessListener {
             val dishes: ArrayList<Dish> = ArrayList()

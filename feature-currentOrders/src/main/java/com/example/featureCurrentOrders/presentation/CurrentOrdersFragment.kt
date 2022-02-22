@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.featureCurrentOrders.databinding.FragmentCurrentOrdersBinding
 import com.example.featureCurrentOrders.domain.ViewModelFactory
 import com.example.featureCurrentOrders.domain.adapters.CurrentOrdersAdapter
+import com.google.android.material.transition.MaterialElevationScale
+import com.google.android.material.transition.MaterialFade
+import com.google.android.material.transition.platform.MaterialSharedAxis
 import javax.inject.Inject
 
 class CurrentOrdersFragment : Fragment() {
@@ -34,6 +37,12 @@ class CurrentOrdersFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCurrentOrdersBinding.inflate(inflater, container, false)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
+            duration = 1000
+        }
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
+            duration = 1000
+        }
         initRecyclerView()
         observeNewOrdersEvent()
         return binding.root
@@ -58,5 +67,6 @@ class CurrentOrdersFragment : Fragment() {
             adapter.setOrdersList(ordersList)
         }
     }
+
 
 }

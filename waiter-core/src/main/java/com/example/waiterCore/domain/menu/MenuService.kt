@@ -44,8 +44,6 @@ object MenuService : BaseObservable<MenuServiceSub> {
     }
 
     fun setMenuServiceState(menu: ArrayList<Category>?) {
-        val thread = Thread.currentThread().name
-        logD(thread)
         if (menu.isNullOrEmpty()) menuState = MenuServiceStates.MenuIsEmpty
         else {
             this.menu = menu
