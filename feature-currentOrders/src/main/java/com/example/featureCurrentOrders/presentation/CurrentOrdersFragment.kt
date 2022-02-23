@@ -10,6 +10,7 @@ import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.featureCurrentOrders.R
 import com.example.featureCurrentOrders.databinding.FragmentCurrentOrdersBinding
 import com.example.featureCurrentOrders.domain.ViewModelFactory
 import com.example.featureCurrentOrders.domain.adapters.CurrentOrdersAdapter
@@ -38,10 +39,10 @@ class CurrentOrdersFragment : Fragment() {
     ): View? {
         binding = FragmentCurrentOrdersBinding.inflate(inflater, container, false)
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
-            duration = 1000
+            duration = resources.getInteger(R.integer.transitionAnimationDuration).toLong()
         }
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
-            duration = 1000
+            duration = resources.getInteger(R.integer.transitionAnimationDuration).toLong()
         }
         initRecyclerView()
         observeNewOrdersEvent()
@@ -67,6 +68,7 @@ class CurrentOrdersFragment : Fragment() {
             adapter.setOrdersList(ordersList)
         }
     }
+
 
 
 }

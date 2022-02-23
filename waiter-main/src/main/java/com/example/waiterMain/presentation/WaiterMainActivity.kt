@@ -13,6 +13,7 @@ import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
 import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponentDeps
 import com.example.featureOrder.domain.di.OrderAppComponentDeps
 import com.example.featureOrder.domain.di.OrderDepsStore
+import com.example.featureOrder.presentation.order.OrderFragment
 import com.example.featureOrder.presentation.tables.TablesFragment
 import com.example.waiterCore.domain.interfaces.OrdersService
 import com.example.waiterCore.domain.order.OrdersServiceSub
@@ -27,9 +28,11 @@ import com.example.waiterMain.domain.NewOrdersWorker
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
 import java.util.concurrent.TimeUnit
 
-//TODO: Add a service for listening to new orders
+//TODO: Started implemented the currentOrdersFragment
 class WaiterMainActivity : AppCompatActivity(),
     NavController.OnDestinationChangedListener {
+    private val currentDestination = 0
+    private val previousDestination = 1
     private lateinit var binding: ActivityWaiterMainBinding
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
@@ -132,4 +135,14 @@ class WaiterMainActivity : AppCompatActivity(),
             bottomNavigation.prepareSlideUp(bottomNavigation.height, startDelay = 150).start()
         }
     }
+
+    override fun onBackPressed() {
+        when(navHostFragment.childFragmentManager.fragments[currentDestination]) {
+            is OrderFragment -> {
+                navController.previousBackStackEntry?.savedStateHandle?.set(TablesFragment.isReturnedFromOrderFragment, true)
+            }
+        }
+        super.onBackPressed()
+    }
 }
+

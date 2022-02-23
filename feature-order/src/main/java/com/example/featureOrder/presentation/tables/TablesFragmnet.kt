@@ -20,18 +20,20 @@ import com.google.android.material.transition.platform.MaterialContainerTransfor
 import com.google.android.material.transition.platform.MaterialElevationScale
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
-
 //TODO: Start implementing this module
-class TablesFragment: Fragment() {
+class TablesFragment : Fragment() {
 
-    private val viewModel: TablesViewModel by viewModels()
+    companion object {
+        const val isReturnedFromOrderFragment = "isReturnedFromOrderFragment"
+    }
 
+    private val spanCount = 2
+    private val tablesCount = 28
     private var smallMargin: Int? = null
     private var largeMargin: Int? = null
     private var topTablesMargin: Int? = null
 
-    private val spanCount = 2
-    private val tablesCount = 28
+    private val viewModel: TablesViewModel by viewModels()
     private lateinit var binding: FragmentTablesBinding
 
     override fun onAttach(context: Context) {
@@ -50,12 +52,7 @@ class TablesFragment: Fragment() {
         binding = FragmentTablesBinding.inflate(inflater)
         initRecyclerView(container)
         observeTablesEvent()
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
-            duration = 1000
-        }
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
-            duration = 1000
-        }
+        setTransitions()
         return binding.root
     }
 
@@ -89,10 +86,6 @@ class TablesFragment: Fragment() {
                 //TODO: Add it to com.example.core.domain.constants
                 item to "end",
             )
-        //TODO: Implement the second part
-        exitTransition = MaterialElevationScale(false).apply {
-            duration = 300
-        }
         findNavController().navigate(direction, fragmentExtras)
     }
 
@@ -102,9 +95,20 @@ class TablesFragment: Fragment() {
         view.doOnPreDraw { startPostponedEnterTransition() }
     }
 
-    fun setTransitions() {
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply {
-            duration = 1000
+    private fun setTransitions() {
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
+            duration = resources.getInteger(R.integer.transitionAnimationDuration).toLong()
+        }
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
+            duration = resources.getInteger(R.integer.transitionAnimationDuration).toLong()
+        }
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
+            isReturnedFromOrderFragment
+        )?.observe(viewLifecycleOwner) {
+            if (it)
+                exitTransition = MaterialElevationScale(false).apply {
+                    duration = resources.getInteger(R.integer.transitionAnimationDuration).toLong()
+                }
         }
     }
 
