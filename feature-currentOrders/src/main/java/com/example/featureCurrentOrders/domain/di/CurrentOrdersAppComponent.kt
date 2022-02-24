@@ -1,6 +1,7 @@
 package com.example.featureCurrentOrders.domain.di
 
-import com.example.featureCurrentOrders.presentation.CurrentOrdersFragment
+import com.example.featureCurrentOrders.presentation.currentOrders.CurrentOrdersFragment
+import com.example.waiterCore.domain.Employee
 import com.example.waiterCore.domain.interfaces.OrdersService
 import com.example.waiterCore.domain.order.OrdersServiceSub
 import dagger.Component
@@ -11,5 +12,6 @@ interface CurrentOrdersAppComponent {
     fun inject(fragment: CurrentOrdersFragment)
 }
 interface CurrentOrdersAppComponentDeps {
+    val currentEmployee: Employee
     val ordersService: OrdersService<OrdersServiceSub>
 }

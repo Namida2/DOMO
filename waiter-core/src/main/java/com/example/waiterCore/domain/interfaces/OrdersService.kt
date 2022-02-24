@@ -2,7 +2,7 @@ package com.example.waiterCore.domain.interfaces
 
 import com.example.waiterCore.domain.order.CurrentOrderServiceSub
 import com.example.waiterCore.domain.order.Order
-import com.example.waiterCore.domain.order.OrderItem
+import com.example.waiterCore.domain.order.OrderType
 
 interface OrdersService<Subscriber> : BaseObservable<Subscriber> {
     var currentOrder: Order?
@@ -11,12 +11,12 @@ interface OrdersService<Subscriber> : BaseObservable<Subscriber> {
     fun subscribeToCurrentOrderChangers(subscriber: CurrentOrderServiceSub)
     fun unSubscribeToCurrentOrderChangers(subscriber: CurrentOrderServiceSub)
 
-    fun addOrderItem(orderItem: OrderItem): Boolean
+    fun addOrderItem(orderItem: OrderType): Boolean
     fun removeOrder(order: Order)
     fun confirmCurrentOrder()
     fun initCurrentOrder(tableId: Int, guestCount: Int)
     fun changeGuestsCount(newCount: Int)
-    fun getCurrentOrderItems(): Set<OrderItem>
+    fun getCurrentOrderItems(): Set<OrderType>
 
     fun addOrder(order: Order)
     fun addListOfOrders(orders: List<Order>)

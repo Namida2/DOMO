@@ -1,19 +1,19 @@
-package com.example.featureOrder.domain.recyclerView.viewTypes
+package com.example.waiterCore.domain.recyclerView.viewTypes
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import com.example.featureOrder.R
-import com.example.featureOrder.databinding.LayoutDishBinding
+import com.example.waiterCore.R
+import com.example.waiterCore.databinding.LayoutDishBinding
 import com.example.waiterCore.domain.menu.Dish
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewItem
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
-import com.example.waiterCore.domain.recyclerView.interfaces.MenuRecyclerViewType
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseAdapterDelegate
 
-class DishRecyclerViewType(
+class DishesAdapterDelegate(
     private val onDishSelected: (dishId: Int) -> Unit,
-) : MenuRecyclerViewType<LayoutDishBinding, Dish>, View.OnClickListener {
+) : BaseAdapterDelegate<LayoutDishBinding, Dish>, View.OnClickListener {
 
     private val diffCallback = object : DiffUtil.ItemCallback<Dish>() {
         override fun areItemsTheSame(oldItem: Dish, newItem: Dish): Boolean = oldItem == newItem
@@ -22,7 +22,7 @@ class DishRecyclerViewType(
 
     override fun getLayoutId(): Int = R.layout.layout_dish
 
-    override fun isItMe(recyclerViewItem: BaseRecyclerViewItem): Boolean = recyclerViewItem is Dish
+    override fun isItMe(recyclerViewType: BaseRecyclerViewType): Boolean = recyclerViewType is Dish
 
     override fun getViewHolder(
         inflater: LayoutInflater,
@@ -52,5 +52,4 @@ class DishViewHolder(
             root.tag = item.id
         }
     }
-
 }

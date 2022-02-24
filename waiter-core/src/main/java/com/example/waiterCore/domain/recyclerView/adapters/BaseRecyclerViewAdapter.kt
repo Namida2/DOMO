@@ -1,33 +1,33 @@
-package com.example.featureOrder.domain.recyclerView.adapters
+package com.example.waiterCore.domain.recyclerView.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
-import com.example.featureOrder.domain.recyclerView.diffCalbacks.MenuAdapterDiffCallback
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewItem
+import com.example.waiterCore.domain.recyclerView.diffCalbacks.BaseAdapterDiffCallback
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseAdapterDelegate
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
-import com.example.waiterCore.domain.recyclerView.interfaces.MenuRecyclerViewType
 
-class MenuItemsAdapter(
-    private var recyclerViewTypes: List<MenuRecyclerViewType<out ViewBinding, out BaseRecyclerViewItem>>,
-) : ListAdapter<BaseRecyclerViewItem, BaseViewHolder<ViewBinding, BaseRecyclerViewItem>>(
-    MenuAdapterDiffCallback(recyclerViewTypes)
+class BaseRecyclerViewAdapter(
+    private var recyclerViewTypes: List<BaseAdapterDelegate<out ViewBinding, out BaseRecyclerViewType>>,
+) : ListAdapter<BaseRecyclerViewType, BaseViewHolder<ViewBinding, BaseRecyclerViewType>>(
+    BaseAdapterDiffCallback(recyclerViewTypes)
 ) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): BaseViewHolder<ViewBinding, BaseRecyclerViewItem> {
+    ): BaseViewHolder<ViewBinding, BaseRecyclerViewType> {
         return recyclerViewTypes.find { it.getLayoutId() == viewType }?.getViewHolder(
             LayoutInflater.from(parent.context),
             parent
-        ) as BaseViewHolder<ViewBinding, BaseRecyclerViewItem>
+        ) as BaseViewHolder<ViewBinding, BaseRecyclerViewType>
     }
 
 
     override fun onBindViewHolder(
-        holder: BaseViewHolder<ViewBinding, BaseRecyclerViewItem>,
+        holder: BaseViewHolder<ViewBinding, BaseRecyclerViewType>,
         position: Int,
     ) {
         holder.onBind(currentList[position])
@@ -39,3 +39,7 @@ class MenuItemsAdapter(
             ?: throw IllegalArgumentException("View type not found in recyclerViewItems. Item: $item")
     }
 }
+
+
+
+

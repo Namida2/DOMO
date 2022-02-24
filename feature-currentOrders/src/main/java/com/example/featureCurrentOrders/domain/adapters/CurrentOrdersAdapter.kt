@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.featureCurrentOrders.databinding.LayoutOrderCardBinding
 import com.example.waiterCore.domain.order.Order
-import com.example.waiterCore.domain.order.OrderItem
 import javax.inject.Inject
 
 class CurrentOrdersAdapter @Inject constructor(): RecyclerView.Adapter<CurrentOrdersAdapter.ViewHolder>() {
@@ -34,6 +33,7 @@ class CurrentOrdersAdapter @Inject constructor(): RecyclerView.Adapter<CurrentOr
 
     fun setOrdersList(ordersList: List<Order>) {
         this.ordersList = ordersList
+        //TODO: this.notifyDataSetChanged()
         this.notifyDataSetChanged()
     }
 

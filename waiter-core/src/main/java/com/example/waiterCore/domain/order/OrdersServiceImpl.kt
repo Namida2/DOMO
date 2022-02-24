@@ -2,10 +2,9 @@ package com.example.waiterCore.domain.order
 
 import com.example.waiterCore.domain.interfaces.OrdersService
 import javax.inject.Inject
-import javax.inject.Singleton
 
 typealias OrdersServiceSub = (orders: List<Order>) -> Unit
-typealias CurrentOrderServiceSub = (orderItems: List<OrderItem>) -> Unit
+typealias CurrentOrderServiceSub = (orderItems: List<OrderType>) -> Unit
 
 class OrdersServiceImpl @Inject constructor() :
     OrdersService<@JvmSuppressWildcards OrdersServiceSub> {
@@ -48,7 +47,7 @@ class OrdersServiceImpl @Inject constructor() :
         }
     }
 
-    override fun addOrderItem(orderItem: OrderItem): Boolean =
+    override fun addOrderItem(orderItem: OrderType): Boolean =
         currentOrder!!.orderItems.add(orderItem)
             .also { notifyChangesOfCurrentOrder() }
 
@@ -66,7 +65,7 @@ class OrdersServiceImpl @Inject constructor() :
         }
         currentOrder = result?.copy() ?: Order(tableId, guestCount)
 
-        val newOrderItems = mutableSetOf<OrderItem>()
+        val newOrderItems = mutableSetOf<OrderType>()
         result?.orderItems?.forEach {
             newOrderItems.add(it.copy())
         }
@@ -79,7 +78,7 @@ class OrdersServiceImpl @Inject constructor() :
         } ?: throw IllegalStateException(currentOrderExceptionMessage)
     }
 
-    override fun getCurrentOrderItems(): Set<OrderItem> =
+    override fun getCurrentOrderItems(): Set<OrderType> =
         currentOrder?.orderItems?.toSet()!!
 
     override fun addOrder(newOrder: Order) {

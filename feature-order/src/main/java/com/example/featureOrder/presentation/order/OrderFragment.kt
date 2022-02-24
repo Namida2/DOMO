@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.featureOrder.databinding.FragmentOrderBinding
 import com.example.featureOrder.domain.ViewModelFactory
 import com.example.featureOrder.domain.di.OrderDepsStore
-import com.example.featureOrder.domain.recyclerView.adapters.MenuItemsAdapter
-import com.example.featureOrder.domain.recyclerView.viewTypes.OrderItemRecyclerViewType
+import com.example.waiterCore.domain.recyclerView.adapters.BaseRecyclerViewAdapter
+import com.example.featureOrder.domain.recyclerView.viewTypes.OrderItemAdapterDelegate
 import com.example.featureOrder.presentation.order.doalogs.guestsCountDialog.GuestsCountBottomSheetDialog
 import com.example.featureOrder.presentation.order.doalogs.menuDialog.MenuBottomSheetDialog
 import com.example.featureOrder.presentation.order.doalogs.orderMenuDialog.OrderMenuBottomSheetDialog
@@ -48,15 +48,15 @@ class OrderFragment : Fragment() {
     private val args: OrderFragmentArgs by navArgs()
 
     @Inject
-    lateinit var orderItemRecyclerViewType: OrderItemRecyclerViewType
-    private var adapter: MenuItemsAdapter? = null
+    lateinit var orderItemAdapterDelegate: OrderItemAdapterDelegate
+    private var adapter: BaseRecyclerViewAdapter? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         //TODO: Add a delegate for viewModels
         OrderDepsStore.appComponent.inject(this)
-        adapter = MenuItemsAdapter(
-            listOf(orderItemRecyclerViewType)
+        adapter = BaseRecyclerViewAdapter(
+            listOf(orderItemAdapterDelegate)
         )
     }
 

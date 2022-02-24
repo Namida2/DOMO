@@ -1,11 +1,10 @@
-package com.example.featureCurrentOrders.presentation
+package com.example.featureCurrentOrders.presentation.currentOrders
 
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.doOnAttach
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,8 +13,7 @@ import com.example.featureCurrentOrders.R
 import com.example.featureCurrentOrders.databinding.FragmentCurrentOrdersBinding
 import com.example.featureCurrentOrders.domain.ViewModelFactory
 import com.example.featureCurrentOrders.domain.adapters.CurrentOrdersAdapter
-import com.google.android.material.transition.MaterialElevationScale
-import com.google.android.material.transition.MaterialFade
+import com.example.waiterCore.domain.tools.extensions.logD
 import com.google.android.material.transition.platform.MaterialSharedAxis
 import javax.inject.Inject
 
@@ -68,7 +66,4 @@ class CurrentOrdersFragment : Fragment() {
             adapter.setOrdersList(ordersList)
         }
     }
-
-
-
 }

@@ -6,15 +6,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.featureOrder.R
 import com.example.featureOrder.databinding.LayoutCategoriesContainerBinding
-import com.example.featureOrder.domain.recyclerView.adapters.MenuItemsAdapter
+import com.example.waiterCore.domain.recyclerView.adapters.BaseRecyclerViewAdapter
 import com.example.waiterCore.domain.menu.CategoriesNameHolder
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewItem
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
-import com.example.waiterCore.domain.recyclerView.interfaces.MenuRecyclerViewType
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseAdapterDelegate
 
 //TODO: Add layouts
-class CategoriesMenuRecyclerViewType :
-    MenuRecyclerViewType<LayoutCategoriesContainerBinding, CategoriesNameHolder> {
+class CategoriesAdapterDelegate :
+    BaseAdapterDelegate<LayoutCategoriesContainerBinding, CategoriesNameHolder> {
 
     override fun getViewHolder(
         inflater: LayoutInflater,
@@ -40,8 +40,8 @@ class CategoriesMenuRecyclerViewType :
 
     }
 
-    override fun isItMe(recyclerViewItem: BaseRecyclerViewItem): Boolean =
-        recyclerViewItem is CategoriesNameHolder
+    override fun isItMe(recyclerViewType: BaseRecyclerViewType): Boolean =
+        recyclerViewType is CategoriesNameHolder
 
 }
 
@@ -49,7 +49,7 @@ class CategoriesMenuViewHolder(
     override val binding: LayoutCategoriesContainerBinding,
 ) : BaseViewHolder<LayoutCategoriesContainerBinding, CategoriesNameHolder>(binding) {
 
-    private var itemsAdapter = MenuItemsAdapter(
+    private var itemsAdapter = BaseRecyclerViewAdapter(
         listOf(
             CategoryRecyclerViewType()
         )

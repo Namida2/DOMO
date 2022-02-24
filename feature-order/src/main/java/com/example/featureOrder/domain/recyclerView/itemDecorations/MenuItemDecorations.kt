@@ -3,7 +3,7 @@ package com.example.featureOrder.domain.recyclerView.itemDecorations
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.example.featureOrder.domain.recyclerView.adapters.MenuItemsAdapter
+import com.example.waiterCore.domain.recyclerView.adapters.BaseRecyclerViewAdapter
 
 class MenuItemDecorations(
     private val smallMargin: Int,
@@ -16,7 +16,7 @@ class MenuItemDecorations(
         state: RecyclerView.State,
     ) {
         super.getItemOffsets(outRect, view, parent, state)
-        val adapter = parent.adapter as MenuItemsAdapter
+        val adapter = parent.adapter as BaseRecyclerViewAdapter
         val position = parent.getChildAdapterPosition(view)
         when (position) {
             0 -> {

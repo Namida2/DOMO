@@ -2,9 +2,8 @@ package com.example.domo.adapters.itemDecorations
 
 import android.graphics.Rect
 import android.view.View
-import androidx.appcompat.view.menu.MenuAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domo.adapters.MenuItemsAdapter
+import com.example.domo.adapters.Adapter
 
 class MenuItemDecorations (
     private val smallMargin: Int,
@@ -17,7 +16,7 @@ class MenuItemDecorations (
         state: RecyclerView.State,
     ) {
         super.getItemOffsets(outRect, view, parent, state)
-        val adapter = parent.adapter as MenuItemsAdapter
+        val adapter = parent.adapter as Adapter
         val position = parent.getChildAdapterPosition(view)
         when(position) {
             0 -> {

@@ -8,11 +8,11 @@ import com.example.featureOrder.domain.interfaces.OnDismissListener
 import com.example.waiterCore.domain.interfaces.OrdersService
 import com.example.waiterCore.domain.order.CurrentOrderServiceSub
 import com.example.waiterCore.domain.order.Order
-import com.example.waiterCore.domain.order.OrderItem
+import com.example.waiterCore.domain.order.OrderType
 import com.example.waiterCore.domain.order.OrdersServiceSub
 import com.example.waiterCore.domain.tools.Event
 
-typealias CurrentOrderChangeEvent = Event<List<OrderItem>>
+typealias CurrentOrderChangeEvent = Event<List<OrderType>>
 
 sealed class OrderViewModelStates {
     class ShowingMenuDialog(val fba: View) : OrderViewModelStates()

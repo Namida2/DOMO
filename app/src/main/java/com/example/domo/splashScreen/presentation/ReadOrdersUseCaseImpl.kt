@@ -5,13 +5,12 @@ import com.example.waiterCore.domain.menu.MenuService
 import com.example.waiterCore.domain.menu.MenuServiceStates
 import com.example.waiterCore.domain.menu.MenuServiceSub
 import com.example.waiterCore.domain.order.Order
-import com.example.waiterCore.domain.order.OrderItem
+import com.example.waiterCore.domain.order.OrderType
 import com.example.waiterCore.domain.order.OrdersServiceSub
 import com.example.waiterCore.domain.tools.FirestoreReferences.ordersCollectionRef
 import com.example.waiterCore.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
 import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
 import com.example.waiterCore.domain.tools.extensions.logD
-import com.google.firebase.firestore.FirebaseFirestore
 import javax.inject.Inject
 
 class ReadOrdersUseCaseImpl @Inject constructor(
@@ -53,9 +52,9 @@ class ReadOrdersUseCaseImpl @Inject constructor(
     private fun readOrderItems(tableId: String, order: Order, isLastDocument: Boolean, listOrders: List<Order>) {
         ordersCollectionRef.document(tableId).collection(COLLECTION_ORDER_ITEMS).get()
             .addOnSuccessListener {
-                val orderItems = mutableSetOf<OrderItem>()
+                val orderItems = mutableSetOf<OrderType>()
                 it.documents.forEach { document ->
-                    document.toObject(OrderItem::class.java)?.let {
+                    document.toObject(OrderType::class.java)?.let {
                             it1 -> orderItems.add(it1)
                     }
                 }

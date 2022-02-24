@@ -14,6 +14,7 @@ import com.example.waiterMain.presentation.WaiterMainActivity
 import com.example.waiterCore.domain.tools.constants.EmployeePosts.ADMINISTRATOR
 import com.example.waiterCore.domain.tools.constants.EmployeePosts.COOK
 import com.example.waiterCore.domain.tools.constants.EmployeePosts.WAITER
+import com.example.waiterCore.domain.tools.extensions.logD
 import extentions.employee
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -61,4 +62,9 @@ class SplashScreenActivity : AppCompatActivity() {
         }
     }
 }
+
+
+
+
+
 

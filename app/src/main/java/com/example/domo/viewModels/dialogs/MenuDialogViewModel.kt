@@ -7,13 +7,13 @@ import com.example.domo.models.interfaces.MenuDialogModelInterface
 import com.example.domo.models.interfaces.MenuHolderStates
 import com.example.waiterCore.domain.menu.CategoryName
 import com.example.waiterCore.domain.menu.Dish
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewItem
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.waiterCore.domain.tools.Event
 
 sealed class MenuDialogStates {
     object Default : MenuDialogStates()
     class MenuExists(
-        val items: List<BaseRecyclerViewItem>,
+        val types: List<BaseRecyclerViewType>,
     ) : MenuDialogStates()
 
     object ShowingDishDialog : MenuDialogStates()
@@ -46,7 +46,7 @@ class MenuDialogViewModel(
         }
     }
 
-    private fun getRecyclerViewItems(): List<BaseRecyclerViewItem> =
+    private fun getRecyclerViewItems(): List<BaseRecyclerViewType> =
         listOf(model.getAllCategories()) +
                 model.menu.map {
                     listOf(CategoryName(it.name)) + it.dishes

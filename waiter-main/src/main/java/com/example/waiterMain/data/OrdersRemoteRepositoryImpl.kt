@@ -1,7 +1,7 @@
 package com.example.waiterMain.data
 
 import com.example.waiterCore.domain.order.Order
-import com.example.waiterCore.domain.order.OrderItem
+import com.example.waiterCore.domain.order.OrderType
 import com.example.waiterCore.domain.tools.ErrorMessages
 import com.example.waiterCore.domain.tools.FirestoreReferences.ordersCollectionRef
 import com.example.waiterCore.domain.tools.TaskWithOrder
@@ -16,9 +16,9 @@ class OrdersRemoteRepositoryImpl @Inject constructor(): OrdersRemoteRepository {
         val tableId = order.tableId.toString()
         ordersCollectionRef.document(tableId).collection(FirestoreConstants.COLLECTION_ORDER_ITEMS)
             .get().addOnSuccessListener {
-                val orderItems = mutableSetOf<OrderItem>()
+                val orderItems = mutableSetOf<OrderType>()
                 it.documents.forEach { document ->
-                    document.toObject(OrderItem::class.java)?.let { it1 ->
+                    document.toObject(OrderType::class.java)?.let { it1 ->
                         orderItems.add(it1)
                     }
                 }

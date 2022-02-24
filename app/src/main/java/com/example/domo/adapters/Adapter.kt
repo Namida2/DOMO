@@ -6,27 +6,28 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
 import com.example.domo.adapters.diffCallbacks.MenuAdapterDiffCallback
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewItem
-import com.example.waiterCore.domain.recyclerView.interfaces.MenuRecyclerViewType
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewType
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseAdapterDelegate
+import com.example.waiterCore.domain.tools.constants.OtherStringConstants.VIEW_TYPE_NOT_FOUND
 
-class MenuItemsAdapter(
-    private var recyclerViewTypes: List<MenuRecyclerViewType<out ViewBinding, out BaseRecyclerViewItem>>,
-) : ListAdapter<BaseRecyclerViewItem, BaseViewHolder<ViewBinding, BaseRecyclerViewItem>>(
+class Adapter(
+    private var recyclerViewTypes: List<BaseAdapterDelegate<out ViewBinding, out BaseRecyclerViewType>>,
+) : ListAdapter<BaseRecyclerViewType, BaseViewHolder<ViewBinding, BaseRecyclerViewType>>(
     MenuAdapterDiffCallback(recyclerViewTypes)
 ) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): BaseViewHolder<ViewBinding, BaseRecyclerViewItem> {
+    ): BaseViewHolder<ViewBinding, BaseRecyclerViewType> {
         return recyclerViewTypes.find { it.getLayoutId() == viewType }?.getViewHolder(
             LayoutInflater.from(parent.context),
             parent
-        ) as BaseViewHolder<ViewBinding, BaseRecyclerViewItem>
+        ) as BaseViewHolder<ViewBinding, BaseRecyclerViewType>
     }
 
     override fun onBindViewHolder(
-        holder: BaseViewHolder<ViewBinding, BaseRecyclerViewItem>,
+        holder: BaseViewHolder<ViewBinding, BaseRecyclerViewType>,
         position: Int,
     ) {
         holder.onBind(currentList[position])
@@ -35,6 +36,6 @@ class MenuItemsAdapter(
     override fun getItemViewType(position: Int): Int {
         val item = currentList[position]
         return recyclerViewTypes.find { it.isItMe(item) }?.getLayoutId()
-            ?: throw IllegalArgumentException("View type not found in recyclerViewItems. Item: $item")
+            ?: throw IllegalArgumentException(VIEW_TYPE_NOT_FOUND + item)
     }
 }

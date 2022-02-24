@@ -11,11 +11,11 @@ import com.example.featureOrder.R
 import com.example.featureOrder.databinding.DialogMenuBinding
 import com.example.featureOrder.domain.ViewModelFactory
 import com.example.featureOrder.domain.interfaces.OnDismissListener
-import com.example.featureOrder.domain.recyclerView.adapters.MenuItemsAdapter
+import com.example.waiterCore.domain.recyclerView.adapters.BaseRecyclerViewAdapter
 import com.example.featureOrder.domain.recyclerView.itemDecorations.MenuItemDecorations
-import com.example.featureOrder.domain.recyclerView.viewTypes.CategoriesMenuRecyclerViewType
+import com.example.featureOrder.domain.recyclerView.viewTypes.CategoriesAdapterDelegate
 import com.example.featureOrder.domain.recyclerView.viewTypes.CategoryLargeRecyclerViewType
-import com.example.featureOrder.domain.recyclerView.viewTypes.DishRecyclerViewType
+import com.example.waiterCore.domain.recyclerView.viewTypes.DishesAdapterDelegate
 import com.example.featureOrder.presentation.order.doalogs.dishDialog.DishAlertDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -29,17 +29,17 @@ class MenuBottomSheetDialog(
     private lateinit var binding: DialogMenuBinding
     private val viewModel: MenuDialogViewModel by viewModels { ViewModelFactory }
     private var dishDialog = DishAlertDialog()
-    private var menuAdapter: MenuItemsAdapter? = null
+    private var menuAdapter: BaseRecyclerViewAdapter? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
         largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
-        menuAdapter = MenuItemsAdapter(
+        menuAdapter = BaseRecyclerViewAdapter(
             listOf(
-                CategoriesMenuRecyclerViewType(),
+                CategoriesAdapterDelegate(),
                 CategoryLargeRecyclerViewType(),
-                DishRecyclerViewType(viewModel::onDishClick)
+                DishesAdapterDelegate(viewModel::onDishClick)
             )
         )
         binding = DialogMenuBinding.inflate(layoutInflater)
@@ -60,7 +60,7 @@ class MenuBottomSheetDialog(
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is MenuDialogStates.MenuExists -> {
-                    menuAdapter?.submitList(it.items)
+                    menuAdapter?.submitList(it.types)
                 }
                 else -> {} //other things
             }

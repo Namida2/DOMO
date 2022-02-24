@@ -1,3 +1,3 @@
 package com.example.waiterCore.domain.recyclerView.interfaces
 
-interface BaseRecyclerViewItem
+interface BaseRecyclerViewType

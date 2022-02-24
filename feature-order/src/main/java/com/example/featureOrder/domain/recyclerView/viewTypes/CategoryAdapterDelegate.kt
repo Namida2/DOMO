@@ -6,15 +6,15 @@ import androidx.recyclerview.widget.DiffUtil
 import com.example.featureOrder.R
 import com.example.featureOrder.databinding.LayoutCategoryBinding
 import com.example.waiterCore.domain.menu.CategoryName
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewItem
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
-import com.example.waiterCore.domain.recyclerView.interfaces.MenuRecyclerViewType
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseAdapterDelegate
 
 class CategoryRecyclerViewType :
-    MenuRecyclerViewType<LayoutCategoryBinding, CategoryName> {
+    BaseAdapterDelegate<LayoutCategoryBinding, CategoryName> {
 
-    override fun isItMe(recyclerViewItem: BaseRecyclerViewItem): Boolean =
-        recyclerViewItem is CategoryName
+    override fun isItMe(recyclerViewType: BaseRecyclerViewType): Boolean =
+        recyclerViewType is CategoryName
 
     override fun getViewHolder(
         inflater: LayoutInflater,
