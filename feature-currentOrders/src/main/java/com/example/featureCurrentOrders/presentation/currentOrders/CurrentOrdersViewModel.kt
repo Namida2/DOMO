@@ -1,4 +1,4 @@
-package com.example.featureCurrentOrders.presentation
+package com.example.featureCurrentOrders.presentation.currentOrders
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

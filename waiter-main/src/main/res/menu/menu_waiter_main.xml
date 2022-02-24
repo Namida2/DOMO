@@ -9,10 +9,6 @@
         android:icon="@drawable/ic_email"
         android:title="@string/orders" />
     <item
-        android:id="@+id/messengerFragment"
-        android:icon="@drawable/ic_email"
-        android:title="@string/messenger" />
-    <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_email"
         android:title="@string/profile" />

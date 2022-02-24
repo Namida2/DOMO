@@ -28,11 +28,10 @@ import com.example.waiterMain.domain.NewOrdersWorker
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
 import java.util.concurrent.TimeUnit
 
-//TODO: Started implemented the currentOrdersFragment
 class WaiterMainActivity : AppCompatActivity(),
     NavController.OnDestinationChangedListener {
+
     private val currentDestination = 0
-    private val previousDestination = 1
     private lateinit var binding: ActivityWaiterMainBinding
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment

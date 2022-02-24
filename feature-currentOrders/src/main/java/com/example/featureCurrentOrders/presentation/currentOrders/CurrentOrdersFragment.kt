@@ -1,11 +1,10 @@
-package com.example.featureCurrentOrders.presentation
+package com.example.featureCurrentOrders.presentation.currentOrders
 
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.doOnAttach
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,8 +13,7 @@ import com.example.featureCurrentOrders.R
 import com.example.featureCurrentOrders.databinding.FragmentCurrentOrdersBinding
 import com.example.featureCurrentOrders.domain.ViewModelFactory
 import com.example.featureCurrentOrders.domain.adapters.CurrentOrdersAdapter
-import com.google.android.material.transition.MaterialElevationScale
-import com.google.android.material.transition.MaterialFade
+import com.example.waiterCore.domain.tools.extensions.logD
 import com.google.android.material.transition.platform.MaterialSharedAxis
 import javax.inject.Inject
 
@@ -70,5 +68,45 @@ class CurrentOrdersFragment : Fragment() {
     }
 
 
+    fun<T> printNames(names: ArrayList<out Clothes>) {
+        names.forEach {
+            it.
+        }
+    }
 
+    open class Clothes {
+        open fun name() {
+            logD("I'm Clothes")
+        }
+    }
+
+    open class Dress: Clothes() {
+        override fun name() {
+            super.name()
+            logD("I'm Dress")
+        }
+    }
+
+    class BlackDress: Dress() {
+        override fun name() {
+            super.name()
+            logD("I'm BlackDress")
+        }
+    }
+
+//-------------
+
+    open class Tshirt: Clothes()  {
+        override fun name() {
+            super.name()
+            logD("I'm Tshirt")
+        }
+    }
+
+    class OverSizeTshirt: Tshirt() {
+        override fun name() {
+            super.name()
+            logD("I'm Tshirt")
+        }
+    }
 }

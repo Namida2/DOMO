@@ -34,6 +34,7 @@ class CurrentOrdersAdapter @Inject constructor(): RecyclerView.Adapter<CurrentOr
 
     fun setOrdersList(ordersList: List<Order>) {
         this.ordersList = ordersList
+        //TODO: this.notifyDataSetChanged()
         this.notifyDataSetChanged()
     }
 

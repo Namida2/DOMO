@@ -39,3 +39,7 @@ class MenuItemsAdapter(
             ?: throw IllegalArgumentException("View type not found in recyclerViewItems. Item: $item")
     }
 }
+
+
+
+

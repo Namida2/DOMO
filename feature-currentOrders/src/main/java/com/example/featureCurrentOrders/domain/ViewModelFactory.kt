@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
 import com.example.featureCurrentOrders.domain.di.DaggerCurrentOrdersAppComponent
-import com.example.featureCurrentOrders.presentation.CurrentOrdersViewModel
+import com.example.featureCurrentOrders.presentation.currentOrders.CurrentOrdersViewModel
 import com.example.waiterCore.domain.tools.constants.OtherStringConstants.UNKNOWN_VIEW_MODEL_CLASS
 
 object ViewModelFactory : ViewModelProvider.Factory {
