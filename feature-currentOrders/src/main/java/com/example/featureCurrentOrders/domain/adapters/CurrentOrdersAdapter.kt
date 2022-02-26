@@ -2,9 +2,14 @@ package com.example.featureCurrentOrders.domain.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.featureCurrentOrders.databinding.LayoutOrderCardBinding
 import com.example.waiterCore.domain.order.Order
+import com.example.waiterCore.domain.order.OrderItem
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseAdapterDelegate
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewType
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
 import javax.inject.Inject
 
 class CurrentOrdersAdapter @Inject constructor(): RecyclerView.Adapter<CurrentOrdersAdapter.ViewHolder>() {
@@ -35,6 +40,38 @@ class CurrentOrdersAdapter @Inject constructor(): RecyclerView.Adapter<CurrentOr
         this.ordersList = ordersList
         //TODO: this.notifyDataSetChanged()
         this.notifyDataSetChanged()
+    }
+}
+
+//TODO: Implement this part //STOPPED//
+class OrdersAdapterDelegate(
+    private val onOrderSelected: (tableId: Int) -> Unit
+): BaseAdapterDelegate<LayoutOrderCardBinding, Order> {
+
+    override fun isItMe(recyclerViewType: BaseRecyclerViewType): Boolean = recyclerViewType is Order
+
+    override fun getViewHolder(
+        inflater: LayoutInflater,
+        parent: ViewGroup
+    ): BaseViewHolder<LayoutOrderCardBinding, Order> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getLayoutId(): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun getDiffCallback(): DiffUtil.ItemCallback<Order> {
+        TODO("Not yet implemented")
+    }
+}
+
+class OrdersViewHolder(
+    override val binding: LayoutOrderCardBinding
+): BaseViewHolder<LayoutOrderCardBinding, Order>(binding) {
+
+    override fun onBind(item: Order) {
+        binding.orderId.text = item.orderId.toString()
     }
 
 }

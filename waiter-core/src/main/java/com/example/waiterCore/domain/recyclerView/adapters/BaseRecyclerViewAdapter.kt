@@ -8,6 +8,7 @@ import com.example.waiterCore.domain.recyclerView.diffCalbacks.BaseAdapterDiffCa
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseAdapterDelegate
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
+import com.example.waiterCore.domain.tools.constants.OtherStringConstants.VIEW_TYPE_NOT_FOUND
 
 class BaseRecyclerViewAdapter(
     private var recyclerViewTypes: List<BaseAdapterDelegate<out ViewBinding, out BaseRecyclerViewType>>,
@@ -36,7 +37,7 @@ class BaseRecyclerViewAdapter(
     override fun getItemViewType(position: Int): Int {
         val item = currentList[position]
         return recyclerViewTypes.find { it.isItMe(item) }?.getLayoutId()
-            ?: throw IllegalArgumentException("View type not found in recyclerViewItems. Item: $item")
+            ?: throw IllegalArgumentException(VIEW_TYPE_NOT_FOUND + item)
     }
 }
 
