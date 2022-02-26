@@ -5,7 +5,7 @@ import com.example.waiterCore.domain.menu.MenuService
 import com.example.waiterCore.domain.menu.MenuServiceStates
 import com.example.waiterCore.domain.menu.MenuServiceSub
 import com.example.waiterCore.domain.order.Order
-import com.example.waiterCore.domain.order.OrderType
+import com.example.waiterCore.domain.order.OrderItem
 import com.example.waiterCore.domain.order.OrdersServiceSub
 import com.example.waiterCore.domain.tools.FirestoreReferences.ordersCollectionRef
 import com.example.waiterCore.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
@@ -52,9 +52,9 @@ class ReadOrdersUseCaseImpl @Inject constructor(
     private fun readOrderItems(tableId: String, order: Order, isLastDocument: Boolean, listOrders: List<Order>) {
         ordersCollectionRef.document(tableId).collection(COLLECTION_ORDER_ITEMS).get()
             .addOnSuccessListener {
-                val orderItems = mutableSetOf<OrderType>()
+                val orderItems = mutableSetOf<OrderItem>()
                 it.documents.forEach { document ->
-                    document.toObject(OrderType::class.java)?.let {
+                    document.toObject(OrderItem::class.java)?.let {
                             it1 -> orderItems.add(it1)
                     }
                 }

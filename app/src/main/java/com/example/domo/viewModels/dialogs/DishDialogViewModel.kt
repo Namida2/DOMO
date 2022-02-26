@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.example.domo.R
 import com.example.waiterCore.domain.interfaces.OrdersService
 import com.example.waiterCore.domain.menu.Dish
-import com.example.waiterCore.domain.order.OrderType
 import com.example.waiterCore.domain.order.OrdersServiceSub
 import com.example.waiterCore.domain.tools.ErrorMessage
 import com.example.waiterCore.domain.tools.extensions.logD
@@ -44,9 +43,9 @@ class DishDialogViewModel(
 
     fun onAddButtonClick(view: View) {
         view.isActivated = false
-        val tableId = ordersService.currentOrder?.tableId!!
+        val tableId = ordersService.currentOrder?.orderId!!
         val resultOfAdding = ordersService.addOrderItem(
-            OrderType(dish!!.id, dishesCount, commentary)
+            com.example.waiterCore.domain.order.OrderItem(dish!!.id, dishesCount, commentary)
         )
         if (!resultOfAdding) {
             _state.value = DishDialogVMStates.DishAlreadyAdded

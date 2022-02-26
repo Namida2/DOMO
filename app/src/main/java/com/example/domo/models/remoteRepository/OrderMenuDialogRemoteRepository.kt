@@ -22,7 +22,7 @@ class OrderMenuDialogRemoteRepository @Inject constructor(
 
     override fun insertCurrentOrder(order: Order, task: SimpleTask) {
         val orderDocumentRef = ordersCollectionRef
-            .document(order.tableId.toString())
+            .document(order.orderId.toString())
         removeAldOrderItems(
             orderDocumentRef.collection(COLLECTION_ORDER_ITEMS),
         ) {

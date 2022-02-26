@@ -15,6 +15,7 @@ object ViewModelFactory : ViewModelProvider.Factory {
                 val currentOrdersViewModel = CurrentOrdersViewModel(
                     CurrentOrderDepsStore.deps.ordersService
                 )
+                //TODO: Move the appComponent to the DepsStore
                 currentOrdersViewModel.also {
                     it.appComponent = DaggerCurrentOrdersAppComponent.builder()
                         .currentOrdersAppComponentDeps(

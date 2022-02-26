@@ -7,11 +7,11 @@ import androidx.lifecycle.ViewModel
 import com.example.domo.models.interfaces.WaiterActOrderFragSharedViewModel
 import com.example.waiterCore.domain.order.CurrentOrderServiceSub
 import com.example.waiterCore.domain.order.Order
-import com.example.waiterCore.domain.order.OrderType
+import com.example.waiterCore.domain.order.OrderItem
 import com.example.waiterCore.domain.tools.Event
 import entities.interfaces.OnDismissListener
 
-typealias CurrentOrderChangeEvent = Event<List<OrderType>>
+typealias CurrentOrderChangeEvent = Event<List<OrderItem>>
 
 sealed class SharedViewModelStates {
     class ShowingMenuDialog(val fba: View) : SharedViewModelStates()

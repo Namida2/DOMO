@@ -4,7 +4,7 @@ import com.example.waiterCore.domain.interfaces.OrdersService
 import javax.inject.Inject
 
 typealias OrdersServiceSub = (orders: List<Order>) -> Unit
-typealias CurrentOrderServiceSub = (orderItems: List<OrderType>) -> Unit
+typealias CurrentOrderServiceSub = (orderItems: List<OrderItem>) -> Unit
 
 class OrdersServiceImpl @Inject constructor() :
     OrdersService<@JvmSuppressWildcards OrdersServiceSub> {
@@ -47,7 +47,7 @@ class OrdersServiceImpl @Inject constructor() :
         }
     }
 
-    override fun addOrderItem(orderItem: OrderType): Boolean =
+    override fun addOrderItem(orderItem: OrderItem): Boolean =
         currentOrder!!.orderItems.add(orderItem)
             .also { notifyChangesOfCurrentOrder() }
 
@@ -61,11 +61,11 @@ class OrdersServiceImpl @Inject constructor() :
 
     override fun initCurrentOrder(tableId: Int, guestCount: Int) {
         val result: Order? = orders.find {
-            it.tableId == tableId
+            it.orderId == tableId
         }
         currentOrder = result?.copy() ?: Order(tableId, guestCount)
 
-        val newOrderItems = mutableSetOf<OrderType>()
+        val newOrderItems = mutableSetOf<OrderItem>()
         result?.orderItems?.forEach {
             newOrderItems.add(it.copy())
         }
@@ -78,12 +78,12 @@ class OrdersServiceImpl @Inject constructor() :
         } ?: throw IllegalStateException(currentOrderExceptionMessage)
     }
 
-    override fun getCurrentOrderItems(): Set<OrderType> =
+    override fun getCurrentOrderItems(): Set<OrderItem> =
         currentOrder?.orderItems?.toSet()!!
 
     override fun addOrder(newOrder: Order) {
         orders.forEachIndexed { index, order ->
-            if (order.tableId == newOrder.tableId) {
+            if (order.orderId == newOrder.orderId) {
                 orders[index] = newOrder
                 return
             }
@@ -96,5 +96,11 @@ class OrdersServiceImpl @Inject constructor() :
         this.orders.clear()
         this.orders.addAll(orders)
     }
+
+    override fun getOrderById(orderId: Int): Order? =
+        orders.find {
+            it.orderId == orderId
+        }
+
 
 }

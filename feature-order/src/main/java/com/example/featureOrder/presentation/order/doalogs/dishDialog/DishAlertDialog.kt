@@ -36,7 +36,7 @@ class DishAlertDialog : DialogFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        viewModel.dish = dish
+        viewModel.orderItem = dish
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

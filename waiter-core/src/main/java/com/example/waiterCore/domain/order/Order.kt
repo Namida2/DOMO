@@ -1,7 +1,7 @@
 package com.example.waiterCore.domain.order
 
 data class Order (
-    var tableId: Int,
+    var orderId: Int,
     var guestsCount: Int,
-    var orderItems: MutableSet<OrderType> = mutableSetOf(),
+    var orderItems: MutableSet<OrderItem> = mutableSetOf(),
 )

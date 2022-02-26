@@ -15,6 +15,7 @@ import com.example.featureOrder.domain.di.OrderAppComponentDeps
 import com.example.featureOrder.domain.di.OrderDepsStore
 import com.example.featureOrder.presentation.order.OrderFragment
 import com.example.featureOrder.presentation.tables.TablesFragment
+import com.example.waiterCore.domain.Employee
 import com.example.waiterCore.domain.interfaces.OrdersService
 import com.example.waiterCore.domain.order.OrdersServiceSub
 import com.example.waiterCore.domain.tools.extensions.Animations.prepareHide
@@ -78,6 +79,8 @@ class WaiterMainActivity : AppCompatActivity(),
 
     private fun provideCurrentOrderDeps() {
         CurrentOrderDepsStore.deps = object : CurrentOrdersAppComponentDeps {
+            override val currentEmployee: Employee?
+                get() = WaiterMainDepsStore.currentEmployee
             override val ordersService: OrdersService<OrdersServiceSub>
                 get() = WaiterMainDepsStore.deps.ordersService
         }

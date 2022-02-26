@@ -24,7 +24,7 @@ class CurrentOrdersAdapter @Inject constructor(): RecyclerView.Adapter<CurrentOr
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentOrder = ordersList[position]
         with(holder.binding) {
-            tableId.text = currentOrder.tableId.toString()
+            tableId.text = currentOrder.orderId.toString()
 
         }
     }

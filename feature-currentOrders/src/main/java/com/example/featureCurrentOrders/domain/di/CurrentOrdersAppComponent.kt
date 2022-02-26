@@ -12,6 +12,6 @@ interface CurrentOrdersAppComponent {
     fun inject(fragment: CurrentOrdersFragment)
 }
 interface CurrentOrdersAppComponentDeps {
-    val currentEmployee: Employee
+    val currentEmployee: Employee?
     val ordersService: OrdersService<OrdersServiceSub>
 }

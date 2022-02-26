@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_current_orders"
+    app:startDestination="@id/currentOrdersFragment">
+
+    <fragment
+        android:id="@+id/currentOrdersFragment"
+        android:name="com.example.featureCurrentOrders.presentation.currentOrders.CurrentOrdersFragment"
+        android:label="CurrentOrdersFragment" >
+        <action
+            android:id="@+id/action_currentOrdersFragment_to_currentOrdersDetailFragment"
+            app:destination="@id/currentOrdersDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/currentOrdersDetailFragment"
+        android:name="com.example.featureCurrentOrders.presentation.currentOrddersDetail.CurrentOrdersDetailFragment"
+        android:label="CurrentOrdersDetailFragment">
+        <argument android:name="orderId" app:argType="integer"/>
+    </fragment>
+</navigation>

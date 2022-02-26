@@ -6,22 +6,22 @@ import androidx.recyclerview.widget.DiffUtil
 import com.example.featureOrder.R
 import com.example.featureOrder.databinding.LayoutOrderItemBinding
 import com.example.waiterCore.domain.menu.MenuService
-import com.example.waiterCore.domain.order.OrderType
+import com.example.waiterCore.domain.order.OrderItem
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseAdapterDelegate
 import javax.inject.Inject
 
 class OrderItemAdapterDelegate @Inject constructor()
-    : BaseAdapterDelegate<LayoutOrderItemBinding, OrderType> {
+    : BaseAdapterDelegate<LayoutOrderItemBinding, OrderItem> {
 
     override fun isItMe(recyclerViewType: BaseRecyclerViewType): Boolean =
-        recyclerViewType is OrderType
+        recyclerViewType is OrderItem
 
     override fun getViewHolder(
         inflater: LayoutInflater,
         parent: ViewGroup,
-    ): BaseViewHolder<LayoutOrderItemBinding, OrderType> =
+    ): BaseViewHolder<LayoutOrderItemBinding, OrderItem> =
         OrderItemViewHolder(
             MenuService,
             LayoutOrderItemBinding.inflate(inflater, parent, false)
@@ -29,23 +29,23 @@ class OrderItemAdapterDelegate @Inject constructor()
 
     override fun getLayoutId(): Int = R.layout.layout_order_item
 
-    private val diffCallback = object : DiffUtil.ItemCallback<OrderType>() {
-        override fun areItemsTheSame(oldItem: OrderType, newItem: OrderType): Boolean =
+    private val diffCallback = object : DiffUtil.ItemCallback<OrderItem>() {
+        override fun areItemsTheSame(oldItem: OrderItem, newItem: OrderItem): Boolean =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: OrderType, newItem: OrderType): Boolean =
+        override fun areContentsTheSame(oldItem: OrderItem, newItem: OrderItem): Boolean =
             oldItem == newItem
     }
 
-    override fun getDiffCallback(): DiffUtil.ItemCallback<OrderType> = diffCallback
+    override fun getDiffCallback(): DiffUtil.ItemCallback<OrderItem> = diffCallback
 }
 
 class OrderItemViewHolder(
     private val menuService: MenuService,
     override val binding: LayoutOrderItemBinding,
-) : BaseViewHolder<LayoutOrderItemBinding, OrderType>(binding) {
+) : BaseViewHolder<LayoutOrderItemBinding, OrderItem>(binding) {
 
-    override fun onBind(item: OrderType) {
+    override fun onBind(item: OrderItem) {
         val dish = menuService.getDishById(item.dishId)
             ?: throw IllegalArgumentException("Dish not found. ID: ${item.dishId}")
         with(binding) {

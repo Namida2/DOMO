@@ -6,8 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.featureOrder.R
 import com.example.waiterCore.domain.interfaces.OrdersService
-import com.example.waiterCore.domain.menu.Dish
-import com.example.waiterCore.domain.order.OrderType
+import com.example.waiterCore.domain.order.OrderItem
 import com.example.waiterCore.domain.order.OrdersServiceSub
 import com.example.waiterCore.domain.tools.ErrorMessage
 import com.example.waiterCore.domain.tools.extensions.logD
@@ -33,14 +32,14 @@ class DishDialogViewModel(
     private var _state = MutableLiveData<DishDialogVMStates>(DishDialogVMStates.Default)
     val state: LiveData<DishDialogVMStates> = _state
 
-    var dish: Dish? = null
+    var orderItem: OrderItem? = null
 
     fun onAddButtonClick(view: View, dishesCount: String, commentary: String) {
         logD("$dishesCount  $commentary")
         view.isActivated = false
-        val tableId = ordersService.currentOrder?.tableId!!
+        val tableId = ordersService.currentOrder?.orderId!!
         val resultOfAdding = ordersService.addOrderItem (
-            OrderType(dish!!.id, dishesCount.toInt(), commentary)
+            com.example.waiterCore.domain.order.OrderItem(orderItem!!.id, dishesCount.toInt(), commentary)
         )
         if (!resultOfAdding) {
             _state.value = DishDialogVMStates.DishAlreadyAdded
