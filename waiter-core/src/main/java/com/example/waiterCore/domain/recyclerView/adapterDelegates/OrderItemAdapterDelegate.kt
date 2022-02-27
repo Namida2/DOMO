@@ -1,19 +1,20 @@
-package com.example.featureOrder.domain.recyclerView.viewTypes
+package com.example.waiterCore.domain.recyclerView.adapterDelegates
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import com.example.featureOrder.R
-import com.example.featureOrder.databinding.LayoutOrderItemBinding
+import com.example.waiterCore.R
+import com.example.waiterCore.databinding.LayoutOrderItemBinding
 import com.example.waiterCore.domain.menu.MenuService
 import com.example.waiterCore.domain.order.OrderItem
+import com.example.waiterCore.domain.recyclerView.interfaces.BaseAdapterDelegate
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseAdapterDelegate
 import javax.inject.Inject
 
-class OrderItemAdapterDelegate @Inject constructor()
-    : BaseAdapterDelegate<LayoutOrderItemBinding, OrderItem> {
+class OrderItemAdapterDelegate @Inject constructor(
+    private val onOrderSelected: (orderId: Int) -> Unit
+): BaseAdapterDelegate<LayoutOrderItemBinding, OrderItem> {
 
     override fun isItMe(recyclerViewType: BaseRecyclerViewType): Boolean =
         recyclerViewType is OrderItem
@@ -47,7 +48,6 @@ class OrderItemViewHolder(
 
     override fun onBind(item: OrderItem) {
         val dish = menuService.getDishById(item.dishId)
-            ?: throw IllegalArgumentException("Dish not found. ID: ${item.dishId}")
         with(binding) {
             category.text = dish.categoryName
             dishName.text = dish.name

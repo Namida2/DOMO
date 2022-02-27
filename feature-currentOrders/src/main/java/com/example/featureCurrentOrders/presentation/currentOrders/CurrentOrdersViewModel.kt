@@ -16,8 +16,6 @@ class CurrentOrdersViewModel(
     private val ordersService: OrdersService<OrdersServiceSub>
 ) : ViewModel() {
 
-    lateinit var appComponent: CurrentOrdersAppComponent
-
     private val _newOrdersEvent: MutableLiveData<NewOrdersEvent> = MutableLiveData()
     val newOrdersEvent: LiveData<NewOrdersEvent> = _newOrdersEvent
 

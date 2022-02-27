@@ -6,10 +6,7 @@
     app:startDestination="@id/navigation_order">
 
     <include app:graph="@navigation/navigation_order" />
-    <fragment
-        android:id="@+id/currentOrdersFragment"
-        android:name="com.example.featureCurrentOrders.presentation.currentOrders.CurrentOrdersFragment"
-        android:label="CurrentOrdersFragment"
-        tools:layout="@layout/fragment_current_orders"/>
+    <include app:graph="@navigation/navigation_current_orders" />
+
 
 </navigation>

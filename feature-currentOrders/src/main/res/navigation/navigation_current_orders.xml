@@ -5,11 +5,11 @@
     android:id="@+id/navigation_current_orders"
     app:startDestination="@id/currentOrdersFragment">
 
+
     <fragment
         android:id="@+id/currentOrdersFragment"
         android:name="com.example.featureCurrentOrders.presentation.currentOrders.CurrentOrdersFragment"
-        android:label="CurrentOrdersFragment"
-        tools:layout="">
+        android:label="CurrentOrdersFragment" >
         <action
             android:id="@+id/action_currentOrdersFragment_to_currentOrdersDetailFragment"
             app:destination="@id/currentOrdersDetailFragment" />
@@ -20,5 +20,4 @@
         android:label="CurrentOrdersDetailFragment" >
         <argument android:name="orderId" app:argType="integer"/>
     </fragment>
-
 </navigation>

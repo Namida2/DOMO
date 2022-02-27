@@ -36,9 +36,7 @@ class DishDialogViewModel(
     var orderItem: Dish? = null
 
     fun onAddButtonClick(view: View, dishesCount: String, commentary: String) {
-        logD("$dishesCount  $commentary")
         view.isActivated = false
-        val tableId = ordersService.currentOrder?.orderId!!
         val resultOfAdding = ordersService.addOrderItem (
            OrderItem(orderItem!!.id, dishesCount.toInt(), commentary)
         )

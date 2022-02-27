@@ -17,7 +17,7 @@ import com.example.featureOrder.databinding.FragmentOrderBinding
 import com.example.featureOrder.domain.ViewModelFactory
 import com.example.featureOrder.domain.di.OrderDepsStore
 import com.example.waiterCore.domain.recyclerView.adapters.BaseRecyclerViewAdapter
-import com.example.featureOrder.domain.recyclerView.viewTypes.OrderItemAdapterDelegate
+import com.example.waiterCore.domain.recyclerView.adapterDelegates.OrderItemAdapterDelegate
 import com.example.featureOrder.presentation.order.doalogs.guestsCountDialog.GuestsCountBottomSheetDialog
 import com.example.featureOrder.presentation.order.doalogs.menuDialog.MenuBottomSheetDialog
 import com.example.featureOrder.presentation.order.doalogs.orderMenuDialog.OrderMenuBottomSheetDialog
@@ -47,16 +47,16 @@ class OrderFragment : Fragment() {
     private val viewModel by viewModels<OrderViewModel> { ViewModelFactory }
     private val args: OrderFragmentArgs by navArgs()
 
-    @Inject
-    lateinit var orderItemAdapterDelegate: OrderItemAdapterDelegate
+
     private var adapter: BaseRecyclerViewAdapter? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         //TODO: Add a delegate for viewModels
-        OrderDepsStore.appComponent.inject(this)
         adapter = BaseRecyclerViewAdapter(
-            listOf(orderItemAdapterDelegate)
+            listOf(OrderItemAdapterDelegate(
+                ::onOrderSelected
+            ))
         )
     }
 
@@ -164,5 +164,7 @@ class OrderFragment : Fragment() {
         }
     }
 
+    private fun onOrderSelected(orderId: Int) {
 
+    }
 }

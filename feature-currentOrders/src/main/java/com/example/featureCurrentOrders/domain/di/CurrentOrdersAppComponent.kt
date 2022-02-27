@@ -9,6 +9,12 @@ import dagger.Component
 @Component (dependencies = [CurrentOrdersAppComponentDeps::class])
 interface CurrentOrdersAppComponent {
 
+    @Component.Builder
+    interface Builder{
+        fun provideCurrentOrdersDeps(deps:CurrentOrdersAppComponentDeps): Builder
+        fun build(): CurrentOrdersAppComponent
+    }
+
     fun inject(fragment: CurrentOrdersFragment)
 }
 interface CurrentOrdersAppComponentDeps {

@@ -36,6 +36,7 @@ class WaiterMainActivity : AppCompatActivity(),
     private lateinit var binding: ActivityWaiterMainBinding
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
+    private var wasNavigatedToOrderFragment = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,9 +95,11 @@ class WaiterMainActivity : AppCompatActivity(),
         when (destination.id) {
             R.id.orderFragment -> {
                 hideNavigationUI()
+                wasNavigatedToOrderFragment = true
             }
             R.id.tablesFragment -> {
                 showNavigationUI()
+                wasNavigatedToOrderFragment = false
             }
         }
     }
@@ -110,7 +113,7 @@ class WaiterMainActivity : AppCompatActivity(),
                     true
                 }
                 R.id.currentOrdersFragment -> {
-                    navController.navigate(R.id.currentOrdersFragment)
+                    navController.navigate(R.id.navigation_current_orders)
                     true
                 }
                 else -> {
@@ -132,6 +135,7 @@ class WaiterMainActivity : AppCompatActivity(),
     }
 
     private fun showNavigationUI() {
+        if(!wasNavigatedToOrderFragment) return
         with(binding) {
             appBar.prepareShow(appBar.height).start()
             bottomNavigation.prepareSlideUp(bottomNavigation.height, startDelay = 150).start()

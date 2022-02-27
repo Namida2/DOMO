@@ -1,4 +1,4 @@
-package com.example.waiterCore.domain.recyclerView.viewTypes
+package com.example.waiterCore.domain.recyclerView.adapterDelegates
 
 import android.view.LayoutInflater
 import android.view.View

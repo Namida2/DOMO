@@ -11,19 +11,13 @@ import com.example.waiterCore.domain.tools.constants.OtherStringConstants.UNKNOW
 object ViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val viewModel = when (modelClass) {
-            CurrentOrdersViewModel::class.java -> {
-                val currentOrdersViewModel = CurrentOrdersViewModel(
+            CurrentOrdersViewModel::class.java ->
+                CurrentOrdersViewModel(
                     CurrentOrderDepsStore.deps.ordersService
                 )
-                //TODO: Move the appComponent to the DepsStore
-                currentOrdersViewModel.also {
-                    it.appComponent = DaggerCurrentOrdersAppComponent.builder()
-                        .currentOrdersAppComponentDeps(
-                            CurrentOrderDepsStore.deps
-                        ).build()
-                }
-            }
-//            CurrentOrderDetailViewModel::class.java -> CurrentOrderDetailViewModel()
+            CurrentOrderDetailViewModel::class.java -> CurrentOrderDetailViewModel(
+                CurrentOrderDepsStore.deps.ordersService
+            )
             else -> throw IllegalArgumentException(UNKNOWN_VIEW_MODEL_CLASS)
         }
         return viewModel as T

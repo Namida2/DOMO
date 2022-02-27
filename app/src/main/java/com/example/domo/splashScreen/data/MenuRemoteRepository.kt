@@ -18,9 +18,9 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
     override fun readNewMenu(onComplete: () -> Unit) {
         MenuService.setMenuServiceStateAsLoading()
         menuCollectionRef.get().addOnSuccessListener {
-            val categoriesCount: Int = it.size()
+            val categoriesLastIndex: Int = it.documents.lastIndex
             it.documents.forEachIndexed { index, documentSnapshot ->
-                if (index == categoriesCount - 1)
+                if (index == categoriesLastIndex)
                     readDishes(documentSnapshot.id, true, onComplete)
                 else
                     readDishes(documentSnapshot.id, onComplete = onComplete)

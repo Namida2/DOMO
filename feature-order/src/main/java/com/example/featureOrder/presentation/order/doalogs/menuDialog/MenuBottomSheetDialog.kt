@@ -15,7 +15,7 @@ import com.example.waiterCore.domain.recyclerView.adapters.BaseRecyclerViewAdapt
 import com.example.featureOrder.domain.recyclerView.itemDecorations.MenuItemDecorations
 import com.example.featureOrder.domain.recyclerView.viewTypes.CategoriesAdapterDelegate
 import com.example.featureOrder.domain.recyclerView.viewTypes.CategoryLargeRecyclerViewType
-import com.example.waiterCore.domain.recyclerView.viewTypes.DishesAdapterDelegate
+import com.example.waiterCore.domain.recyclerView.adapterDelegates.DishesAdapterDelegate
 import com.example.featureOrder.presentation.order.doalogs.dishDialog.DishAlertDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
