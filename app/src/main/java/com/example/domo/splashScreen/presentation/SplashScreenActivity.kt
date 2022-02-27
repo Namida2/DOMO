@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.example.cookMain.presentation.CookMainActivity
 import com.example.domo.authorization.presentation.AuthorizationActivity
 import com.example.domo.splashScreen.domain.ViewModelFactory
 import com.example.waiterCore.domain.tools.ErrorMessages.networkConnectionMessage
@@ -45,7 +46,7 @@ class SplashScreenActivity : AppCompatActivity() {
                     employee = state.employee
                     when (employee?.post) {
                         COOK ->
-                            startActivity(Intent(this, WaiterMainActivity::class.java))
+                            startActivity(Intent(this, CookMainActivity::class.java))
                         WAITER ->
                             startActivity(Intent(this, WaiterMainActivity::class.java))
                         ADMINISTRATOR ->

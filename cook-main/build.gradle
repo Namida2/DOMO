@@ -1,16 +1,13 @@
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'com.google.gms.google-services'
-    id 'androidx.navigation.safeargs'
 }
 
 android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.example.domo"
         minSdk 24
         targetSdk 31
         versionCode 1
@@ -36,19 +33,11 @@ android {
         viewBinding true
         dataBinding true
     }
-
 }
 
 dependencies {
-    implementation project(':waiter-main')
-    implementation project(':cook-main')
-    implementation project(':firebase-auth-core')
     implementation project(':waiter-core')
-
-    implementation platform (Firebase.firebaseBom)
-    implementation (Firebase.firebaseAuth)
-    implementation (Firebase.firebaseFirestore)
-    implementation (Firebase.firebaseAnalytics)
+    implementation project(':feature-currentOrders')
 
     implementation (RecyclerView.recyclerview)
     implementation (Navigation.navigationFragmentKtx)
@@ -64,11 +53,6 @@ dependencies {
     implementation (ArchComponents.viewModel)
     implementation (ArchComponents.liveData)
     kapt(ArchComponents.lifecycleCompiler)
-
-    implementation (Room.roomRuntime)
-    annotationProcessor (Room.compiler)
-    implementation (Room.roomKtx)
-    kapt (Room.compiler)
 
     implementation (AndroidX.core)
     implementation (AndroidX.appcompat)

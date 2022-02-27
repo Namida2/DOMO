@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/navigation_waiter_main" />
+        app:navGraph="@navigation/navigation_cook_main" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
@@ -57,6 +57,6 @@
         app:itemTextColor="@color/black"
         app:labelVisibilityMode="labeled"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
-        app:menu="@menu/menu_waiter_main" />
+        app:menu="@menu/menu_cook_main" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
