@@ -56,6 +56,7 @@
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_registration.xml" value="0.23599726775956284" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragment_tables.xml" value="0.22" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/fragmnet_order.xml" value="0.33" />
+        <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/layout.xml" value="0.134375" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/layout_categories_container.xml" value="0.1642361111111111" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/layout_category.xml" value="0.25" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/layout/layout_category_large.xml" value="0.24791666666666667" />
@@ -70,7 +71,11 @@
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/menu/menu_waiter.xml" value="0.24791666666666667" />
         <entry key="..\:/Projects/Graduate/DOMO/cook-main/src/main/res/layout/activity_cook_main.xml" value="0.18032786885245902" />
         <entry key="..\:/Projects/Graduate/DOMO/cook-main/src/main/res/menu/menu_cook_main.xml" value="0.24791666666666667" />
+        <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.315" />
+        <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/ic_launcher_background.xml" value="0.315" />
+        <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/ic_launcher_foreground.xml" value="0.315" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/activity_main.xml" value="0.24791666666666667" />
+        <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/layout_order_item.xml" value="0.24791666666666667" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-authorisation/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-authorisation/src/main/res/drawable/bg_top_card.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-authorisation/src/main/res/drawable/ic_launcher_background.xml" value="0.2586805555555556" />
@@ -105,6 +110,7 @@
         <entry key="..\:/Projects/Graduate/DOMO/waiter-core/src/main/res/drawable/bg_error_dialog.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/waiter-core/src/main/res/drawable/bg_error_dialog_button.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/waiter-core/src/main/res/drawable/bg_rounded_white_24.xml" value="0.2586805555555556" />
+        <entry key="..\:/Projects/Graduate/DOMO/waiter-core/src/main/res/drawable/ic_arrow_left.xml" value="0.315" />
         <entry key="..\:/Projects/Graduate/DOMO/waiter-core/src/main/res/drawable/ic_arrow_right.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/waiter-core/src/main/res/drawable/ic_more.xml" value="0.3725" />
         <entry key="..\:/Projects/Graduate/DOMO/waiter-core/src/main/res/drawable/ic_profile.xml" value="0.2586805555555556" />

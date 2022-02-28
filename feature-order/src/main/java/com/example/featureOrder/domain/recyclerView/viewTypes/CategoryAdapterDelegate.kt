@@ -3,12 +3,12 @@ package com.example.featureOrder.domain.recyclerView.viewTypes
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import com.example.core.domain.menu.CategoryName
+import com.example.core.domain.recyclerView.interfaces.BaseAdapterDelegate
+import com.example.core.domain.recyclerView.interfaces.BaseRecyclerViewType
+import com.example.core.domain.recyclerView.interfaces.BaseViewHolder
 import com.example.featureOrder.R
 import com.example.featureOrder.databinding.LayoutCategoryBinding
-import com.example.waiterCore.domain.menu.CategoryName
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewType
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseAdapterDelegate
 
 class CategoryRecyclerViewType :
     BaseAdapterDelegate<LayoutCategoryBinding, CategoryName> {

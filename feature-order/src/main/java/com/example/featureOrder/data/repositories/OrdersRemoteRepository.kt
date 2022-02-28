@@ -1,16 +1,15 @@
 package com.example.featureOrder.data.repositories
 
-import com.example.waiterCore.domain.order.Order
-import com.example.waiterCore.domain.tools.FirestoreReferences.newOrdersListenerDocumentRef
-import com.example.waiterCore.domain.tools.FirestoreReferences.ordersCollectionRef
-import com.example.waiterCore.domain.tools.SimpleTask
-import com.example.waiterCore.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
-import com.example.waiterCore.domain.tools.constants.FirestoreConstants.DOCUMENT_ORDER_ITEM_DELIMITER
-import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
-import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ID
-import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_ORDER_INFO
-import com.example.waiterCore.domain.tools.extensions.logD
-import com.example.waiterCore.domain.tools.extensions.logE
+import com.example.core.domain.order.Order
+import com.example.core.domain.tools.FirestoreReferences.newOrdersListenerDocumentRef
+import com.example.core.domain.tools.FirestoreReferences.ordersCollectionRef
+import com.example.core.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
+import com.example.core.domain.tools.constants.FirestoreConstants.DOCUMENT_ORDER_ITEM_DELIMITER
+import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
+import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ID
+import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_INFO
+import com.example.core.domain.tools.extensions.logD
+import com.example.core.domain.tools.extensions.logE
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,7 +22,7 @@ class OrdersRemoteRepositoryImpl @Inject constructor(
 
     private val guestCountData = mutableMapOf<String, Int>()
 
-    override fun insertCurrentOrder(order: Order, task: SimpleTask) {
+    override fun insertCurrentOrder(order: Order, task: com.example.core.domain.tools.SimpleTask) {
         val orderDocumentRef = ordersCollectionRef
             .document(order.orderId.toString())
         removeAldOrderItems(
@@ -98,6 +97,6 @@ class OrdersRemoteRepositoryImpl @Inject constructor(
 }
 
 interface OrdersRemoteRepository {
-    fun insertCurrentOrder(order: Order, task: SimpleTask)
+    fun insertCurrentOrder(order: Order, task: com.example.core.domain.tools.SimpleTask)
     fun insertNewOrderDateToListener(order: Order)
 }

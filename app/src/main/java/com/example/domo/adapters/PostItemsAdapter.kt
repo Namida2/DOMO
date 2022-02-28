@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.domo.adapters.diffCallbacks.PostAdapterDiffCallback
 import com.example.domo.databinding.LayoutPostItemBinding
-import com.example.waiterCore.domain.tools.constants.EmployeePosts
+import com.example.core.domain.tools.constants.EmployeePosts
 import entities.PostItem
 
 class PostItemsAdapter(
@@ -15,7 +15,7 @@ class PostItemsAdapter(
     var setSelectedPost: (post: String) -> Unit
 ) : RecyclerView.Adapter<PostItemsAdapter.ViewHolder>(), View.OnClickListener {
 
-    private var lastSelectedPost: String = EmployeePosts.COOK
+    private var lastSelectedPost: String = com.example.core.domain.tools.constants.EmployeePosts.COOK
 
     class ViewHolder(
         val binding: LayoutPostItemBinding,

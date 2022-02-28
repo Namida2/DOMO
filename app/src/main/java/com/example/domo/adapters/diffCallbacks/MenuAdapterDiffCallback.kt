@@ -2,8 +2,8 @@ package com.example.domo.adapters.diffCallbacks
 
 import androidx.recyclerview.widget.DiffUtil
 import androidx.viewbinding.ViewBinding
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewType
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseAdapterDelegate
+import com.example.core.domain.recyclerView.interfaces.BaseAdapterDelegate
+import com.example.core.domain.recyclerView.interfaces.BaseRecyclerViewType
 
 class MenuAdapterDiffCallback(
     private val recyclerViewTypes: List<BaseAdapterDelegate<out ViewBinding, out BaseRecyclerViewType>>,
@@ -26,8 +26,8 @@ class MenuAdapterDiffCallback(
     private fun getDiffCallback(
         type: BaseRecyclerViewType,
     ): DiffUtil.ItemCallback<BaseRecyclerViewType> {
-        return recyclerViewTypes.find { it.isItMe(type) }?.getDiffCallback() as DiffUtil.ItemCallback<BaseRecyclerViewType>
-            ?: throw IllegalArgumentException("DiffCallback not found for this item: $type")
+        return recyclerViewTypes.find { it.isItMe(type) }
+            ?.getDiffCallback() as DiffUtil.ItemCallback<BaseRecyclerViewType>
     }
 
 }

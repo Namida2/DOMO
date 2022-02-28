@@ -2,16 +2,15 @@ package di
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.core.domain.Employee
+import com.example.core.domain.interfaces.OrdersService
+import com.example.core.domain.order.OrdersServiceSub
 import com.example.domo.models.interfaces.*
 import com.example.domo.splashScreen.domain.di.SplashScreenAppComponentDeps
 import com.example.domo.views.activities.WaiterMainActivity
 import com.example.domo.views.dialogs.MenuBottomSheetDialog
 import com.example.domo.views.fragments.OrderFragment
 import com.example.domo.views.fragments.TablesFragment
-import com.example.waiterCore.data.database.Database
-import com.example.waiterCore.domain.interfaces.OrdersService
-import com.example.waiterCore.domain.order.OrdersServiceSub
-import com.example.waiterMain.domain.di.WaiterMainDeps
 import dagger.BindsInstance
 import dagger.Component
 import di.modules.*
@@ -26,8 +25,9 @@ interface AppComponent : SplashScreenAppComponentDeps {
     @Component.Factory
     interface Factory {
         fun create(
+            @BindsInstance currentEmployee: Employee?,
             @BindsInstance context: Context,
-            @BindsInstance database: Database,
+            @BindsInstance database: com.example.core.data.database.Database,
             @BindsInstance sharedPreferences: SharedPreferences,
         ): AppComponent
     }

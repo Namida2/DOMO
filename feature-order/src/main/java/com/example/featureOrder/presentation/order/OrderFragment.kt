@@ -13,15 +13,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.core.domain.adapterDelegates.OrderItemAdapterDelegate
+import com.example.core.domain.adapters.BaseRecyclerViewAdapter
+import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
 import com.example.featureOrder.databinding.FragmentOrderBinding
 import com.example.featureOrder.domain.ViewModelFactory
-import com.example.featureOrder.domain.di.OrderDepsStore
-import com.example.waiterCore.domain.recyclerView.adapters.BaseRecyclerViewAdapter
-import com.example.waiterCore.domain.recyclerView.adapterDelegates.OrderItemAdapterDelegate
 import com.example.featureOrder.presentation.order.doalogs.guestsCountDialog.GuestsCountBottomSheetDialog
 import com.example.featureOrder.presentation.order.doalogs.menuDialog.MenuBottomSheetDialog
 import com.example.featureOrder.presentation.order.doalogs.orderMenuDialog.OrderMenuBottomSheetDialog
-import com.example.waiterCore.domain.tools.extensions.Animations.prepareSlideUp
 import com.google.android.material.transition.platform.MaterialContainerTransform
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Default
@@ -29,7 +28,6 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 class OrderFragment : Fragment() {
 
@@ -54,9 +52,11 @@ class OrderFragment : Fragment() {
         super.onAttach(context)
         //TODO: Add a delegate for viewModels
         adapter = BaseRecyclerViewAdapter(
-            listOf(OrderItemAdapterDelegate(
-                ::onOrderSelected
-            ))
+            listOf(
+                OrderItemAdapterDelegate(
+                    ::onOrderSelected
+                )
+            )
         )
     }
 

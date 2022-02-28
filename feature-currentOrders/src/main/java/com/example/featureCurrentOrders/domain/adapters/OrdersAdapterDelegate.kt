@@ -4,13 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import com.example.core.domain.order.Order
+import com.example.core.domain.recyclerView.interfaces.BaseAdapterDelegate
+import com.example.core.domain.recyclerView.interfaces.BaseRecyclerViewType
+import com.example.core.domain.recyclerView.interfaces.BaseViewHolder
 import com.example.featureCurrentOrders.R
 import com.example.featureCurrentOrders.databinding.LayoutOrderCardBinding
-import com.example.waiterCore.domain.order.Order
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseAdapterDelegate
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewType
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
-import com.example.waiterCore.domain.tools.extensions.logD
 
 //TODO: Implement this part //STOPPED//
 class OrdersAdapterDelegate(
@@ -53,5 +52,4 @@ class OrdersViewHolder(
         binding.orderId.text = item.orderId.toString()
         binding.orderId.text = item.orderId.toString()
     }
-
 }

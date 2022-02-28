@@ -9,12 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.core.domain.adapters.BaseRecyclerViewAdapter
 import com.example.featureCurrentOrders.R
 import com.example.featureCurrentOrders.databinding.FragmentCurrentOrdersBinding
 import com.example.featureCurrentOrders.domain.ViewModelFactory
 import com.example.featureCurrentOrders.domain.adapters.OrdersAdapterDelegate
-import com.example.waiterCore.domain.recyclerView.adapters.BaseRecyclerViewAdapter
-import com.example.waiterCore.domain.tools.extensions.logD
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
 class CurrentOrdersFragment : Fragment() {
@@ -62,7 +61,7 @@ class CurrentOrdersFragment : Fragment() {
     private fun observeNewOrdersEvent() {
         viewModel.newOrdersEvent.observe(viewLifecycleOwner) {
             val ordersList = it.getData() ?: return@observe
-            adapter.submitList(ordersList)
+            adapter.submitList(ordersList.toList())
         }
     }
 

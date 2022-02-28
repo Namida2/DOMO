@@ -9,8 +9,8 @@ dependencyResolutionManagement {
 rootProject.name = "DOMO"
 include ':app'
 include ':waiter-core'
-include ':firebase-auth-core'
 include ':feature-order'
 include ':waiter-main'
 include ':feature-currentOrders'
 include ':cook-main'
+include ':core'

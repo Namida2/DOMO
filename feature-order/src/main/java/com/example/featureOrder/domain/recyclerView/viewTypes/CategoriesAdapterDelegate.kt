@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.core.domain.menu.CategoriesNameHolder
+import com.example.core.domain.adapters.BaseRecyclerViewAdapter
+import com.example.core.domain.recyclerView.interfaces.BaseAdapterDelegate
+import com.example.core.domain.recyclerView.interfaces.BaseRecyclerViewType
+import com.example.core.domain.recyclerView.interfaces.BaseViewHolder
 import com.example.featureOrder.R
 import com.example.featureOrder.databinding.LayoutCategoriesContainerBinding
-import com.example.waiterCore.domain.recyclerView.adapters.BaseRecyclerViewAdapter
-import com.example.waiterCore.domain.menu.CategoriesNameHolder
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewType
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseAdapterDelegate
 
 //TODO: Add layouts
 class CategoriesAdapterDelegate :

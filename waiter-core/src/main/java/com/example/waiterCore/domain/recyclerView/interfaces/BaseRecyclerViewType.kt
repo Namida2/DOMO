@@ -1,3 +1,0 @@
-package com.example.waiterCore.domain.recyclerView.interfaces
-
-interface BaseRecyclerViewType

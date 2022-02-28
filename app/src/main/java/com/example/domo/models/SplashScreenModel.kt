@@ -1,18 +1,17 @@
 package com.example.domo.models
 
 import android.content.SharedPreferences
+import com.example.core.domain.Employee
+import com.example.core.domain.tools.Task
+import com.example.core.domain.tools.TaskWithEmployee
+import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_MENU_VERSION
+import com.example.core.domain.tools.extensions.logD
+import com.example.core.domain.tools.extensions.logE
 import com.example.domo.models.interfaces.MenuLocalRepository
 import com.example.domo.models.interfaces.SplashScreenModelInterface
 import com.example.domo.models.remoteRepository.interfaces.SSRemoteRepositoryInterface
-import com.example.waiterCore.domain.Employee
 import com.google.firebase.auth.FirebaseUser
-import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_MENU_VERSION
-import com.example.waiterCore.data.database.daos.EmployeeDao
 import entities.*
-import com.example.waiterCore.domain.tools.Task
-import com.example.waiterCore.domain.tools.TaskWithEmployee
-import com.example.waiterCore.domain.tools.extensions.logD
-import com.example.waiterCore.domain.tools.extensions.logE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -24,7 +23,7 @@ import javax.inject.Singleton
 @Singleton
 class SplashScreenModel @Inject constructor(
     private var menuHolder: MenuLocalRepository,
-    private var employeeDao: EmployeeDao,
+    private var employeeDao: com.example.core.data.database.daos.EmployeeDao,
     private var sharedPreferences: SharedPreferences,
     private var remoteRepository: SSRemoteRepositoryInterface,
 ) : SplashScreenModelInterface {
@@ -55,7 +54,10 @@ class SplashScreenModel @Inject constructor(
         readEmployeeData(currentUser, task)
     }
 
-    private fun readEmployeeData(currentUser: FirebaseUser, task: Task<Employee, Unit>) {
+    private fun readEmployeeData(
+        currentUser: FirebaseUser,
+        task: Task<Employee, Unit>
+    ) {
         currentUser.reload().addOnCompleteListener { firebaseAuthTask ->
             if (firebaseAuthTask.isSuccessful) {
                 CoroutineScope(Main).launch {

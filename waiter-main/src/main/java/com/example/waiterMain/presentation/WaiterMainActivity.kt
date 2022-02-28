@@ -9,23 +9,23 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
+import com.example.core.data.workers.NewOrdersWorker
+import com.example.core.domain.Employee
+import com.example.core.domain.interfaces.OrdersService
+import com.example.core.domain.order.OrdersServiceSub
+import com.example.core.domain.tools.extensions.Animations.prepareHide
+import com.example.core.domain.tools.extensions.Animations.prepareShow
+import com.example.core.domain.tools.extensions.Animations.prepareSlideDown
+import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
+import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
 import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponentDeps
 import com.example.featureOrder.domain.di.OrderAppComponentDeps
 import com.example.featureOrder.domain.di.OrderDepsStore
 import com.example.featureOrder.presentation.order.OrderFragment
 import com.example.featureOrder.presentation.tables.TablesFragment
-import com.example.waiterCore.domain.Employee
-import com.example.waiterCore.domain.interfaces.OrdersService
-import com.example.waiterCore.domain.order.OrdersServiceSub
-import com.example.waiterCore.domain.tools.extensions.Animations.prepareHide
-import com.example.waiterCore.domain.tools.extensions.Animations.prepareShow
-import com.example.waiterCore.domain.tools.extensions.Animations.prepareSlideDown
-import com.example.waiterCore.domain.tools.extensions.Animations.prepareSlideUp
-import com.example.waiterCore.domain.tools.extensions.createMessageDialog
 import com.example.waiterMain.R
 import com.example.waiterMain.databinding.ActivityWaiterMainBinding
-import com.example.waiterMain.domain.NewOrdersWorker
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
 import java.util.concurrent.TimeUnit
 
@@ -54,7 +54,6 @@ class WaiterMainActivity : AppCompatActivity(),
     }
 
     private fun makeNewOrdersWorkRequest() {
-
         val uploadWorkRequest: WorkRequest =
             PeriodicWorkRequestBuilder<NewOrdersWorker>(1, TimeUnit.MINUTES)
                 .build()
@@ -81,7 +80,7 @@ class WaiterMainActivity : AppCompatActivity(),
     private fun provideCurrentOrderDeps() {
         CurrentOrderDepsStore.deps = object : CurrentOrdersAppComponentDeps {
             override val currentEmployee: Employee?
-                get() = WaiterMainDepsStore.currentEmployee
+                get() = WaiterMainDepsStore.deps.currentEmployee
             override val ordersService: OrdersService<OrdersServiceSub>
                 get() = WaiterMainDepsStore.deps.ordersService
         }
@@ -135,7 +134,7 @@ class WaiterMainActivity : AppCompatActivity(),
     }
 
     private fun showNavigationUI() {
-        if(!wasNavigatedToOrderFragment) return
+        if (!wasNavigatedToOrderFragment) return
         with(binding) {
             appBar.prepareShow(appBar.height).start()
             bottomNavigation.prepareSlideUp(bottomNavigation.height, startDelay = 150).start()
@@ -143,9 +142,12 @@ class WaiterMainActivity : AppCompatActivity(),
     }
 
     override fun onBackPressed() {
-        when(navHostFragment.childFragmentManager.fragments[currentDestination]) {
+        when (navHostFragment.childFragmentManager.fragments[currentDestination]) {
             is OrderFragment -> {
-                navController.previousBackStackEntry?.savedStateHandle?.set(TablesFragment.isReturnedFromOrderFragment, true)
+                navController.previousBackStackEntry?.savedStateHandle?.set(
+                    TablesFragment.isReturnedFromOrderFragment,
+                    true
+                )
             }
         }
         super.onBackPressed()

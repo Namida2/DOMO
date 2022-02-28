@@ -1,8 +1,8 @@
 package com.example.domo.models
 
+import com.example.core.domain.interfaces.OrdersService
+import com.example.core.domain.order.OrdersServiceSub
 import com.example.domo.models.interfaces.WaiterActOrderFragSharedViewModel
-import com.example.waiterCore.domain.interfaces.OrdersService
-import com.example.waiterCore.domain.order.OrdersServiceSub
 import javax.inject.Inject
 
 class WaiterActOrderFragModel @Inject constructor(

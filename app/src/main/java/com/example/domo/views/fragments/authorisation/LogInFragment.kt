@@ -13,10 +13,10 @@ import com.example.domo.splashScreen.presentation.SplashScreenActivity
 import com.example.domo.viewModels.LogInViewModel
 import com.example.domo.viewModels.LogInViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
-import com.example.waiterCore.domain.tools.ErrorMessage
-import com.example.waiterCore.domain.tools.dialogs.ProcessAlertDialog
-import com.example.waiterCore.domain.tools.extensions.createMessageDialog
-import com.example.waiterCore.domain.tools.extensions.isNetworkConnected
+import com.example.core.domain.tools.ErrorMessage
+import com.example.core.domain.tools.dialogs.ProcessAlertDialog
+import com.example.core.domain.tools.extensions.createMessageDialog
+import com.example.core.domain.tools.extensions.isNetworkConnected
 
 class LogInFragment : Fragment() {
 
@@ -40,7 +40,7 @@ class LogInFragment : Fragment() {
                 if (requireContext().isNetworkConnected()) {
                     viewModel?.signIn(email.text.toString(), password.text.toString())
                 } else requireContext().createMessageDialog(
-                    ErrorMessage(
+                    com.example.core.domain.tools.ErrorMessage(
                         R.string.defaultTitle,
                         R.string.networkConnectionMessage
                     )
@@ -54,7 +54,7 @@ class LogInFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is LogInViewModelStates.Validating -> {
-                    ProcessAlertDialog.show(parentFragmentManager, "")
+                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.show(parentFragmentManager, "")
                 }
                 is LogInViewModelStates.Success -> {
 //                    ProcessAlertDialog.onSuccess()
@@ -62,7 +62,7 @@ class LogInFragment : Fragment() {
                 }
                 else -> {
                     if (it is LogInViewModelStates.Default) return@observe
-                    ProcessAlertDialog.dismiss()
+                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.dismiss()
                     requireContext().createMessageDialog(it.errorMessage!!)
                         ?.show(parentFragmentManager, "")
                 }

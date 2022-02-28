@@ -1,10 +1,9 @@
 package com.example.domo.models.interfaces
 
+import com.example.core.domain.Employee
 import entities.PostItem
-import com.example.waiterCore.domain.tools.TaskWithEmployee
-import com.example.waiterCore.domain.Employee
 
 interface RegistrationModelInterface {
-    fun registration(employee: Employee, task: TaskWithEmployee)
+    fun registration(employee: Employee, task: com.example.core.domain.tools.TaskWithEmployee)
     fun getPostItems(): MutableList<PostItem>
 }

@@ -8,9 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.viewModels.activities.SplashScreenStates
 import com.example.domo.viewModels.activities.SplashScreenViewModel
-import com.example.waiterCore.domain.tools.constants.EmployeePosts.ADMINISTRATOR
-import com.example.waiterCore.domain.tools.constants.EmployeePosts.COOK
-import com.example.waiterCore.domain.tools.constants.EmployeePosts.WAITER
+import com.example.core.domain.tools.constants.EmployeePosts.ADMINISTRATOR
+import com.example.core.domain.tools.constants.EmployeePosts.COOK
+import com.example.core.domain.tools.constants.EmployeePosts.WAITER
 import extentions.employee
 
 

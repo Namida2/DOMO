@@ -1,12 +1,10 @@
 package com.example.domo.registration.data
 
-import com.example.waiterCore.domain.Employee
-import com.example.waiterCore.domain.tools.ErrorMessages.defaultErrorMessage
-import com.example.waiterCore.domain.tools.ErrorMessages.emailAlreadyExistsMessage
-import com.example.waiterCore.domain.tools.TaskWithEmployee
-import com.example.waiterCore.domain.tools.constants.FirestoreConstants
-import com.example.waiterCore.domain.tools.extensions.logD
-import com.example.waiterCore.domain.tools.extensions.logE
+import com.example.core.domain.Employee
+import com.example.core.domain.tools.ErrorMessages.defaultErrorMessage
+import com.example.core.domain.tools.ErrorMessages.emailAlreadyExistsMessage
+import com.example.core.domain.tools.extensions.logD
+import com.example.core.domain.tools.extensions.logE
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -15,7 +13,7 @@ import javax.inject.Inject
 interface RegistrationRemoteRepository {
     fun registration(
         employee: Employee,
-        task: TaskWithEmployee,
+        task: com.example.core.domain.tools.TaskWithEmployee,
     )
 }
 
@@ -25,13 +23,13 @@ class RegistrationRemoteRepositoryImpl @Inject constructor(
 ) : RegistrationRemoteRepository {
 
     private val employeesCollectionRef: CollectionReference =
-        fireStore.collection(FirestoreConstants.COLLECTION_RESTAURANTS)
-            .document(FirestoreConstants.DOCUMENT_DOMO)
-            .collection(FirestoreConstants.COLLECTION_EMPLOYEES)
+        fireStore.collection(com.example.core.domain.tools.constants.FirestoreConstants.COLLECTION_RESTAURANTS)
+            .document(com.example.core.domain.tools.constants.FirestoreConstants.DOCUMENT_DOMO)
+            .collection(com.example.core.domain.tools.constants.FirestoreConstants.COLLECTION_EMPLOYEES)
 
     override fun registration(
         employee: Employee,
-        task: TaskWithEmployee,
+        task: com.example.core.domain.tools.TaskWithEmployee,
     ) {
         auth.fetchSignInMethodsForEmail(employee.email)
             .addOnCompleteListener {
@@ -51,7 +49,7 @@ class RegistrationRemoteRepositoryImpl @Inject constructor(
 
     private fun createNewEmployee(
         employee: Employee,
-        task: TaskWithEmployee,
+        task: com.example.core.domain.tools.TaskWithEmployee,
     ) {
         auth.createUserWithEmailAndPassword(employee.email, employee.password)
             .addOnCompleteListener {
@@ -66,7 +64,7 @@ class RegistrationRemoteRepositoryImpl @Inject constructor(
 
     private fun addEmployeeToCollection(
         employee: Employee,
-        task: TaskWithEmployee,
+        task: com.example.core.domain.tools.TaskWithEmployee,
     ) {
         fireStore.runTransaction {
             it.set(employeesCollectionRef.document(employee.email), employee)

@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-    implementation project(':waiter-core')
+    implementation project(":core")
 
     implementation platform (Firebase.firebaseBom)
     implementation (Firebase.firebaseAuth)

@@ -2,16 +2,14 @@ package com.example.domo.models
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.waiterCore.domain.tools.constants.FirestoreConstants
+import com.example.core.domain.menu.Category
+import com.example.core.domain.menu.CategoryName
+import com.example.core.domain.menu.Dish
+import com.example.core.domain.tools.FirestoreReferences.menuCollectionRef
+import com.example.core.domain.tools.extensions.logE
 import com.example.domo.models.interfaces.MenuHolder
 import com.example.domo.models.interfaces.MenuHolderStates
 import com.example.domo.models.interfaces.MenuLocalRepository
-import com.example.waiterCore.domain.tools.FirestoreReferences.menuCollectionRef
-import com.example.waiterCore.data.database.daos.MenuDao
-import com.example.waiterCore.domain.menu.Category
-import com.example.waiterCore.domain.menu.CategoryName
-import com.example.waiterCore.domain.menu.Dish
-import com.example.waiterCore.domain.tools.extensions.logE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -23,13 +21,13 @@ import javax.inject.Singleton
 //TODO: Add the OrderDao and reading newOrders if they exist
 @Singleton
 class MenuService @Inject constructor(
-    private var menuDao: MenuDao,
+    private var menuDao: com.example.core.data.database.daos.MenuDao,
 ) : MenuHolder, MenuLocalRepository {
 
     private val _menuState: MutableLiveData<MenuHolderStates> =
         MutableLiveData(MenuHolderStates.Default)
     override val menuState: LiveData<MenuHolderStates> = _menuState
-    override var menu: ArrayList<Category> = ArrayList()
+    override var menu: ArrayList<Category> = arrayListOf()
 
     override fun readNewMenu(onComplete: () -> Unit) {
         _menuState.value = MenuHolderStates.MenuIsLoading
@@ -52,7 +50,8 @@ class MenuService @Inject constructor(
         onComplete: () -> Unit,
     ) {
         val dishesCollectionRef =
-            menuCollectionRef.document(category).collection(FirestoreConstants.COLLECTION_DISHES)
+            menuCollectionRef.document(category)
+                .collection(com.example.core.domain.tools.constants.FirestoreConstants.COLLECTION_DISHES)
         dishesCollectionRef.get().addOnSuccessListener {
             val dishes: ArrayList<Dish> = ArrayList()
             for (document in it)

@@ -33,19 +33,22 @@ android {
 }
 
 dependencies {
+    implementation project(":core")
+
+    implementation (WorkManager.workRuntime)
 
     implementation platform (Firebase.firebaseBom)
     implementation (Firebase.firebaseAuth)
     implementation (Firebase.firebaseFirestore)
     implementation (Firebase.firebaseAnalytics)
 
-    implementation (Dagger.dagger)
-    kapt (Dagger.compiler)
-
     implementation (Room.roomRuntime)
     annotationProcessor (Room.compiler)
     implementation (Room.roomKtx)
     kapt (Room.compiler)
+
+    implementation (Dagger.dagger)
+    kapt (Dagger.compiler)
 
     implementation (AndroidX.core)
     implementation (AndroidX.appcompat)

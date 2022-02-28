@@ -1,15 +1,18 @@
 package com.example.waiterMain.domain.di
 
 import android.content.Context
-import com.example.waiterCore.domain.interfaces.OrdersService
-import com.example.waiterCore.domain.order.OrdersServiceSub
-import com.example.waiterMain.domain.NewOrdersWorker
-import com.example.waiterMain.domain.di.modules.RemoteRepositoryModule
-import com.example.waiterMain.domain.di.modules.UseCasesModule
-import com.example.waiterMain.domain.useCases.ReadNewOrderUseCase
+import com.example.core.domain.Employee
+import com.example.core.domain.di.modules.RemoteRepositoryModule
+import com.example.core.domain.di.modules.UseCasesModule
+import com.example.core.domain.interfaces.OrdersService
+import com.example.core.domain.order.OrdersServiceSub
+import com.example.core.domain.useCases.ReadNewOrderUseCase
 import dagger.Component
 
-@Component(dependencies = [WaiterMainDeps::class], modules = [UseCasesModule::class, RemoteRepositoryModule::class])
+@Component(
+    dependencies = [WaiterMainDeps::class],
+    modules = [RemoteRepositoryModule::class, UseCasesModule::class]
+)
 interface WaiterMainAppComponent {
     @Component.Builder
     interface Builder {
@@ -21,6 +24,7 @@ interface WaiterMainAppComponent {
 }
 
 interface WaiterMainDeps {
+    val currentEmployee: Employee?
     val context: Context
     val ordersService: OrdersService<OrdersServiceSub>
 }

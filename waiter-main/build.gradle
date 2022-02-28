@@ -37,7 +37,7 @@ dependencies {
 
     implementation project(':feature-order')
     implementation project(':feature-currentOrders')
-    implementation project(':waiter-core')
+    implementation project(':core')
 
     implementation (WorkManager.workRuntime)
 

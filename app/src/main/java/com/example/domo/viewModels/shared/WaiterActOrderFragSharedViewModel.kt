@@ -4,14 +4,13 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.core.domain.order.CurrentOrderServiceSub
+import com.example.core.domain.order.Order
+import com.example.core.domain.order.OrderItem
 import com.example.domo.models.interfaces.WaiterActOrderFragSharedViewModel
-import com.example.waiterCore.domain.order.CurrentOrderServiceSub
-import com.example.waiterCore.domain.order.Order
-import com.example.waiterCore.domain.order.OrderItem
-import com.example.waiterCore.domain.tools.Event
 import entities.interfaces.OnDismissListener
 
-typealias CurrentOrderChangeEvent = Event<List<OrderItem>>
+typealias CurrentOrderChangeEvent = com.example.core.domain.tools.Event<List<OrderItem>>
 
 sealed class SharedViewModelStates {
     class ShowingMenuDialog(val fba: View) : SharedViewModelStates()
@@ -31,7 +30,8 @@ class WaiterActOrderFragSharedViewModel(
 ) : ViewModel(), OnDismissListener {
 
     private val _states: MutableLiveData<SharedViewModelStates> = MutableLiveData(
-        SharedViewModelStates.Default)
+        SharedViewModelStates.Default
+    )
     val states: LiveData<SharedViewModelStates> = _states
 
     private val _currentOrderChangedEvent: MutableLiveData<CurrentOrderChangeEvent> =
@@ -39,7 +39,7 @@ class WaiterActOrderFragSharedViewModel(
     val currentOrderChangedEvent: LiveData<CurrentOrderChangeEvent> = _currentOrderChangedEvent
 
     private val currentOrderSubscriber: CurrentOrderServiceSub = {
-        _currentOrderChangedEvent.value = Event(it)
+        _currentOrderChangedEvent.value = com.example.core.domain.tools.Event(it)
     }
 
     fun onFbaClick(fba: View) {

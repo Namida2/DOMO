@@ -2,61 +2,63 @@ package com.example.domo.viewModels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.waiterCore.domain.tools.ErrorMessage
+import com.example.core.domain.Employee
+import com.example.core.domain.tools.extensions.isValidEmail
 import com.example.domo.R
 import com.example.domo.models.interfaces.RegistrationModelInterface
-import com.example.waiterCore.domain.Employee
-import com.example.waiterCore.domain.tools.constants.EmployeePosts
-import entities.*
-import com.example.waiterCore.domain.tools.TaskWithEmployee
-import com.example.waiterCore.domain.tools.extensions.isEmptyField
-import com.example.waiterCore.domain.tools.extensions.isValidEmail
+import entities.PostItem
 
 sealed class RegistrationViewModelStates {
-    open var errorMessage: ErrorMessage? = null
+    open var errorMessage: com.example.core.domain.tools.ErrorMessage? = null
 
     object Default : RegistrationViewModelStates()
     object Validating : RegistrationViewModelStates()
     object InvalidEmail : RegistrationViewModelStates() {
-        override var errorMessage: ErrorMessage? = ErrorMessage(
-            R.string.wrongEmailFormatTitle,
-            R.string.wrongEmailFormatMessage
-        )
+        override var errorMessage: com.example.core.domain.tools.ErrorMessage? =
+            com.example.core.domain.tools.ErrorMessage(
+                R.string.wrongEmailFormatTitle,
+                R.string.wrongEmailFormatMessage
+            )
     }
 
     object EmptyField : RegistrationViewModelStates() {
-        override var errorMessage: ErrorMessage? = ErrorMessage(
-            R.string.emptyFieldTitle,
-            R.string.emptyFieldMessage
-        )
+        override var errorMessage: com.example.core.domain.tools.ErrorMessage? =
+            com.example.core.domain.tools.ErrorMessage(
+                R.string.emptyFieldTitle,
+                R.string.emptyFieldMessage
+            )
     }
 
     object ShortPassword : RegistrationViewModelStates() {
-        override var errorMessage: ErrorMessage? = ErrorMessage(
-            R.string.tooShortPasswordTitle,
-            R.string.tooShortPasswordMessage
-        )
+        override var errorMessage: com.example.core.domain.tools.ErrorMessage? =
+            com.example.core.domain.tools.ErrorMessage(
+                R.string.tooShortPasswordTitle,
+                R.string.tooShortPasswordMessage
+            )
     }
 
     object WrongPasswordConfirmation : RegistrationViewModelStates() {
-        override var errorMessage: ErrorMessage? = ErrorMessage(
-            R.string.wrongPasswordConfirmationTitle,
-            R.string.wrongPasswordConfirmationMessage
-        )
+        override var errorMessage: com.example.core.domain.tools.ErrorMessage? =
+            com.example.core.domain.tools.ErrorMessage(
+                R.string.wrongPasswordConfirmationTitle,
+                R.string.wrongPasswordConfirmationMessage
+            )
     }
 
     object EmailAlreadyExists : RegistrationViewModelStates() {
-        override var errorMessage: ErrorMessage? = ErrorMessage(
-            R.string.emailAlreadyExitsTitle,
-            R.string.emailAlreadyExistsMessage
-        )
+        override var errorMessage: com.example.core.domain.tools.ErrorMessage? =
+            com.example.core.domain.tools.ErrorMessage(
+                R.string.emailAlreadyExitsTitle,
+                R.string.emailAlreadyExistsMessage
+            )
     }
 
     object DefaultError : RegistrationViewModelStates() {
-        override var errorMessage: ErrorMessage? = ErrorMessage(
-            R.string.defaultTitle,
-            R.string.defaultMessage
-        )
+        override var errorMessage: com.example.core.domain.tools.ErrorMessage? =
+            com.example.core.domain.tools.ErrorMessage(
+                R.string.defaultTitle,
+                R.string.defaultMessage
+            )
     }
 
     class Valid(val employee: Employee) : RegistrationViewModelStates()
@@ -64,7 +66,7 @@ sealed class RegistrationViewModelStates {
 
 class RegistrationViewModel(private val model: RegistrationModelInterface) : ViewModel() {
 
-    var selectedPost: String = EmployeePosts.COOK
+    var selectedPost: String = com.example.core.domain.tools.constants.EmployeePosts.COOK
     private val MIN_PASSWORD_LENGH = 6
     private var _state =
         MutableLiveData<RegistrationViewModelStates>(RegistrationViewModelStates.Default)
@@ -73,7 +75,12 @@ class RegistrationViewModel(private val model: RegistrationModelInterface) : Vie
     fun validation(name: String, email: String, password: String, confirmPassword: String) {
         state.value = RegistrationViewModelStates.Validating
         when {
-            isEmptyField(name, email, password, confirmPassword) -> {
+            com.example.core.domain.tools.extensions.isEmptyField(
+                name,
+                email,
+                password,
+                confirmPassword
+            ) -> {
                 state.value = RegistrationViewModelStates.EmptyField; return
             }
             !email.isValidEmail() -> {
@@ -90,12 +97,12 @@ class RegistrationViewModel(private val model: RegistrationModelInterface) : Vie
         val employee = Employee(email, name, selectedPost, password)
         model.registration(
             employee,
-            object : TaskWithEmployee {
+            object : com.example.core.domain.tools.TaskWithEmployee {
                 override fun onSuccess(arg: Employee) {
                     state.value = RegistrationViewModelStates.Valid(employee)
                 }
 
-                override fun onError(message: ErrorMessage?) {
+                override fun onError(message: com.example.core.domain.tools.ErrorMessage?) {
                     when (message!!.titleId) {
                         R.string.emailAlreadyExitsTitle -> {
                             state.value = RegistrationViewModelStates.EmailAlreadyExists

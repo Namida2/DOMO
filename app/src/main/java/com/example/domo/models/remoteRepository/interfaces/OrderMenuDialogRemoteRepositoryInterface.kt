@@ -1,8 +1,7 @@
 package com.example.domo.models.remoteRepository.interfaces
 
-import com.example.waiterCore.domain.order.Order
-import com.example.waiterCore.domain.tools.SimpleTask
+import com.example.core.domain.order.Order
 
 interface OrderMenuDialogRemoteRepositoryInterface {
-    fun insertCurrentOrder(order: Order, task: SimpleTask)
+    fun insertCurrentOrder(order: Order, task: com.example.core.domain.tools.SimpleTask)
 }

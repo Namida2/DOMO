@@ -1,14 +1,14 @@
 package com.example.domo.models.remoteRepository
 
-import com.example.waiterCore.domain.tools.FirestoreReferences.employeesCollectionRef
-import com.example.waiterCore.domain.tools.FirestoreReferences.menuDocumentRef
+import com.example.core.domain.Employee
+import com.example.core.domain.tools.FirestoreReferences.employeesCollectionRef
+import com.example.core.domain.tools.FirestoreReferences.menuDocumentRef
+import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_MENU_VERSION
+import com.example.core.domain.tools.extensions.logE
 import com.example.domo.models.remoteRepository.interfaces.SSRemoteRepositoryInterface
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.toObject
-import com.example.waiterCore.domain.Employee
-import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_MENU_VERSION
-import com.example.waiterCore.domain.tools.extensions.logE
 import javax.inject.Inject
 
 

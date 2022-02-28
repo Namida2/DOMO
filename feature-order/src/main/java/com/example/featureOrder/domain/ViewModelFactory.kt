@@ -2,13 +2,13 @@ package com.example.featureOrder.domain
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.core.domain.menu.MenuService
+import com.example.core.domain.tools.constants.OtherStringConstants.UNKNOWN_VIEW_MODEL_CLASS
 import com.example.featureOrder.domain.di.OrderDepsStore
 import com.example.featureOrder.presentation.order.OrderViewModel
+import com.example.featureOrder.presentation.order.doalogs.dishDialog.DishDialogViewModel
 import com.example.featureOrder.presentation.order.doalogs.menuDialog.MenuDialogViewModel
 import com.example.featureOrder.presentation.order.doalogs.orderMenuDialog.OrderMenuDialogViewModel
-import com.example.featureOrder.presentation.order.doalogs.dishDialog.DishDialogViewModel
-import com.example.waiterCore.domain.menu.MenuService
-import com.example.waiterCore.domain.tools.constants.OtherStringConstants.UNKNOWN_VIEW_MODEL_CLASS
 
 object ViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

@@ -4,23 +4,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.core.domain.Employee
+import com.example.core.domain.tools.ErrorMessages.permissionErrorMessage
 import com.example.domo.splashScreen.domain.GetCurrentEmployeeUseCase
 import com.example.domo.splashScreen.domain.ReadMenuUseCase
-import com.example.waiterCore.domain.Employee
-import com.example.waiterCore.domain.tools.ErrorMessage
-import com.example.waiterCore.domain.tools.Task
 import kotlinx.coroutines.launch
-import com.example.waiterCore.domain.tools.ErrorMessages.permissionErrorMessage
 
 sealed class SplashScreenStates {
     object DefaultState : SplashScreenStates()
     object CheckingForCurrentEmployee : SplashScreenStates()
     class EmployeeExists(
         var employee: Employee
-        ) : SplashScreenStates()
-    class PermissionError(
-        var message: ErrorMessage = permissionErrorMessage
     ) : SplashScreenStates()
+
+    class PermissionError(
+        var message: com.example.core.domain.tools.ErrorMessage = permissionErrorMessage
+    ) : SplashScreenStates()
+
     object EmployeeDoesNotExit : SplashScreenStates()
 }
 
@@ -42,20 +42,19 @@ class SplashScreenViewModel(
     fun getCurrentEmployee() {
         viewModelScope.launch {
             _state.value = SplashScreenStates.CheckingForCurrentEmployee
-            getCurrentEmployeeUseCase.getCurrentEmployee(object : Task<Employee, Unit> {
+            getCurrentEmployeeUseCase.getCurrentEmployee(object :
+                com.example.core.domain.tools.Task<Employee, Unit> {
                 override fun onSuccess(emplpoyee: Employee) {
-                    if(emplpoyee.permission)
+                    if (emplpoyee.permission)
                         _state.value = SplashScreenStates.EmployeeExists(emplpoyee)
                     else _state.value = SplashScreenStates.PermissionError()
                 }
-                override fun onError(message: ErrorMessage?) {
+
+                override fun onError(message: com.example.core.domain.tools.ErrorMessage?) {
                     _state.value = SplashScreenStates.EmployeeDoesNotExit
                 }
             })
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-    }
 }

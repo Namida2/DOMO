@@ -18,10 +18,10 @@ import com.example.domo.adapters.itemDecorations.PostItemDecoration
 import com.example.domo.databinding.FragmentRegistrationBinding
 import com.example.domo.splashScreen.domain.ViewModelFactory
 import com.example.domo.splashScreen.presentation.SplashScreenActivity
-import com.example.waiterCore.domain.tools.ErrorMessage
-import com.example.waiterCore.domain.tools.dialogs.ProcessAlertDialog
-import com.example.waiterCore.domain.tools.extensions.createMessageDialog
-import com.example.waiterCore.domain.tools.extensions.isNetworkConnected
+import com.example.core.domain.tools.ErrorMessage
+import com.example.core.domain.tools.dialogs.ProcessAlertDialog
+import com.example.core.domain.tools.extensions.createMessageDialog
+import com.example.core.domain.tools.extensions.isNetworkConnected
 
 class RegistrationFragment: Fragment() {
 
@@ -84,7 +84,7 @@ class RegistrationFragment: Fragment() {
                     )
                 }
             else requireContext().createMessageDialog(
-                ErrorMessage(
+                com.example.core.domain.tools.ErrorMessage(
                     R.string.defaultTitle,
                     R.string.networkConnectionMessage
                 )
@@ -97,7 +97,7 @@ class RegistrationFragment: Fragment() {
             var dialog: DialogFragment? = null
             when (it) {
                 is RegistrationViewModelStates.Validating -> {
-                    ProcessAlertDialog.show(parentFragmentManager, "")
+                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.show(parentFragmentManager, "")
                 }
                 is RegistrationViewModelStates.Valid -> {
                     //Can not perform this action after onSaveInstanceState (it's about dismiss)
@@ -106,7 +106,7 @@ class RegistrationFragment: Fragment() {
                 }
                 else -> {
                     if (it is RegistrationViewModelStates.Default) return@observe
-                    ProcessAlertDialog.dismiss()
+                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.dismiss()
                     dialog = requireContext().createMessageDialog(it.errorMessage!!)
                 }
             }

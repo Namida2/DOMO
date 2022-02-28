@@ -1,0 +1,103 @@
+package com.example.core.data.workers
+
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
+import androidx.core.app.NotificationCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.work.CoroutineWorker
+import androidx.work.WorkerParameters
+import com.example.core.R
+import com.example.core.domain.di.CoreDepsStore
+import com.example.core.domain.order.Order
+import com.example.core.domain.tools.ErrorMessage
+import com.example.core.domain.tools.Event
+import com.example.core.domain.tools.FirestoreReferences.newOrdersListenerDocumentRef
+import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
+import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ID
+import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_INFO
+import com.example.core.domain.tools.constants.OtherStringConstants.NULL_ORDER_INFO_MESSAGE
+import com.example.core.domain.tools.extensions.logD
+import com.example.core.domain.tools.extensions.logE
+import com.example.core.domain.useCases.ReadNewOrderUseCase
+import com.google.firebase.firestore.ListenerRegistration
+
+typealias ErrorMessageEvent = Event<ErrorMessage>
+
+class NewOrdersWorker(
+    private val context: Context, params: WorkerParameters
+) : CoroutineWorker(context, params) {
+
+    private var id = 0
+    private val channelId = "0_0"
+    private lateinit var notificationManager: NotificationManager
+    private var readNewOrderUseCase: ReadNewOrderUseCase =
+        CoreDepsStore.appComponent.provideReadNewOrderUseCase()
+
+    companion object {
+        var ordersListener: ListenerRegistration? = null
+        private val _event: MutableLiveData<ErrorMessageEvent> = MutableLiveData()
+        val event: LiveData<ErrorMessageEvent> = _event
+    }
+
+    override suspend fun doWork(): Result {
+        if (ordersListener != null) return Result.retry()
+        createNotificationChannel()
+        ordersListener = newOrdersListenerDocumentRef.addSnapshotListener { snapshot, error ->
+            when {
+                error != null -> {
+                    logE("$this: $error")
+                    return@addSnapshotListener
+                }
+                snapshot != null && snapshot.exists() && snapshot.data != null -> {
+                    onNewOrder(snapshot.data!!)
+                }
+                else -> logD("$this: $NULL_ORDER_INFO_MESSAGE")
+            }
+
+        }
+        return Result.success()
+    }
+
+    private fun onNewOrder(data: MutableMap<String, Any>) {
+//        if (WaiterMainDepsStore.currentEmployee!!.post == COOK)
+        notificationManager.notify(
+            id++, createNotification(data.toString())
+        )
+        val orderInfo = data[FIELD_ORDER_INFO] as Map<*, *>
+        val tableId = (orderInfo[FIELD_ORDER_ID] as Long).toInt()
+        val guestCount = (orderInfo[FIELD_GUESTS_COUNT] as Long).toInt()
+        readNewOrderUseCase.readNewOrder(
+            Order(tableId, guestCount)
+        ) {
+            _event.value = ErrorMessageEvent(it)
+        }
+    }
+
+    private fun createNotification(message: String): Notification =
+        NotificationCompat.Builder(context, channelId)
+            .setSmallIcon(R.drawable.ic_email)
+            .setContentTitle("New order")
+            .setContentText(message)
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText(message)
+            )
+            .setPriority(NotificationCompat.PRIORITY_HIGH).build()
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = context.getString(R.string.app_name)
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel(channelId, name, importance).apply {
+                description = "descriptionText"
+            }
+            notificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+}

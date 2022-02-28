@@ -13,10 +13,10 @@ import com.example.domo.databinding.FragmentLogInBinding
 import com.example.domo.splashScreen.domain.ViewModelFactory
 
 import com.example.domo.splashScreen.presentation.SplashScreenActivity
-import com.example.waiterCore.domain.tools.ErrorMessages.networkConnectionMessage
-import com.example.waiterCore.domain.tools.dialogs.ProcessAlertDialog
-import com.example.waiterCore.domain.tools.extensions.createMessageDialog
-import com.example.waiterCore.domain.tools.extensions.isNetworkConnected
+import com.example.core.domain.tools.ErrorMessages.networkConnectionMessage
+import com.example.core.domain.tools.dialogs.ProcessAlertDialog
+import com.example.core.domain.tools.extensions.createMessageDialog
+import com.example.core.domain.tools.extensions.isNetworkConnected
 import extentions.employee
 
 class LogInFragment : Fragment() {
@@ -55,16 +55,16 @@ class LogInFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is LogInViewModelStates.Validating -> {
-                    ProcessAlertDialog.show(parentFragmentManager, "")
+                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.show(parentFragmentManager, "")
                 }
                 is LogInViewModelStates.Success -> {
-                    ProcessAlertDialog.dismiss()
+                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.dismiss()
                     requireActivity().employee = it.employee
                     requireContext().startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
                 }
                 else -> {
                     if (it is LogInViewModelStates.Default) return@observe
-                    ProcessAlertDialog.dismiss()
+                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.dismiss()
                     if (it.errorMessage == null) return@observe
                     requireContext().createMessageDialog(it.errorMessage!!)
                         ?.show(parentFragmentManager, "")

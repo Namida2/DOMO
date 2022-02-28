@@ -8,7 +8,7 @@ import com.example.domo.viewModels.dialogs.MenuDialogViewModel
 import com.example.domo.viewModels.dialogs.OrderMenuDialogViewModel
 import com.example.domo.viewModels.fragments.TablesViewModel
 import com.example.domo.viewModels.shared.WaiterActOrderFragSharedViewModel
-import com.example.waiterCore.domain.tools.constants.OtherStringConstants.UNKNOWN_VIEW_MODEL_CLASS
+import com.example.core.domain.tools.constants.OtherStringConstants.UNKNOWN_VIEW_MODEL_CLASS
 import di.AppComponent
 
 object ViewModelFactory : ViewModelProvider.Factory {

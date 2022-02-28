@@ -1,20 +1,19 @@
 package com.example.domo.splashScreen.presentation
 
-import com.example.waiterCore.domain.interfaces.OrdersService
-import com.example.waiterCore.domain.menu.MenuService
-import com.example.waiterCore.domain.menu.MenuServiceStates
-import com.example.waiterCore.domain.menu.MenuServiceSub
-import com.example.waiterCore.domain.order.Order
-import com.example.waiterCore.domain.order.OrderItem
-import com.example.waiterCore.domain.order.OrdersServiceSub
-import com.example.waiterCore.domain.tools.FirestoreReferences.ordersCollectionRef
-import com.example.waiterCore.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
-import com.example.waiterCore.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
-import com.example.waiterCore.domain.tools.extensions.logD
+import com.example.core.domain.interfaces.OrdersService
+import com.example.core.domain.menu.MenuService
+import com.example.core.domain.menu.MenuServiceStates
+import com.example.core.domain.menu.MenuServiceSub
+import com.example.core.domain.order.Order
+import com.example.core.domain.order.OrderItem
+import com.example.core.domain.order.OrdersServiceSub
+import com.example.core.domain.tools.FirestoreReferences.ordersCollectionRef
+import com.example.core.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
+import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
+import com.example.core.domain.tools.extensions.logD
 import javax.inject.Inject
 
 class ReadOrdersUseCaseImpl @Inject constructor(
-    private val menuService: MenuService,
     private val ordersService: OrdersService<OrdersServiceSub>,
 ) : ReadOrdersUseCase {
 
@@ -23,7 +22,7 @@ class ReadOrdersUseCaseImpl @Inject constructor(
             when (state) {
                 is MenuServiceStates.MenuExists -> {
                     readOrdersInfo()
-                    menuService.unSubscribe(this)
+                    MenuService.unSubscribe(this)
                 }
                 else -> {}
             }
@@ -31,7 +30,7 @@ class ReadOrdersUseCaseImpl @Inject constructor(
     }
 
     override fun readOrders() {
-        menuService.subscribe(subscriber)
+        MenuService.subscribe(subscriber)
     }
 
     private fun readOrdersInfo() {
@@ -49,22 +48,28 @@ class ReadOrdersUseCaseImpl @Inject constructor(
             logD("something wrong")
         }
     }
-    private fun readOrderItems(tableId: String, order: Order, isLastDocument: Boolean, listOrders: List<Order>) {
+
+    private fun readOrderItems(
+        tableId: String,
+        order: Order,
+        isLastDocument: Boolean,
+        listOrders: List<Order>
+    ) {
         ordersCollectionRef.document(tableId).collection(COLLECTION_ORDER_ITEMS).get()
             .addOnSuccessListener {
                 val orderItems = mutableSetOf<OrderItem>()
                 it.documents.forEach { document ->
-                    document.toObject(OrderItem::class.java)?.let {
-                            it1 -> orderItems.add(it1)
+                    document.toObject(OrderItem::class.java)?.let { it1 ->
+                        orderItems.add(it1)
                     }
                 }
                 order.orderItems = orderItems
-                if(isLastDocument) {
+                if (isLastDocument) {
                     ordersService.addListOfOrders(listOrders)
                 }
             }.addOnFailureListener {
                 logD("something wrong")
-        }
+            }
     }
 }
 

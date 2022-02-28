@@ -2,29 +2,28 @@ package com.example.domo.viewModels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.core.domain.Employee
 import com.example.domo.R
 import com.example.domo.models.interfaces.LogInModelInterface
-import com.example.waiterCore.domain.tools.ErrorMessage
-import com.example.waiterCore.domain.tools.TaskWithEmployee
-import com.example.waiterCore.domain.Employee
-import com.example.waiterCore.domain.tools.extensions.isEmptyField
 
 sealed class LogInViewModelStates {
-    open var errorMessage: ErrorMessage? = null
+    open var errorMessage: com.example.core.domain.tools.ErrorMessage? = null
 
     object EmptyField : LogInViewModelStates() {
-        override var errorMessage: ErrorMessage? = ErrorMessage(
-            R.string.emptyFieldTitle,
-            R.string.emptyFieldMessage
-        )
+        override var errorMessage: com.example.core.domain.tools.ErrorMessage? =
+            com.example.core.domain.tools.ErrorMessage(
+                R.string.emptyFieldTitle,
+                R.string.emptyFieldMessage
+            )
     }
 
     object Validating : LogInViewModelStates()
     object WrongEmailOrPassword : LogInViewModelStates() {
-        override var errorMessage: ErrorMessage? = ErrorMessage(
-            R.string.wrongEmailOrPasswordTitle,
-            R.string.wrongEmailOrPasswordMessage
-        )
+        override var errorMessage: com.example.core.domain.tools.ErrorMessage? =
+            com.example.core.domain.tools.ErrorMessage(
+                R.string.wrongEmailOrPasswordTitle,
+                R.string.wrongEmailOrPasswordMessage
+            )
     }
 
     class Success(employee: Employee) : LogInViewModelStates()
@@ -39,15 +38,17 @@ class LogInViewModel(
 
     fun signIn(email: String, password: String) {
         state.value = LogInViewModelStates.Validating
-        if (isEmptyField(email, password)) {
+        if (com.example.core.domain.tools.extensions.isEmptyField(email, password)) {
             state.value = LogInViewModelStates.EmptyField; return
         }
-        model.signIn(email, password, object : TaskWithEmployee {
+        model.signIn(email, password, object : com.example.core.domain.tools.TaskWithEmployee {
             override fun onSuccess(arg: Employee) {
                 state.value = LogInViewModelStates.Success(arg)
             }
-            override fun onError(message: ErrorMessage?) {
-                state.value = LogInViewModelStates.WrongEmailOrPassword.apply { errorMessage = message }
+
+            override fun onError(message: com.example.core.domain.tools.ErrorMessage?) {
+                state.value =
+                    LogInViewModelStates.WrongEmailOrPassword.apply { errorMessage = message }
             }
         })
     }

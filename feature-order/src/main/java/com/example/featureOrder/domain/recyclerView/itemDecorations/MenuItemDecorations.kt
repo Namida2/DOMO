@@ -3,7 +3,7 @@ package com.example.featureOrder.domain.recyclerView.itemDecorations
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.example.waiterCore.domain.recyclerView.adapters.BaseRecyclerViewAdapter
+import com.example.core.domain.adapters.BaseRecyclerViewAdapter
 
 class MenuItemDecorations(
     private val smallMargin: Int,

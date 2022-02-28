@@ -1,8 +1,8 @@
 package di.modules
 
-import com.example.waiterCore.domain.interfaces.OrdersService
-import com.example.waiterCore.domain.order.OrdersServiceSub
-import com.example.waiterCore.domain.order.OrdersServiceImpl
+import com.example.core.domain.interfaces.OrdersService
+import com.example.core.domain.order.OrdersServiceImpl
+import com.example.core.domain.order.OrdersServiceSub
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton

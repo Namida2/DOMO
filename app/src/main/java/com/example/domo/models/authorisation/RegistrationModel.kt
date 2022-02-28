@@ -1,14 +1,12 @@
 package com.example.domo.models.authorisation
 
 import android.view.View
+import com.example.core.domain.Employee
+import com.example.core.domain.tools.ErrorMessage
+import com.example.core.domain.tools.constants.EmployeePosts
 import com.example.domo.models.interfaces.RegistrationModelInterface
 import com.example.domo.models.remoteRepository.authorisation.RegistrationRemoteRepository
-import com.example.waiterCore.domain.tools.constants.EmployeePosts
-import com.example.waiterCore.data.database.daos.EmployeeDao
-import com.example.waiterCore.domain.tools.ErrorMessage
 import entities.PostItem
-import com.example.waiterCore.domain.tools.TaskWithEmployee
-import com.example.waiterCore.domain.Employee
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -19,11 +17,15 @@ import javax.inject.Singleton
 
 @Singleton
 class RegistrationModel @Inject constructor(
-    private val employeeDao: EmployeeDao,
+    private val employeeDao: com.example.core.data.database.daos.EmployeeDao,
     private val remoteRepository: RegistrationRemoteRepository,
 ) : RegistrationModelInterface {
-    override fun registration(employee: Employee, task: TaskWithEmployee) {
-        remoteRepository.registration(employee, object : TaskWithEmployee {
+    override fun registration(
+        employee: Employee,
+        task: com.example.core.domain.tools.TaskWithEmployee
+    ) {
+        remoteRepository.registration(employee, object :
+            com.example.core.domain.tools.TaskWithEmployee {
             override fun onSuccess(arg: Employee) {
                 CoroutineScope(IO).launch {
                     employeeDao.deleteAll()
@@ -33,6 +35,7 @@ class RegistrationModel @Inject constructor(
                     }
                 }
             }
+
             override fun onError(message: ErrorMessage?) {
                 task.onError(message)
             }

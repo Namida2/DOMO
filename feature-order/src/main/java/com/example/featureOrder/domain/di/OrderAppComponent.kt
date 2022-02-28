@@ -1,13 +1,13 @@
 package com.example.featureOrder.domain.di
 
+import com.example.core.domain.interfaces.OrdersService
+import com.example.core.domain.order.OrdersServiceSub
 import com.example.featureOrder.domain.di.modules.FirebaseModule
 import com.example.featureOrder.domain.di.modules.RemoteRepositoriesModule
 import com.example.featureOrder.domain.di.modules.ServicesModule
 import com.example.featureOrder.domain.di.modules.UseCasesModule
-import com.example.featureOrder.presentation.order.OrderFragment
 import com.example.featureOrder.domain.useCases.InsertOrderUseCase
-import com.example.waiterCore.domain.interfaces.OrdersService
-import com.example.waiterCore.domain.order.OrdersServiceSub
+import com.example.featureOrder.presentation.order.OrderFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -22,9 +22,10 @@ interface OrderAppComponent {
         fun provideOrderAppComponentDeps(deps: OrderAppComponentDeps): Builder
         fun build(): OrderAppComponent
     }
+
     fun inject(fragment: OrderFragment)
     fun provideOrderService(): OrdersService<OrdersServiceSub>
-    fun provideInsertOrderUseCase() : InsertOrderUseCase
+    fun provideInsertOrderUseCase(): InsertOrderUseCase
 }
 
 interface OrderAppComponentDeps {

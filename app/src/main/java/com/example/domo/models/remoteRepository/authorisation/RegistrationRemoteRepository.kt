@@ -1,17 +1,15 @@
 package com.example.domo.models.remoteRepository.authorisation
 
+import com.example.core.domain.Employee
+import com.example.core.domain.tools.constants.FirestoreConstants.COLLECTION_EMPLOYEES
+import com.example.core.domain.tools.constants.FirestoreConstants.COLLECTION_RESTAURANTS
+import com.example.core.domain.tools.constants.FirestoreConstants.DOCUMENT_DOMO
+import com.example.core.domain.tools.extensions.logD
+import com.example.core.domain.tools.extensions.logE
 import com.example.domo.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.example.waiterCore.domain.tools.constants.FirestoreConstants.COLLECTION_EMPLOYEES
-import com.example.waiterCore.domain.tools.constants.FirestoreConstants.COLLECTION_RESTAURANTS
-import com.example.waiterCore.domain.tools.constants.FirestoreConstants.DOCUMENT_DOMO
-import com.example.waiterCore.domain.tools.ErrorMessage
-import com.example.waiterCore.domain.tools.TaskWithEmployee
-import com.example.waiterCore.domain.Employee
-import com.example.waiterCore.domain.tools.extensions.logD
-import com.example.waiterCore.domain.tools.extensions.logE
 import javax.inject.Inject
 
 class RegistrationRemoteRepository @Inject constructor(
@@ -28,7 +26,7 @@ class RegistrationRemoteRepository @Inject constructor(
 
     fun registration(
         employee: Employee,
-        task: TaskWithEmployee,
+        task: com.example.core.domain.tools.TaskWithEmployee,
     ) {
         auth.fetchSignInMethodsForEmail(employee.email)
             .addOnCompleteListener {
@@ -39,7 +37,7 @@ class RegistrationRemoteRepository @Inject constructor(
                     } else {
                         logE("${this}: Email already exits")
                         task.onError(
-                            ErrorMessage(
+                            com.example.core.domain.tools.ErrorMessage(
                                 emailAlreadyExistsTitle,
                                 emailAlreadyExistsMessage
                             )
@@ -53,7 +51,7 @@ class RegistrationRemoteRepository @Inject constructor(
 
     private fun createNewEmployee(
         employee: Employee,
-        task: TaskWithEmployee,
+        task: com.example.core.domain.tools.TaskWithEmployee,
     ) {
         auth.createUserWithEmailAndPassword(employee.email, employee.password)
             .addOnCompleteListener {
@@ -68,7 +66,7 @@ class RegistrationRemoteRepository @Inject constructor(
 
     private fun addEmployeeToCollection(
         employee: Employee,
-        task: TaskWithEmployee,
+        task: com.example.core.domain.tools.TaskWithEmployee,
     ) {
         fireStore.runTransaction {
             it.set(employeesCollectionRef.document(employee.email), employee)
@@ -79,7 +77,7 @@ class RegistrationRemoteRepository @Inject constructor(
                 logE("${this}: ${it.exception.toString()}")
                 auth.currentUser?.delete()
                 task.onError(
-                    ErrorMessage(
+                    com.example.core.domain.tools.ErrorMessage(
                         defaultExceptionTitle,
                         defaultExceptionMessage
                     )

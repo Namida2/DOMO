@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
+import com.example.core.domain.recyclerView.interfaces.BaseAdapterDelegate
+import com.example.core.domain.recyclerView.interfaces.BaseRecyclerViewType
+import com.example.core.domain.recyclerView.interfaces.BaseViewHolder
+import com.example.core.domain.tools.constants.OtherStringConstants.VIEW_TYPE_NOT_FOUND
 import com.example.domo.adapters.diffCallbacks.MenuAdapterDiffCallback
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseViewHolder
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseRecyclerViewType
-import com.example.waiterCore.domain.recyclerView.interfaces.BaseAdapterDelegate
-import com.example.waiterCore.domain.tools.constants.OtherStringConstants.VIEW_TYPE_NOT_FOUND
 
 class Adapter(
     private var recyclerViewTypes: List<BaseAdapterDelegate<out ViewBinding, out BaseRecyclerViewType>>,

@@ -9,10 +9,10 @@ import androidx.fragment.app.viewModels
 import com.example.featureOrder.databinding.DialogOrderMenuBinding
 import com.example.featureOrder.domain.ViewModelFactory
 import com.example.featureOrder.domain.interfaces.OnDismissListener
-import com.example.waiterCore.domain.tools.ErrorMessages.networkConnectionMessage
-import com.example.waiterCore.domain.tools.dialogs.ProcessAlertDialog
-import com.example.waiterCore.domain.tools.extensions.createMessageDialog
-import com.example.waiterCore.domain.tools.extensions.isNetworkConnected
+import com.example.core.domain.tools.ErrorMessages.networkConnectionMessage
+import com.example.core.domain.tools.dialogs.ProcessAlertDialog
+import com.example.core.domain.tools.extensions.createMessageDialog
+import com.example.core.domain.tools.extensions.isNetworkConnected
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class OrderMenuBottomSheetDialog(
@@ -52,10 +52,10 @@ class OrderMenuBottomSheetDialog(
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is OrderMenuDialogVMStates.InsertingCurrentOrder -> {
-                    ProcessAlertDialog.show(childFragmentManager, "")
+                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.show(childFragmentManager, "")
                 }
                 is OrderMenuDialogVMStates.InsertingWasSuccessful -> {
-                    ProcessAlertDialog.onSuccess()
+                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.onSuccess()
                 }
                 is OrderMenuDialogVMStates.InsertingWasFailure -> {
                     requireContext().createMessageDialog(it.errorMasse)

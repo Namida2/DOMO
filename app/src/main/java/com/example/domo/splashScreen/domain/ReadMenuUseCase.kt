@@ -3,8 +3,8 @@ package com.example.domo.splashScreen.domain
 import android.content.SharedPreferences
 import com.example.domo.splashScreen.data.MenuLocalRepository
 import com.example.domo.splashScreen.data.MenuRemoteRepository
-import com.example.waiterCore.domain.tools.constants.FirestoreConstants
-import com.example.waiterCore.domain.tools.extensions.logD
+import com.example.core.domain.tools.constants.FirestoreConstants
+import com.example.core.domain.tools.extensions.logD
 import javax.inject.Inject
 
 class ReadMenuUseCaseImpl @Inject constructor(

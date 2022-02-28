@@ -3,13 +3,11 @@ package com.example.domo.authorization.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.core.domain.Employee
+import com.example.core.domain.tools.ErrorMessage
+import com.example.core.domain.tools.ErrorMessages.emptyFieldMessage
+import com.example.core.domain.tools.ErrorMessages.wrongEmailOrPassword
 import com.example.domo.authorization.domain.LogInUseCase
-import com.example.waiterCore.domain.Employee
-import com.example.waiterCore.domain.tools.ErrorMessage
-import com.example.waiterCore.domain.tools.ErrorMessages.emptyFieldMessage
-import com.example.waiterCore.domain.tools.ErrorMessages.wrongEmailOrPassword
-import com.example.waiterCore.domain.tools.TaskWithEmployee
-import com.example.waiterCore.domain.tools.extensions.isEmptyField
 
 sealed class LogInViewModelStates {
     open var errorMessage: ErrorMessage? = null
@@ -17,10 +15,13 @@ sealed class LogInViewModelStates {
     object EmptyField : LogInViewModelStates() {
         override var errorMessage: ErrorMessage? = emptyFieldMessage
     }
+
     object Validating : LogInViewModelStates()
     object WrongEmailOrPassword : LogInViewModelStates() {
-        override var errorMessage: ErrorMessage? = wrongEmailOrPassword
+        override var errorMessage: ErrorMessage? =
+            wrongEmailOrPassword
     }
+
     class Success(val employee: Employee) : LogInViewModelStates()
     object Default : LogInViewModelStates()
 }
@@ -33,10 +34,11 @@ class LogInViewModel(
 
     fun logIn(email: String, password: String) {
         _state.value = LogInViewModelStates.Validating
-        if (isEmptyField(email, password)) {
+        if (com.example.core.domain.tools.extensions.isEmptyField(email, password)) {
             _state.value = LogInViewModelStates.EmptyField; return
         }
-        logInUseCaseImpl.logIn(email, password, object : TaskWithEmployee {
+        logInUseCaseImpl.logIn(email, password, object :
+            com.example.core.domain.tools.TaskWithEmployee {
             override fun onSuccess(arg: Employee) {
                 _state.value = LogInViewModelStates.Success(arg)
             }

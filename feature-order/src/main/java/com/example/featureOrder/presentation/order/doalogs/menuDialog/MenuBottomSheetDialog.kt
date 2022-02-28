@@ -7,15 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.example.core.domain.adapterDelegates.DishesAdapterDelegate
+import com.example.core.domain.adapters.BaseRecyclerViewAdapter
 import com.example.featureOrder.R
 import com.example.featureOrder.databinding.DialogMenuBinding
 import com.example.featureOrder.domain.ViewModelFactory
 import com.example.featureOrder.domain.interfaces.OnDismissListener
-import com.example.waiterCore.domain.recyclerView.adapters.BaseRecyclerViewAdapter
 import com.example.featureOrder.domain.recyclerView.itemDecorations.MenuItemDecorations
 import com.example.featureOrder.domain.recyclerView.viewTypes.CategoriesAdapterDelegate
 import com.example.featureOrder.domain.recyclerView.viewTypes.CategoryLargeRecyclerViewType
-import com.example.waiterCore.domain.recyclerView.adapterDelegates.DishesAdapterDelegate
 import com.example.featureOrder.presentation.order.doalogs.dishDialog.DishAlertDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -80,7 +80,7 @@ class MenuBottomSheetDialog(
     private fun observeDishEvent() {
         viewModel.onDishSelected.observe(viewLifecycleOwner) {
             val dish = it.getData()
-            if(dishDialog.isAdded || dish == null) return@observe
+            if (dishDialog.isAdded || dish == null) return@observe
             dishDialog.dish = dish
             dishDialog.show(parentFragmentManager, "")
         }

@@ -6,11 +6,13 @@ import com.example.domo.authorization.presentation.LogInViewModel
 import com.example.domo.registration.presentation.RegistrationViewModel
 import com.example.domo.splashScreen.domain.di.SplashScreenAppComponent
 import com.example.domo.splashScreen.presentation.SplashScreenViewModel
-import com.example.waiterCore.domain.tools.constants.OtherStringConstants.UNKNOWN_VIEW_MODEL_CLASS
+import com.example.core.domain.tools.constants.OtherStringConstants.UNKNOWN_VIEW_MODEL_CLASS
+import com.example.domo.splashScreen.domain.di.SplashScreenDepsStore
 
 object ViewModelFactory : ViewModelProvider.Factory {
 
     lateinit var appComponent: SplashScreenAppComponent
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
 
         val viewModel = when (modelClass) {

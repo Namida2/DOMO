@@ -1,9 +1,9 @@
 package com.example.domo.models.dialogs
 
+import com.example.core.domain.menu.CategoriesNameHolder
+import com.example.core.domain.menu.Dish
 import com.example.domo.models.interfaces.MenuDialogModelInterface
 import com.example.domo.models.interfaces.MenuHolder
-import com.example.waiterCore.domain.menu.CategoriesNameHolder
-import com.example.waiterCore.domain.menu.Dish
 import javax.inject.Inject
 
 class MenuDialogModel @Inject constructor(
@@ -13,6 +13,7 @@ class MenuDialogModel @Inject constructor(
     override val menuState = menuHolder.menuState
     override fun getAllCategories(): CategoriesNameHolder =
         CategoriesNameHolder(menuHolder.getAllCategories())
+
     override fun getDishById(id: Int): Dish {
         var dish: Dish? = null
         menu.first {

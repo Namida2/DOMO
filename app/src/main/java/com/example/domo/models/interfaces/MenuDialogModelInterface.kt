@@ -1,9 +1,9 @@
 package com.example.domo.models.interfaces
 
 import androidx.lifecycle.LiveData
-import com.example.waiterCore.domain.menu.CategoriesNameHolder
-import com.example.waiterCore.domain.menu.Category
-import com.example.waiterCore.domain.menu.Dish
+import com.example.core.domain.menu.CategoriesNameHolder
+import com.example.core.domain.menu.Category
+import com.example.core.domain.menu.Dish
 
 interface MenuDialogModelInterface {
     val menuState: LiveData<MenuHolderStates>
