@@ -13,7 +13,6 @@ import com.example.core.domain.tools.constants.EmployeePosts.COOK
 import com.example.core.domain.tools.constants.EmployeePosts.WAITER
 import extentions.employee
 
-
 class SplashScreenActivity : AppCompatActivity() {
 
     private val viewModel: SplashScreenViewModel by viewModels { ViewModelFactory }
@@ -36,7 +35,7 @@ class SplashScreenActivity : AppCompatActivity() {
                     startActivity(Intent(this, AuthorizationActivity::class.java))
                 is SplashScreenStates.EmployeeExists -> {
                     employee = state.employee
-                    when (employee?.post) {
+                    when (employee.post) {
                         COOK ->
                             startActivity(Intent(this, WaiterMainActivity::class.java))
                         WAITER ->
@@ -45,8 +44,7 @@ class SplashScreenActivity : AppCompatActivity() {
                             startActivity(Intent(this, WaiterMainActivity::class.java))
                     }
                 }
-                else -> {
-                }//DefaultState
+                else -> {}//DefaultState
             }
         }
     }

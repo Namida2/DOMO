@@ -11,6 +11,7 @@
     android:clickable="true"
     android:focusable="true"
     android:layout_marginBottom="8dp"
+    app:cardElevation="4dp"
     app:cardBackgroundColor="@color/black"
     app:cardCornerRadius="24dp"
     android:id="@+id/largeOrderContainer">
@@ -26,6 +27,7 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
+            app:cardElevation="4dp"
             app:cardCornerRadius="24dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -150,7 +152,7 @@
             android:gravity="center"
             android:text="Все блюда готовы"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:visibility="visible" />
 
     </RelativeLayout>

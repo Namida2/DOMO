@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cookCore.presentation.CookCurrentOrderDetailViewModel
 import com.example.core.domain.adapterDelegates.OrderItemAdapterDelegate
 import com.example.core.domain.adapters.BaseRecyclerViewAdapter
 import com.example.core.domain.tools.constants.EmployeePosts.COOK
+import com.example.core.domain.tools.dialogs.ClosedQuestionDialog
 import com.example.core.domain.tools.extensions.logD
 import com.example.featureCurrentOrders.R
 import com.example.featureCurrentOrders.databinding.FragmentCurrentOrdersDetailBinding
@@ -20,17 +22,15 @@ import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
 class CurrentOrdersDetailFragment : Fragment() {
-
     private val args: CurrentOrdersDetailFragmentArgs by navArgs()
-
     private lateinit var binding: FragmentCurrentOrdersDetailBinding
     private val viewModel by viewModels<CurrentOrderDetailViewModel> { ViewModelFactory }
+    private val cookViewModel by viewModels<CookCurrentOrderDetailViewModel> { ViewModelFactory }
     private val adapter = BaseRecyclerViewAdapter(
-        listOf(
-            OrderItemAdapterDelegate(::onDishSelected)
-        )
+        listOf(OrderItemAdapterDelegate(::onDishSelected))
     )
-
+    private var isDishCompletedDialog: ClosedQuestionDialog? = null
+    private var isCook = false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,6 +43,7 @@ class CurrentOrdersDetailFragment : Fragment() {
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
             duration = resources.getInteger(R.integer.transitionAnimationDuration).toLong()
         }
+        checkEmployeePost()
         initRecyclerView()
         observeDishesExistEvent()
         viewModel.getDishesByOrderId(args.orderId)
@@ -53,6 +54,15 @@ class CurrentOrdersDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
+    }
+
+    private fun checkEmployeePost() {
+        if (CurrentOrderDepsStore.deps.currentEmployee?.post != COOK) return
+        isCook = true
+        isDishCompletedDialog = ClosedQuestionDialog {
+            cookViewModel.doSomeMagic()
+            logD("!!!!!")
+        }
     }
 
     private fun initRecyclerView() {
@@ -75,7 +85,8 @@ class CurrentOrdersDetailFragment : Fragment() {
     }
 
     private fun onDishSelected(dishId: Int) {
-        if (CurrentOrderDepsStore.deps.currentEmployee!!.post != COOK) return
+        if (!isCook) return
+        isDishCompletedDialog?.show(parentFragmentManager, "")
         logD("I'm cook.")
     }
 }

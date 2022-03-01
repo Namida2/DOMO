@@ -1,8 +1,6 @@
 plugins {
     id 'com.android.library'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-    id "androidx.navigation.safeargs"
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
@@ -11,6 +9,8 @@ android {
     defaultConfig {
         minSdk 24
         targetSdk 31
+        versionCode 1
+        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -28,30 +28,15 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        viewBinding true
-        dataBinding true
-    }
 }
 
 dependencies {
     implementation project(":core")
-    implementation project(":cook-core")
 
-    implementation (RecyclerView.recyclerview)
-    implementation (Navigation.navigationFragmentKtx)
-    implementation (Navigation.navigationUiKtx)
-    implementation (Navigation.navigationFeaturesSupport)
-
-    implementation (Dagger.dagger)
-    kapt (Dagger.compiler)
-
-    implementation (Fragment.fragmentKtx)
-    implementation (Activity.activityKtx)
-    implementation (Coroutines.coroutinesCore)
-    implementation (ArchComponents.viewModel)
-    implementation (ArchComponents.liveData)
-    kapt(ArchComponents.lifecycleCompiler)
+    implementation platform (Firebase.firebaseBom)
+    implementation (Firebase.firebaseAuth)
+    implementation (Firebase.firebaseFirestore)
+    implementation (Firebase.firebaseAnalytics)
 
     implementation (AndroidX.core)
     implementation (AndroidX.appcompat)

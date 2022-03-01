@@ -1,9 +1,13 @@
 package com.example.core.domain.tools.dialogs
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.example.core.R
 import com.example.core.databinding.DialogMessageBinding
@@ -19,8 +23,6 @@ class MessageAlertDialog(
     private val message: String,
     private val action: (() -> Unit)? = null,
 ) : DialogFragment() {
-
-    private val DISMISS_TIME: Long = 140
 
     companion object {
         val isExist: AtomicBoolean = AtomicBoolean(false)
@@ -42,16 +44,25 @@ class MessageAlertDialog(
         super.onAttach(context)
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    @SuppressLint("ResourceType")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val binding = DialogMessageBinding.inflate(layoutInflater)
-        val builder = AlertDialog.Builder(context, R.style.alertDialogStyle)
+        val builder = AlertDialog.Builder(requireContext(), R.style.alertDialogStyle)
         with(binding) {
             titleTextView.text = title
             messageTextView.text = message
             actionButton.setOnClickListener {
                 action?.let { notNullAction -> notNullAction() }
                 CoroutineScope(Main).launch {
-                    delay(DISMISS_TIME)
+                    delay(requireContext().resources.getDimension(R.integer.dismissDialogTime).toLong())
                     dismiss()
                 }
             }

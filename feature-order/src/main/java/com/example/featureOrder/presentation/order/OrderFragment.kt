@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.core.domain.adapterDelegates.OrderItemAdapterDelegate
 import com.example.core.domain.adapters.BaseRecyclerViewAdapter
 import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
+import com.example.featureOrder.R
 import com.example.featureOrder.databinding.FragmentOrderBinding
 import com.example.featureOrder.domain.ViewModelFactory
 import com.example.featureOrder.presentation.order.doalogs.guestsCountDialog.GuestsCountBottomSheetDialog
@@ -34,8 +35,7 @@ class OrderFragment : Fragment() {
     private var tableId = 0
     private val defaultGuestsCount = 1
 
-    private val transformDuration = 300L
-    private val guestCountDelay = 400L
+    private val guestCountShowingDelay = 400L
 
     private var menuBottomSheetDialog: MenuBottomSheetDialog? = null
     private var guestCountDialog: GuestsCountBottomSheetDialog? = null
@@ -68,7 +68,7 @@ class OrderFragment : Fragment() {
     ): View? {
         sharedElementEnterTransition = MaterialContainerTransform().apply {
 //            drawingViewId = R.id.nav_host_fragment
-            duration = transformDuration
+            duration = resources.getInteger(R.integer.transitionAnimationDuration).toLong()
         }
         initBinding()
         initDialogs()
@@ -133,7 +133,7 @@ class OrderFragment : Fragment() {
 
     private fun showGuestCountDialog() {
         CoroutineScope(Default).launch {
-            delay(guestCountDelay)
+            delay(guestCountShowingDelay)
             withContext(Main) {
 //                guestCountDialog?.show(parentFragmentManager, "")
             }

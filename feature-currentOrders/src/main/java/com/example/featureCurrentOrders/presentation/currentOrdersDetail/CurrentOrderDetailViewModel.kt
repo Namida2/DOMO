@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModel
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.order.OrderItem
 import com.example.core.domain.order.OrdersServiceSub
+import com.example.core.domain.tools.Event
 
-typealias DishesExistEvent = com.example.core.domain.tools.Event<List<OrderItem>>
+typealias DishesExistEvent = Event<List<OrderItem>>
 
 class CurrentOrderDetailViewModel(
     private val ordersService: OrdersService<OrdersServiceSub>
@@ -22,7 +23,7 @@ class CurrentOrderDetailViewModel(
                 //TODO: Subscribe to newOrderService updates
             }
             else -> _dishesExitEvent.value =
-                com.example.core.domain.tools.Event(order.orderItems.toList())
+                Event(order.orderItems.toList())
         }
     }
 }
