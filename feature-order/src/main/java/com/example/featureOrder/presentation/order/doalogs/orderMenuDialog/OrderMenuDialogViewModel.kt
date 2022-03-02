@@ -28,11 +28,11 @@ class OrderMenuDialogViewModel(
 
     fun onConfirmOrderButtonClick(view: View) {
         _state.value = OrderMenuDialogVMStates.InsertingCurrentOrder
-        insertOrderUseCase.insertCurrentOrder(object: com.example.core.domain.tools.SimpleTask {
+        insertOrderUseCase.insertCurrentOrder(object: SimpleTask {
             override fun onSuccess(arg: Unit) {
                 _state.value = OrderMenuDialogVMStates.InsertingWasSuccessful
             }
-            override fun onError(message: com.example.core.domain.tools.ErrorMessage?) {
+            override fun onError(message: ErrorMessage?) {
                 _state.value = OrderMenuDialogVMStates.InsertingWasFailure()
             }
         })

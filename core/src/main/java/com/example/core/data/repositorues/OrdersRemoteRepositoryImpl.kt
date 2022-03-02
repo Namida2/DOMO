@@ -27,7 +27,7 @@ class OrdersRemoteRepositoryImpl @Inject constructor(): OrdersRemoteRepository {
             }.addOnFailureListener {
                 logE("$this: $it")
                 if (it is FirebaseNetworkException)
-                    task.onError(ErrorMessages.networkConnectionMessage)
+                    task.onError(ErrorMessages.checkNetworkConnectionMessage)
                 else task.onError(ErrorMessages.defaultErrorMessage)
             }
     }

@@ -7,7 +7,7 @@ import com.example.core.domain.tools.constants.FirestoreConstants
 
 object FirestoreReferences {
     @SuppressLint("StaticFieldLeak")
-    private var fireStore = FirebaseFirestore.getInstance()
+    var fireStore = FirebaseFirestore.getInstance()
     val employeesCollectionRef: CollectionReference =
         fireStore.collection(FirestoreConstants.COLLECTION_RESTAURANTS)
             .document(FirestoreConstants.DOCUMENT_DOMO)
@@ -30,4 +30,9 @@ object FirestoreReferences {
             .document(FirestoreConstants.DOCUMENT_DOMO)
             .collection(FirestoreConstants.COLLECTION_LISTENERS)
             .document(FirestoreConstants.DOCUMENT_NEW_ORDERS_LISTENER)
+    val orderItemsStateListenerDocumentRef =
+        fireStore.collection(FirestoreConstants.COLLECTION_RESTAURANTS)
+            .document(FirestoreConstants.DOCUMENT_DOMO)
+            .collection(FirestoreConstants.COLLECTION_LISTENERS)
+            .document(FirestoreConstants.DOCUMENT_ORDER_ITEMS_STATE_LISTENER)
 }

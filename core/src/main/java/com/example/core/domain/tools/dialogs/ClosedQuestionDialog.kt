@@ -12,11 +12,13 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class ClosedQuestionDialog(
+class ClosedQuestionDialog<A>(
     private val title: String? = null,
     private val message: String? = null,
-    private val onAccept: () -> Unit
+    private val onAccept: (arg: A?) -> Unit
 ) : DialogFragment() {
+
+    var arg: A? = null
 
     @SuppressLint("ResourceType")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -29,7 +31,7 @@ class ClosedQuestionDialog(
                 myDismiss()
             }
             acceptButton.setOnClickListener {
-                onAccept.invoke()
+                onAccept.invoke(arg)
                 myDismiss()
             }
         }

@@ -3,7 +3,7 @@ package com.example.core.domain.tools
 import com.example.core.R
 
 object ErrorMessages {
-    val networkConnectionMessage = ErrorMessage(
+    val checkNetworkConnectionMessage = ErrorMessage(
         R.string.defaultTitle,
         R.string.networkConnectionMessage
     )

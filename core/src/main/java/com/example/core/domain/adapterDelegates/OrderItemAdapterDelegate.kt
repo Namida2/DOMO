@@ -11,10 +11,12 @@ import com.example.core.domain.order.OrderItem
 import com.example.core.domain.recyclerView.interfaces.BaseAdapterDelegate
 import com.example.core.domain.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.core.domain.recyclerView.interfaces.BaseViewHolder
+import com.example.core.domain.tools.constants.FirestoreConstants
+import com.example.core.domain.tools.constants.FirestoreConstants.DOCUMENT_ORDER_ITEM_DELIMITER
 import javax.inject.Inject
 
 class OrderItemAdapterDelegate @Inject constructor(
-    private val onOrderSelected: (orderId: Int) -> Unit
+    private val onOrderSelected: (orderItemId: String) -> Unit
 ) : BaseAdapterDelegate<LayoutOrderItemBinding, OrderItem>, View.OnClickListener {
 
     override fun isItMe(recyclerViewType: BaseRecyclerViewType): Boolean =
@@ -43,7 +45,7 @@ class OrderItemAdapterDelegate @Inject constructor(
     override fun getDiffCallback(): DiffUtil.ItemCallback<OrderItem> = diffCallback
 
     override fun onClick(v: View?) {
-        v?.tag?.let { onOrderSelected.invoke(it as Int) }
+        v?.tag?.let { onOrderSelected.invoke(it as String) }
     }
 }
 
@@ -53,9 +55,10 @@ class OrderItemViewHolder(
 
     override fun onBind(item: OrderItem) {
         val dish = MenuService.getDishById(item.dishId)
+        val orderItemId = dish.id.toString() + DOCUMENT_ORDER_ITEM_DELIMITER + item.commentary
         with(binding) {
-            binding.orderLargeContainer.tag = dish.id
-            binding.orderSmallContainer.tag = dish.id
+            binding.orderLargeContainer.tag = orderItemId
+            binding.orderSmallContainer.tag = orderItemId
             category.text = dish.categoryName
             dishName.text = dish.name
             dishCost.text = dish.cost

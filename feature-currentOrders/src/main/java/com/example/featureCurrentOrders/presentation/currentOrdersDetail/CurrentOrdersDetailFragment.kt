@@ -29,8 +29,9 @@ class CurrentOrdersDetailFragment : Fragment() {
     private val adapter = BaseRecyclerViewAdapter(
         listOf(OrderItemAdapterDelegate(::onDishSelected))
     )
-    private var isDishCompletedDialog: ClosedQuestionDialog? = null
+    private var isDishCompletedDialog: ClosedQuestionDialog<String>? = null
     private var isCook = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -59,9 +60,8 @@ class CurrentOrdersDetailFragment : Fragment() {
     private fun checkEmployeePost() {
         if (CurrentOrderDepsStore.deps.currentEmployee?.post != COOK) return
         isCook = true
-        isDishCompletedDialog = ClosedQuestionDialog {
-            cookViewModel.doSomeMagic()
-            logD("!!!!!")
+        isDishCompletedDialog = ClosedQuestionDialog { orderItemId ->
+            cookViewModel.setOrderItemAsReady(args.orderId, orderItemId!!)
         }
     }
 
@@ -84,9 +84,9 @@ class CurrentOrdersDetailFragment : Fragment() {
         }
     }
 
-    private fun onDishSelected(dishId: Int) {
+    private fun onDishSelected(orderItemId: String) {
         if (!isCook) return
+        isDishCompletedDialog?.arg = orderItemId
         isDishCompletedDialog?.show(parentFragmentManager, "")
-        logD("I'm cook.")
     }
 }

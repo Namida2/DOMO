@@ -9,8 +9,7 @@ import androidx.fragment.app.viewModels
 import com.example.featureOrder.databinding.DialogOrderMenuBinding
 import com.example.featureOrder.domain.ViewModelFactory
 import com.example.featureOrder.domain.interfaces.OnDismissListener
-import com.example.core.domain.tools.ErrorMessages.networkConnectionMessage
-import com.example.core.domain.tools.dialogs.ProcessAlertDialog
+import com.example.core.domain.tools.ErrorMessages.checkNetworkConnectionMessage
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.core.domain.tools.extensions.isNetworkConnected
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -43,7 +42,7 @@ class OrderMenuBottomSheetDialog(
             acceptOrderButton.setOnClickListener {
                 if (requireContext().isNetworkConnected()) {
                     viewModel.onConfirmOrderButtonClick(acceptOrderButton)
-                } else requireContext().createMessageDialog(networkConnectionMessage)
+                } else requireContext().createMessageDialog(checkNetworkConnectionMessage)
             }
         }
     }

@@ -2,7 +2,7 @@ package com.example.core.domain.tools.extensions
 
 import com.example.core.domain.Employee
 import com.example.core.domain.tools.ErrorMessages.defaultErrorMessage
-import com.example.core.domain.tools.ErrorMessages.networkConnectionMessage
+import com.example.core.domain.tools.ErrorMessages.checkNetworkConnectionMessage
 import com.example.core.domain.tools.ErrorMessages.wrongEmailOrPassword
 import com.example.core.domain.tools.FirestoreReferences.employeesCollectionRef
 import com.google.firebase.FirebaseNetworkException
@@ -30,7 +30,7 @@ fun String.readEmployeeByEmail (className: String, task: com.example.core.domain
     }.addOnFailureListener {
         logE("$className, email = $this: ${it.message}")
         if(it is FirebaseNetworkException)
-            task.onError(networkConnectionMessage)
+            task.onError(checkNetworkConnectionMessage)
         else task.onError(defaultErrorMessage)
     }
 }

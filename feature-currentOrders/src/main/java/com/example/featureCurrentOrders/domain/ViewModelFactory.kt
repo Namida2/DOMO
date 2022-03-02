@@ -18,6 +18,7 @@ object ViewModelFactory : ViewModelProvider.Factory {
             CurrentOrderDetailViewModel::class.java -> CurrentOrderDetailViewModel(
                 CurrentOrderDepsStore.deps.ordersService
             )
+            //TODO: Provide the dependencies //STOPPED//
             CookCurrentOrderDetailViewModel::class.java -> CookCurrentOrderDetailViewModel()
             else -> throw IllegalArgumentException(UNKNOWN_VIEW_MODEL_CLASS)
         }

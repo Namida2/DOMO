@@ -13,8 +13,7 @@ import com.example.domo.databinding.FragmentLogInBinding
 import com.example.domo.splashScreen.domain.ViewModelFactory
 
 import com.example.domo.splashScreen.presentation.SplashScreenActivity
-import com.example.core.domain.tools.ErrorMessages.networkConnectionMessage
-import com.example.core.domain.tools.dialogs.ProcessAlertDialog
+import com.example.core.domain.tools.ErrorMessages.checkNetworkConnectionMessage
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.core.domain.tools.extensions.isNetworkConnected
 import extentions.employee
@@ -41,7 +40,7 @@ class LogInFragment : Fragment() {
                 if (requireContext().isNetworkConnected()) {
                     viewModel.logIn(email.text.toString().lowercase(), password.text.toString())
                 } else requireContext().createMessageDialog(
-                   networkConnectionMessage
+                   checkNetworkConnectionMessage
                 )?.show(parentFragmentManager, "")
             }
             newAccountButton.setOnClickListener {

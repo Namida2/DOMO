@@ -9,7 +9,7 @@ import com.example.cookMain.domain.di.CookMainDepsStore
 import com.example.cookMain.presentation.CookMainActivity
 import com.example.domo.authorization.presentation.AuthorizationActivity
 import com.example.domo.splashScreen.domain.ViewModelFactory
-import com.example.core.domain.tools.ErrorMessages.networkConnectionMessage
+import com.example.core.domain.tools.ErrorMessages.checkNetworkConnectionMessage
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.core.domain.tools.extensions.isNetworkConnected
 import com.example.waiterMain.presentation.WaiterMainActivity
@@ -18,7 +18,6 @@ import com.example.core.domain.tools.constants.EmployeePosts.COOK
 import com.example.core.domain.tools.constants.EmployeePosts.WAITER
 import com.example.domo.splashScreen.domain.di.SplashScreenDepsStore
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
-import extentions.appComponent
 import extentions.employee
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -31,7 +30,7 @@ class SplashScreenActivity : AppCompatActivity() {
         subscribeToViewModelState()
         if (isNetworkConnected())
             viewModel.getCurrentEmployee()
-        else createMessageDialog(networkConnectionMessage) {
+        else createMessageDialog(checkNetworkConnectionMessage) {
             this.finish()
         }?.show(supportFragmentManager, "")
     }
