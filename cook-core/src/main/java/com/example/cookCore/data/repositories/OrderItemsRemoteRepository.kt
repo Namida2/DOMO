@@ -13,8 +13,9 @@ import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_IT
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.Transaction
+import javax.inject.Inject
 
-class OrderItemsRemoteRepositoryImpl : OrderItemsRemoteRepository {
+class OrderItemsRemoteRepositoryImpl @Inject constructor() : OrderItemsRemoteRepository {
     override fun setOrderItemAsReady(orderId: Int, orderItemId: String, task: SimpleTask) {
         val orderItemDocumentRef = ordersCollectionRef.document(orderId.toString())
             .collection(COLLECTION_ORDER_ITEMS).document(orderItemId)

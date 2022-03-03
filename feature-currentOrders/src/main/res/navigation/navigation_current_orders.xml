@@ -5,7 +5,6 @@
     android:id="@+id/navigation_current_orders"
     app:startDestination="@id/currentOrdersFragment">
 
-
     <fragment
         android:id="@+id/currentOrdersFragment"
         android:name="com.example.featureCurrentOrders.presentation.currentOrders.CurrentOrdersFragment"

@@ -2,6 +2,7 @@ package com.example.featureCurrentOrders.domain
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.cookCore.domain.di.CookCoreAppComponentStore
 import com.example.cookCore.presentation.CookCurrentOrderDetailViewModel
 import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
 import com.example.featureCurrentOrders.presentation.currentOrdersDetail.CurrentOrderDetailViewModel
@@ -19,7 +20,9 @@ object ViewModelFactory : ViewModelProvider.Factory {
                 CurrentOrderDepsStore.deps.ordersService
             )
             //TODO: Provide the dependencies //STOPPED//
-            CookCurrentOrderDetailViewModel::class.java -> CookCurrentOrderDetailViewModel()
+            CookCurrentOrderDetailViewModel::class.java -> CookCurrentOrderDetailViewModel(
+                CookCoreAppComponentStore.cookCoreAppComponent.provideChangeOrderItemStateUseCase()
+            )
             else -> throw IllegalArgumentException(UNKNOWN_VIEW_MODEL_CLASS)
         }
         return viewModel as T

@@ -164,7 +164,7 @@ class OrderFragment : Fragment() {
         }
     }
 
-    private fun onOrderSelected(orderId: Int) {
-
+    private fun onOrderSelected(orderId: String) {
+        //TODO: Implement the dishMenu dialog
     }
 }
