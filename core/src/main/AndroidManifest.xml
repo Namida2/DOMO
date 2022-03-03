@@ -9,6 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DOMO">
+        <receiver
+            android:name=".data.workers.NewOrdersService$Restarter"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="restartservice" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name=".data.workers.NewOrdersService"
+            android:enabled="true"/>
     </application>
+
+
 
 </manifest>

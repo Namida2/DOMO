@@ -1,17 +1,21 @@
 package com.example.core.data.workers
 
-import android.app.Notification
-import android.app.NotificationChannel
+import android.app.AlarmManager
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.Service
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
 import android.os.Build
-import androidx.core.app.NotificationCompat
+import android.os.IBinder
+import android.os.SystemClock
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.work.CoroutineWorker
-import androidx.work.WorkerParameters
-import com.example.core.R
 import com.example.core.domain.di.CoreDepsStore
+import com.example.core.domain.notofications.NotificationsTools.createNotification
+import com.example.core.domain.notofications.NotificationsTools.createNotificationChannel
 import com.example.core.domain.order.Order
 import com.example.core.domain.tools.ErrorMessage
 import com.example.core.domain.tools.Event
@@ -25,27 +29,85 @@ import com.example.core.domain.tools.extensions.logE
 import com.example.core.domain.useCases.ReadNewOrderUseCase
 import com.google.firebase.firestore.ListenerRegistration
 
+
 typealias ErrorMessageEvent = Event<ErrorMessage>
 
-class NewOrdersWorker(
-    private val context: Context, params: WorkerParameters
-) : CoroutineWorker(context, params) {
+//class NewOrdersWorker(
+//    private val context: Context, params: WorkerParameters
+//) : CoroutineWorker(context, params) {
+//
+//    private var id = 0
+//    private var notificationManager: NotificationManager? = null
+//    private var readNewOrderUseCase: ReadNewOrderUseCase =
+//        CoreDepsStore.appComponent.provideReadNewOrderUseCase()
+//
+//    companion object {
+//        var ordersListener: ListenerRegistration? = null
+//        private val _event: MutableLiveData<ErrorMessageEvent> = MutableLiveData()
+//        val event: LiveData<ErrorMessageEvent> = _event
+//    }
+//
+//    override suspend fun doWork(): Result {
+//        if (ordersListener != null) return Result.retry()
+//        notificationManager = createNotificationChannel(context)
+//        ordersListener = newOrdersListenerDocumentRef.addSnapshotListener { snapshot, error ->
+//            when {
+//                error != null -> {
+//                    logE("$this: $error")
+//                    return@addSnapshotListener
+//                }
+//                snapshot != null && snapshot.exists() && snapshot.data != null -> {
+//                    onNewOrder(snapshot.data!!)
+//                }
+//                else -> logD("$this: $NULL_ORDER_INFO_MESSAGE")
+//            }
+//
+//        }
+//        return Result.success()
+//    }
+//
+//    private fun onNewOrder(data: MutableMap<String, Any>) {
+////        if (WaiterMainDepsStore.currentEmployee!!.post == COOK)
+//        notificationManager?.notify(
+//            id++, createNotification(context, data.toString())
+//        )
+//        val orderInfo = data[FIELD_ORDER_INFO] as Map<*, *>
+//        val tableId = (orderInfo[FIELD_ORDER_ID] as Long).toInt()
+//        val guestCount = (orderInfo[FIELD_GUESTS_COUNT] as Long).toInt()
+//        readNewOrderUseCase.readNewOrder(
+//            Order(tableId, guestCount)
+//        ) {
+//            _event.value = ErrorMessageEvent(it)
+//        }
+//    }
+//}
+
+
+class NewOrdersService(): Service() {
 
     private var id = 0
-    private val channelId = "0_0"
-    private lateinit var notificationManager: NotificationManager
+    private var notificationManager: NotificationManager? = null
     private var readNewOrderUseCase: ReadNewOrderUseCase =
         CoreDepsStore.appComponent.provideReadNewOrderUseCase()
 
+    var ordersListener: ListenerRegistration? = null
+    private val _event: MutableLiveData<ErrorMessageEvent> = MutableLiveData()
+    val event: LiveData<ErrorMessageEvent> = _event
+
     companion object {
-        var ordersListener: ListenerRegistration? = null
-        private val _event: MutableLiveData<ErrorMessageEvent> = MutableLiveData()
-        val event: LiveData<ErrorMessageEvent> = _event
+        var isRunning = false
     }
 
-    override suspend fun doWork(): Result {
-        if (ordersListener != null) return Result.retry()
-        createNotificationChannel()
+
+    override fun onCreate() {
+        super.onCreate()
+    }
+
+    //TODO: Don't show the notification when it receive the fist notification
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        isRunning = true
+        if (ordersListener != null) return START_STICKY
+        notificationManager = createNotificationChannel(this)
         ordersListener = newOrdersListenerDocumentRef.addSnapshotListener { snapshot, error ->
             when {
                 error != null -> {
@@ -57,15 +119,14 @@ class NewOrdersWorker(
                 }
                 else -> logD("$this: $NULL_ORDER_INFO_MESSAGE")
             }
-
         }
-        return Result.success()
+        return super.onStartCommand(intent, flags, startId)
     }
 
     private fun onNewOrder(data: MutableMap<String, Any>) {
 //        if (WaiterMainDepsStore.currentEmployee!!.post == COOK)
-        notificationManager.notify(
-            id++, createNotification(data.toString())
+        notificationManager?.notify(
+            id++, createNotification(this, data.toString())
         )
         val orderInfo = data[FIELD_ORDER_INFO] as Map<*, *>
         val tableId = (orderInfo[FIELD_ORDER_ID] as Long).toInt()
@@ -77,27 +138,42 @@ class NewOrdersWorker(
         }
     }
 
-    private fun createNotification(message: String): Notification =
-        NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(R.drawable.ic_email)
-            .setContentTitle("New order")
-            .setContentText(message)
-            .setStyle(
-                NotificationCompat.BigTextStyle()
-                    .bigText(message)
-            )
-            .setPriority(NotificationCompat.PRIORITY_HIGH).build()
+    override fun onDestroy() {
+        super.onDestroy()
+        isRunning = false
+        ordersListener?.remove()
 
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = context.getString(R.string.app_name)
-            val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(channelId, name, importance).apply {
-                description = "descriptionText"
+        val broadcastIntent = Intent()
+        broadcastIntent.action = "restartservice"
+        broadcastIntent.setClass(this, Restarter::class.java)
+        this.sendBroadcast(broadcastIntent)
+    }
+
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        val restartServiceIntent = Intent(applicationContext, this.javaClass)
+        restartServiceIntent.setPackage(packageName)
+        val restartServicePendingIntent = PendingIntent.getService(
+            applicationContext,
+            1,
+            restartServiceIntent,
+            PendingIntent.FLAG_IMMUTABLE
+        )
+        val alarmService = applicationContext.getSystemService(ALARM_SERVICE) as AlarmManager
+        alarmService[AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000] =
+            restartServicePendingIntent
+        super.onTaskRemoved(rootIntent)
+    }
+
+    override fun onBind(intent: Intent?): IBinder? = null
+    class Restarter : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            logD("Service tried to stop")
+            Toast.makeText(context, "Service restarted", Toast.LENGTH_SHORT).show()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(Intent(context, NewOrdersService::class.java))
+            } else {
+                context.startService(Intent(context, NewOrdersService::class.java))
             }
-            notificationManager =
-                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
         }
     }
 }

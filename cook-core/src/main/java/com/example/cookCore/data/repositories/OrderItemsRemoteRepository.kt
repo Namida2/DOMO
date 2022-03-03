@@ -10,6 +10,7 @@ import com.example.core.domain.tools.constants.FirestoreConstants.COLLECTION_ORD
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ID
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_IS_READY
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ITEM_ID
+import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ITEM_INFO
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.Transaction
@@ -20,7 +21,7 @@ class OrderItemsRemoteRepositoryImpl @Inject constructor() : OrderItemsRemoteRep
         val orderItemDocumentRef = ordersCollectionRef.document(orderId.toString())
             .collection(COLLECTION_ORDER_ITEMS).document(orderItemId)
         fireStore.runTransaction {
-            it.update(orderItemDocumentRef, FIELD_ORDER_IS_READY, true, SetOptions.merge())
+            it.update(orderItemDocumentRef, FIELD_ORDER_IS_READY, true)
             updateOrderItemsStateListener(orderId, orderItemId, it)
         }.addOnSuccessListener {
             task.onSuccess(Unit)
@@ -37,8 +38,10 @@ class OrderItemsRemoteRepositoryImpl @Inject constructor() : OrderItemsRemoteRep
         transaction: Transaction
     ) {
         val orderItemInfo = mapOf<String, Any>(
-            FIELD_ORDER_ID to orderId,
-            FIELD_ORDER_ITEM_ID to orderItemId
+            FIELD_ORDER_ITEM_INFO to mapOf<String, Any>(
+                FIELD_ORDER_ID to orderId,
+                FIELD_ORDER_ITEM_ID to orderItemId
+            )
         )
         transaction.update(orderItemsStateListenerDocumentRef, orderItemInfo)
     }

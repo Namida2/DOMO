@@ -11,8 +11,8 @@ import com.example.core.domain.order.OrderItem
 import com.example.core.domain.recyclerView.interfaces.BaseAdapterDelegate
 import com.example.core.domain.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.core.domain.recyclerView.interfaces.BaseViewHolder
-import com.example.core.domain.tools.constants.FirestoreConstants
 import com.example.core.domain.tools.constants.FirestoreConstants.DOCUMENT_ORDER_ITEM_DELIMITER
+import com.example.core.domain.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
 import javax.inject.Inject
 
 class OrderItemAdapterDelegate @Inject constructor(
@@ -64,8 +64,18 @@ class OrderItemViewHolder(
             dishCost.text = dish.cost
             dishWeight.text = dish.weight
             dishCount.text = item.count.toString()
-            commentary.text = item.commentary + "no commentary"
+            setConditionalData(item)
         }
+    }
+
+    private fun setConditionalData(item: OrderItem) {
+        with(binding) {
+            if (item.commentary == EMPTY_COMMENTARY) commentary.visibility = View.GONE
+            else commentary.visibility = View.VISIBLE
+            if (item.isReady) isReady.visibility = View.GONE
+            else isReady.visibility = View.VISIBLE
+        }
+
     }
 }
 

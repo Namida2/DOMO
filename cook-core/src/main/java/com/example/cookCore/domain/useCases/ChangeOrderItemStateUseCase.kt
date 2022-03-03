@@ -10,15 +10,7 @@ class ChangeOrderItemStateUseCaseImpl @Inject constructor(
 ): ChangeOrderItemStateUseCase {
 
     override fun setOrderItemAsReady(orderId: Int, orderItemId: String, task: SimpleTask) {
-        orderItemsRepository.setOrderItemAsReady(orderId, orderItemId, object: SimpleTask {
-            override fun onSuccess(arg: Unit) {
-                TODO("Not yet implemented")
-            }
-            override fun onError(message: ErrorMessage?) {
-                TODO("Not yet implemented")
-            }
-        })
-
+        orderItemsRepository.setOrderItemAsReady(orderId, orderItemId, task)
     }
 }
 

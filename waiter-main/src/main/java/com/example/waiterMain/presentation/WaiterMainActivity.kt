@@ -1,15 +1,14 @@
 package com.example.waiterMain.presentation
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.WorkRequest
-import com.example.core.data.workers.NewOrdersWorker
+import com.example.core.data.workers.NewOrdersService
+import com.example.core.data.workers.NewOrdersService.Restarter
 import com.example.core.domain.Employee
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.order.OrdersServiceSub
@@ -17,7 +16,6 @@ import com.example.core.domain.tools.extensions.Animations.prepareHide
 import com.example.core.domain.tools.extensions.Animations.prepareShow
 import com.example.core.domain.tools.extensions.Animations.prepareSlideDown
 import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
-import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
 import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponentDeps
 import com.example.featureOrder.domain.di.OrderAppComponentDeps
@@ -27,7 +25,7 @@ import com.example.featureOrder.presentation.tables.TablesFragment
 import com.example.waiterMain.R
 import com.example.waiterMain.databinding.ActivityWaiterMainBinding
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
-import java.util.concurrent.TimeUnit
+
 
 class WaiterMainActivity : AppCompatActivity(),
     NavController.OnDestinationChangedListener {
@@ -37,6 +35,7 @@ class WaiterMainActivity : AppCompatActivity(),
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
     private var wasNavigatedToOrderFragment = false
+    private lateinit var newOrdersService: NewOrdersService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,20 +53,32 @@ class WaiterMainActivity : AppCompatActivity(),
     }
 
     private fun makeNewOrdersWorkRequest() {
-        val uploadWorkRequest: WorkRequest =
-            PeriodicWorkRequestBuilder<NewOrdersWorker>(1, TimeUnit.MINUTES)
-                .build()
-        WorkManager.getInstance(this)
-            .enqueue(uploadWorkRequest)
-        observeOrdersWorkerEvents()
+        newOrdersService = NewOrdersService()
+        val intent = Intent(this, newOrdersService::class.java)
+        if (!NewOrdersService.isRunning) {
+            startService(intent)
+        }
+//        val uploadWorkRequest: WorkRequest =
+//            PeriodicWorkRequestBuilder<NewOrdersWorker>(MIN_BACKOFF_MILLIS, TimeUnit.MINUTES)
+//                .build()
+//        WorkManager.getInstance(this)
+//            .enqueue(uploadWorkRequest)
+//        observeOrdersWorkerEvents()
+    }
+
+    override fun onDestroy() {
+        val broadcastIntent = Intent()
+        broadcastIntent.action = "restartservice"
+        broadcastIntent.setClass(this, Restarter::class.java)
+        this.sendBroadcast(broadcastIntent)
+        super.onDestroy()
     }
 
     private fun observeOrdersWorkerEvents() {
-        NewOrdersWorker.event.observe(this) {
-            val data = it.getData() ?: return@observe
-            createMessageDialog(data)
-                ?.show(supportFragmentManager, "")
-        }
+//        NewOrdersWorker.event.observe(this) {
+//            val data = it.getData() ?: return@observe
+//            createMessageDialog(data)?.show(supportFragmentManager, "")
+//        }
     }
 
     private fun provideFeatureOrderDeps() {

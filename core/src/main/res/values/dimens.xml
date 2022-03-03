@@ -4,6 +4,6 @@
     <dimen name="large_margin">16dp</dimen>
     <dimen name="top_tables_margin">60dp</dimen>
 
-    <item name="transitionAnimationDuration" type="integer">320</item>
+    <item name="transitionAnimationDuration" type="integer">300</item>
     <item name="dismissDialogTime" type="integer">120</item>
 </resources>

@@ -26,4 +26,5 @@ object FirestoreConstants {
     const val FIELD_ORDER_IS_READY= "ready"
     //Tools
     const val DOCUMENT_ORDER_ITEM_DELIMITER = "_"
+    const val EMPTY_COMMENTARY = ""
 }
