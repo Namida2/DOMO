@@ -13,6 +13,8 @@ import android.os.SystemClock
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.work.*
+import androidx.work.WorkRequest.MIN_BACKOFF_MILLIS
 import com.example.core.domain.di.CoreDepsStore
 import com.example.core.domain.notofications.NotificationsTools.createNotification
 import com.example.core.domain.notofications.NotificationsTools.createNotificationChannel
@@ -28,64 +30,70 @@ import com.example.core.domain.tools.extensions.logD
 import com.example.core.domain.tools.extensions.logE
 import com.example.core.domain.useCases.ReadNewOrderUseCase
 import com.google.firebase.firestore.ListenerRegistration
-
+import java.util.concurrent.TimeUnit
 
 typealias ErrorMessageEvent = Event<ErrorMessage>
 
-//class NewOrdersWorker(
-//    private val context: Context, params: WorkerParameters
-//) : CoroutineWorker(context, params) {
-//
-//    private var id = 0
-//    private var notificationManager: NotificationManager? = null
-//    private var readNewOrderUseCase: ReadNewOrderUseCase =
-//        CoreDepsStore.appComponent.provideReadNewOrderUseCase()
-//
-//    companion object {
-//        var ordersListener: ListenerRegistration? = null
-//        private val _event: MutableLiveData<ErrorMessageEvent> = MutableLiveData()
-//        val event: LiveData<ErrorMessageEvent> = _event
-//    }
-//
-//    override suspend fun doWork(): Result {
-//        if (ordersListener != null) return Result.retry()
-//        notificationManager = createNotificationChannel(context)
-//        ordersListener = newOrdersListenerDocumentRef.addSnapshotListener { snapshot, error ->
-//            when {
-//                error != null -> {
-//                    logE("$this: $error")
-//                    return@addSnapshotListener
-//                }
-//                snapshot != null && snapshot.exists() && snapshot.data != null -> {
-//                    onNewOrder(snapshot.data!!)
-//                }
-//                else -> logD("$this: $NULL_ORDER_INFO_MESSAGE")
-//            }
-//
-//        }
-//        return Result.success()
-//    }
-//
-//    private fun onNewOrder(data: MutableMap<String, Any>) {
-////        if (WaiterMainDepsStore.currentEmployee!!.post == COOK)
-//        notificationManager?.notify(
-//            id++, createNotification(context, data.toString())
-//        )
-//        val orderInfo = data[FIELD_ORDER_INFO] as Map<*, *>
-//        val tableId = (orderInfo[FIELD_ORDER_ID] as Long).toInt()
-//        val guestCount = (orderInfo[FIELD_GUESTS_COUNT] as Long).toInt()
-//        readNewOrderUseCase.readNewOrder(
-//            Order(tableId, guestCount)
-//        ) {
-//            _event.value = ErrorMessageEvent(it)
-//        }
-//    }
-//}
+class NewOrdersWorker(
+    private val context: Context, params: WorkerParameters
+) : CoroutineWorker(context, params) {
+
+    private var id = 0
+    private var notificationManager: NotificationManager? = null
+    private var readNewOrderUseCase: ReadNewOrderUseCase =
+        CoreDepsStore.appComponent.provideReadNewOrderUseCase()
+
+    companion object {
+        var isFirstNotification = true
+        var ordersListener: ListenerRegistration? = null
+        private val _event: MutableLiveData<ErrorMessageEvent> = MutableLiveData()
+        val event: LiveData<ErrorMessageEvent> = _event
+    }
+
+    override suspend fun doWork(): Result {
+        if (ordersListener != null) return Result.retry()
+        notificationManager = createNotificationChannel(context)
+        ordersListener = newOrdersListenerDocumentRef.addSnapshotListener { snapshot, error ->
+            when {
+                error != null -> {
+                    logE("$this: $error")
+                    return@addSnapshotListener
+                }
+                snapshot != null && snapshot.exists() && snapshot.data != null -> {
+                    if (!isFirstNotification)
+                        onNewOrder(snapshot.data!!)
+                    isFirstNotification = false
+                }
+                else -> logD("$this: $NULL_ORDER_INFO_MESSAGE")
+            }
+
+        }
+        return Result.success()
+    }
+
+    private fun onNewOrder(data: MutableMap<String, Any>) {
+//        if (WaiterMainDepsStore.currentEmployee!!.post == COOK)
+        notificationManager?.notify(
+            id++, createNotification(context, data.toString())
+        )
+        val orderInfo = data[FIELD_ORDER_INFO] as Map<*, *>
+        val tableId = (orderInfo[FIELD_ORDER_ID] as Long).toInt()
+        val guestCount = (orderInfo[FIELD_GUESTS_COUNT] as Long).toInt()
+        readNewOrderUseCase.readNewOrder(
+            Order(tableId, guestCount)
+        ) {
+            _event.value = ErrorMessageEvent(it)
+        }
+    }
 
 
+}
+
+//TODO: Start a foreground service
 class NewOrdersService(): Service() {
 
     private var id = 0
+    private var isFirstNotification = true
     private var notificationManager: NotificationManager? = null
     private var readNewOrderUseCase: ReadNewOrderUseCase =
         CoreDepsStore.appComponent.provideReadNewOrderUseCase()
@@ -98,8 +106,8 @@ class NewOrdersService(): Service() {
         var isRunning = false
     }
 
-
     override fun onCreate() {
+
         super.onCreate()
     }
 
@@ -115,12 +123,14 @@ class NewOrdersService(): Service() {
                     return@addSnapshotListener
                 }
                 snapshot != null && snapshot.exists() && snapshot.data != null -> {
-                    onNewOrder(snapshot.data!!)
+                    if (!isFirstNotification)
+                        onNewOrder(snapshot.data!!)
+                    isFirstNotification = false
                 }
                 else -> logD("$this: $NULL_ORDER_INFO_MESSAGE")
             }
         }
-        return super.onStartCommand(intent, flags, startId)
+        return START_STICKY
     }
 
     private fun onNewOrder(data: MutableMap<String, Any>) {
@@ -139,14 +149,13 @@ class NewOrdersService(): Service() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         isRunning = false
         ordersListener?.remove()
-
         val broadcastIntent = Intent()
         broadcastIntent.action = "restartservice"
         broadcastIntent.setClass(this, Restarter::class.java)
         this.sendBroadcast(broadcastIntent)
+        super.onDestroy()
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {
@@ -168,12 +177,20 @@ class NewOrdersService(): Service() {
     class Restarter : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
             logD("Service tried to stop")
-            Toast.makeText(context, "Service restarted", Toast.LENGTH_SHORT).show()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(Intent(context, NewOrdersService::class.java))
-            } else {
-                context.startService(Intent(context, NewOrdersService::class.java))
-            }
+
+            val uploadWorkRequest: WorkRequest =
+            PeriodicWorkRequestBuilder<NewOrdersWorker>(MIN_BACKOFF_MILLIS, TimeUnit.MINUTES)
+                .build()
+        WorkManager.getInstance(context)
+            .enqueue(uploadWorkRequest)
+//        observeOrdersWorkerEvents()
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                Toast.makeText(context, "ForegroundService", Toast.LENGTH_SHORT).show()
+//                context.startForegroundService(Intent(context, NewOrdersService::class.java))
+//            } else {
+//                Toast.makeText(context, "StartService", Toast.LENGTH_SHORT).show()
+//                context.startService(Intent(context, NewOrdersService::class.java))
+//            }
         }
     }
 }

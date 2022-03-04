@@ -2,13 +2,19 @@ package com.example.waiterMain.presentation
 
 import android.content.Intent
 import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.WorkRequest
+import androidx.work.WorkRequest.MIN_BACKOFF_MILLIS
 import com.example.core.data.workers.NewOrdersService
 import com.example.core.data.workers.NewOrdersService.Restarter
+import com.example.core.data.workers.NewOrdersWorker
 import com.example.core.domain.Employee
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.order.OrdersServiceSub
@@ -25,6 +31,7 @@ import com.example.featureOrder.presentation.tables.TablesFragment
 import com.example.waiterMain.R
 import com.example.waiterMain.databinding.ActivityWaiterMainBinding
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
+import java.util.concurrent.TimeUnit
 
 
 class WaiterMainActivity : AppCompatActivity(),
@@ -53,17 +60,17 @@ class WaiterMainActivity : AppCompatActivity(),
     }
 
     private fun makeNewOrdersWorkRequest() {
-        newOrdersService = NewOrdersService()
-        val intent = Intent(this, newOrdersService::class.java)
-        if (!NewOrdersService.isRunning) {
-            startService(intent)
-        }
-//        val uploadWorkRequest: WorkRequest =
-//            PeriodicWorkRequestBuilder<NewOrdersWorker>(MIN_BACKOFF_MILLIS, TimeUnit.MINUTES)
-//                .build()
-//        WorkManager.getInstance(this)
-//            .enqueue(uploadWorkRequest)
-//        observeOrdersWorkerEvents()
+//        newOrdersService = NewOrdersService()
+//        val intent = Intent(this, newOrdersService::class.java)
+//        if (!NewOrdersService.isRunning) {
+//            startService(intent)
+//        }
+        val uploadWorkRequest: WorkRequest =
+            PeriodicWorkRequestBuilder<NewOrdersWorker>(MIN_BACKOFF_MILLIS, TimeUnit.MINUTES)
+                .build()
+        WorkManager.getInstance(this)
+            .enqueue(uploadWorkRequest)
+        observeOrdersWorkerEvents()
     }
 
     override fun onDestroy() {
