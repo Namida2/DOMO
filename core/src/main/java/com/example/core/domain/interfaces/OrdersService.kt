@@ -21,4 +21,5 @@ interface OrdersService<Subscriber>: BaseObservable<Subscriber> {
     fun addOrder(order: Order)
     fun addListOfOrders(orders: List<Order>)
     fun getOrderById(orderId: Int): Order?
+    fun changeOrderItemStatus(orderId: Int, orderItemId: String)
 }

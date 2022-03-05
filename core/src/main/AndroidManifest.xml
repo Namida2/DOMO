@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.core">
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DOMO">
         <receiver
-            android:name=".data.workers.NewOrdersService$Restarter"
+            android:name=".data.workers.Restarter"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -19,7 +20,9 @@
         </receiver>
         <service
             android:name=".data.workers.NewOrdersService"
-            android:enabled="true"/>
+            android:enabled="true"
+            android:exported="false"
+            />
     </application>
 
 

@@ -104,5 +104,14 @@ class OrdersServiceImpl @Inject constructor() :
             it.orderId == orderId
         }
 
+    //TODO: Notify about data changes
+    override fun changeOrderItemStatus(orderId: Int, orderItemId: String) {
+        orders.find {
+            it.orderId == orderId
+        }?.orderItems?.find {
+            it.getOrderIemId() == orderItemId
+        }?.isReady = true
+    }
+
 
 }

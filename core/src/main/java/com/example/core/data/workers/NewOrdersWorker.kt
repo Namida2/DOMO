@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.IBinder
 import android.os.SystemClock
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startForegroundService
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.work.*
@@ -38,13 +39,13 @@ class NewOrdersWorker(
     private val context: Context, params: WorkerParameters
 ) : CoroutineWorker(context, params) {
 
+    var isFirstNotification = true
     private var id = 0
     private var notificationManager: NotificationManager? = null
     private var readNewOrderUseCase: ReadNewOrderUseCase =
         CoreDepsStore.appComponent.provideReadNewOrderUseCase()
 
     companion object {
-        var isFirstNotification = true
         var ordersListener: ListenerRegistration? = null
         private val _event: MutableLiveData<ErrorMessageEvent> = MutableLiveData()
         val event: LiveData<ErrorMessageEvent> = _event
@@ -68,7 +69,7 @@ class NewOrdersWorker(
             }
 
         }
-        return Result.success()
+        return Result.retry()
     }
 
     private fun onNewOrder(data: MutableMap<String, Any>) {
@@ -85,37 +86,36 @@ class NewOrdersWorker(
             _event.value = ErrorMessageEvent(it)
         }
     }
-
-
 }
 
-//TODO: Start a foreground service
+
+//TODO: Start a foreground service (maybe)
 class NewOrdersService(): Service() {
 
-    private var id = 0
+    private var id = 1
     private var isFirstNotification = true
     private var notificationManager: NotificationManager? = null
     private var readNewOrderUseCase: ReadNewOrderUseCase =
         CoreDepsStore.appComponent.provideReadNewOrderUseCase()
 
-    var ordersListener: ListenerRegistration? = null
-    private val _event: MutableLiveData<ErrorMessageEvent> = MutableLiveData()
-    val event: LiveData<ErrorMessageEvent> = _event
-
     companion object {
         var isRunning = false
+        var ordersListener: ListenerRegistration? = null
+        private val _event: MutableLiveData<ErrorMessageEvent> = MutableLiveData()
+        val event: LiveData<ErrorMessageEvent> = _event
     }
 
     override fun onCreate() {
-
         super.onCreate()
+        notificationManager = createNotificationChannel(this)
+//        startForeground(id++, createNotification(this, "NewOrdersService"))
     }
 
     //TODO: Don't show the notification when it receive the fist notification
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        Toast.makeText(this, "onStartCommand", Toast.LENGTH_SHORT).show()
         isRunning = true
         if (ordersListener != null) return START_STICKY
-        notificationManager = createNotificationChannel(this)
         ordersListener = newOrdersListenerDocumentRef.addSnapshotListener { snapshot, error ->
             when {
                 error != null -> {
@@ -133,6 +133,31 @@ class NewOrdersService(): Service() {
         return START_STICKY
     }
 
+    override fun onDestroy() {
+        isRunning = false
+        ordersListener?.remove()
+        val intent = Intent("restartservice")
+        sendBroadcast(intent)
+        super.onDestroy()
+    }
+
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        val intent = Intent("YOUR_ACTION_NAME")
+        intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
+        val pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0)
+        val restartService = Intent(
+            applicationContext,
+            this.javaClass
+        )
+        restartService.setPackage(packageName)
+        val alarmService = applicationContext.getSystemService(ALARM_SERVICE) as AlarmManager
+        alarmService[AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000] =
+            pendingIntent
+        super.onTaskRemoved(rootIntent)
+    }
+
+    override fun onBind(intent: Intent?): IBinder? = null
+
     private fun onNewOrder(data: MutableMap<String, Any>) {
 //        if (WaiterMainDepsStore.currentEmployee!!.post == COOK)
         notificationManager?.notify(
@@ -147,50 +172,16 @@ class NewOrdersService(): Service() {
             _event.value = ErrorMessageEvent(it)
         }
     }
+}
 
-    override fun onDestroy() {
-        isRunning = false
-        ordersListener?.remove()
-        val broadcastIntent = Intent()
-        broadcastIntent.action = "restartservice"
-        broadcastIntent.setClass(this, Restarter::class.java)
-        this.sendBroadcast(broadcastIntent)
-        super.onDestroy()
-    }
-
-    override fun onTaskRemoved(rootIntent: Intent?) {
-        val restartServiceIntent = Intent(applicationContext, this.javaClass)
-        restartServiceIntent.setPackage(packageName)
-        val restartServicePendingIntent = PendingIntent.getService(
-            applicationContext,
-            1,
-            restartServiceIntent,
-            PendingIntent.FLAG_IMMUTABLE
-        )
-        val alarmService = applicationContext.getSystemService(ALARM_SERVICE) as AlarmManager
-        alarmService[AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000] =
-            restartServicePendingIntent
-        super.onTaskRemoved(rootIntent)
-    }
-
-    override fun onBind(intent: Intent?): IBinder? = null
-    class Restarter : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent?) {
-            logD("Service tried to stop")
-
-            val uploadWorkRequest: WorkRequest =
+class Restarter: BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent?) {
+        logD("Service tried to stop")
+        Toast.makeText(context, "Restarter", Toast.LENGTH_LONG).show()
+        val uploadWorkRequest: WorkRequest =
             PeriodicWorkRequestBuilder<NewOrdersWorker>(MIN_BACKOFF_MILLIS, TimeUnit.MINUTES)
                 .build()
         WorkManager.getInstance(context)
             .enqueue(uploadWorkRequest)
-//        observeOrdersWorkerEvents()
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                Toast.makeText(context, "ForegroundService", Toast.LENGTH_SHORT).show()
-//                context.startForegroundService(Intent(context, NewOrdersService::class.java))
-//            } else {
-//                Toast.makeText(context, "StartService", Toast.LENGTH_SHORT).show()
-//                context.startService(Intent(context, NewOrdersService::class.java))
-//            }
-        }
     }
 }
