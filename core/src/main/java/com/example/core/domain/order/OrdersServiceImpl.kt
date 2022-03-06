@@ -86,6 +86,7 @@ class OrdersServiceImpl @Inject constructor() :
         orders.forEachIndexed { index, order ->
             if (order.orderId == newOrder.orderId) {
                 orders[index] = newOrder
+                notifyChanges()
                 return
             }
         }
@@ -104,7 +105,7 @@ class OrdersServiceImpl @Inject constructor() :
             it.orderId == orderId
         }
 
-    //TODO: Notify about data changes
+    //TODO: Notify about data changes //STOPPED//
     override fun changeOrderItemStatus(orderId: Int, orderItemId: String) {
         orders.find {
             it.orderId == orderId

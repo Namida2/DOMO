@@ -1,5 +1,6 @@
 package com.example.featureCurrentOrders.presentation.currentOrdersDetail
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +33,11 @@ class CurrentOrdersDetailFragment : Fragment() {
     private var isDishCompletedDialog: ClosedQuestionDialog<String>? = null
     private var isCook = false
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        viewModel.orderId = args.orderId
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,7 +53,6 @@ class CurrentOrdersDetailFragment : Fragment() {
         checkEmployeePost()
         initRecyclerView()
         observeDishesExistEvent()
-        viewModel.getDishesByOrderId(args.orderId)
         return binding.root
     }
 
@@ -77,9 +82,9 @@ class CurrentOrdersDetailFragment : Fragment() {
     }
 
     private fun observeDishesExistEvent() {
-        viewModel.dishesExitEvent.observe(viewLifecycleOwner) {
+        viewModel.newOrderItemsEvent.observe(viewLifecycleOwner) {
             it.getData()?.let { listOfDishes ->
-                adapter.submitList(listOfDishes)
+                adapter.submitList(listOfDishes.toList())
             }
         }
     }

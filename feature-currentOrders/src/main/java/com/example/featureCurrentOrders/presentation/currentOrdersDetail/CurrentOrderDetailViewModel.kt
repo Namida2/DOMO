@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.core.domain.interfaces.OrdersService
+import com.example.core.domain.order.Order
 import com.example.core.domain.order.OrderItem
 import com.example.core.domain.order.OrdersServiceSub
 import com.example.core.domain.tools.Event
+import kotlin.properties.Delegates
 
 typealias DishesExistEvent = Event<List<OrderItem>>
 
@@ -14,16 +16,24 @@ class CurrentOrderDetailViewModel(
     private val ordersService: OrdersService<OrdersServiceSub>
 ) : ViewModel() {
 
-    private val _dishesExitEvent = MutableLiveData<DishesExistEvent>()
-    val dishesExitEvent: LiveData<DishesExistEvent> = _dishesExitEvent
+    var orderId: Int? = null
+    set(value) {
+        field = value
+        ordersService.subscribe(subscriber)
+    }
+    private val _newOrderItemsEvent = MutableLiveData<DishesExistEvent>()
+    val newOrderItemsEvent: LiveData<DishesExistEvent> = _newOrderItemsEvent
 
-    fun getDishesByOrderId(orderId: Int) {
-        when (val order = ordersService.getOrderById(orderId)) {
-            null -> {
-                //TODO: Subscribe to newOrderService updates
+    private val subscriber = object : OrdersServiceSub {
+        override fun invoke(orders: List<Order>) {
+            orders.find { it.orderId == orderId}?.let {
+                _newOrderItemsEvent.value = Event(it.orderItems.toList())
             }
-            else -> _dishesExitEvent.value =
-                Event(order.orderItems.toList())
         }
+    }
+
+    override fun onCleared() {
+        ordersService.unSubscribe(subscriber)
+        super.onCleared()
     }
 }

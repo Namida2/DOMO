@@ -29,4 +29,8 @@ class CookMainActivity : AppCompatActivity() {
                 get() = CookMainDepsStore.deps.ordersService
         }
     }
+
+    private fun mareWorkerRequests() {
+
+    }
 }
