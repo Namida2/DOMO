@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.domain.adapters.BaseRecyclerViewAdapter
+import com.example.core.domain.tools.extensions.logD
 import com.example.featureCurrentOrders.R
 import com.example.featureCurrentOrders.databinding.FragmentCurrentOrdersBinding
 import com.example.featureCurrentOrders.domain.ViewModelFactory
@@ -58,10 +59,11 @@ class CurrentOrdersFragment : Fragment() {
         }
     }
 
+    //TODO: Accept the same order //STOPPED//
     private fun observeNewOrdersEvent() {
         viewModel.newOrdersEvent.observe(viewLifecycleOwner) {
             val ordersList = it.getData() ?: return@observe
-            adapter.submitList(ordersList.toList())
+            adapter.submitList(ordersList)
         }
     }
 

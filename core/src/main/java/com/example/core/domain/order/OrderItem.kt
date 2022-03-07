@@ -17,9 +17,9 @@ data class OrderItem(
 
     override fun equals(other: Any?): Boolean =
         if (other !is OrderItem) false
-        else dishId == other.dishId && commentary == other.commentary
+        else dishId == other.dishId && commentary == other.commentary && isReady == other.isReady
 
-    override fun hashCode(): Int = "$$dishId: $commentary".hashCode()
+    override fun hashCode(): Int = "$dishId: $commentary".hashCode()
 }
 
 

@@ -11,11 +11,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cookCore.presentation.CookCurrentOrderDetailViewModel
-import com.example.core.domain.adapterDelegates.OrderItemAdapterDelegate
+import com.example.core.domain.adapterDelegates.OrderItemsAdapterDelegate
 import com.example.core.domain.adapters.BaseRecyclerViewAdapter
 import com.example.core.domain.tools.constants.EmployeePosts.COOK
 import com.example.core.domain.tools.dialogs.ClosedQuestionDialog
-import com.example.core.domain.tools.extensions.logD
 import com.example.featureCurrentOrders.R
 import com.example.featureCurrentOrders.databinding.FragmentCurrentOrdersDetailBinding
 import com.example.featureCurrentOrders.domain.ViewModelFactory
@@ -28,7 +27,7 @@ class CurrentOrdersDetailFragment : Fragment() {
     private val viewModel by viewModels<CurrentOrderDetailViewModel> { ViewModelFactory }
     private val cookViewModel by viewModels<CookCurrentOrderDetailViewModel> { ViewModelFactory }
     private val adapter = BaseRecyclerViewAdapter(
-        listOf(OrderItemAdapterDelegate(::onDishSelected))
+        listOf(OrderItemsAdapterDelegate(::onDishSelected))
     )
     private var isDishCompletedDialog: ClosedQuestionDialog<String>? = null
     private var isCook = false
@@ -84,7 +83,7 @@ class CurrentOrdersDetailFragment : Fragment() {
     private fun observeDishesExistEvent() {
         viewModel.newOrderItemsEvent.observe(viewLifecycleOwner) {
             it.getData()?.let { listOfDishes ->
-                adapter.submitList(listOfDishes.toList())
+                adapter.submitList(listOfDishes)
             }
         }
     }

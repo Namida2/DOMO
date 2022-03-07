@@ -39,6 +39,7 @@ dependencies {
     implementation project(":core")
     implementation project(':feature-currentOrders')
 
+    implementation (WorkManager.workRuntime)
     implementation (RecyclerView.recyclerview)
     implementation (Navigation.navigationFragmentKtx)
     implementation (Navigation.navigationUiKtx)

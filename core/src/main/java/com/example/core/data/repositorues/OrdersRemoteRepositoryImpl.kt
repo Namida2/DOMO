@@ -16,7 +16,7 @@ class OrdersRemoteRepositoryImpl @Inject constructor(): OrdersRemoteRepository {
         val tableId = order.orderId.toString()
         ordersCollectionRef.document(tableId).collection(FirestoreConstants.COLLECTION_ORDER_ITEMS)
             .get().addOnSuccessListener {
-                val orderItems = mutableSetOf<OrderItem>()
+                val orderItems = mutableListOf<OrderItem>()
                 it.documents.forEach { document ->
                     document.toObject(OrderItem::class.java)?.let { it1 ->
                         orderItems.add(it1)

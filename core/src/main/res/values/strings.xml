@@ -33,5 +33,5 @@
     <string name="permissionErrorMessage">Владльцу данной почты пока запрещено работать с приложением. Обатитесь к администратору.</string>
 
     <string name="dishAlreadyAddedTitle">Это блюдо уже добавленно</string>
-    <string name="dishAlreadyAddedMessage">Если необходимо извенить количесвто порцый данного блюда, вернитесь на экран заказа и нажмите на карточку с нужным блюдом.</string>
+    <string name="dishAlreadyAddedMessage">Если необходимо изменить количество порций данного блюда, вернитесь на экран заказа и нажмите на карточку с нужным блюдом.</string>
 </resources>

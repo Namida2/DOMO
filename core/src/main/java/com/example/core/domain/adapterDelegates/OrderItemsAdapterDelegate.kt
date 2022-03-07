@@ -15,7 +15,7 @@ import com.example.core.domain.tools.constants.FirestoreConstants.DOCUMENT_ORDER
 import com.example.core.domain.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
 import javax.inject.Inject
 
-class OrderItemAdapterDelegate @Inject constructor(
+class OrderItemsAdapterDelegate @Inject constructor(
     private val onOrderSelected: (orderItemId: String) -> Unit
 ) : BaseAdapterDelegate<LayoutOrderItemBinding, OrderItem>, View.OnClickListener {
 
@@ -57,8 +57,8 @@ class OrderItemViewHolder(
         val dish = MenuService.getDishById(item.dishId)
         val orderItemId = dish.id.toString() + DOCUMENT_ORDER_ITEM_DELIMITER + item.commentary
         with(binding) {
-            binding.orderLargeContainer.tag = orderItemId
-            binding.orderSmallContainer.tag = orderItemId
+            orderLargeContainer.tag = orderItemId
+            orderSmallContainer.tag = orderItemId
             category.text = dish.categoryName
             dishName.text = dish.name
             dishCost.text = dish.cost
@@ -72,8 +72,8 @@ class OrderItemViewHolder(
         with(binding) {
             if (item.commentary == EMPTY_COMMENTARY) commentary.visibility = View.GONE
             else commentary.visibility = View.VISIBLE
-            if (item.isReady) isReady.visibility = View.GONE
-            else isReady.visibility = View.VISIBLE
+            if (item.isReady) isReady.visibility = View.VISIBLE
+            else isReady.visibility = View.GONE
         }
 
     }

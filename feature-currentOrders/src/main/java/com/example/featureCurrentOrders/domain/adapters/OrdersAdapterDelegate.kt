@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import com.example.core.domain.menu.MenuService
 import com.example.core.domain.order.Order
 import com.example.core.domain.recyclerView.interfaces.BaseAdapterDelegate
 import com.example.core.domain.recyclerView.interfaces.BaseRecyclerViewType
@@ -18,9 +19,10 @@ class OrdersAdapterDelegate(
 
     override fun isItMe(recyclerViewType: BaseRecyclerViewType): Boolean = recyclerViewType is Order
     private val diffCallback = object : DiffUtil.ItemCallback<Order>() {
-        override fun areItemsTheSame(oldItem: Order, newItem: Order): Boolean = newItem == newItem
+        override fun areItemsTheSame(oldItem: Order, newItem: Order): Boolean =
+            oldItem == newItem
         override fun areContentsTheSame(oldItem: Order, newItem: Order): Boolean =
-            newItem == newItem
+            oldItem == newItem
     }
 
     override fun getViewHolder(
@@ -45,11 +47,28 @@ class OrdersAdapterDelegate(
 class OrdersViewHolder(
     override val binding: LayoutOrderCardBinding
 ) : BaseViewHolder<LayoutOrderCardBinding, Order>(binding) {
-
+    private val tooLongNamePreviewDelimiter = "...\n"
+    private val namePreviewDelimiter = "\n"
+    private var preview = ""
+    private val maxDishNameLength = 16
+    private val averageOrderItemsCount = 4
     override fun onBind(item: Order) {
+        var allReady = true
         binding.largeOrderContainer.tag = item.orderId
         binding.orderContainerCardView.tag = item.orderId
         binding.orderId.text = item.orderId.toString()
         binding.orderId.text = item.orderId.toString()
+        val count = item.orderItems.size.coerceAtMost(averageOrderItemsCount)
+        item.orderItems.take(count).forEach {
+            val name = MenuService.getDishById(it.dishId).name
+            preview += when {
+                name.length > maxDishNameLength -> name.substring(0, maxDishNameLength) + tooLongNamePreviewDelimiter
+                else ->  name + namePreviewDelimiter
+            }
+            if(!it.isReady) allReady = false
+        }
+        binding.preview.text = preview
+        if(allReady) binding.completeTextView.visibility = View.VISIBLE
+        else binding.completeTextView.visibility = View.GONE
     }
 }

@@ -1,6 +1,7 @@
 package com.example.core.domain.order
 
 import com.example.core.domain.interfaces.OrdersService
+import com.example.core.domain.tools.extensions.logD
 import javax.inject.Inject
 
 typealias OrdersServiceSub = (orders: List<Order>) -> Unit
@@ -48,9 +49,17 @@ class OrdersServiceImpl @Inject constructor() :
         }
     }
 
-    override fun addOrderItem(orderItem: OrderItem): Boolean =
-        currentOrder!!.orderItems.add(orderItem)
-            .also { notifyChangesOfCurrentOrder() }
+    override fun addOrderItem(orderItem: OrderItem): Boolean {
+        val existingOrderItem = currentOrder!!.orderItems.find {
+            it.getOrderIemId() == orderItem.getOrderIemId()
+        }
+        if (existingOrderItem == null) {
+            currentOrder!!.orderItems.add(orderItem)
+            notifyChangesOfCurrentOrder()
+            return true
+        }
+        return false
+    }
 
     override fun removeOrder(order: Order) {
         orders.remove(order)
@@ -66,7 +75,7 @@ class OrdersServiceImpl @Inject constructor() :
         }
         currentOrder = result?.copy() ?: Order(tableId, guestCount)
 
-        val newOrderItems = mutableSetOf<OrderItem>()
+        val newOrderItems = mutableListOf<OrderItem>()
         result?.orderItems?.forEach {
             newOrderItems.add(it.copy())
         }
@@ -105,14 +114,25 @@ class OrdersServiceImpl @Inject constructor() :
             it.orderId == orderId
         }
 
-    //TODO: Notify about data changes //STOPPED//
     override fun changeOrderItemStatus(orderId: Int, orderItemId: String) {
+        var newOrder: Order? = null
         orders.find {
             it.orderId == orderId
-        }?.orderItems?.find {
-            it.getOrderIemId() == orderItemId
-        }?.isReady = true
+        }.also {
+            newOrder = it?.copy(
+                orderItems = it.orderItems.map { orderItem ->
+                    if(orderItem.getOrderIemId() == orderItemId)
+                        orderItem.copy(isReady = true)
+                    else orderItem
+                }.toMutableList()
+            )
+        }
+        orders.forEachIndexed { index, order ->
+            if (order.orderId == orderId) {
+                orders[index] = newOrder!!
+            }
+        }
+        notifyChanges()
     }
-
-
 }
+

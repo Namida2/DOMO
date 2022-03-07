@@ -2,7 +2,6 @@ package com.example.waiterMain.presentation
 
 import android.content.Intent
 import android.graphics.Rect
-import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -13,7 +12,6 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.example.core.data.workers.NewOrdersItemStatusWorker
-import com.example.core.data.workers.NewOrdersService
 import com.example.core.data.workers.NewOrdersWorker
 import com.example.core.data.workers.Restarter
 import com.example.core.domain.Employee
@@ -56,17 +54,10 @@ class WaiterMainActivity : AppCompatActivity(),
         setOnItemSelectedListener()
         provideFeatureOrderDeps()
         provideCurrentOrderDeps()
-        makeNewOrdersWorkRequest()
+        makeWorkerRequests()
     }
 
-    private fun makeNewOrdersWorkRequest() {
-//        val intent = Intent(this, NewOrdersService::class.java)
-//        if (!NewOrdersService.isRunning) {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                startService(intent)
-//            } else
-//                startService(intent)
-//        }
+    private fun makeWorkerRequests() {
         val newOrdersWorkRequest: WorkRequest =
             PeriodicWorkRequestBuilder<NewOrdersWorker>(MIN_PERIODIC_FLEX_MILLIS, TimeUnit.MINUTES).build()
         val newOrderItemsStateRequest: WorkRequest =
@@ -77,10 +68,10 @@ class WaiterMainActivity : AppCompatActivity(),
     }
 
     override fun onDestroy() {
-        val broadcastIntent = Intent()
-        broadcastIntent.action = "restartservice"
-        broadcastIntent.setClass(this, Restarter::class.java)
-        this.sendBroadcast(broadcastIntent)
+//        val broadcastIntent = Intent()
+//        broadcastIntent.action = "restartservice"
+//        broadcastIntent.setClass(this, Restarter::class.java)
+//        this.sendBroadcast(broadcastIntent)
         super.onDestroy()
     }
 
