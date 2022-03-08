@@ -21,7 +21,7 @@
         android:label="OrderFragment"
         tools:layout="@layout/fragment_order">
         <argument
-            android:name="tableId"
+            android:name="orderId"
             app:argType="integer"/>
     </fragment>
 

@@ -43,17 +43,17 @@ class DishDialogViewModel(
     private var commentary = ""
 
     fun onAddButtonClick(view: View) {
-        view.isActivated = false
-        val tableId = ordersService.currentOrder?.orderId!!
-        val resultOfAdding = ordersService.addOrderItem(
-            OrderItem(dish!!.id, dishesCount, commentary)
-        )
-        if (!resultOfAdding) {
-            _state.value = DishDialogVMStates.DishAlreadyAdded
-            view.isActivated = true
-        } else _state.value = DishDialogVMStates.DishSuccessfulAdded
-        _state.value = DishDialogVMStates.Default
-        logD(ordersService.currentOrder.toString())
+//        view.isActivated = false
+//        val tableId = ordersService.currentOrder?.orderId!!
+//        val resultOfAdding = ordersService.addOrderItem(
+//            OrderItem(dish!!.id, dishesCount, commentary)
+//        )
+//        if (!resultOfAdding) {
+//            _state.value = DishDialogVMStates.DishAlreadyAdded
+//            view.isActivated = true
+//        } else _state.value = DishDialogVMStates.DishSuccessfulAdded
+//        _state.value = DishDialogVMStates.Default
+//        logD(ordersService.currentOrder.toString())
     }
 
     fun onCountChanged(newCount: Int) {

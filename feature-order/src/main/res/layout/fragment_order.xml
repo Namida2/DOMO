@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.example.featureOrder.presentation.order.OrderViewModel" />
@@ -37,8 +36,7 @@
                 android:background="@android:color/transparent"
                 android:transitionName="orderToolBar"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:navigationIcon="@drawable/ic_arrow_left"
-                app:navigationIconTint="@color/white">
+                app:navigationIcon="@drawable/ic_arrow_left_white">
 
                 <LinearLayout
                     android:layout_width="match_parent"

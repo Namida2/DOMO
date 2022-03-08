@@ -15,10 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.core.domain.adapterDelegates.OrderItemsAdapterDelegate
 import com.example.core.domain.adapters.BaseRecyclerViewAdapter
+import com.example.core.domain.tools.enims.AddingDishMods
 import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
 import com.example.featureOrder.R
 import com.example.featureOrder.databinding.FragmentOrderBinding
 import com.example.featureOrder.domain.ViewModelFactory
+import com.example.featureOrder.presentation.order.doalogs.dishDialog.DishAlertDialog
 import com.example.featureOrder.presentation.order.doalogs.guestsCountDialog.GuestsCountBottomSheetDialog
 import com.example.featureOrder.presentation.order.doalogs.menuDialog.MenuBottomSheetDialog
 import com.example.featureOrder.presentation.order.doalogs.orderMenuDialog.OrderMenuBottomSheetDialog
@@ -32,7 +34,7 @@ import kotlinx.coroutines.withContext
 
 class OrderFragment : Fragment() {
 
-    private var tableId = 0
+    private var orderId = 0
     private val defaultGuestsCount = 1
 
     private val guestCountShowingDelay = 400L
@@ -40,11 +42,11 @@ class OrderFragment : Fragment() {
     private var menuBottomSheetDialog: MenuBottomSheetDialog? = null
     private var guestCountDialog: GuestsCountBottomSheetDialog? = null
     private var orderMenuDialog: OrderMenuBottomSheetDialog? = null
+    private var dishDialog = DishAlertDialog(AddingDishMods.UPDATING)
 
     private lateinit var binding: FragmentOrderBinding
     private val viewModel by viewModels<OrderViewModel> { ViewModelFactory }
     private val args: OrderFragmentArgs by navArgs()
-
 
     private var adapter: BaseRecyclerViewAdapter? = null
 
@@ -54,7 +56,7 @@ class OrderFragment : Fragment() {
         adapter = BaseRecyclerViewAdapter(
             listOf(
                 OrderItemsAdapterDelegate(
-                    ::onOrderSelected
+                    viewModel::onOrderItemSelected
                 )
             )
         )
@@ -90,9 +92,9 @@ class OrderFragment : Fragment() {
     private fun initBinding() {
         binding = FragmentOrderBinding.inflate(layoutInflater)
         binding.viewModel = viewModel
-        tableId = args.tableId
+        orderId = args.orderId
         with(binding) {
-            tableNumber.text = tableId.toString()
+            tableNumber.text = orderId.toString()
             intiOrderData()
         }
     }
@@ -100,7 +102,7 @@ class OrderFragment : Fragment() {
     private fun intiOrderData() {
         with(binding) {
             orderRecyclerView.adapter = adapter
-            this@OrderFragment.viewModel.initCurrentOrder(tableId, defaultGuestsCount)
+            this@OrderFragment.viewModel.initCurrentOrder(orderId, defaultGuestsCount)
 
             val currentOrder = this@OrderFragment.viewModel.getCurrentOrder()
             binding.guestsCount.text = currentOrder.guestsCount.toString()
@@ -135,7 +137,7 @@ class OrderFragment : Fragment() {
         CoroutineScope(Default).launch {
             delay(guestCountShowingDelay)
             withContext(Main) {
-//                guestCountDialog?.show(parentFragmentManager, "")
+                guestCountDialog?.show(parentFragmentManager, "")
             }
         }
     }
@@ -148,7 +150,7 @@ class OrderFragment : Fragment() {
     }
 
     private fun observeViewModelStates() {
-        viewModel.states.observe(viewLifecycleOwner) {
+        viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is OrderViewModelStates.ShowingMenuDialog -> {
                     if (!menuBottomSheetDialog?.isAdded!!)
@@ -158,13 +160,18 @@ class OrderFragment : Fragment() {
                     if (!orderMenuDialog?.isAdded!!)
                         orderMenuDialog?.show(parentFragmentManager, "")
                 }
+                is OrderViewModelStates.ShowingDishMenuDialog -> {
+                    dishDialog.dish = it.dish
+                    dishDialog.setOrderItemData(
+                        it.orderItem.count,
+                        it.orderItem.commentary
+                    )
+                    dishDialog.show(parentFragmentManager, "")
+                }
                 else -> {
                 } //DefaultState
             }
         }
     }
 
-    private fun onOrderSelected(orderId: String) {
-        //TODO: Implement the dishMenu dialog
-    }
 }

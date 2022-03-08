@@ -17,7 +17,6 @@ class InsertOrderUseCaseImpl @Inject constructor(
                 ordersService.confirmCurrentOrder()
                 task.onSuccess(Unit)
             }
-
             override fun onError(message: ErrorMessage?) {
                 task.onError()
             }

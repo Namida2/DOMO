@@ -3,8 +3,9 @@ package com.example.featureOrder.data.repositories
 import com.example.core.domain.order.Order
 import com.example.core.domain.tools.FirestoreReferences.newOrdersListenerDocumentRef
 import com.example.core.domain.tools.FirestoreReferences.ordersCollectionRef
+import com.example.core.domain.tools.SimpleTask
 import com.example.core.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
-import com.example.core.domain.tools.constants.FirestoreConstants.DOCUMENT_ORDER_ITEM_DELIMITER
+import com.example.core.domain.tools.constants.FirestoreConstants.ORDER_ITEM_ID_DELIMITER
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ID
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_INFO
@@ -22,19 +23,17 @@ class OrdersRemoteRepositoryImpl @Inject constructor(
 
     private val guestCountData = mutableMapOf<String, Int>()
 
-    override fun insertCurrentOrder(order: Order, task: com.example.core.domain.tools.SimpleTask) {
+    override fun insertCurrentOrder(order: Order, task: SimpleTask) {
         val orderDocumentRef = ordersCollectionRef
             .document(order.orderId.toString())
-        removeAldOrderItems(
-            orderDocumentRef.collection(COLLECTION_ORDER_ITEMS),
-        ) {
+        removeAldOrderItems(orderDocumentRef.collection(COLLECTION_ORDER_ITEMS), task) {
             firestore.runTransaction {
                 guestCountData[FIELD_GUESTS_COUNT] = order.guestsCount
                 it.set(orderDocumentRef, guestCountData)
                 setOrderItems(it, orderDocumentRef, order)
             }.addOnSuccessListener {
                 logD("$this: Insertion was successful.")
-                insertNewOrderDateToListener(order)
+                insertNewOrderDataToListener(order)
                 task.onSuccess(Unit)
             }.addOnFailureListener {
                 it.message?.let { it1 -> logE(it1) }
@@ -50,7 +49,7 @@ class OrdersRemoteRepositoryImpl @Inject constructor(
     ) {
         order.orderItems.forEach {
             val orderItemDocumentName =
-                "${it.dishId}$DOCUMENT_ORDER_ITEM_DELIMITER${it.commentary}"
+                "${it.dishId}$ORDER_ITEM_ID_DELIMITER${it.commentary}"
             val documentOrderItemRef =
                 orderDocumentRef.collection(COLLECTION_ORDER_ITEMS)
                     .document(orderItemDocumentName)
@@ -60,7 +59,8 @@ class OrdersRemoteRepositoryImpl @Inject constructor(
 
     private fun removeAldOrderItems(
         collectionOrderItemsRef: CollectionReference,
-        onComplete: () -> Unit,
+        task: SimpleTask,
+        onSuccess: ()-> Unit
     ) {
         // TODO: To find out if there is a better solution
         collectionOrderItemsRef.get().addOnSuccessListener {
@@ -70,19 +70,19 @@ class OrdersRemoteRepositoryImpl @Inject constructor(
                         logD("Removed index: $i")
                         if (i == it.documents.lastIndex) {
                             logD(i.toString())
-                            onComplete.invoke()
+                            onSuccess.invoke()
                         }
                     }
             }
             if (it.documents.lastIndex == -1)
-                onComplete.invoke()
+                onSuccess.invoke()
         }.addOnFailureListener {
-            onComplete.invoke()
+            task.onError()
             logE("$this: ${it.message}")
         }
     }
 
-    override fun insertNewOrderDateToListener(order: Order) {
+    override fun insertNewOrderDataToListener(order: Order) {
         val (tableId, guestsCount) = order
         val newOrderData = mapOf<String, Any>(
             FIELD_ORDER_INFO to mapOf<String, Any>(
@@ -90,13 +90,23 @@ class OrdersRemoteRepositoryImpl @Inject constructor(
                 FIELD_GUESTS_COUNT to guestsCount
             )
         )
-        newOrdersListenerDocumentRef.set(newOrderData).addOnFailureListener {
+        newOrdersListenerDocumentRef.set(
+            mapOf<String, Any>(
+                FIELD_ORDER_INFO to mapOf<String, Any>(
+                    FIELD_ORDER_ID to "",
+                    FIELD_GUESTS_COUNT to ""
+                )
+            )
+        ).addOnSuccessListener {
+            newOrdersListenerDocumentRef.set(newOrderData)
+        }.addOnFailureListener {
             logE("$this: ${it.message}")
         }
     }
+
 }
 
 interface OrdersRemoteRepository {
-    fun insertCurrentOrder(order: Order, task: com.example.core.domain.tools.SimpleTask)
-    fun insertNewOrderDateToListener(order: Order)
+    fun insertCurrentOrder(order: Order, task: SimpleTask)
+    fun insertNewOrderDataToListener(order: Order)
 }

@@ -11,14 +11,13 @@ import com.example.core.domain.order.OrderItem
 import com.example.core.domain.recyclerView.interfaces.BaseAdapterDelegate
 import com.example.core.domain.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.core.domain.recyclerView.interfaces.BaseViewHolder
-import com.example.core.domain.tools.constants.FirestoreConstants.DOCUMENT_ORDER_ITEM_DELIMITER
+import com.example.core.domain.tools.constants.FirestoreConstants.ORDER_ITEM_ID_DELIMITER
 import com.example.core.domain.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
 import javax.inject.Inject
 
 class OrderItemsAdapterDelegate @Inject constructor(
     private val onOrderSelected: (orderItemId: String) -> Unit
 ) : BaseAdapterDelegate<LayoutOrderItemBinding, OrderItem>, View.OnClickListener {
-
     override fun isItMe(recyclerViewType: BaseRecyclerViewType): Boolean =
         recyclerViewType is OrderItem
 
@@ -37,7 +36,6 @@ class OrderItemsAdapterDelegate @Inject constructor(
     private val diffCallback = object : DiffUtil.ItemCallback<OrderItem>() {
         override fun areItemsTheSame(oldItem: OrderItem, newItem: OrderItem): Boolean =
             oldItem == newItem
-
         override fun areContentsTheSame(oldItem: OrderItem, newItem: OrderItem): Boolean =
             oldItem == newItem
     }
@@ -55,7 +53,7 @@ class OrderItemViewHolder(
 
     override fun onBind(item: OrderItem) {
         val dish = MenuService.getDishById(item.dishId)
-        val orderItemId = dish.id.toString() + DOCUMENT_ORDER_ITEM_DELIMITER + item.commentary
+        val orderItemId = dish.id.toString() + ORDER_ITEM_ID_DELIMITER + item.commentary
         with(binding) {
             orderLargeContainer.tag = orderItemId
             orderSmallContainer.tag = orderItemId
@@ -64,6 +62,7 @@ class OrderItemViewHolder(
             dishCost.text = dish.cost
             dishWeight.text = dish.weight
             dishCount.text = item.count.toString()
+            commentary.text = item.commentary
             setConditionalData(item)
         }
     }

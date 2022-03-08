@@ -3,6 +3,7 @@ package com.example.core.domain.interfaces
 import com.example.core.domain.order.CurrentOrderServiceSub
 import com.example.core.domain.order.Order
 import com.example.core.domain.order.OrderItem
+import com.example.core.domain.tools.enims.AddingDishMods
 
 interface OrdersService<Subscriber>: BaseObservable<Subscriber> {
     var currentOrder: Order?
@@ -12,6 +13,7 @@ interface OrdersService<Subscriber>: BaseObservable<Subscriber> {
     fun unSubscribeToCurrentOrderChangers(subscriber: CurrentOrderServiceSub)
 
     fun addOrderItem(orderItem: OrderItem): Boolean
+    fun updateOrderItem(orderItem: OrderItem, aldCommentary: String): Boolean
     fun removeOrder(order: Order)
     fun confirmCurrentOrder()
     fun initCurrentOrder(tableId: Int, guestCount: Int)

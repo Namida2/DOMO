@@ -11,7 +11,7 @@
         android:layout_height="2dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="12dp"
-        android:background="@drawable/bg_rounded_white_24" />
+        android:background="@drawable/bg_rounded_white_24_corner" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/guestsCountRecyclerView"

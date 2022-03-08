@@ -1,5 +1,6 @@
 package com.example.cookCore.data.repositories
 
+import com.example.core.domain.tools.ErrorMessage
 import com.example.core.domain.tools.ErrorMessages.checkNetworkConnectionMessage
 import com.example.core.domain.tools.ErrorMessages.defaultErrorMessage
 import com.example.core.domain.tools.FirestoreReferences.fireStore
@@ -12,7 +13,6 @@ import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_IS
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ITEM_ID
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ITEM_INFO
 import com.google.firebase.FirebaseNetworkException
-import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.Transaction
 import javax.inject.Inject
 
@@ -20,17 +20,33 @@ class OrderItemsRemoteRepositoryImpl @Inject constructor() : OrderItemsRemoteRep
     override fun setOrderItemAsReady(orderId: Int, orderItemId: String, task: SimpleTask) {
         val orderItemDocumentRef = ordersCollectionRef.document(orderId.toString())
             .collection(COLLECTION_ORDER_ITEMS).document(orderItemId)
-        fireStore.runTransaction {
-            it.update(orderItemDocumentRef, FIELD_ORDER_IS_READY, true)
-            updateOrderItemsStateListener(orderId, orderItemId, it)
-        }.addOnSuccessListener {
-            task.onSuccess(Unit)
-        }.addOnFailureListener {
-            if(it is FirebaseNetworkException)
-                task.onError(checkNetworkConnectionMessage)
-            else task.onError(defaultErrorMessage)
+        resetOrderItemState(task) {
+            fireStore.runTransaction {
+                it.update(orderItemDocumentRef, FIELD_ORDER_IS_READY, true)
+                updateOrderItemsStateListener(orderId, orderItemId, it)
+            }.addOnSuccessListener {
+                task.onSuccess(Unit)
+            }.addOnFailureListener {
+                task.onError(getExceptionMessage(it))
+            }
         }
     }
+
+    private fun resetOrderItemState(task: SimpleTask, onSuccess: () -> Unit) {
+        orderItemsStateListenerDocumentRef.set(
+            mapOf<String, Any>(
+                FIELD_ORDER_ITEM_INFO to mapOf<String, Any>(
+                    FIELD_ORDER_ID to "",
+                    FIELD_ORDER_ITEM_ID to ""
+                )
+            )
+        ).addOnSuccessListener {
+            onSuccess.invoke()
+        }.addOnFailureListener{
+            task.onError(getExceptionMessage(it))
+        }
+    }
+
 
     private fun updateOrderItemsStateListener(
         orderId: Int,
@@ -45,6 +61,10 @@ class OrderItemsRemoteRepositoryImpl @Inject constructor() : OrderItemsRemoteRep
         )
         transaction.update(orderItemsStateListenerDocumentRef, orderItemInfo)
     }
+
+    private fun getExceptionMessage(it: Exception): ErrorMessage =
+        if (it is FirebaseNetworkException) checkNetworkConnectionMessage
+        else defaultErrorMessage
 }
 
 interface OrderItemsRemoteRepository {

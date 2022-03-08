@@ -49,14 +49,13 @@ class OrdersViewHolder(
 ) : BaseViewHolder<LayoutOrderCardBinding, Order>(binding) {
     private val tooLongNamePreviewDelimiter = "...\n"
     private val namePreviewDelimiter = "\n"
-    private var preview = ""
     private val maxDishNameLength = 16
     private val averageOrderItemsCount = 4
     override fun onBind(item: Order) {
+        var preview = ""
         var allReady = true
         binding.largeOrderContainer.tag = item.orderId
         binding.orderContainerCardView.tag = item.orderId
-        binding.orderId.text = item.orderId.toString()
         binding.orderId.text = item.orderId.toString()
         val count = item.orderItems.size.coerceAtMost(averageOrderItemsCount)
         item.orderItems.take(count).forEach {

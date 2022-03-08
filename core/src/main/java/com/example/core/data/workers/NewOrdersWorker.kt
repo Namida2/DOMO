@@ -7,11 +7,9 @@ import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.IBinder
 import android.os.SystemClock
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startForegroundService
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.work.*
@@ -73,24 +71,24 @@ class NewOrdersWorker(
     }
 
     private fun onNewOrder(data: MutableMap<String, Any>) {
-//        if (WaiterMainDepsStore.currentEmployee!!.post == COOK)
-        notificationManager?.notify(
-            id++, createNotification(context, data.toString())
-        )
         val orderInfo = data[FIELD_ORDER_INFO] as Map<*, *>
-        val tableId = (orderInfo[FIELD_ORDER_ID] as Long).toInt()
-        val guestCount = (orderInfo[FIELD_GUESTS_COUNT] as Long).toInt()
+        val tableId = (orderInfo[FIELD_ORDER_ID] as? Long)?.toInt() ?: return
+        val guestCount = (orderInfo[FIELD_GUESTS_COUNT] as? Long)?.toInt() ?: return
         readNewOrderUseCase.readNewOrder(
             Order(tableId, guestCount)
         ) {
             _event.value = ErrorMessageEvent(it)
         }
+//        if (WaiterMainDepsStore.currentEmployee!!.post == COOK)
+        notificationManager?.notify(
+            id++, createNotification(context, data.toString())
+        )
     }
 }
 
 
 //TODO: Start a foreground service (maybe)
-class NewOrdersService(): Service() {
+class NewOrdersService : Service() {
 
     private var id = 1
     private var isFirstNotification = true
@@ -174,7 +172,7 @@ class NewOrdersService(): Service() {
     }
 }
 
-class Restarter: BroadcastReceiver() {
+class Restarter : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         logD("Service tried to stop")
         Toast.makeText(context, "Restarter", Toast.LENGTH_LONG).show()

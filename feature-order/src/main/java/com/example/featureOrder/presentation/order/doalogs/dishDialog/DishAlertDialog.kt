@@ -9,17 +9,22 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.core.domain.menu.Dish
+import com.example.core.domain.tools.enims.AddingDishMods
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.featureOrder.R
 import com.example.featureOrder.databinding.DialogDishBinding
 import com.example.featureOrder.domain.ViewModelFactory
 
-class DishAlertDialog : DialogFragment() {
+class DishAlertDialog(
+    val mode: AddingDishMods = AddingDishMods.INSERTING
+): DialogFragment() {
 
     var dish: Dish? = null
+    private var count: Int = 1
+    private var aldCommentary: String = ""
 
     private var binding: DialogDishBinding? = null
-    private val viewModel: DishDialogViewModel by viewModels { ViewModelFactory }
+    private val viewModel by viewModels<DishDialogViewModel> { ViewModelFactory }
     private val observer = Observer<DishDialogVMStates> {
         when (it) {
             is DishDialogVMStates.DishAlreadyAdded -> {
@@ -29,14 +34,15 @@ class DishAlertDialog : DialogFragment() {
             is DishDialogVMStates.DishSuccessfulAdded -> {
                 this.dismiss()
             }
-            else -> {
-            } //Default state
+            else -> {} //Default state
         }
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         viewModel.orderItem = dish
+        viewModel.addingDishMode = mode
+        viewModel.aldCommentary = aldCommentary
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -47,6 +53,11 @@ class DishAlertDialog : DialogFragment() {
         return builder.create()
     }
 
+    fun setOrderItemData(count: Int, commentary: String) {
+        this.count = count
+        this.aldCommentary = commentary
+    }
+
     private fun initBinding() {
         binding = DialogDishBinding.inflate(layoutInflater)
         binding?.viewModel = viewModel
@@ -54,12 +65,14 @@ class DishAlertDialog : DialogFragment() {
     }
 
     override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
         viewModel.state.removeObserver(observer)
+        super.onDismiss(dialog)
     }
 
     private fun initView(binding: DialogDishBinding) {
         binding.dishName.text = dish?.name
+        binding.dishesCount.setText(count.toString())
+        binding.commentary.setText(aldCommentary)
     }
 
 }

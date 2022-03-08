@@ -1,8 +1,7 @@
 package com.example.core.domain.order
 
 import com.example.core.domain.recyclerView.interfaces.BaseRecyclerViewType
-import com.example.core.domain.tools.constants.FirestoreConstants.DOCUMENT_ORDER_ITEM_DELIMITER
-import com.google.firebase.firestore.Exclude
+import com.example.core.domain.tools.constants.FirestoreConstants.ORDER_ITEM_ID_DELIMITER
 
 data class OrderItem(
     var dishId: Int,
@@ -13,7 +12,7 @@ data class OrderItem(
     constructor() : this(0, 0, "")
 
     fun getOrderIemId() =
-        dishId.toString() + DOCUMENT_ORDER_ITEM_DELIMITER + commentary
+        dishId.toString() + ORDER_ITEM_ID_DELIMITER + commentary
 
     override fun equals(other: Any?): Boolean =
         if (other !is OrderItem) false

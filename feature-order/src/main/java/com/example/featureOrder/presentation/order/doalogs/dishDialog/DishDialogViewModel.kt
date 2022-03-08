@@ -8,6 +8,7 @@ import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.menu.Dish
 import com.example.core.domain.order.OrderItem
 import com.example.core.domain.order.OrdersServiceSub
+import com.example.core.domain.tools.enims.AddingDishMods
 import com.example.core.domain.tools.extensions.logD
 import com.example.featureOrder.R
 
@@ -30,17 +31,31 @@ class DishDialogViewModel(
     private val ordersService: OrdersService<OrdersServiceSub>,
 ) : ViewModel() {
 
-    private var _state = MutableLiveData<DishDialogVMStates>(DishDialogVMStates.Default)
-    val state: LiveData<DishDialogVMStates> = _state
-
     var orderItem: Dish? = null
+    var addingDishMode: AddingDishMods? = null
+    var aldCommentary: String? = null
+    private var _state = MutableLiveData<DishDialogVMStates>(DishDialogVMStates.Default)
+
+    val state: LiveData<DishDialogVMStates> = _state
 
     fun onAddButtonClick(view: View, dishesCount: String, commentary: String) {
         view.isActivated = false
-        val resultOfAdding = ordersService.addOrderItem(
-            OrderItem(orderItem!!.id, dishesCount.toInt(), commentary)
-        )
-        if (!resultOfAdding) {
+        var result = false
+        when(addingDishMode) {
+            AddingDishMods.INSERTING -> {
+                result = ordersService.addOrderItem(
+                    OrderItem(orderItem!!.id, dishesCount.toInt(), commentary),
+                )
+            }
+            AddingDishMods.UPDATING -> {
+                result = ordersService.updateOrderItem(
+                    OrderItem(orderItem!!.id, dishesCount.toInt(), commentary),
+                    aldCommentary!!
+                )
+            }
+            else -> {logD("$this: addingDishMode is null")}
+        }
+        if (!result) {
             _state.value = DishDialogVMStates.DishAlreadyAdded
             view.isActivated = true
         } else _state.value = DishDialogVMStates.DishSuccessfulAdded

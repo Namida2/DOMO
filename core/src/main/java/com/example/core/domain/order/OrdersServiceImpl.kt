@@ -1,7 +1,9 @@
 package com.example.core.domain.order
 
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.tools.extensions.logD
+import com.example.core.domain.tools.constants.FirestoreConstants.ORDER_ITEM_ID_DELIMITER
+import com.example.core.domain.tools.constants.OtherStringConstants.CURRENT_ORDER_NOT_INITIALIZED
+import com.example.core.domain.tools.constants.OtherStringConstants.ORDER_ITEM_NOT_FOUNT
 import javax.inject.Inject
 
 typealias OrdersServiceSub = (orders: List<Order>) -> Unit
@@ -11,10 +13,8 @@ typealias CurrentOrderServiceSub = (orderItems: List<OrderItem>) -> Unit
 class OrdersServiceImpl @Inject constructor() :
     OrdersService<@JvmSuppressWildcards OrdersServiceSub> {
 
-    private val currentOrderExceptionMessage = "Current order has not been initialized."
-
     override var currentOrder: Order? = null
-        get() = field ?: throw IllegalStateException(currentOrderExceptionMessage)
+        get() = field ?: throw IllegalStateException(CURRENT_ORDER_NOT_INITIALIZED)
 
     var orders = mutableListOf<Order>()
     private var subscribers = mutableSetOf<OrdersServiceSub>()
@@ -61,6 +61,24 @@ class OrdersServiceImpl @Inject constructor() :
         return false
     }
 
+    override fun updateOrderItem(orderItem: OrderItem, aldCommentary: String): Boolean {
+        val aldOrderItemId = orderItem.dishId.toString() + ORDER_ITEM_ID_DELIMITER + aldCommentary
+        currentOrder!!.orderItems.find {
+            it.getOrderIemId() == aldOrderItemId
+        } ?: throw IllegalArgumentException(ORDER_ITEM_NOT_FOUNT)
+        val anotherExistingOrderItem = currentOrder!!.orderItems.find {
+            it.getOrderIemId() == orderItem.getOrderIemId()
+        }
+        if(anotherExistingOrderItem != null) return false
+
+        currentOrder!!.orderItems = currentOrder!!.orderItems.map {
+            if (it.getOrderIemId() == aldOrderItemId) orderItem
+            else it
+        }.toMutableList()
+        notifyChangesOfCurrentOrder()
+        return true
+    }
+
     override fun removeOrder(order: Order) {
         orders.remove(order)
     }
@@ -85,7 +103,7 @@ class OrdersServiceImpl @Inject constructor() :
     override fun changeGuestsCount(newCount: Int) {
         currentOrder?.also {
             it.guestsCount = newCount
-        } ?: throw IllegalStateException(currentOrderExceptionMessage)
+        } ?: throw IllegalStateException(CURRENT_ORDER_NOT_INITIALIZED)
     }
 
     override fun getCurrentOrderItems(): Set<OrderItem> =
@@ -121,7 +139,7 @@ class OrdersServiceImpl @Inject constructor() :
         }.also {
             newOrder = it?.copy(
                 orderItems = it.orderItems.map { orderItem ->
-                    if(orderItem.getOrderIemId() == orderItemId)
+                    if (orderItem.getOrderIemId() == orderItemId)
                         orderItem.copy(isReady = true)
                     else orderItem
                 }.toMutableList()

@@ -53,8 +53,8 @@ class NewOrdersItemStatusWorker(
 
     private fun setNewOrderItemStatus(data: Map<String, Any>) {
         val orderItemInfo = data[FIELD_ORDER_ITEM_INFO] as Map<*, *>
-        val orderId = (orderItemInfo[FIELD_ORDER_ID] as Long).toInt()
-        val orderItemId = orderItemInfo[FIELD_ORDER_ITEM_ID] as String
+        val orderId = (orderItemInfo[FIELD_ORDER_ID] as? Long)?.toInt() ?: return
+        val orderItemId = orderItemInfo[FIELD_ORDER_ITEM_ID] as? String ?: return
         orderService.changeOrderItemStatus(orderId, orderItemId)
 //        if (CoreDepsStore.deps.currentEmployee!!.post == WAITER)
             notificationManager?.notify( id++,
