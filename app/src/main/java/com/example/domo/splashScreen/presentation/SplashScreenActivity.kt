@@ -53,6 +53,7 @@ class SplashScreenActivity : AppCompatActivity() {
                         }
                         WAITER -> {
                             WaiterMainDepsStore.deps = SplashScreenDepsStore.appComponent
+                            WaiterMainDepsStore.profileDeps = SplashScreenDepsStore.appComponent
                             startActivity(Intent(this, WaiterMainActivity::class.java))
                         }
                         ADMINISTRATOR ->

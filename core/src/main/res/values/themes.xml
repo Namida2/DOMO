@@ -16,6 +16,10 @@
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
     </style>
 
+    <style name="switchesStyle" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/blue</item>
+    </style>
+
     <style name="appBarLayoutStyle" parent="TextAppearance.MaterialComponents.Button">
         <item name="shapeAppearance">@style/aaa</item>
         <item name="android:background">@color/blue</item>
@@ -72,12 +76,12 @@
         <item name="android:windowExitAnimation">@anim/dialog_hide</item>
     </style>
 
-    <style name="errorButtonStyle" parent="Widget.MaterialComponents.Button">
+    <style name="confirmButtonStyle" parent="Widget.MaterialComponents.Button">
         <item name="android:background">@drawable/bg_dialog_message_button</item>
         <item name="rippleColor">@color/black</item>
-        <item name="materialThemeOverlay">@style/ThemeOverlay.App.ErrorButtonStyle</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.ConfirmButtonStyle</item>
     </style>
-    <style name="ThemeOverlay.App.ErrorButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <style name="ThemeOverlay.App.ConfirmButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="colorPrimary">@color/white</item>
         <item name="shapeAppearance">@style/buttonShapeAppearance</item>
     </style>
@@ -85,12 +89,12 @@
     <style name="cancelButton" parent="Widget.MaterialComponents.Button">
         <item name="android:background">@drawable/bg_cancel_button_dialog</item>
         <item name="rippleColor">@color/black</item>
-        <item name="materialThemeOverlay">@style/ThemeOverlay.App.ErrorButtonStyle</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.ConfirmButtonStyle</item>
     </style>
     <style name="acceptButton" parent="Widget.MaterialComponents.Button">
         <item name="android:background">@drawable/bg_accept_button_dialog</item>
         <item name="rippleColor">@color/black</item>
-        <item name="materialThemeOverlay">@style/ThemeOverlay.App.ErrorButtonStyle</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.ConfirmButtonStyle</item>
     </style>
 
     <style name="emptyButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">

@@ -35,12 +35,12 @@ android {
 
 dependencies {
 
-    implementation project(':feature-order')
-    implementation project(':feature-currentOrders')
     implementation project(':core')
+    implementation project(':feature-order')
+    implementation project(':feature-profile')
+    implementation project(':feature-currentOrders')
 
     implementation (WorkManager.workRuntime)
-
     implementation (Dagger.dagger)
     kapt (Dagger.compiler)
 

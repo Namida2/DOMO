@@ -5,7 +5,9 @@
     <string name="profile">Профиль</string>
     <string name="messenger">Мессенджер</string>
 
+    <!--Tools-->
     <string name="networkConnectionMessage">Пожалуйста, проверьте свое интернет-соединение.</string>
+    <string name="leaveAccountMessage">Вы действительно хотите покинуть этот аккаунт?</string>
 
     <!--ErrorAlertDialog messages and titles-->
     <string name="defaultTitle">Oops!</string>

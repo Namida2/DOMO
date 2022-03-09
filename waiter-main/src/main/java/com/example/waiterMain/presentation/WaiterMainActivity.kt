@@ -1,6 +1,5 @@
 package com.example.waiterMain.presentation
 
-import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +12,6 @@ import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
-import com.example.core.data.workers.Restarter
 import com.example.core.domain.Employee
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.order.OrdersServiceSub
@@ -28,9 +26,12 @@ import com.example.featureOrder.domain.di.OrderAppComponentDeps
 import com.example.featureOrder.domain.di.OrderDepsStore
 import com.example.featureOrder.presentation.order.OrderFragment
 import com.example.featureOrder.presentation.tables.TablesFragment
+import com.example.featureProfile.domain.di.ProfileAppComponentDeps
+import com.example.featureProfile.domain.di.ProfileDepsStore
 import com.example.waiterMain.R
 import com.example.waiterMain.databinding.ActivityWaiterMainBinding
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
+import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
 
 class WaiterMainActivity : AppCompatActivity(),
@@ -54,25 +55,25 @@ class WaiterMainActivity : AppCompatActivity(),
         setOnItemSelectedListener()
         provideFeatureOrderDeps()
         provideCurrentOrderDeps()
+        provideProfileDeps()
         makeWorkerRequests()
     }
 
+
     private fun makeWorkerRequests() {
         val newOrdersWorkRequest: WorkRequest =
-            PeriodicWorkRequestBuilder<NewOrdersWorker>(MIN_PERIODIC_FLEX_MILLIS, TimeUnit.MINUTES).build()
+            PeriodicWorkRequestBuilder<NewOrdersWorker>(
+                MIN_PERIODIC_FLEX_MILLIS,
+                TimeUnit.MINUTES
+            ).build()
         val newOrderItemsStateRequest: WorkRequest =
-            PeriodicWorkRequestBuilder<NewOrdersItemStatusWorker>(MIN_PERIODIC_FLEX_MILLIS, TimeUnit.MINUTES).build()
+            PeriodicWorkRequestBuilder<NewOrdersItemStatusWorker>(
+                MIN_PERIODIC_FLEX_MILLIS,
+                TimeUnit.MINUTES
+            ).build()
         WorkManager.getInstance(this).enqueue(newOrdersWorkRequest)
         WorkManager.getInstance(this).enqueue(newOrderItemsStateRequest)
         observeOrdersWorkerEvents()
-    }
-
-    override fun onDestroy() {
-//        val broadcastIntent = Intent()
-//        broadcastIntent.action = "restartservice"
-//        broadcastIntent.setClass(this, Restarter::class.java)
-//        this.sendBroadcast(broadcastIntent)
-        super.onDestroy()
     }
 
     private fun observeOrdersWorkerEvents() {
@@ -98,6 +99,15 @@ class WaiterMainActivity : AppCompatActivity(),
         }
     }
 
+    private fun provideProfileDeps() {
+        ProfileDepsStore.deps = object : ProfileAppComponentDeps {
+            override val currentEmployee: Employee?
+                get() = WaiterMainDepsStore.deps.currentEmployee
+            override val firebaseAuth: FirebaseAuth
+                get() = WaiterMainDepsStore.profileDeps.firebaseAuth
+        }
+    }
+
     override fun onDestinationChanged(
         controller: NavController,
         destination: NavDestination,
@@ -112,12 +122,17 @@ class WaiterMainActivity : AppCompatActivity(),
                 showNavigationUI()
                 wasNavigatedToOrderFragment = false
             }
+//            R.id.profileFragment -> {
+//                showNavigationUI()
+//                wasNavigatedToOrderFragment = false
+//            }
+
         }
     }
 
     private fun setOnItemSelectedListener() {
         binding.bottomNavigation.setOnItemSelectedListener {
-            var currentFragment = navHostFragment.parentFragmentManager.fragments[0]
+            val currentFragment = navHostFragment.parentFragmentManager.fragments[0]
             when (it.itemId) {
                 R.id.tablesFragment -> {
                     navController.navigate(R.id.navigation_order)
@@ -125,6 +140,10 @@ class WaiterMainActivity : AppCompatActivity(),
                 }
                 R.id.currentOrdersFragment -> {
                     navController.navigate(R.id.navigation_current_orders)
+                    true
+                }
+                R.id.profileFragment -> {
+                    navController.navigate(R.id.profileFragment)
                     true
                 }
                 else -> {

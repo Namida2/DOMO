@@ -168,8 +168,7 @@ class OrderFragment : Fragment() {
                     )
                     dishDialog.show(parentFragmentManager, "")
                 }
-                else -> {
-                } //DefaultState
+                else -> {} //DefaultState
             }
         }
     }
