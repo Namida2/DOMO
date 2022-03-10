@@ -76,7 +76,9 @@
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_accept_button_dialog.xml" value="0.315" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_black_rounded_24.xml" value="0.211" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_cancel_button_dialog.xml" value="0.315" />
+        <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_guests_count_dialog.xml" value="0.219" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_rounded_white_24.xml" value="0.1635" />
+        <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_rounded_white_24_corner.xml" value="0.219" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/ic_arrow_left.xml" value="0.211" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/ic_arrow_left_black.xml" value="0.211" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/ic_avatar_0.xml" value="0.315" />
@@ -99,7 +101,7 @@
         <entry key="..\:/Projects/Graduate/DOMO/feature-currentOrders/src/main/res/layout/fragment_current_orders_detail.xml" value="0.24791666666666667" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-currentOrders/src/main/res/layout/layout_order_card.xml" value="0.22" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-order/src/main/res/layout/dialog_dish.xml" value="0.24791666666666667" />
-        <entry key="..\:/Projects/Graduate/DOMO/feature-order/src/main/res/layout/dialog_guests_count.xml" value="0.1440972222222222" />
+        <entry key="..\:/Projects/Graduate/DOMO/feature-order/src/main/res/layout/dialog_guests_count.xml" value="0.25" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-order/src/main/res/layout/dialog_order_menu.xml" value="0.16086065573770492" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-order/src/main/res/layout/fragment_order.xml" value="0.24791666666666667" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-order/src/main/res/layout/layout_categories_container.xml" value="0.24791666666666667" />

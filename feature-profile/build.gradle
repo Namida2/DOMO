@@ -38,6 +38,7 @@ android {
 dependencies {
     implementation project(':core')
 
+    implementation (ArchComponents.lifecycleRuntime)
     implementation (Dagger.dagger)
     kapt (Dagger.compiler)
 

@@ -7,7 +7,7 @@ object Versions {
     const val activity = "1.4.1"
     const val fragment = "1.4.0"
     const val coroutinesCore = "1.5.2"
-    const val lifecycle = "2.4.0"
+    const val lifecycle = "2.4.1"
     const val room = "2.3.0"
     const val androidXCore = "1.7.0"
     const val androidXAppcompat = "1.4.0"
@@ -64,6 +64,7 @@ object ArchComponents {
     const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:" + Versions.lifecycle
     const val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:" + Versions.lifecycle
     const val lifecycleCompiler = "androidx.lifecycle:lifecycle-compiler:" + Versions.lifecycle
+    const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:" + Versions.lifecycle
 }
 
 object Room {

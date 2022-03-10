@@ -74,7 +74,7 @@ class OrderFragment : Fragment() {
         }
         initBinding()
         initDialogs()
-        observeCurrentOrderChanges()
+        observeCurrentOrderChangesEvent()
         postponeEnterTransition()
         observeViewModelStates()
         return binding.root
@@ -142,10 +142,9 @@ class OrderFragment : Fragment() {
         }
     }
 
-    private fun observeCurrentOrderChanges() {
+    private fun observeCurrentOrderChangesEvent() {
         viewModel.currentOrderChangedEvent.observe(viewLifecycleOwner) {
-            val data = it.getData() ?: return@observe
-            adapter?.submitList(data)
+            it.getData()?.let { adapter?.submitList(it) }
         }
     }
 

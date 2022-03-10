@@ -38,6 +38,10 @@ android {
 dependencies {
     implementation project(":core")
     implementation project(':feature-currentOrders')
+    implementation project(':feature-profile')
+
+    implementation platform (Firebase.firebaseBom)
+    implementation (Firebase.firebaseAuth)
 
     implementation (WorkManager.workRuntime)
     implementation (RecyclerView.recyclerview)

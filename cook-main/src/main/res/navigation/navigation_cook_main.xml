@@ -5,4 +5,8 @@
     app:startDestination="@id/navigation_current_orders">
 
     <include app:graph="@navigation/navigation_current_orders" />
+    <fragment
+        android:id="@id/profileFragment"
+        android:name="com.example.featureProfile.presentation.ProfileFragment"
+        android:label="ProfileFragment" />
 </navigation>

@@ -10,11 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cookCore.presentation.CookCurrentOrderDetailVMStates
 import com.example.cookCore.presentation.CookCurrentOrderDetailViewModel
 import com.example.core.domain.adapterDelegates.OrderItemsAdapterDelegate
 import com.example.core.domain.adapters.BaseRecyclerViewAdapter
 import com.example.core.domain.tools.constants.EmployeePosts.COOK
 import com.example.core.domain.tools.dialogs.ClosedQuestionDialog
+import com.example.core.domain.tools.dialogs.ProcessAlertDialog
+import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.featureCurrentOrders.R
 import com.example.featureCurrentOrders.databinding.FragmentCurrentOrdersDetailBinding
 import com.example.featureCurrentOrders.domain.ViewModelFactory
@@ -52,7 +55,28 @@ class CurrentOrdersDetailFragment : Fragment() {
         checkEmployeePost()
         initRecyclerView()
         observeDishesExistEvent()
+        observeViewModelState()
         return binding.root
+    }
+
+    private fun observeViewModelState() {
+        cookViewModel.state.observe(viewLifecycleOwner) {
+            when (it) {
+                is CookCurrentOrderDetailVMStates.UpdatingData -> {
+                    ProcessAlertDialog.show(parentFragmentManager, "")
+                }
+                is CookCurrentOrderDetailVMStates.OnUpdationgFailure -> {
+                    ProcessAlertDialog.dismiss()
+                    requireContext().createMessageDialog(it.errorMessage)
+                        ?.show(parentFragmentManager, "")
+                }
+                is CookCurrentOrderDetailVMStates.OnUpdatingSuccess -> {
+                    ProcessAlertDialog.onSuccess()
+                }
+                is CookCurrentOrderDetailVMStates.Default -> {}
+            }
+
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

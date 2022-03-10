@@ -4,13 +4,13 @@ import com.example.core.domain.order.CurrentOrderServiceSub
 import com.example.core.domain.order.Order
 import com.example.core.domain.order.OrderItem
 import com.example.core.domain.tools.enims.AddingDishMods
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 
-interface OrdersService<Subscriber>: BaseObservable<Subscriber> {
+interface OrdersService<Subscriber> {
     var currentOrder: Order?
-    var currentOrderSubscribers: MutableSet<CurrentOrderServiceSub>
-    fun notifyChangesOfCurrentOrder()
-    fun subscribeToCurrentOrderChangers(subscriber: CurrentOrderServiceSub)
-    fun unSubscribeToCurrentOrderChangers(subscriber: CurrentOrderServiceSub)
+    fun subscribeOnOrdersChanges(): Flow<List<Order>>
+    fun subscribeOnCurrentOrderChanges(): Flow<List<OrderItem>>
 
     fun addOrderItem(orderItem: OrderItem): Boolean
     fun updateOrderItem(orderItem: OrderItem, aldCommentary: String): Boolean

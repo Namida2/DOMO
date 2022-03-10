@@ -47,8 +47,8 @@ class WaiterActOrderFragSharedViewModel(
     }
 
     fun initCurrentOrder(tableId: Int, guestCount: Int) {
-        model.initCurrentOrder(tableId, guestCount)
-        model.subscribeToCurrentOrderChangers(currentOrderSubscriber)
+//        model.initCurrentOrder(tableId, guestCount)
+//        model.subscribeToCurrentOrderChangers(currentOrderSubscriber)
     }
 
     fun getCurrentOrder(): Order =
@@ -68,7 +68,7 @@ class WaiterActOrderFragSharedViewModel(
     }
 
     override fun onCleared() {
-        super.onCleared()
-        model.unSubscribeToCurrentOrderChangers(currentOrderSubscriber)
+//        super.onCleared()
+//        model.unSubscribeToCurrentOrderChangers(currentOrderSubscriber)
     }
 }

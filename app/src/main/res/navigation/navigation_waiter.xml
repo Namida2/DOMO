@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_waiter"
-    app:startDestination="@id/tablesFragment">
+    app:startDestination="@id/currentOrdersFragment">
     <fragment
-        android:id="@+id/tablesFragment"
+        android:id="@+id/currentOrdersFragment"
         android:name="com.example.domo.views.fragments.TablesFragment"
         android:label="TablesFragment"
         tools:layout="@layout/fragment_tables">

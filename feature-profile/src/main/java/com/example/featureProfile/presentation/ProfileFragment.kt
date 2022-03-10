@@ -1,5 +1,6 @@
 package com.example.featureProfile.presentation
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.core.domain.tools.ErrorMessages.checkNetworkConnectionMessage
 import com.example.core.domain.tools.dialogs.ClosedQuestionDialog
+import com.example.core.domain.tools.dialogs.ProcessAlertDialog
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.core.domain.tools.extensions.isNetworkConnected
 import com.example.featureProfile.R
@@ -17,7 +19,7 @@ import com.example.featureProfile.domain.ViewModelFactory
 import com.example.featureProfile.domain.di.ProfileDepsStore
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
-class ProfileFragment: Fragment() {
+class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
     private val viewModel by viewModels<ProfileViewModel> { ViewModelFactory }
@@ -33,6 +35,7 @@ class ProfileFragment: Fragment() {
         }
     }
 
+    @SuppressLint("UnsafeRepeatOnLifecycleDetector")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,6 +49,7 @@ class ProfileFragment: Fragment() {
             duration = resources.getInteger(R.integer.transitionAnimationDuration).toLong()
         }
         initBinding()
+        observeViewModelStates()
         return binding.root
     }
 
@@ -55,6 +59,24 @@ class ProfileFragment: Fragment() {
                 closedQuestionDialog.show(parentFragmentManager, "")
             } else requireContext().createMessageDialog(checkNetworkConnectionMessage)
                 ?.show(parentFragmentManager, "")
+        }
+    }
+
+    private fun observeViewModelStates() {
+        viewModel.state.observe(viewLifecycleOwner) {
+            when (it) {
+                is ProfileViewModelStates.TryingToLogOut ->
+                    ProcessAlertDialog.show(parentFragmentManager, "")
+                is ProfileViewModelStates.LogOutFailed -> {
+                    ProcessAlertDialog.dismiss()
+                    requireContext().createMessageDialog(it.errorMessage)
+                        ?.show(parentFragmentManager, "")
+                }
+                is ProfileViewModelStates.LogOutWasSuccessful -> {
+                    ProcessAlertDialog.onSuccess()
+                }
+                is ProfileViewModelStates.Default -> {}
+            }
         }
     }
 }

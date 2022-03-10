@@ -4,6 +4,9 @@ import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.tools.constants.FirestoreConstants.ORDER_ITEM_ID_DELIMITER
 import com.example.core.domain.tools.constants.OtherStringConstants.CURRENT_ORDER_NOT_INITIALIZED
 import com.example.core.domain.tools.constants.OtherStringConstants.ORDER_ITEM_NOT_FOUNT
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 typealias OrdersServiceSub = (orders: List<Order>) -> Unit
@@ -17,37 +20,14 @@ class OrdersServiceImpl @Inject constructor() :
         get() = field ?: throw IllegalStateException(CURRENT_ORDER_NOT_INITIALIZED)
 
     var orders = mutableListOf<Order>()
-    private var subscribers = mutableSetOf<OrdersServiceSub>()
-    override var currentOrderSubscribers: MutableSet<CurrentOrderServiceSub> = mutableSetOf()
+    private var ordersSubscribers = MutableSharedFlow<List<Order>>(replay = 1)
+    private var currentOrderSubscribers = MutableSharedFlow<List<OrderItem>>(replay = 1)
 
-    override fun notifyChangesOfCurrentOrder() {
-        currentOrderSubscribers.forEach {
-            it.invoke(currentOrder?.orderItems?.toList()!!)
-        }
-    }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun subscribeOnOrdersChanges(): Flow<List<Order>> = ordersSubscribers
 
-    override fun subscribe(subscriber: OrdersServiceSub) {
-        subscribers.add(subscriber)
-        subscriber.invoke(orders)
-    }
-
-    override fun unSubscribe(subscriber: OrdersServiceSub) {
-        subscribers.remove(subscriber)
-    }
-
-    override fun subscribeToCurrentOrderChangers(subscriber: CurrentOrderServiceSub) {
-        currentOrderSubscribers.add(subscriber)
-    }
-
-    override fun unSubscribeToCurrentOrderChangers(subscriber: CurrentOrderServiceSub) {
-        currentOrderSubscribers.remove(subscriber)
-    }
-
-    override fun notifyChanges() {
-        subscribers.forEach {
-            it.invoke(orders.toList())
-        }
-    }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun subscribeOnCurrentOrderChanges(): Flow<List<OrderItem>> = currentOrderSubscribers
 
     override fun addOrderItem(orderItem: OrderItem): Boolean {
         val existingOrderItem = currentOrder!!.orderItems.find {
@@ -55,7 +35,7 @@ class OrdersServiceImpl @Inject constructor() :
         }
         if (existingOrderItem == null) {
             currentOrder!!.orderItems.add(orderItem)
-            notifyChangesOfCurrentOrder()
+            currentOrderSubscribers.tryEmit(currentOrder!!.orderItems)
             return true
         }
         return false
@@ -69,13 +49,13 @@ class OrdersServiceImpl @Inject constructor() :
         val anotherExistingOrderItem = currentOrder!!.orderItems.find {
             it.getOrderIemId() == orderItem.getOrderIemId()
         }
-        if(anotherExistingOrderItem != null) return false
+        if (anotherExistingOrderItem != null) return false
 
         currentOrder!!.orderItems = currentOrder!!.orderItems.map {
             if (it.getOrderIemId() == aldOrderItemId) orderItem
             else it
         }.toMutableList()
-        notifyChangesOfCurrentOrder()
+        currentOrderSubscribers.tryEmit(currentOrder!!.orderItems)
         return true
     }
 
@@ -98,6 +78,7 @@ class OrdersServiceImpl @Inject constructor() :
             newOrderItems.add(it.copy())
         }
         currentOrder?.orderItems = newOrderItems
+        currentOrderSubscribers.tryEmit(currentOrder!!.orderItems)
     }
 
     override fun changeGuestsCount(newCount: Int) {
@@ -113,18 +94,18 @@ class OrdersServiceImpl @Inject constructor() :
         orders.forEachIndexed { index, order ->
             if (order.orderId == newOrder.orderId) {
                 orders[index] = newOrder
-                notifyChanges()
+                ordersSubscribers.tryEmit(orders)
                 return
             }
         }
         orders.add(newOrder)
-        notifyChanges()
+        ordersSubscribers.tryEmit(orders)
     }
 
     override fun addListOfOrders(orders: List<Order>) {
         this.orders.clear()
         this.orders.addAll(orders)
-        notifyChanges()
+        ordersSubscribers.tryEmit(orders)
     }
 
     override fun getOrderById(orderId: Int): Order? =
@@ -150,7 +131,7 @@ class OrdersServiceImpl @Inject constructor() :
                 orders[index] = newOrder!!
             }
         }
-        notifyChanges()
+        ordersSubscribers.tryEmit(orders)
     }
 }
 
