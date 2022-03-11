@@ -18,7 +18,7 @@ class InsertOrderUseCaseImpl @Inject constructor(
                 task.onSuccess(Unit)
             }
             override fun onError(message: ErrorMessage?) {
-                task.onError()
+                task.onError(message)
             }
         })
     }

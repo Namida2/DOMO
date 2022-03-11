@@ -3,29 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_authorization"
-    app:startDestination="@id/logInFragment">
+    app:startDestination="@id/navigation_log_in">
 
-    <fragment
-        android:id="@+id/logInFragment"
-        android:name="com.example.domo.authorization.presentation.LogInFragment"
-        android:label="LogInFragment"
-        tools:layout="@layout/fragment_log_in">
-        <action
-            android:id="@+id/action_logInFragment_to_registrationFragment"
-            app:destination="@id/registrationFragment"
-            app:enterAnim="@anim/anim_slide_in_right"
-            app:exitAnim="@anim/anim_slide_out_left"
-            app:popExitAnim="@anim/anim_slide_out_right"
-            app:popEnterAnim="@anim/anim_slide_in_left"/>
-    </fragment>
-    <fragment
-        android:id="@+id/registrationFragment"
-        android:name="com.example.domo.registration.presentation.RegistrationFragment"
-        android:label="RegistrationFragment"
-        tools:layout="@layout/fragment_registration">
-        <action
-            android:id="@+id/action_registrationFragment_to_logInFragment"
-            app:destination="@id/logInFragment" />
-    </fragment>
+    <include app:graph="@navigation/navigation_log_in" />
 
 </navigation>

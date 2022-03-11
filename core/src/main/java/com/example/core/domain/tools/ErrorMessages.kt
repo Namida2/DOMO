@@ -11,9 +11,9 @@ object ErrorMessages {
         R.string.defaultTitle,
         R.string.defaultMessage
     )
-    val permissionErrorMessage = ErrorMessage(
-        R.string.permissionErrorTitle,
-        R.string.permissionErrorMessage
+    val permissionDeniedMessage = ErrorMessage(
+        R.string.permissionDeniedTitle,
+        R.string.permissionDeniedMessage
     )
     val wrongEmailOrPassword = ErrorMessage(
         R.string.wrongEmailOrPasswordTitle,

@@ -74,6 +74,8 @@ class ProfileFragment : Fragment() {
                 }
                 is ProfileViewModelStates.LogOutWasSuccessful -> {
                     ProcessAlertDialog.onSuccess()
+                    //TODO: Launch the SplashScreenActivity
+
                 }
                 is ProfileViewModelStates.Default -> {}
             }

@@ -6,7 +6,7 @@ import com.example.core.domain.tools.ErrorMessage
 import com.example.core.domain.tools.constants.EmployeePosts
 import com.example.domo.models.interfaces.RegistrationModelInterface
 import com.example.domo.models.remoteRepository.authorisation.RegistrationRemoteRepository
-import entities.PostItem
+import com.example.featureRegistration.domain.PostItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main

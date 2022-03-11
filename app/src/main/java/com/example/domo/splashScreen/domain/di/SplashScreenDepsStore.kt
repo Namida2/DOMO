@@ -8,7 +8,6 @@ object SplashScreenDepsStore {
     val appComponent: SplashScreenAppComponent by lazy {
         val component = DaggerSplashScreenAppComponent.builder().provideDeps(deps).build()
         ViewModelFactory.appComponent = component
-
         component
     }
 }

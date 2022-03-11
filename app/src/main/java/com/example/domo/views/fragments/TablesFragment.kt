@@ -77,14 +77,14 @@ class TablesFragment : Fragment() {
     }
 
     private fun startOrderFragment(item: View) {
-        val direction = TablesFragmentDirections
-            .actionTablesFragmentToOrderFragment(item.tag as Int)
-        val fragmentExtras =
-            FragmentNavigatorExtras(
-                //TODO: Add it to com.example.core.domain.constants
-                item to "end",
-            )
-        findNavController().navigate(direction, fragmentExtras)
+//        val direction = TablesFragmentDirections
+//            .actionTablesFragmentToOrderFragment(item.tag as Int)
+//        val fragmentExtras =
+//            FragmentNavigatorExtras(
+//                //TODO: Add it to com.example.core.domain.constants
+//                item to "end",
+//            )
+//        findNavController().navigate(direction, fragmentExtras)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

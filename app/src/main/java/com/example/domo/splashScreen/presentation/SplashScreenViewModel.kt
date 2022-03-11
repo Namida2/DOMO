@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.Employee
-import com.example.core.domain.tools.ErrorMessages.permissionErrorMessage
+import com.example.core.domain.tools.ErrorMessages.permissionDeniedMessage
 import com.example.domo.splashScreen.domain.GetCurrentEmployeeUseCase
 import com.example.domo.splashScreen.domain.ReadMenuUseCase
 import kotlinx.coroutines.launch
@@ -18,7 +18,7 @@ sealed class SplashScreenStates {
     ) : SplashScreenStates()
 
     class PermissionError(
-        var message: com.example.core.domain.tools.ErrorMessage = permissionErrorMessage
+        var message: com.example.core.domain.tools.ErrorMessage = permissionDeniedMessage
     ) : SplashScreenStates()
 
     object EmployeeDoesNotExit : SplashScreenStates()

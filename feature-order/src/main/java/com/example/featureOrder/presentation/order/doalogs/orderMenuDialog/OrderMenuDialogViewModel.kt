@@ -4,36 +4,37 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.featureOrder.domain.useCases.InsertOrderUseCase
 import com.example.core.domain.tools.ErrorMessage
-
 import com.example.core.domain.tools.ErrorMessages.defaultErrorMessage
 import com.example.core.domain.tools.SimpleTask
+import com.example.featureOrder.domain.useCases.InsertOrderUseCase
 
 sealed class OrderMenuDialogVMStates {
-    object Default: OrderMenuDialogVMStates()
-    object InsertingCurrentOrder: OrderMenuDialogVMStates()
-    object InsertingWasSuccessful: OrderMenuDialogVMStates()
-    class InsertingWasFailure: OrderMenuDialogVMStates() {
-        val errorMasse = defaultErrorMessage
-    }
+    object Default : OrderMenuDialogVMStates()
+    object InsertingCurrentOrder : OrderMenuDialogVMStates()
+    object InsertingWasSuccessful : OrderMenuDialogVMStates()
+    class InsertingWasFailure(val errorMessage: ErrorMessage) : OrderMenuDialogVMStates()
 }
+
 class OrderMenuDialogViewModel(
     private val insertOrderUseCase: InsertOrderUseCase,
 ) : ViewModel() {
 
     private var _state: MutableLiveData<OrderMenuDialogVMStates> = MutableLiveData(
-    OrderMenuDialogVMStates.Default)
+        OrderMenuDialogVMStates.Default
+    )
     val state: LiveData<OrderMenuDialogVMStates> = _state
 
     fun onConfirmOrderButtonClick(view: View) {
         _state.value = OrderMenuDialogVMStates.InsertingCurrentOrder
-        insertOrderUseCase.insertCurrentOrder(object: SimpleTask {
+        insertOrderUseCase.insertCurrentOrder(object : SimpleTask {
             override fun onSuccess(arg: Unit) {
                 _state.value = OrderMenuDialogVMStates.InsertingWasSuccessful
             }
+
             override fun onError(message: ErrorMessage?) {
-                _state.value = OrderMenuDialogVMStates.InsertingWasFailure()
+                _state.value =
+                    OrderMenuDialogVMStates.InsertingWasFailure(message ?: defaultErrorMessage)
             }
         })
     }

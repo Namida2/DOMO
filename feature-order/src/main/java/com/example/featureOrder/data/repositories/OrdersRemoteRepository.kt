@@ -9,12 +9,10 @@ import com.example.core.domain.tools.constants.FirestoreConstants.ORDER_ITEM_ID_
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ID
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_INFO
+import com.example.core.domain.tools.extensions.getExceptionMessage
 import com.example.core.domain.tools.extensions.logD
 import com.example.core.domain.tools.extensions.logE
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Transaction
+import com.google.firebase.firestore.*
 import javax.inject.Inject
 
 class OrdersRemoteRepositoryImpl @Inject constructor(
@@ -37,7 +35,7 @@ class OrdersRemoteRepositoryImpl @Inject constructor(
                 task.onSuccess(Unit)
             }.addOnFailureListener {
                 it.message?.let { it1 -> logE(it1) }
-                task.onError()
+                task.onError(it.getExceptionMessage())
             }
         }
     }
@@ -74,11 +72,10 @@ class OrdersRemoteRepositoryImpl @Inject constructor(
                         }
                     }
             }
-            if (it.documents.lastIndex == -1)
-                onSuccess.invoke()
+            if (it.documents.lastIndex == -1) onSuccess.invoke()
         }.addOnFailureListener {
-            task.onError()
             logE("$this: ${it.message}")
+            task.onError(it.getExceptionMessage())
         }
     }
 
@@ -103,7 +100,6 @@ class OrdersRemoteRepositoryImpl @Inject constructor(
             logE("$this: ${it.message}")
         }
     }
-
 }
 
 interface OrdersRemoteRepository {

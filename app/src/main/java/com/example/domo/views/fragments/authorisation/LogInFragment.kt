@@ -7,16 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.core.domain.tools.extensions.createMessageDialog
+import com.example.core.domain.tools.extensions.isNetworkConnected
 import com.example.domo.R
-import com.example.domo.databinding.FragmentLogInBinding
 import com.example.domo.splashScreen.presentation.SplashScreenActivity
 import com.example.domo.viewModels.LogInViewModel
 import com.example.domo.viewModels.LogInViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
-import com.example.core.domain.tools.ErrorMessage
-import com.example.core.domain.tools.dialogs.ProcessAlertDialog
-import com.example.core.domain.tools.extensions.createMessageDialog
-import com.example.core.domain.tools.extensions.isNetworkConnected
+import com.example.featureLogIn.databinding.FragmentLogInBinding
 
 class LogInFragment : Fragment() {
 
@@ -38,7 +36,7 @@ class LogInFragment : Fragment() {
         with(binding) {
             logInButton.setOnClickListener {
                 if (requireContext().isNetworkConnected()) {
-                    viewModel?.signIn(email.text.toString(), password.text.toString())
+                    viewModel.signIn(email.text.toString(), password.text.toString())
                 } else requireContext().createMessageDialog(
                     com.example.core.domain.tools.ErrorMessage(
                         R.string.defaultTitle,
@@ -54,11 +52,19 @@ class LogInFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is LogInViewModelStates.Validating -> {
-                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.show(parentFragmentManager, "")
+                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.show(
+                        parentFragmentManager,
+                        ""
+                    )
                 }
                 is LogInViewModelStates.Success -> {
 //                    ProcessAlertDialog.onSuccess()
-                    requireContext().startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
+                    requireContext().startActivity(
+                        Intent(
+                            requireContext(),
+                            SplashScreenActivity::class.java
+                        )
+                    )
                 }
                 else -> {
                     if (it is LogInViewModelStates.Default) return@observe

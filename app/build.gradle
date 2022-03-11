@@ -36,13 +36,13 @@ android {
         viewBinding true
         dataBinding true
     }
-
 }
 
 dependencies {
-    implementation project(':waiter-main')
-    implementation project(':cook-main')
     implementation project(":core")
+    implementation project(':cook-main')
+    implementation project(':waiter-main')
+    implementation project(':feature-logIn')
 
     implementation platform (Firebase.firebaseBom)
     implementation (Firebase.firebaseAuth)
@@ -55,6 +55,8 @@ dependencies {
     implementation (Navigation.navigationFeaturesSupport)
 
     implementation (Dagger.dagger)
+    implementation project(path: ':feature-registration')
+    implementation project(path: ':feature-registration')
     kapt (Dagger.compiler)
 
     implementation (Fragment.fragmentKtx)

@@ -1,11 +1,11 @@
 package com.example.domo.splashScreen.domain.di.modules
 
-import com.example.domo.authorization.domain.LogInUseCase
-import com.example.domo.authorization.domain.LogInUseCaseImpl
+import com.example.featureLogIn.domain.LogInUseCase
+import com.example.featureLogIn.domain.LogInUseCaseImpl
 import com.example.domo.registration.domain.GetPostItemsUseCase
 import com.example.domo.registration.domain.GetPostItemsUseCaseImpl
-import com.example.domo.registration.domain.RegistrationUseCase
-import com.example.domo.registration.domain.RegistrationUseCaseImpl
+import com.example.featureRegistration.domain.useCases.RegistrationUseCase
+import com.example.featureRegistration.domain.useCases.RegistrationUseCaseImpl
 import com.example.domo.splashScreen.domain.GetCurrentEmployeeUseCase
 import com.example.domo.splashScreen.domain.GetCurrentEmployeeUseCaseImpl
 import com.example.domo.splashScreen.domain.ReadMenuUseCase

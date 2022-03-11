@@ -31,8 +31,8 @@
     <string name="tooShortPasswordTitle">Пароль слишком короткий</string>
     <string name="tooShortPasswordMessage">Пароль должен состоять из 6 и больше стмволов.</string>
 
-    <string name="permissionErrorTitle">Нет прав</string>
-    <string name="permissionErrorMessage">Владльцу данной почты пока запрещено работать с приложением. Обатитесь к администратору.</string>
+    <string name="permissionDeniedTitle">Нет прав</string>
+    <string name="permissionDeniedMessage">Владльцу данной почты пока запрещено работать с приложением. Обатитесь к администратору.</string>
 
     <string name="dishAlreadyAddedTitle">Это блюдо уже добавленно</string>
     <string name="dishAlreadyAddedMessage">Если необходимо изменить количество порций данного блюда, вернитесь на экран заказа и нажмите на карточку с нужным блюдом.</string>

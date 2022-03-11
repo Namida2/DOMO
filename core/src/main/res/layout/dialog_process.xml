@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
+            app:trackThickness="3dp"
             android:layout_marginBottom="32dp"
             android:indeterminate="true"
             app:trackCornerRadius="90dp" />
@@ -31,7 +32,7 @@
             android:fontFamily="@font/montserrat_semi_bold"
             android:text="Подождите немного..."
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
     <TextView

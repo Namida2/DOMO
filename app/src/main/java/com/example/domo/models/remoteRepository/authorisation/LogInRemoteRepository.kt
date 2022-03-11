@@ -11,8 +11,8 @@ class LogInRemoteRepository @Inject constructor(
     private val auth: FirebaseAuth,
 ) {
     private val permissionErrorMessage = com.example.core.domain.tools.ErrorMessage(
-        R.string.permissionErrorTitle,
-        R.string.permissionErrorMessage
+        R.string.permissionDeniedTitle,
+        R.string.permissionDeniedMessage
     )
     private val defaultErrorMessage = com.example.core.domain.tools.ErrorMessage(
         R.string.defaultTitle,

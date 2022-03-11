@@ -1,7 +1,7 @@
 package com.example.domo.splashScreen.domain.di.modules
 
-import com.example.domo.authorization.data.UsersRemoteRepository
-import com.example.domo.authorization.data.UsersRemoteRepositoryImpl
+import com.example.featureLogIn.data.UsersRemoteRepository
+import com.example.featureLogIn.data.UsersRemoteRepositoryImpl
 import com.example.domo.splashScreen.data.MenuLocalRepository
 import com.example.domo.splashScreen.data.MenuLocalRepositoryImpl
 import com.example.core.data.database.Database

@@ -16,8 +16,10 @@
             <option value="$PROJECT_DIR$/cook-main" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/feature-currentOrders" />
+            <option value="$PROJECT_DIR$/feature-logIn" />
             <option value="$PROJECT_DIR$/feature-order" />
             <option value="$PROJECT_DIR$/feature-profile" />
+            <option value="$PROJECT_DIR$/feature-registration" />
             <option value="$PROJECT_DIR$/waiter-core" />
             <option value="$PROJECT_DIR$/waiter-main" />
           </set>

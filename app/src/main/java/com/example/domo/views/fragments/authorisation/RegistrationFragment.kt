@@ -12,18 +12,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.core.domain.tools.ErrorMessages.defaultErrorMessage
+import com.example.core.domain.tools.extensions.createMessageDialog
+import com.example.core.domain.tools.extensions.isNetworkConnected
 import com.example.domo.R
-import com.example.domo.adapters.PostItemsAdapter
-import com.example.domo.adapters.itemDecorations.PostItemDecoration
-import com.example.domo.databinding.FragmentRegistrationBinding
 import com.example.domo.splashScreen.presentation.SplashScreenActivity
 import com.example.domo.viewModels.RegistrationViewModel
 import com.example.domo.viewModels.RegistrationViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
-import com.example.core.domain.tools.ErrorMessages.defaultErrorMessage
-import com.example.core.domain.tools.dialogs.ProcessAlertDialog
-import com.example.core.domain.tools.extensions.createMessageDialog
-import com.example.core.domain.tools.extensions.isNetworkConnected
+import com.example.featureRegistration.databinding.FragmentRegistrationBinding
+import com.example.featureRegistration.domain.recyclerView.PostItemDecoration
+import com.example.featureRegistration.domain.recyclerView.PostItemsAdapter
 
 class RegistrationFragment : Fragment() {
 
@@ -96,7 +95,10 @@ class RegistrationFragment : Fragment() {
             var dialog: DialogFragment? = null
             when (it) {
                 is RegistrationViewModelStates.Validating -> {
-                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.show(parentFragmentManager, "")
+                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.show(
+                        parentFragmentManager,
+                        ""
+                    )
                 }
                 is RegistrationViewModelStates.Valid -> {
                     //Can not perform this action after onSaveInstanceState (it's about dismiss)

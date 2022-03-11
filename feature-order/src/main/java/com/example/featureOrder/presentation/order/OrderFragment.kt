@@ -36,7 +36,6 @@ class OrderFragment : Fragment() {
 
     private var orderId = 0
     private val defaultGuestsCount = 1
-
     private val guestCountShowingDelay = 400L
 
     private var menuBottomSheetDialog: MenuBottomSheetDialog? = null

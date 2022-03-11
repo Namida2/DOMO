@@ -2,6 +2,7 @@ package com.example.core.domain
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "employee")
 data class Employee (

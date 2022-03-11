@@ -2,12 +2,11 @@ package com.example.domo.splashScreen.domain
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.domo.authorization.presentation.LogInViewModel
-import com.example.domo.registration.presentation.RegistrationViewModel
+import com.example.featureLogIn.presentation.LogInViewModel
+import com.example.featureRegistration.presentation.RegistrationViewModel
 import com.example.domo.splashScreen.domain.di.SplashScreenAppComponent
 import com.example.domo.splashScreen.presentation.SplashScreenViewModel
 import com.example.core.domain.tools.constants.OtherStringConstants.UNKNOWN_VIEW_MODEL_CLASS
-import com.example.domo.splashScreen.domain.di.SplashScreenDepsStore
 
 object ViewModelFactory : ViewModelProvider.Factory {
 
@@ -20,13 +19,6 @@ object ViewModelFactory : ViewModelProvider.Factory {
                 appComponent.provideReadMenuUseCase(),
                 appComponent.provideReadOrdersUseCase(),
                 appComponent.provideGetCurrentEmployeeUseCase()
-            )
-            LogInViewModel::class.java -> LogInViewModel(
-                appComponent.provideLogInUseCase()
-            )
-            RegistrationViewModel::class.java -> RegistrationViewModel(
-                appComponent.provideGetPostItemsUseCase(),
-                appComponent.provideRegistrationUseCase()
             )
             else -> throw IllegalArgumentException(UNKNOWN_VIEW_MODEL_CLASS + modelClass)
         }

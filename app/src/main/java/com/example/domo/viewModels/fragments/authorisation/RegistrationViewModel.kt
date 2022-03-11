@@ -6,7 +6,7 @@ import com.example.core.domain.Employee
 import com.example.core.domain.tools.extensions.isValidEmail
 import com.example.domo.R
 import com.example.domo.models.interfaces.RegistrationModelInterface
-import entities.PostItem
+import com.example.featureRegistration.domain.PostItem
 
 sealed class RegistrationViewModelStates {
     open var errorMessage: com.example.core.domain.tools.ErrorMessage? = null

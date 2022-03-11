@@ -6,12 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.example.core.domain.tools.ErrorMessages.checkNetworkConnectionMessage
+import com.example.core.domain.tools.dialogs.ProcessAlertDialog
+import com.example.core.domain.tools.extensions.createMessageDialog
+import com.example.core.domain.tools.extensions.isNetworkConnected
 import com.example.featureOrder.databinding.DialogOrderMenuBinding
 import com.example.featureOrder.domain.ViewModelFactory
 import com.example.featureOrder.domain.interfaces.OnDismissListener
-import com.example.core.domain.tools.ErrorMessages.checkNetworkConnectionMessage
-import com.example.core.domain.tools.extensions.createMessageDialog
-import com.example.core.domain.tools.extensions.isNetworkConnected
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class OrderMenuBottomSheetDialog(
@@ -51,15 +52,17 @@ class OrderMenuBottomSheetDialog(
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is OrderMenuDialogVMStates.InsertingCurrentOrder -> {
-                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.show(childFragmentManager, "")
+                    ProcessAlertDialog.show(childFragmentManager, "")
                 }
                 is OrderMenuDialogVMStates.InsertingWasSuccessful -> {
-                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.onSuccess()
+                    ProcessAlertDialog.onSuccess()
                 }
                 is OrderMenuDialogVMStates.InsertingWasFailure -> {
-                    requireContext().createMessageDialog(it.errorMasse)
+                    ProcessAlertDialog.dismiss()
+                    requireContext().createMessageDialog(it.errorMessage)
+                        ?.show(parentFragmentManager, "")
                 }
-                else -> {}//Default state
+                is OrderMenuDialogVMStates.Default -> {}
             }
         }
     }
