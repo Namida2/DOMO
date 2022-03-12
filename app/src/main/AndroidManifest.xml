@@ -12,7 +12,7 @@
         android:theme="@style/Theme.DOMO">
         <activity
             android:theme="@style/splashScreenStyle"
-            android:name=".splashScreen.presentation.SplashScreenActivity"
+            android:name=".splashScreen.presentation.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

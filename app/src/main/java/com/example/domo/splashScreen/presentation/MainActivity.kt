@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -18,19 +17,18 @@ import com.example.core.domain.tools.constants.EmployeePosts.COOK
 import com.example.core.domain.tools.constants.EmployeePosts.WAITER
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.core.domain.tools.extensions.isNetworkConnected
-import com.example.core.domain.tools.extensions.logD
 import com.example.domo.databinding.ActivityMainBinding
 import com.example.domo.splashScreen.domain.ViewModelFactory
 import com.example.domo.splashScreen.domain.di.SplashScreenDepsStore
 import com.example.featureLogIn.R
 import com.example.featureLogIn.domain.di.LogInDepsStore
-import com.example.featureLogIn.domain.interfaces.EmployeeAuthorizationCallback
+import com.example.core.domain.interfaces.EmployeeAuthorizationCallback
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
 import com.example.waiterMain.presentation.WaiterMainActivity
 import extentions.employee
-import java.io.Serializable
 
-class SplashScreenActivity : AppCompatActivity() {
+//TODO: Implement closing ProfileFragment when it should to be
+class MainActivity: AppCompatActivity(), EmployeeAuthorizationCallback {
 
     private val viewModel by viewModels<SplashScreenViewModel> { ViewModelFactory }
     private lateinit var navController: NavController
@@ -40,11 +38,6 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         checkPermissions()
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
-        navController = navHostFragment.findNavController()
-
     }
 
     private fun checkPermissions() {
@@ -56,15 +49,6 @@ class SplashScreenActivity : AppCompatActivity() {
         subscribeToViewModelState()
     }
 
-    private fun doMagic(employee: Employee) {
-        this.employee = employee
-        WaiterMainDepsStore.deps = SplashScreenDepsStore.appComponent
-        WaiterMainDepsStore.profileDeps = SplashScreenDepsStore.appComponent
-        startActivity(
-            Intent(this, this::class.java)
-        )
-    }
-
     private fun subscribeToViewModelState() {
         viewModel.state.observe(this) { state ->
             when (state) {
@@ -72,22 +56,9 @@ class SplashScreenActivity : AppCompatActivity() {
                     //progressBar?
                 }
                 is SplashScreenStates.EmployeeDoesNotExit -> {
-                    //TODO: Resolve this problem //STOPPED//
-                    LogInDepsStore.deps = SplashScreenDepsStore.appComponent
-                    navController.setGraph(
-                        R.navigation.navigation_log_in,
-                        bundleOf("employeeAuthorizationCallback" to object :
-                            EmployeeAuthorizationCallback {
-                            override fun onEmployeeLoggedIn(employee: Employee) {
-                                logD("it it works?")
-                                doMagic(employee)
-                            }
-                        })
-                    )
-                    setContentView(binding.root)
+                    prepareLogInScreen()
                 }
                 is SplashScreenStates.EmployeeExists -> {
-                    //Set an employee in the extension field
                     employee = state.employee
                     when (employee.post) {
                         COOK -> {
@@ -107,9 +78,25 @@ class SplashScreenActivity : AppCompatActivity() {
                     createMessageDialog(state.message)
                         ?.show(supportFragmentManager, "")
                 }
-                else -> {}//DefaultState
+                SplashScreenStates.DefaultState -> {}
             }
         }
+    }
+
+    private fun prepareLogInScreen() {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
+        navController = navHostFragment.findNavController().also {
+            it.setGraph(R.navigation.navigation_log_in)
+        }
+        LogInDepsStore.deps = SplashScreenDepsStore.appComponent
+        setContentView(binding.root)
+    }
+
+    override fun onEmployeeLoggedIn(employee: Employee?) {
+        employee?.let{this.employee = it}
+        startActivity(Intent(this, this::class.java))
     }
 }
 

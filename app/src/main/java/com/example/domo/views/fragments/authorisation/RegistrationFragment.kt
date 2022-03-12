@@ -16,7 +16,7 @@ import com.example.core.domain.tools.ErrorMessages.defaultErrorMessage
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.core.domain.tools.extensions.isNetworkConnected
 import com.example.domo.R
-import com.example.domo.splashScreen.presentation.SplashScreenActivity
+import com.example.domo.splashScreen.presentation.MainActivity
 import com.example.domo.viewModels.RegistrationViewModel
 import com.example.domo.viewModels.RegistrationViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
@@ -45,7 +45,6 @@ class RegistrationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding.lifecycleOwner = viewLifecycleOwner
         observeViewModelState()
         return binding.root
     }
@@ -103,7 +102,7 @@ class RegistrationFragment : Fragment() {
                 is RegistrationViewModelStates.Valid -> {
                     //Can not perform this action after onSaveInstanceState (it's about dismiss)
                     //ProcessAlertDialog.onSuccess()l
-                    startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
+                    startActivity(Intent(requireContext(), MainActivity::class.java))
                 }
                 else -> {
                     if (it is RegistrationViewModelStates.Default) return@observe

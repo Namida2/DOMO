@@ -1,6 +1,7 @@
 package com.example.featureRegistration.presentation
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.core.domain.interfaces.EmployeeAuthorizationCallback
+import com.example.core.domain.tools.constants.OtherStringConstants
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.core.domain.tools.extensions.isNetworkConnected
 import com.example.featureRegistration.R
@@ -23,12 +26,16 @@ class RegistrationFragment : Fragment() {
 
     private var smallMargin: Int? = null
     private var largeMargin: Int? = null
-
+    private lateinit var employeeAuthorizationCallback: EmployeeAuthorizationCallback
     private val viewModel: RegistrationViewModel by viewModels { ViewModelFactory }
     lateinit var binding: FragmentRegistrationBinding
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        employeeAuthorizationCallback =
+            (context as? EmployeeAuthorizationCallback) ?: throw IllegalArgumentException(
+                OtherStringConstants.ACTIVITY_IS_NOT_EMPLOYEE_AUTHORIZATION_CALLBACK
+            )
         viewModel.resetState()
         smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
         largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
@@ -40,7 +47,6 @@ class RegistrationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding.lifecycleOwner = viewLifecycleOwner
         observeViewModelState()
         return binding.root
     }
@@ -99,9 +105,7 @@ class RegistrationFragment : Fragment() {
                     )
                 }
                 is RegistrationViewModelStates.Valid -> {
-                    //Can not perform this action after onSaveInstanceState (it's about dismiss)
-                    //ProcessAlertDialog.onSuccess()
-//                    startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
+                    employeeAuthorizationCallback.onEmployeeLoggedIn(it.employee)
                 }
                 else -> {
                     if (it is RegistrationViewModelStates.Default) return@observe

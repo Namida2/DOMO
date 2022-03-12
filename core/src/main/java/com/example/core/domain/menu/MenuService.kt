@@ -38,6 +38,7 @@ object MenuService : BaseObservable<MenuServiceSub> {
             }
             dish != null
         }
+        //TODO: Read the menu again in this place if there is an exception
         return dish ?: throw IllegalArgumentException(UNKNOWN_DISH_ID + dishId)
     }
 

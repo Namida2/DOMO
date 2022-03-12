@@ -8,24 +8,30 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.example.core.domain.Employee
 import com.example.core.domain.tools.ErrorMessages.checkNetworkConnectionMessage
+import com.example.core.domain.tools.constants.OtherStringConstants.ACTIVITY_IS_NOT_EMPLOYEE_AUTHORIZATION_CALLBACK
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.core.domain.tools.extensions.isNetworkConnected
 import com.example.featureLogIn.R
 import com.example.featureLogIn.databinding.FragmentLogInBinding
 import com.example.featureLogIn.domain.ViewModelFactory
-import com.example.featureLogIn.domain.interfaces.EmployeeAuthorizationCallback
-import java.io.Serializable
+import com.example.featureLogIn.domain.di.LogInDepsStore
+import com.example.core.domain.interfaces.EmployeeAuthorizationCallback
+import com.example.featureRegistration.domain.di.RegistrationAppComponentDeps
+import com.example.featureRegistration.domain.di.RegistrationDepsStore
+import com.google.firebase.auth.FirebaseAuth
 
 class LogInFragment : Fragment() {
-    private val args by navArgs<LogInFragmentArgs>()
+    private lateinit var employeeAuthorizationCallback: EmployeeAuthorizationCallback
     private lateinit var binding: FragmentLogInBinding
     private val viewModel by viewModels<LogInViewModel> { ViewModelFactory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        employeeAuthorizationCallback =
+            (context as? EmployeeAuthorizationCallback) ?: throw IllegalArgumentException(
+                ACTIVITY_IS_NOT_EMPLOYEE_AUTHORIZATION_CALLBACK
+            )
     }
 
     override fun onCreateView(
@@ -49,10 +55,18 @@ class LogInFragment : Fragment() {
                 )?.show(parentFragmentManager, "")
             }
             newAccountButton.setOnClickListener {
-                findNavController().navigate(R.id.action_logInFragment_to_registrationFragment)
+                prepareRegistrationScreen()
             }
         }
         observeViewModelStates()
+    }
+
+    private fun prepareRegistrationScreen() {
+        RegistrationDepsStore.deps = object : RegistrationAppComponentDeps {
+            override val firebaseAuth: FirebaseAuth
+                get() = LogInDepsStore.deps.firebaseAuth
+        }
+        findNavController().navigate(R.id.action_logInFragment_to_registrationFragment)
     }
 
     private fun observeViewModelStates() {
@@ -66,7 +80,7 @@ class LogInFragment : Fragment() {
                 }
                 is LogInViewModelStates.Success -> {
                     com.example.core.domain.tools.dialogs.ProcessAlertDialog.dismiss()
-                    args.employeeAuthorizationCallback.onEmployeeLoggedIn(it.employee)
+                    employeeAuthorizationCallback.onEmployeeLoggedIn(it.employee)
                 }
                 else -> {
                     if (it is LogInViewModelStates.Default) return@observe
