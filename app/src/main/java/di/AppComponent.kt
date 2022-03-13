@@ -6,7 +6,7 @@ import com.example.core.domain.Employee
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.order.OrdersServiceSub
 import com.example.domo.models.interfaces.*
-import com.example.domo.splashScreen.domain.di.SplashScreenAppComponentDeps
+import com.example.featureSplashScreen.domain.di.SplashScreenAppComponentDeps
 import com.example.domo.views.activities.WaiterMainActivity
 import com.example.domo.views.dialogs.MenuBottomSheetDialog
 import com.example.domo.views.fragments.OrderFragment

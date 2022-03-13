@@ -2,9 +2,11 @@ package application
 
 import android.app.Application
 import androidx.room.Room
+import com.example.core.data.database.Database
 import com.example.core.domain.Employee
 import com.example.core.domain.di.CoreDepsStore
-import com.example.domo.splashScreen.domain.di.SplashScreenDepsStore
+import com.example.core.domain.tools.constants.SharedPreferencesConstants
+import com.example.featureSplashScreen.domain.di.SplashScreenDepsStore
 import com.example.domo.viewModels.ViewModelFactory
 import di.AppComponent
 import di.DaggerAppComponent
@@ -24,11 +26,11 @@ class MyApplication : Application() {
             applicationContext,
             Room.databaseBuilder(
                 applicationContext,
-                com.example.core.data.database.Database::class.java,
+                Database::class.java,
                 "restaurant_database"
             ).build(),
             getSharedPreferences(
-                com.example.core.domain.tools.constants.SharedPreferencesConstants.DB_SETTINGS,
+                SharedPreferencesConstants.DB_SETTINGS,
                 MODE_PRIVATE
             )
         )

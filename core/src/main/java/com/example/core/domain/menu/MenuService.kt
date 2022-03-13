@@ -14,7 +14,7 @@ sealed class MenuServiceStates {
     object MenuIsLoading : MenuServiceStates()
     object Default : MenuServiceStates()
 }
-
+//TODO: Create an interface for MenuService to domain layer
 object MenuService : BaseObservable<MenuServiceSub> {
     var menu: ArrayList<Category> = ArrayList()
 

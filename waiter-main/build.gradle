@@ -37,6 +37,7 @@ dependencies {
 
     implementation project(':core')
     implementation project(':feature-order')
+    implementation project(':feature-logIn')
     implementation project(':feature-profile')
     implementation project(':feature-currentOrders')
 

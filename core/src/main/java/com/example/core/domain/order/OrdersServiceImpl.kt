@@ -13,7 +13,7 @@ typealias OrdersServiceSub = (orders: List<Order>) -> Unit
 typealias CurrentOrderServiceSub = (orderItems: List<OrderItem>) -> Unit
 
 //TODO: Add states to showing the progress bar when the orders is reading
-class OrdersServiceImpl @Inject constructor() :
+class OrdersServiceImpl @Inject constructor():
     OrdersService<@JvmSuppressWildcards OrdersServiceSub> {
 
     override var currentOrder: Order? = null

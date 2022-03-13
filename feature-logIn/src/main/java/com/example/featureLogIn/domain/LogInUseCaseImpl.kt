@@ -5,7 +5,6 @@ import com.example.featureLogIn.data.UsersRemoteRepository
 import javax.inject.Inject
 
 class LogInUseCaseImpl @Inject constructor(
-    //private val employeeDao: EmployeeDao,
     private val usersRepository: UsersRemoteRepository,
 ) : LogInUseCase {
     override fun logIn(email: String, password: String, task: TaskWithEmployee) {

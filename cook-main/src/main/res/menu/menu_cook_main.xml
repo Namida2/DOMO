@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@id/currentOrdersFragment"
-        android:icon="@drawable/ic_email"
+        android:icon="@drawable/ic_orders"
         android:title="@string/tables"/>
     <item
         android:id="@+id/profileFragment"
-        android:icon="@drawable/ic_email"
+        android:icon="@drawable/ic_profile_solid"
         android:title="@string/profile" />
 </menu>

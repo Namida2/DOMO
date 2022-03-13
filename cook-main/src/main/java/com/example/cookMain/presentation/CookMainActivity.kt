@@ -55,10 +55,13 @@ class CookMainActivity : AppCompatActivity() {
                     navController.navigate(R.id.profileFragment)
                     true
                 }
-                else -> { false }
+                else -> {
+                    false
+                }
             }
         }
     }
+
     private fun provideProfileDeps() {
         ProfileDepsStore.deps = object : ProfileAppComponentDeps {
             override val currentEmployee: Employee?

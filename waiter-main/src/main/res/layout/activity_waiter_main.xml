@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rootCoordinationLayout"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <androidx.fragment.app.FragmentContainerView
@@ -49,9 +50,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom|center"
-        android:background="@color/white"
+        android:background="@drawable/bg_bottom_navigation"
         android:transitionName="defaultBottomNavigationView"
         app:hideOnScroll="true"
+        app:elevation="8dp"
+        android:elevation="8dp"
         app:itemIconTint="@color/color_bottom_navigation_items"
         app:itemRippleColor="@color/black"
         app:itemTextColor="@color/black"

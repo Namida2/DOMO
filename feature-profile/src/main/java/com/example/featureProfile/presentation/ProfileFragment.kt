@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.core.domain.tools.ErrorMessages.checkNetworkConnectionMessage
+import com.example.core.domain.tools.constants.OtherStringConstants.ACTIVITY_IS_NOT_LEAVE_ACCOUNT_CALLBACK
 import com.example.core.domain.tools.dialogs.ClosedQuestionDialog
 import com.example.core.domain.tools.dialogs.ProcessAlertDialog
 import com.example.core.domain.tools.extensions.createMessageDialog
@@ -17,11 +18,13 @@ import com.example.featureProfile.R
 import com.example.featureProfile.databinding.FragmentProfileBinding
 import com.example.featureProfile.domain.ViewModelFactory
 import com.example.featureProfile.domain.di.ProfileDepsStore
+import com.example.featureProfile.domain.di.interfaces.LeaveAccountCallback
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
+    private lateinit var leaveAccountCallback: LeaveAccountCallback
     private val viewModel by viewModels<ProfileViewModel> { ViewModelFactory }
     private lateinit var closedQuestionDialog: ClosedQuestionDialog<Unit>
 
@@ -33,6 +36,8 @@ class ProfileFragment : Fragment() {
         ) { //TODO: leaveThisAccount //STOPPED//
             viewModel.leaveThisAccount()
         }
+        leaveAccountCallback = (context as? LeaveAccountCallback)
+            ?: throw IllegalArgumentException(ACTIVITY_IS_NOT_LEAVE_ACCOUNT_CALLBACK)
     }
 
     @SuppressLint("UnsafeRepeatOnLifecycleDetector")
@@ -54,11 +59,17 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initBinding() {
-        binding.leaveAccountButton.setOnClickListener {
-            if (requireContext().isNetworkConnected()) {
-                closedQuestionDialog.show(parentFragmentManager, "")
-            } else requireContext().createMessageDialog(checkNetworkConnectionMessage)
-                ?.show(parentFragmentManager, "")
+        val currentEmployee = ProfileDepsStore.deps.currentEmployee
+        with(binding) {
+//            employeeName.text = currentEmployee?.name
+//            employeeEmail.text = currentEmployee?.email
+//            employeePost.text = currentEmployee?.post
+            leaveAccountButton.setOnClickListener {
+                if (requireContext().isNetworkConnected()) {
+                    closedQuestionDialog.show(parentFragmentManager, "")
+                } else requireContext().createMessageDialog(checkNetworkConnectionMessage)
+                    ?.show(parentFragmentManager, "")
+            }
         }
     }
 
@@ -74,8 +85,7 @@ class ProfileFragment : Fragment() {
                 }
                 is ProfileViewModelStates.LogOutWasSuccessful -> {
                     ProcessAlertDialog.onSuccess()
-                    //TODO: Launch the SplashScreenActivity
-
+                    leaveAccountCallback.onLeaveAccount()
                 }
                 is ProfileViewModelStates.Default -> {}
             }

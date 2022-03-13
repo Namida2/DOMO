@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.core.domain.tools.extensions.isNetworkConnected
 import com.example.domo.R
-import com.example.domo.splashScreen.presentation.MainActivity
+import com.example.featureSplashScreen.presentation.SplashScreenActivity
 import com.example.domo.viewModels.LogInViewModel
 import com.example.domo.viewModels.LogInViewModelStates
 import com.example.domo.viewModels.ViewModelFactory
@@ -62,7 +62,7 @@ class LogInFragment : Fragment() {
                     requireContext().startActivity(
                         Intent(
                             requireContext(),
-                            MainActivity::class.java
+                            SplashScreenActivity::class.java
                         )
                     )
                 }

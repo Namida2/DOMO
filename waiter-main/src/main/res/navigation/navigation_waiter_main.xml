@@ -11,5 +11,6 @@
         android:id="@+id/profileFragment"
         android:name="com.example.featureProfile.presentation.ProfileFragment"
         android:label="ProfileFragment" />
+    <include app:graph="@navigation/navigation_log_in"/>
 
 </navigation>

@@ -43,6 +43,7 @@ dependencies {
     implementation project(':cook-main')
     implementation project(':waiter-main')
     implementation project(':feature-logIn')
+    implementation project(':feature-splashScreen')
 
     implementation platform (Firebase.firebaseBom)
     implementation (Firebase.firebaseAuth)
