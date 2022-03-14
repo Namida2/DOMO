@@ -13,6 +13,7 @@ import com.example.featureEmployees.databinding.FragmentEmployeesBinding
 import com.example.featureEmployees.domain.ViewModelFactory
 import com.example.featureEmployees.presentation.recyclerView.EmployeesAdapterDelegate
 
+//TODO: Add the EmployeeDetailDialog
 class EmployeesFragment : Fragment() {
 
     private lateinit var binding: FragmentEmployeesBinding
