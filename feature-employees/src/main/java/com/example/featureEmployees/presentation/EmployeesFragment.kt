@@ -48,7 +48,7 @@ class EmployeesFragment : Fragment() {
         }
     }
 
-    private fun observeViewModelStates() {:
+    private fun observeViewModelStates() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is EmployeesVMStates.ReadingData -> {
