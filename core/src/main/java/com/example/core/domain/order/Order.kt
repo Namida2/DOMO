@@ -1,7 +1,6 @@
 package com.example.core.domain.order
 
-import com.example.core.domain.recyclerView.interfaces.BaseRecyclerViewType
-import com.example.core.domain.tools.extensions.logD
+import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 
 data class Order(
     var orderId: Int,

@@ -2,8 +2,8 @@ package com.example.domo.adapters.diffCallbacks
 
 import androidx.recyclerview.widget.DiffUtil
 import androidx.viewbinding.ViewBinding
-import com.example.core.domain.recyclerView.interfaces.BaseAdapterDelegate
-import com.example.core.domain.recyclerView.interfaces.BaseRecyclerViewType
+import com.example.core.presentation.recyclerView.interfaces.BaseAdapterDelegate
+import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 
 class MenuAdapterDiffCallback(
     private val recyclerViewTypes: List<BaseAdapterDelegate<out ViewBinding, out BaseRecyclerViewType>>,

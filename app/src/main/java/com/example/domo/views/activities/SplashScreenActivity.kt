@@ -8,10 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.domo.viewModels.ViewModelFactory
 import com.example.domo.viewModels.activities.SplashScreenStates
 import com.example.domo.viewModels.activities.SplashScreenViewModel
-import com.example.core.domain.tools.constants.EmployeePosts.ADMINISTRATOR
-import com.example.core.domain.tools.constants.EmployeePosts.COOK
-import com.example.core.domain.tools.constants.EmployeePosts.WAITER
-import extentions.employee
 
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -34,15 +30,15 @@ class SplashScreenActivity : AppCompatActivity() {
                 is SplashScreenStates.EmployeeDoesNotExit ->
                     startActivity(Intent(this, AuthorizationActivity::class.java))
                 is SplashScreenStates.EmployeeExists -> {
-                    employee = state.employee
-                    when (employee.post) {
-                        COOK ->
-                            startActivity(Intent(this, WaiterMainActivity::class.java))
-                        WAITER ->
-                            startActivity(Intent(this, WaiterMainActivity::class.java))
-                        ADMINISTRATOR ->
-                            startActivity(Intent(this, WaiterMainActivity::class.java))
-                    }
+//                    employee = state.employee
+//                    when (employee.post) {
+//                        COOK ->
+//                            startActivity(Intent(this, WaiterMainActivity::class.java))
+//                        WAITER ->
+//                            startActivity(Intent(this, WaiterMainActivity::class.java))
+//                        ADMINISTRATOR ->
+//                            startActivity(Intent(this, WaiterMainActivity::class.java))
+//                    }
                 }
                 else -> {}//DefaultState
             }

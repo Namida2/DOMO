@@ -1,5 +1,6 @@
 package com.example.cookMain.presentation
 
+import android.graphics.Rect
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -10,21 +11,29 @@ import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.example.cookMain.R
 import com.example.cookMain.databinding.ActivityCookMainBinding
+import com.example.cookMain.domain.di.CookMainDeps
 import com.example.cookMain.domain.di.CookMainDepsStore
 import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
 import com.example.core.domain.Employee
+import com.example.core.domain.interfaces.BasePostActivity
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.order.OrdersServiceSub
+import com.example.core.domain.tools.extensions.Animations.prepareHide
+import com.example.core.domain.tools.extensions.Animations.prepareShow
+import com.example.core.domain.tools.extensions.Animations.prepareSlideDown
+import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
 import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponentDeps
+import com.example.featureLogIn.domain.di.LogInDeps
+import com.example.featureLogIn.domain.di.LogInDepsStore
 import com.example.featureProfile.domain.di.ProfileAppComponentDeps
 import com.example.featureProfile.domain.di.ProfileDepsStore
 import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
 
-class CookMainActivity : AppCompatActivity() {
+class CookMainActivity : AppCompatActivity(), BasePostActivity {
 
     private lateinit var binding: ActivityCookMainBinding
     private lateinit var navHostFragment: NavHostFragment
@@ -37,6 +46,7 @@ class CookMainActivity : AppCompatActivity() {
         navHostFragment =
             supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
         navController = navHostFragment.navController
+        showNavigationUI()
         provideCurrentOrderDeps()
         provideProfileDeps()
         makeWorkerRequests()
@@ -101,5 +111,33 @@ class CookMainActivity : AppCompatActivity() {
             val data = it.getData() ?: return@observe
             createMessageDialog(data)?.show(supportFragmentManager, "")
         }
+    }
+
+    private fun hideNavigationUI() {
+        with(binding) {
+            appBar.prepareHide(appBar.height).start()
+            val scrollBounds = Rect()
+            rootCoordinationLayout.getHitRect(scrollBounds)
+            if (bottomNavigation.getLocalVisibleRect(scrollBounds)) {
+                bottomNavigation.prepareSlideDown(bottomNavigation.height).start()
+            }
+        }
+    }
+
+    private fun showNavigationUI() {
+        with(binding) {
+            appBar.prepareShow(appBar.height).start()
+            bottomNavigation.prepareSlideUp(bottomNavigation.height, startDelay = 150).start()
+        }
+    }
+
+    override fun onLeaveAccount() {
+        hideNavigationUI()
+        LogInDepsStore.deps = CookMainDepsStore.deps as LogInDeps
+        navController.setGraph(R.navigation.navigation_log_in)
+    }
+
+    override fun onEmployeeLoggedIn(employee: Employee?) {
+        CookMainDepsStore.employeeAuthCallback.onEmployeeLoggedIn(employee)
     }
 }

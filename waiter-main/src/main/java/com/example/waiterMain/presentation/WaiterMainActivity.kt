@@ -1,6 +1,5 @@
 package com.example.waiterMain.presentation
 
-import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +13,8 @@ import androidx.work.WorkRequest
 import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
 import com.example.core.domain.Employee
+import com.example.core.domain.interfaces.BasePostActivity
+import com.example.core.domain.interfaces.EmployeeAuthCallback
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.order.OrdersServiceSub
 import com.example.core.domain.tools.extensions.Animations.prepareHide
@@ -23,13 +24,15 @@ import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
 import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponentDeps
+import com.example.featureLogIn.domain.di.LogInDeps
+import com.example.featureLogIn.domain.di.LogInDepsStore
 import com.example.featureOrder.domain.di.OrderAppComponentDeps
 import com.example.featureOrder.domain.di.OrderDepsStore
 import com.example.featureOrder.presentation.order.OrderFragment
 import com.example.featureOrder.presentation.tables.TablesFragment
 import com.example.featureProfile.domain.di.ProfileAppComponentDeps
 import com.example.featureProfile.domain.di.ProfileDepsStore
-import com.example.featureProfile.domain.di.interfaces.LeaveAccountCallback
+import com.example.core.domain.interfaces.LeaveAccountCallback
 import com.example.waiterMain.R
 import com.example.waiterMain.databinding.ActivityWaiterMainBinding
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
@@ -37,7 +40,7 @@ import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
 
 class WaiterMainActivity : AppCompatActivity(),
-    NavController.OnDestinationChangedListener, LeaveAccountCallback {
+    NavController.OnDestinationChangedListener, BasePostActivity {
 
     private val currentDestination = 0
     private lateinit var binding: ActivityWaiterMainBinding
@@ -54,13 +57,13 @@ class WaiterMainActivity : AppCompatActivity(),
         navController = navHostFragment.navController.apply {
             addOnDestinationChangedListener(this@WaiterMainActivity)
         }
+        showNavigationUI()
         setOnItemSelectedListener()
         provideFeatureOrderDeps()
         provideCurrentOrderDeps()
         provideProfileDeps()
         makeWorkerRequests()
     }
-
 
     private fun makeWorkerRequests() {
         val newOrdersWorkRequest: WorkRequest =
@@ -128,7 +131,6 @@ class WaiterMainActivity : AppCompatActivity(),
 //                showNavigationUI()
 //                wasNavigatedToOrderFragment = false
 //            }
-
         }
     }
 
@@ -187,7 +189,13 @@ class WaiterMainActivity : AppCompatActivity(),
     }
 
     override fun onLeaveAccount() {
+        hideNavigationUI()
+        LogInDepsStore.deps = WaiterMainDepsStore.profileDeps as LogInDeps
         navController.setGraph(R.navigation.navigation_log_in)
+    }
+
+    override fun onEmployeeLoggedIn(employee: Employee?) {
+       WaiterMainDepsStore.employeeAuthCallback.onEmployeeLoggedIn(employee)
     }
 }
 

@@ -18,7 +18,7 @@ import com.example.featureProfile.R
 import com.example.featureProfile.databinding.FragmentProfileBinding
 import com.example.featureProfile.domain.ViewModelFactory
 import com.example.featureProfile.domain.di.ProfileDepsStore
-import com.example.featureProfile.domain.di.interfaces.LeaveAccountCallback
+import com.example.core.domain.interfaces.LeaveAccountCallback
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
 class ProfileFragment : Fragment() {
@@ -84,7 +84,7 @@ class ProfileFragment : Fragment() {
                         ?.show(parentFragmentManager, "")
                 }
                 is ProfileViewModelStates.LogOutWasSuccessful -> {
-                    ProcessAlertDialog.onSuccess()
+                    ProcessAlertDialog.dismiss()
                     leaveAccountCallback.onLeaveAccount()
                 }
                 is ProfileViewModelStates.Default -> {}

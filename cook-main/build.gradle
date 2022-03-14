@@ -37,8 +37,9 @@ android {
 
 dependencies {
     implementation project(":core")
-    implementation project(':feature-currentOrders')
+    implementation project(':feature-logIn')
     implementation project(':feature-profile')
+    implementation project(':feature-currentOrders')
 
     implementation platform (Firebase.firebaseBom)
     implementation (Firebase.firebaseAuth)

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.core.domain.menu.CategoryName
 import com.example.core.domain.menu.Dish
-import com.example.core.domain.recyclerView.interfaces.BaseRecyclerViewType
+import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.domo.models.interfaces.MenuDialogModelInterface
 import com.example.domo.models.interfaces.MenuHolderStates
 

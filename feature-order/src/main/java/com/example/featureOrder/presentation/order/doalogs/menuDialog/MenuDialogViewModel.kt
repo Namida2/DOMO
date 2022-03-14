@@ -7,7 +7,7 @@ import com.example.core.domain.menu.CategoryName
 import com.example.core.domain.menu.Dish
 import com.example.core.domain.menu.MenuService
 import com.example.core.domain.menu.MenuServiceStates
-import com.example.core.domain.recyclerView.interfaces.BaseRecyclerViewType
+import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 
 sealed class MenuDialogStates {
     object Default : MenuDialogStates()

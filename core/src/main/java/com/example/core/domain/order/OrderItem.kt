@@ -1,6 +1,6 @@
 package com.example.core.domain.order
 
-import com.example.core.domain.recyclerView.interfaces.BaseRecyclerViewType
+import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.core.domain.tools.constants.FirestoreConstants.ORDER_ITEM_ID_DELIMITER
 
 data class OrderItem(

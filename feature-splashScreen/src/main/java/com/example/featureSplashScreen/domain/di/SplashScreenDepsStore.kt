@@ -1,8 +1,16 @@
 package com.example.featureSplashScreen.domain.di
 
+import com.example.core.domain.Employee
+import com.example.core.domain.interfaces.EmployeeAuthCallback
+
 object SplashScreenDepsStore {
-    lateinit var deps: SplashScreenAppComponentDeps
-    val appComponent: SplashScreenAppComponent by lazy {
-        DaggerSplashScreenAppComponent.builder().provideDeps(deps).build()
+    val currentEmployee: Employee = Employee()
+    fun setNewEmployeeData(newEmployee: Employee) {
+        currentEmployee.email = newEmployee.email
+        currentEmployee.name = newEmployee.name
+        currentEmployee.post = newEmployee.post
+        currentEmployee.password = newEmployee.password
+        currentEmployee.permission = newEmployee.permission
     }
+    lateinit var appComponent: SplashScreenAppComponent
 }

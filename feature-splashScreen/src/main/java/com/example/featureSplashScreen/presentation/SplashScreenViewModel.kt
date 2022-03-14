@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.Employee
 import com.example.core.domain.tools.ErrorMessages.permissionDeniedMessage
+import com.example.core.domain.tools.Task
 import com.example.featureSplashScreen.domain.GetCurrentEmployeeUseCase
 import com.example.featureSplashScreen.domain.ReadMenuUseCase
 import kotlinx.coroutines.launch
@@ -42,8 +43,7 @@ class SplashScreenViewModel(
     fun getCurrentEmployee() {
         viewModelScope.launch {
             _state.value = SplashScreenStates.CheckingForCurrentEmployee
-            getCurrentEmployeeUseCase.getCurrentEmployee(object :
-                com.example.core.domain.tools.Task<Employee, Unit> {
+            getCurrentEmployeeUseCase.getCurrentEmployee(object : Task<Employee, Unit> {
                 override fun onSuccess(emplpoyee: Employee) {
                     if (emplpoyee.permission)
                         _state.value = SplashScreenStates.EmployeeExists(emplpoyee)

@@ -29,8 +29,6 @@ fun String.readEmployeeByEmail (className: String, task: com.example.core.domain
         task.onSuccess(employee)
     }.addOnFailureListener {
         logE("$className, email = $this: ${it.message}")
-        if(it is FirebaseNetworkException)
-            task.onError(checkNetworkConnectionMessage)
-        else task.onError(defaultErrorMessage)
+        task.onError(it.getExceptionMessage())
     }
 }

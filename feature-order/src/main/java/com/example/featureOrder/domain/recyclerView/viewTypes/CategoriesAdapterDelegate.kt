@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.core.domain.menu.CategoriesNameHolder
-import com.example.core.domain.adapters.BaseRecyclerViewAdapter
-import com.example.core.domain.recyclerView.interfaces.BaseAdapterDelegate
-import com.example.core.domain.recyclerView.interfaces.BaseRecyclerViewType
-import com.example.core.domain.recyclerView.interfaces.BaseViewHolder
+import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
+import com.example.core.presentation.recyclerView.interfaces.BaseAdapterDelegate
+import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
+import com.example.core.presentation.recyclerView.interfaces.BaseViewHolder
 import com.example.featureOrder.R
 import com.example.featureOrder.databinding.LayoutCategoriesContainerBinding
 

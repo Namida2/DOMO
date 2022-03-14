@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.example.core.domain.adapterDelegates.DishesAdapterDelegate
-import com.example.core.domain.adapters.BaseRecyclerViewAdapter
+import com.example.core.presentation.recyclerView.adapterDelegates.DishesAdapterDelegate
+import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
 import com.example.featureOrder.R
 import com.example.featureOrder.databinding.DialogMenuBinding
 import com.example.featureOrder.domain.ViewModelFactory

@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
-import com.example.core.domain.recyclerView.interfaces.BaseAdapterDelegate
-import com.example.core.domain.recyclerView.interfaces.BaseRecyclerViewType
-import com.example.core.domain.recyclerView.interfaces.BaseViewHolder
+import com.example.core.presentation.recyclerView.interfaces.BaseAdapterDelegate
+import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
+import com.example.core.presentation.recyclerView.interfaces.BaseViewHolder
 import com.example.core.domain.tools.constants.OtherStringConstants.VIEW_TYPE_NOT_FOUND
 import com.example.domo.adapters.diffCallbacks.MenuAdapterDiffCallback
 

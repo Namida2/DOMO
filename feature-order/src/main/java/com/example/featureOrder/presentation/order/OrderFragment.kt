@@ -13,8 +13,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.core.domain.adapterDelegates.OrderItemsAdapterDelegate
-import com.example.core.domain.adapters.BaseRecyclerViewAdapter
+import com.example.core.presentation.recyclerView.adapterDelegates.OrderItemsAdapterDelegate
+import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
 import com.example.core.domain.tools.enims.AddingDishMods
 import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
 import com.example.featureOrder.R

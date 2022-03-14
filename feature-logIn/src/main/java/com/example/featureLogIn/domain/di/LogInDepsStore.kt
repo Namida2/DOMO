@@ -1,8 +1,8 @@
 package com.example.featureLogIn.domain.di
 
 object LogInDepsStore {
-    lateinit var deps: LogInAppComponentDeps
+    lateinit var deps: LogInDeps
     val appComponent: LogInAppComponent by lazy {
-        DaggerLogInAppComponent.builder().logInAppComponentDeps(deps).build()
+        DaggerLogInAppComponent.builder().logInDeps(deps).build()
     }
 }

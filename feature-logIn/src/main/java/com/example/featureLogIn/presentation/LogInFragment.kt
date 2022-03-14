@@ -16,20 +16,20 @@ import com.example.featureLogIn.R
 import com.example.featureLogIn.databinding.FragmentLogInBinding
 import com.example.featureLogIn.domain.ViewModelFactory
 import com.example.featureLogIn.domain.di.LogInDepsStore
-import com.example.core.domain.interfaces.EmployeeAuthorizationCallback
+import com.example.core.domain.interfaces.EmployeeAuthCallback
 import com.example.featureRegistration.domain.di.RegistrationAppComponentDeps
 import com.example.featureRegistration.domain.di.RegistrationDepsStore
 import com.google.firebase.auth.FirebaseAuth
 
 class LogInFragment : Fragment() {
-    private lateinit var employeeAuthorizationCallback: EmployeeAuthorizationCallback
+    private lateinit var employeeAuthCallback: EmployeeAuthCallback
     private lateinit var binding: FragmentLogInBinding
     private val viewModel by viewModels<LogInViewModel> { ViewModelFactory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        employeeAuthorizationCallback =
-            (context as? EmployeeAuthorizationCallback) ?: throw IllegalArgumentException(
+        employeeAuthCallback =
+            (context as? EmployeeAuthCallback) ?: throw IllegalArgumentException(
                 ACTIVITY_IS_NOT_EMPLOYEE_AUTHORIZATION_CALLBACK
             )
     }
@@ -80,7 +80,7 @@ class LogInFragment : Fragment() {
                 }
                 is LogInViewModelStates.Success -> {
                     com.example.core.domain.tools.dialogs.ProcessAlertDialog.dismiss()
-                    employeeAuthorizationCallback.onEmployeeLoggedIn(it.employee)
+                    employeeAuthCallback.onEmployeeLoggedIn(it.employee)
                 }
                 else -> {
                     if (it is LogInViewModelStates.Default) return@observe

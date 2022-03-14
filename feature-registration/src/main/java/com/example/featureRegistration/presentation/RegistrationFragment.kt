@@ -1,7 +1,6 @@
 package com.example.featureRegistration.presentation
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.core.domain.interfaces.EmployeeAuthorizationCallback
+import com.example.core.domain.interfaces.EmployeeAuthCallback
 import com.example.core.domain.tools.constants.OtherStringConstants
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.core.domain.tools.extensions.isNetworkConnected
@@ -26,14 +25,14 @@ class RegistrationFragment : Fragment() {
 
     private var smallMargin: Int? = null
     private var largeMargin: Int? = null
-    private lateinit var employeeAuthorizationCallback: EmployeeAuthorizationCallback
+    private lateinit var employeeAuthCallback: EmployeeAuthCallback
     private val viewModel: RegistrationViewModel by viewModels { ViewModelFactory }
     lateinit var binding: FragmentRegistrationBinding
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        employeeAuthorizationCallback =
-            (context as? EmployeeAuthorizationCallback) ?: throw IllegalArgumentException(
+        employeeAuthCallback =
+            (context as? EmployeeAuthCallback) ?: throw IllegalArgumentException(
                 OtherStringConstants.ACTIVITY_IS_NOT_EMPLOYEE_AUTHORIZATION_CALLBACK
             )
         viewModel.resetState()
@@ -105,7 +104,7 @@ class RegistrationFragment : Fragment() {
                     )
                 }
                 is RegistrationViewModelStates.Valid -> {
-                    employeeAuthorizationCallback.onEmployeeLoggedIn(it.employee)
+                    employeeAuthCallback.onEmployeeLoggedIn(it.employee)
                 }
                 else -> {
                     if (it is RegistrationViewModelStates.Default) return@observe

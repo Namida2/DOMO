@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_admin"
+    app:startDestination="@id/employeesFragment">
+
+    <fragment
+        android:id="@id/employeesFragment"
+        android:name="com.example.featureEmployees.presentation.EmployeesFragment"
+        android:label="EmployeesFragment" />
+</navigation>

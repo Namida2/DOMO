@@ -8,6 +8,7 @@
     <!--Tools-->
     <string name="networkConnectionMessage">Пожалуйста, проверьте свое интернет-соединение.</string>
     <string name="leaveAccountMessage">Вы действительно хотите покинуть этот аккаунт?</string>
+    <string name="databaseName">restaurant_database</string>
 
     <!--ErrorAlertDialog messages and titles-->
     <string name="defaultTitle">Oops!</string>

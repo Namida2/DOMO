@@ -7,13 +7,13 @@ import com.google.firebase.auth.FirebaseAuth
 import dagger.Component
 
 @Component(
-    dependencies = [LogInAppComponentDeps::class],
+    dependencies = [LogInDeps::class],
     modules = [UseCasesModule::class, RepositoriesModule::class]
 )
 interface LogInAppComponent {
     fun provideLogInUseCase(): LogInUseCase
 }
 
-interface LogInAppComponentDeps {
+interface LogInDeps {
     val firebaseAuth: FirebaseAuth
 }

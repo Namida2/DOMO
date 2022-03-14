@@ -2,7 +2,7 @@ package com.example.core.domain.menu
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.core.domain.recyclerView.interfaces.BaseRecyclerViewType
+import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 
 @Entity(tableName = "menu")
 data class Dish(

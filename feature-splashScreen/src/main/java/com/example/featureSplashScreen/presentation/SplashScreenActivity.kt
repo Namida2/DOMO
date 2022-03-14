@@ -8,10 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import com.example.administratorMain.presentation.AdministratorMainActivity
 import com.example.cookMain.domain.di.CookMainDepsStore
 import com.example.cookMain.presentation.CookMainActivity
 import com.example.core.domain.Employee
-import com.example.core.domain.interfaces.EmployeeAuthorizationCallback
+import com.example.core.domain.interfaces.EmployeeAuthCallback
 import com.example.core.domain.tools.ErrorMessages.checkNetworkConnectionMessage
 import com.example.core.domain.tools.constants.EmployeePosts.ADMINISTRATOR
 import com.example.core.domain.tools.constants.EmployeePosts.COOK
@@ -20,23 +21,20 @@ import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.core.domain.tools.extensions.isNetworkConnected
 import com.example.featureLogIn.R
 import com.example.featureLogIn.domain.di.LogInDepsStore
-import com.example.featureSplashScreen.databinding.ActivityMainBinding
+import com.example.featureSplashScreen.databinding.ActivitySplashScreenBinding
 import com.example.featureSplashScreen.domain.ViewModelFactory
 import com.example.featureSplashScreen.domain.di.SplashScreenDepsStore
+import com.example.featureSplashScreen.domain.di.SplashScreenDepsStore.setNewEmployeeData
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
 import com.example.waiterMain.presentation.WaiterMainActivity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.suspendCancellableCoroutine
 
 //TODO: Implement closing ProfileFragment when it should to be
 @SuppressLint("CustomSplashScreen")
-class SplashScreenActivity : AppCompatActivity(), EmployeeAuthorizationCallback {
+class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback {
 
     private val viewModel by viewModels<SplashScreenViewModel> { ViewModelFactory }
     private lateinit var navController: NavController
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivitySplashScreenBinding
 
     @SuppressLint("SetTextI18n", "CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,19 +62,21 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthorizationCallback 
                 }
                 is SplashScreenStates.EmployeeExists -> {
                     //TODO: Modify the SplashScreenAppComponent //STOPPED//
-                    employee = state.employee
+                    setNewEmployeeData(state.employee)
                     when (state.employee.post) {
                         COOK -> {
                             CookMainDepsStore.deps = SplashScreenDepsStore.appComponent
+                            CookMainDepsStore.employeeAuthCallback = this
                             startActivity(Intent(this, CookMainActivity::class.java))
                         }
                         WAITER -> {
                             WaiterMainDepsStore.deps = SplashScreenDepsStore.appComponent
                             WaiterMainDepsStore.profileDeps = SplashScreenDepsStore.appComponent
+                            WaiterMainDepsStore.employeeAuthCallback = this
                             startActivity(Intent(this, WaiterMainActivity::class.java))
                         }
                         ADMINISTRATOR ->
-                            startActivity(Intent(this, WaiterMainActivity::class.java))
+                            startActivity(Intent(this, AdministratorMainActivity::class.java))
                     }
                 }
                 is SplashScreenStates.PermissionError -> {
@@ -89,7 +89,7 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthorizationCallback 
     }
 
     private fun prepareLogInScreen() {
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         val navHostFragment =
             supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
         navController = navHostFragment.findNavController().also {
@@ -100,8 +100,8 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthorizationCallback 
     }
 
     override fun onEmployeeLoggedIn(employee: Employee?) {
-        employee?.let{this.employee = it}
-        startActivity(Intent(this, this::class.java))
+        employee?.let { setNewEmployeeData(it) }
+        startActivity(Intent(this, SplashScreenActivity::class.java))
     }
 }
 

@@ -10,12 +10,14 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/administrator-main" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/cook-core" />
             <option value="$PROJECT_DIR$/cook-main" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/feature-currentOrders" />
+            <option value="$PROJECT_DIR$/feature-employees" />
             <option value="$PROJECT_DIR$/feature-logIn" />
             <option value="$PROJECT_DIR$/feature-order" />
             <option value="$PROJECT_DIR$/feature-profile" />
