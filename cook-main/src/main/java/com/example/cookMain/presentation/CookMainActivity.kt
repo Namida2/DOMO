@@ -50,10 +50,10 @@ class CookMainActivity : AppCompatActivity(), BasePostActivity {
         provideCurrentOrderDeps()
         provideProfileDeps()
         makeWorkerRequests()
-        setOnItemSelectedListener()
+        setOnNavigationItemSelectedListener()
     }
 
-    private fun setOnItemSelectedListener() {
+    override fun setOnNavigationItemSelectedListener() {
         binding.bottomNavigation.setOnItemSelectedListener {
             val currentFragment = navHostFragment.parentFragmentManager.fragments[0]
             when (it.itemId) {
@@ -90,7 +90,7 @@ class CookMainActivity : AppCompatActivity(), BasePostActivity {
         }
     }
 
-    private fun makeWorkerRequests() {
+    override fun makeWorkerRequests() {
         val newOrdersWorkRequest: WorkRequest =
             PeriodicWorkRequestBuilder<NewOrdersWorker>(
                 MIN_PERIODIC_FLEX_MILLIS,
@@ -103,32 +103,40 @@ class CookMainActivity : AppCompatActivity(), BasePostActivity {
             ).build()
         WorkManager.getInstance(this).enqueue(newOrdersWorkRequest)
         WorkManager.getInstance(this).enqueue(newOrderItemsStateRequest)
-        observeOrdersWorkerEvents()
     }
 
-    private fun observeOrdersWorkerEvents() {
-        NewOrdersWorker.event.observe(this) {
-            val data = it.getData() ?: return@observe
-            createMessageDialog(data)?.show(supportFragmentManager, "")
-        }
-    }
-
-    private fun hideNavigationUI() {
+    override fun hideNavigationUI() {
         with(binding) {
             appBar.prepareHide(appBar.height).start()
             val scrollBounds = Rect()
             rootCoordinationLayout.getHitRect(scrollBounds)
-            if (bottomNavigation.getLocalVisibleRect(scrollBounds)) {
+            if (appBar.getLocalVisibleRect(scrollBounds))
+                appBar.prepareHide(appBar.height).start()
+            if (bottomNavigation.getLocalVisibleRect(scrollBounds))
                 bottomNavigation.prepareSlideDown(bottomNavigation.height).start()
-            }
         }
     }
 
-    private fun showNavigationUI() {
+    override fun showNavigationUI() {
         with(binding) {
-            appBar.prepareShow(appBar.height).start()
-            bottomNavigation.prepareSlideUp(bottomNavigation.height, startDelay = 150).start()
+            val scrollBounds = Rect()
+            rootCoordinationLayout.getHitRect(scrollBounds)
+            if (!appBar.getLocalVisibleRect(scrollBounds))
+                appBar.prepareShow(
+                    appBar.height,
+                    startDelay = resources.getInteger(R.integer.navigationUIStartDelay).toLong()
+                ).start()
+            if (!bottomNavigation.getLocalVisibleRect(scrollBounds))
+                bottomNavigation.prepareSlideUp(
+                    bottomNavigation.height,
+                    startDelay = resources.getInteger(R.integer.navigationUIStartDelay).toLong()
+                ).start()
         }
+    }
+
+    override fun onBackPressed() {
+        showNavigationUI()
+        super.onBackPressed()
     }
 
     override fun onLeaveAccount() {

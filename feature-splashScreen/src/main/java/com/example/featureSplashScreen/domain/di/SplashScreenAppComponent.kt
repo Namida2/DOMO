@@ -2,6 +2,7 @@ package com.example.featureSplashScreen.domain.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.administratorMain.domatn.di.AdminAppComponentDeps
 import com.example.cookMain.domain.di.CookMainDeps
 import com.example.core.data.database.Database
 import com.example.core.domain.Employee
@@ -23,7 +24,7 @@ import javax.inject.Singleton
         RemoteRepositoryModule::class, ServicesModule::class, FirebaseModule::class],
 )
 interface SplashScreenAppComponent : WaiterMainDeps,
-    CoreAppComponentDeps, CookMainDeps, ProfileModuleDeps, LogInDeps {
+    CoreAppComponentDeps, CookMainDeps, ProfileModuleDeps, LogInDeps, AdminAppComponentDeps {
 
     @Component.Builder
     interface Builder {

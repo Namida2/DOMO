@@ -14,7 +14,6 @@ import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
 import com.example.core.domain.Employee
 import com.example.core.domain.interfaces.BasePostActivity
-import com.example.core.domain.interfaces.EmployeeAuthCallback
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.order.OrdersServiceSub
 import com.example.core.domain.tools.extensions.Animations.prepareHide
@@ -32,7 +31,6 @@ import com.example.featureOrder.presentation.order.OrderFragment
 import com.example.featureOrder.presentation.tables.TablesFragment
 import com.example.featureProfile.domain.di.ProfileAppComponentDeps
 import com.example.featureProfile.domain.di.ProfileDepsStore
-import com.example.core.domain.interfaces.LeaveAccountCallback
 import com.example.waiterMain.R
 import com.example.waiterMain.databinding.ActivityWaiterMainBinding
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
@@ -46,7 +44,6 @@ class WaiterMainActivity : AppCompatActivity(),
     private lateinit var binding: ActivityWaiterMainBinding
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
-    private var wasNavigatedToOrderFragment = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,14 +55,14 @@ class WaiterMainActivity : AppCompatActivity(),
             addOnDestinationChangedListener(this@WaiterMainActivity)
         }
         showNavigationUI()
-        setOnItemSelectedListener()
+        setOnNavigationItemSelectedListener()
         provideFeatureOrderDeps()
         provideCurrentOrderDeps()
         provideProfileDeps()
         makeWorkerRequests()
     }
 
-    private fun makeWorkerRequests() {
+    override fun makeWorkerRequests() {
         val newOrdersWorkRequest: WorkRequest =
             PeriodicWorkRequestBuilder<NewOrdersWorker>(
                 MIN_PERIODIC_FLEX_MILLIS,
@@ -76,6 +73,7 @@ class WaiterMainActivity : AppCompatActivity(),
                 MIN_PERIODIC_FLEX_MILLIS,
                 TimeUnit.MINUTES
             ).build()
+        //TODO: Workers not start after leaving account
         WorkManager.getInstance(this).enqueue(newOrdersWorkRequest)
         WorkManager.getInstance(this).enqueue(newOrderItemsStateRequest)
         observeOrdersWorkerEvents()
@@ -121,20 +119,18 @@ class WaiterMainActivity : AppCompatActivity(),
         when (destination.id) {
             R.id.orderFragment -> {
                 hideNavigationUI()
-                wasNavigatedToOrderFragment = true
             }
             R.id.tablesFragment -> {
                 showNavigationUI()
-                wasNavigatedToOrderFragment = false
             }
-//            R.id.profileFragment -> {
-//                showNavigationUI()
-//                wasNavigatedToOrderFragment = false
-//            }
+            R.id.profileFragment -> {
+                showNavigationUI()
+            }
         }
     }
 
-    private fun setOnItemSelectedListener() {
+
+    override fun setOnNavigationItemSelectedListener() {
         binding.bottomNavigation.setOnItemSelectedListener {
             val currentFragment = navHostFragment.parentFragmentManager.fragments[0]
             when (it.itemId) {
@@ -157,22 +153,32 @@ class WaiterMainActivity : AppCompatActivity(),
         }
     }
 
-    private fun hideNavigationUI() {
+    override fun hideNavigationUI() {
         with(binding) {
             appBar.prepareHide(appBar.height).start()
             val scrollBounds = Rect()
             rootCoordinationLayout.getHitRect(scrollBounds)
-            if (bottomNavigation.getLocalVisibleRect(scrollBounds)) {
+            if (appBar.getLocalVisibleRect(scrollBounds))
+                appBar.prepareHide(appBar.height).start()
+            if (bottomNavigation.getLocalVisibleRect(scrollBounds))
                 bottomNavigation.prepareSlideDown(bottomNavigation.height).start()
-            }
         }
     }
 
-    private fun showNavigationUI() {
-        if (!wasNavigatedToOrderFragment) return
+    override fun showNavigationUI() {
         with(binding) {
-            appBar.prepareShow(appBar.height).start()
-            bottomNavigation.prepareSlideUp(bottomNavigation.height, startDelay = 150).start()
+            val scrollBounds = Rect()
+            rootCoordinationLayout.getHitRect(scrollBounds)
+            if (!appBar.getLocalVisibleRect(scrollBounds))
+                appBar.prepareShow(
+                    appBar.height,
+                    startDelay = resources.getInteger(R.integer.navigationUIStartDelay).toLong()
+                ).start()
+            if (!bottomNavigation.getLocalVisibleRect(scrollBounds))
+                bottomNavigation.prepareSlideUp(
+                    bottomNavigation.height,
+                    startDelay = resources.getInteger(R.integer.navigationUIStartDelay).toLong()
+                ).start()
         }
     }
 
@@ -185,6 +191,7 @@ class WaiterMainActivity : AppCompatActivity(),
                 )
             }
         }
+        showNavigationUI()
         super.onBackPressed()
     }
 
@@ -195,7 +202,7 @@ class WaiterMainActivity : AppCompatActivity(),
     }
 
     override fun onEmployeeLoggedIn(employee: Employee?) {
-       WaiterMainDepsStore.employeeAuthCallback.onEmployeeLoggedIn(employee)
+        WaiterMainDepsStore.employeeAuthCallback.onEmployeeLoggedIn(employee)
     }
 }
 

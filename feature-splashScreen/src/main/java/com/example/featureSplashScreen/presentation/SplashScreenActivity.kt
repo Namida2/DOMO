@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import com.example.administratorMain.domatn.di.AdminDepsStore
 import com.example.administratorMain.presentation.AdministratorMainActivity
 import com.example.cookMain.domain.di.CookMainDepsStore
 import com.example.cookMain.presentation.CookMainActivity
@@ -75,8 +76,11 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback {
                             WaiterMainDepsStore.employeeAuthCallback = this
                             startActivity(Intent(this, WaiterMainActivity::class.java))
                         }
-                        ADMINISTRATOR ->
+                        ADMINISTRATOR -> {
+                            AdminDepsStore.deps = SplashScreenDepsStore.appComponent
+                            AdminDepsStore.employeeAuthCallback = this
                             startActivity(Intent(this, AdministratorMainActivity::class.java))
+                        }
                     }
                 }
                 is SplashScreenStates.PermissionError -> {

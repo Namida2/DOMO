@@ -27,7 +27,6 @@
             android:layout_height="44dp"
             android:elevation="0dp"
             android:transitionName="defaultToolBar"
-            app:layout_scrollFlags="scroll|enterAlways"
             app:navigationIcon="@drawable/ic_arrow_left_white"
             app:navigationIconTint="@color/black"
             app:titleCentered="true">

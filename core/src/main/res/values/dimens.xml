@@ -6,4 +6,5 @@
 
     <item name="transitionAnimationDuration" type="integer">300</item>
     <item name="dismissDialogTime" type="integer">120</item>
+    <item name="navigationUIStartDelay" type="integer">200</item>
 </resources>

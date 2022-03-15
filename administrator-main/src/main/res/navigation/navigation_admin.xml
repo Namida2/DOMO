@@ -8,4 +8,8 @@
         android:id="@id/employeesFragment"
         android:name="com.example.featureEmployees.presentation.EmployeesFragment"
         android:label="EmployeesFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.featureProfile.presentation.ProfileFragment"
+        android:label="ProfileFragment" />
 </navigation>
