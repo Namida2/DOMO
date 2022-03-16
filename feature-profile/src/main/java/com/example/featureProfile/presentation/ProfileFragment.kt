@@ -21,7 +21,7 @@ import com.example.featureProfile.domain.di.ProfileDepsStore
 import com.example.core.domain.interfaces.LeaveAccountCallback
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
-class ProfileFragment : Fragment() {
+class ProfileFragment: Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
     private lateinit var leaveAccountCallback: LeaveAccountCallback
@@ -61,9 +61,9 @@ class ProfileFragment : Fragment() {
     private fun initBinding() {
         val currentEmployee = ProfileDepsStore.deps.currentEmployee
         with(binding) {
-//            employeeName.text = currentEmployee?.name
-//            employeeEmail.text = currentEmployee?.email
-//            employeePost.text = currentEmployee?.post
+//            layoutProfile.employeeName.text = currentEmployee?.name
+//            layoutProfile.employeeEmail.text = currentEmployee?.email
+//            layoutProfile.employeePost.text = currentEmployee?.post
             leaveAccountButton.setOnClickListener {
                 if (requireContext().isNetworkConnected()) {
                     closedQuestionDialog.show(parentFragmentManager, "")

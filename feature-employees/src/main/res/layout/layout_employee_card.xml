@@ -2,10 +2,12 @@
 
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/employeePostContainer"
+    android:id="@+id/largeCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:clickable="true"
+    android:focusable="true"
     app:cardBackgroundColor="@color/black"
     app:cardCornerRadius="24dp"
     app:cardElevation="4dp">
@@ -16,6 +18,9 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/innerCard"
+            android:layout_margin="-10dp"
+            android:clickable="true"
+            android:focusable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="24dp"
@@ -90,6 +95,8 @@
 
 
         <LinearLayout
+            android:id="@+id/permission"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/innerCard"
@@ -102,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:fontFamily="@font/montserrat_semi_bold"
-                android:text="Post: "
+                android:text="Permission: "
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
@@ -112,7 +119,7 @@
                 android:layout_gravity="bottom"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="Administrator"
+                android:text="Yes"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>

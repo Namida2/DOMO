@@ -5,7 +5,7 @@
       <map>
         <entry key="..\:/Projects/Graduate/DOMO/administrator-main/src/main/res/layout/activity_administrator.xml" value="0.15198087431693988" />
         <entry key="..\:/Projects/Graduate/DOMO/administrator-main/src/main/res/layout/activity_main.xml" value="0.15915300546448088" />
-        <entry key="..\:/Projects/Graduate/DOMO/administrator-main/src/main/res/menu/menu_administrator.xml" value="1.45625" />
+        <entry key="..\:/Projects/Graduate/DOMO/administrator-main/src/main/res/menu/menu_administrator.xml" value="0.44144144144144143" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3880208333333333" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/bg_black_raunded.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/app/src/main/res/drawable/bg_black_round.xml" value="0.25601374570446733" />
@@ -80,6 +80,7 @@
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_black_rounded_24.xml" value="0.211" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_bottom_navigation.xml" value="0.215" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_cancel_button_dialog.xml" value="0.315" />
+        <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_dialog_message_button.xml" value="0.362" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_guests_count_dialog.xml" value="0.219" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_rounded_white_24.xml" value="0.1635" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_rounded_white_24_corner.xml" value="0.219" />
@@ -95,6 +96,7 @@
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/dialog_clodsed_question.xml" value="0.33" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/dialog_process.xml" value="0.5" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/layout_order_item.xml" value="0.2" />
+        <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/layout_profile.xml" value="0.49606299212598426" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-authorisation/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-authorisation/src/main/res/drawable/bg_top_card.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-authorisation/src/main/res/drawable/ic_launcher_background.xml" value="0.2586805555555556" />
@@ -109,9 +111,11 @@
         <entry key="..\:/Projects/Graduate/DOMO/feature-currentOrders/src/main/res/layout/fragment_current_orders.xml" value="0.20013661202185792" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-currentOrders/src/main/res/layout/fragment_current_orders_detail.xml" value="0.24791666666666667" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-currentOrders/src/main/res/layout/layout_order_card.xml" value="0.22" />
+        <entry key="..\:/Projects/Graduate/DOMO/feature-employees/src/main/res/drawable/bg_dialgo_employee_detail_margins.xml" value="0.2435" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-employees/src/main/res/layout/activity_main.xml" value="0.15915300546448088" />
+        <entry key="..\:/Projects/Graduate/DOMO/feature-employees/src/main/res/layout/dialog_employee_detail.xml" value="0.22" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-employees/src/main/res/layout/fragment_employees.xml" value="0.15915300546448088" />
-        <entry key="..\:/Projects/Graduate/DOMO/feature-employees/src/main/res/layout/layout_employee_card.xml" value="0.33" />
+        <entry key="..\:/Projects/Graduate/DOMO/feature-employees/src/main/res/layout/layout_employee_card.xml" value="0.2" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-logIn/src/main/res/layout/activity_authorization.xml" value="0.1717896174863388" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-logIn/src/main/res/layout/activity_main.xml" value="0.1717896174863388" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-logIn/src/main/res/layout/fragment_log_in.xml" value="0.1717896174863388" />

@@ -14,27 +14,18 @@ import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
 import com.example.core.domain.Employee
 import com.example.core.domain.interfaces.BasePostActivity
-import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.order.OrdersServiceSub
 import com.example.core.domain.tools.extensions.Animations.prepareHide
 import com.example.core.domain.tools.extensions.Animations.prepareShow
 import com.example.core.domain.tools.extensions.Animations.prepareSlideDown
 import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
 import com.example.core.domain.tools.extensions.createMessageDialog
-import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
-import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponentDeps
 import com.example.featureLogIn.domain.di.LogInDeps
 import com.example.featureLogIn.domain.di.LogInDepsStore
-import com.example.featureOrder.domain.di.OrderAppComponentDeps
-import com.example.featureOrder.domain.di.OrderDepsStore
 import com.example.featureOrder.presentation.order.OrderFragment
 import com.example.featureOrder.presentation.tables.TablesFragment
-import com.example.featureProfile.domain.di.ProfileAppComponentDeps
-import com.example.featureProfile.domain.di.ProfileDepsStore
 import com.example.waiterMain.R
 import com.example.waiterMain.databinding.ActivityWaiterMainBinding
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
-import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
 
 class WaiterMainActivity : AppCompatActivity(),
@@ -56,11 +47,9 @@ class WaiterMainActivity : AppCompatActivity(),
         }
         showNavigationUI()
         setOnNavigationItemSelectedListener()
-        provideFeatureOrderDeps()
-        provideCurrentOrderDeps()
-        provideProfileDeps()
         makeWorkerRequests()
     }
+
 
     override fun makeWorkerRequests() {
         val newOrdersWorkRequest: WorkRequest =
@@ -86,31 +75,6 @@ class WaiterMainActivity : AppCompatActivity(),
         }
     }
 
-    private fun provideFeatureOrderDeps() {
-        OrderDepsStore.deps = object : OrderAppComponentDeps {
-            override val ordersService: OrdersService<OrdersServiceSub>
-                get() = WaiterMainDepsStore.deps.ordersService
-        }
-    }
-
-    private fun provideCurrentOrderDeps() {
-        CurrentOrderDepsStore.deps = object : CurrentOrdersAppComponentDeps {
-            override val currentEmployee: Employee?
-                get() = WaiterMainDepsStore.deps.currentEmployee
-            override val ordersService: OrdersService<OrdersServiceSub>
-                get() = WaiterMainDepsStore.deps.ordersService
-        }
-    }
-
-    private fun provideProfileDeps() {
-        ProfileDepsStore.deps = object : ProfileAppComponentDeps {
-            override val currentEmployee: Employee?
-                get() = WaiterMainDepsStore.deps.currentEmployee
-            override val firebaseAuth: FirebaseAuth
-                get() = WaiterMainDepsStore.profileDeps.firebaseAuth
-        }
-    }
-
     override fun onDestinationChanged(
         controller: NavController,
         destination: NavDestination,
@@ -128,7 +92,6 @@ class WaiterMainActivity : AppCompatActivity(),
             }
         }
     }
-
 
     override fun setOnNavigationItemSelectedListener() {
         binding.bottomNavigation.setOnItemSelectedListener {

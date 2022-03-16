@@ -35,4 +35,9 @@ object FirestoreReferences {
             .document(FirestoreConstants.DOCUMENT_DOMO)
             .collection(FirestoreConstants.COLLECTION_LISTENERS)
             .document(FirestoreConstants.DOCUMENT_ORDER_ITEMS_STATE_LISTENER)
+    val newPermissionDocumentRef =
+        fireStore.collection(FirestoreConstants.COLLECTION_RESTAURANTS)
+            .document(FirestoreConstants.DOCUMENT_DOMO)
+            .collection(FirestoreConstants.COLLECTION_LISTENERS)
+            .document(FirestoreConstants.DOCUMENT_PERMISSION_LISTENER)
 }

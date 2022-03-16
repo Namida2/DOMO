@@ -8,25 +8,36 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.core.domain.Employee
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
+import com.example.featureEmployees.R
 import com.example.featureEmployees.databinding.FragmentEmployeesBinding
 import com.example.featureEmployees.domain.ViewModelFactory
+import com.example.featureEmployees.presentation.dialogs.EmployeeDetailDialog
 import com.example.featureEmployees.presentation.recyclerView.EmployeesAdapterDelegate
+import com.google.android.material.transition.platform.MaterialSharedAxis
 
-//TODO: Add the EmployeeDetailDialog
+//TODO: Add a permission listener for all posts
 class EmployeesFragment : Fragment() {
 
     private lateinit var binding: FragmentEmployeesBinding
     private val viewModel by viewModels<EmployeesViewModel> { ViewModelFactory }
+    private val employeeDetailDialog: EmployeeDetailDialog = EmployeeDetailDialog()
     private val adapter = BaseRecyclerViewAdapter(
         listOf(
-            EmployeesAdapterDelegate()
+            EmployeesAdapterDelegate(::onEmployeeSelected)
         )
     )
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         viewModel.readEmployees()
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
+            duration = resources.getInteger(R.integer.transitionAnimationDuration).toLong()
+        }
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
+            duration = resources.getInteger(R.integer.transitionAnimationDuration).toLong()
+        }
     }
 
     override fun onCreateView(
@@ -77,4 +88,8 @@ class EmployeesFragment : Fragment() {
         }
     }
 
+    private fun onEmployeeSelected(employee: Employee) {
+        employeeDetailDialog.employee = employee
+        employeeDetailDialog.show(parentFragmentManager, "")
+    }
 }

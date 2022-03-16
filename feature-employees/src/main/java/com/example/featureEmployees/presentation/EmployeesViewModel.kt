@@ -10,9 +10,11 @@ import com.example.core.domain.tools.ErrorMessages.defaultErrorMessage
 import com.example.core.domain.tools.Event
 import com.example.core.domain.tools.SimpleTask
 import com.example.featureEmployees.domain.EmployeesService
-import com.example.featureEmployees.domain.ReadEmployeesUseCase
+import com.example.featureEmployees.domain.useCases.ReadEmployeesUseCase
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+
+typealias NewEmployeesEvent = Event<List<Employee>>
 
 sealed class EmployeesVMStates {
     object Default : EmployeesVMStates()
@@ -22,15 +24,12 @@ sealed class EmployeesVMStates {
     class ReadingFailed(val errorMessage: ErrorMessage) : EmployeesVMStates()
 }
 
-typealias NewEmployeesEvent = Event<List<Employee>>
-
 class EmployeesViewModel(
     private val readEmployeesUseCase: ReadEmployeesUseCase,
 ) : ViewModel() {
 
     private val _state = MutableLiveData<EmployeesVMStates>()
     val state: LiveData<EmployeesVMStates> = _state
-
     private val _newEmployeesEvent = MutableLiveData<NewEmployeesEvent>()
     val newEmployeesEvent: LiveData<NewEmployeesEvent> = _newEmployeesEvent
 
@@ -48,7 +47,6 @@ class EmployeesViewModel(
             override fun onSuccess(arg: Unit) {
                 _state.value = EmployeesVMStates.ReadingWasSuccessful
             }
-
             override fun onError(message: ErrorMessage?) {
                 _state.value = EmployeesVMStates.ReadingFailed(message ?: defaultErrorMessage)
             }

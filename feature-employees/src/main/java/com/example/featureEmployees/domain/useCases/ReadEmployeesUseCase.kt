@@ -1,4 +1,4 @@
-package com.example.featureEmployees.domain
+package com.example.featureEmployees.domain.useCases
 
 import com.example.core.domain.tools.SimpleTask
 import com.example.featureEmployees.domain.repositories.EmployeesRepository

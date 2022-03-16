@@ -20,6 +20,8 @@ import com.example.core.domain.tools.extensions.Animations.prepareHide
 import com.example.core.domain.tools.extensions.Animations.prepareShow
 import com.example.core.domain.tools.extensions.Animations.prepareSlideDown
 import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
+import com.example.featureEmployees.domain.di.EmployeesAppComponentDeps
+import com.example.featureEmployees.domain.di.EmployeesDepsStore
 import com.example.featureLogIn.domain.di.LogInDeps
 import com.example.featureLogIn.domain.di.LogInDepsStore
 import com.example.featureProfile.domain.di.ProfileAppComponentDeps
@@ -41,17 +43,7 @@ class AdministratorMainActivity : AppCompatActivity(), BasePostActivity {
         setOnNavigationItemSelectedListener()
         makeWorkerRequests()
         showNavigationUI()
-        provideProfileDeps()
         setContentView(binding.root)
-    }
-
-    private fun provideProfileDeps() {
-        ProfileDepsStore.deps = object : ProfileAppComponentDeps {
-            override val currentEmployee: Employee?
-                get() = AdminDepsStore.deps.currentEmployee
-            override val firebaseAuth: FirebaseAuth
-                get() = AdminDepsStore.deps.firestoreAuth
-        }
     }
 
     override fun setOnNavigationItemSelectedListener() {

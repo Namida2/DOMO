@@ -7,6 +7,7 @@ import com.example.core.domain.menu.CategoryName
 import com.example.core.domain.menu.Dish
 import com.example.core.domain.menu.MenuService
 import com.example.core.domain.menu.MenuServiceStates
+import com.example.core.domain.tools.Event
 import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 
 sealed class MenuDialogStates {
@@ -14,20 +15,18 @@ sealed class MenuDialogStates {
     class MenuExists(
         val types: List<BaseRecyclerViewType>,
     ) : MenuDialogStates()
-
     object ShowingDishDialog : MenuDialogStates()
 }
 
 class MenuDialogViewModel(
     private val menuService: MenuService,
 ) : ViewModel() {
-    private var _state: MutableLiveData<MenuDialogStates> =
-        MutableLiveData(MenuDialogStates.Default)
+    private var _state: MutableLiveData<MenuDialogStates> = MutableLiveData()
     val state: LiveData<MenuDialogStates> = _state
 
-    private var _onDishSelected: MutableLiveData<com.example.core.domain.tools.Event<Dish>> =
+    private var _onDishSelected: MutableLiveData<Event<Dish>> =
         MutableLiveData()
-    val onDishSelected: LiveData<com.example.core.domain.tools.Event<Dish>> = _onDishSelected
+    val onDishSelected: LiveData<Event<Dish>> = _onDishSelected
 
     init {
         when (menuService.menuState) {
@@ -53,6 +52,6 @@ class MenuDialogViewModel(
                 }.flatten()
 
     fun onDishClick(dishId: Int) {
-        _onDishSelected.value = com.example.core.domain.tools.Event(menuService.getDishById(dishId))
+        _onDishSelected.value = Event(menuService.getDishById(dishId))
     }
 }
