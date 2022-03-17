@@ -13,7 +13,8 @@ object ViewModelFactory: ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val viewModel = when(modelClass) {
             EmployeesViewModel::class.java -> EmployeesViewModel(
-                appComponent.provideReadEmployeesUseCase()
+                appComponent.provideReadEmployeesUseCase(),
+                appComponent.provideEmployeesService()
             )
             EmployeeDetailViewModel::class.java -> EmployeeDetailViewModel(
                 appComponent.provideSetPermissionUseCase(),

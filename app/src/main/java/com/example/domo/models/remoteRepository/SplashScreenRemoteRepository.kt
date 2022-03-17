@@ -1,8 +1,8 @@
 package com.example.domo.models.remoteRepository
 
 import com.example.core.domain.Employee
-import com.example.core.domain.tools.FirestoreReferences.employeesCollectionRef
-import com.example.core.domain.tools.FirestoreReferences.menuDocumentRef
+import com.example.core.domain.tools.constants.FirestoreReferences.employeesCollectionRef
+import com.example.core.domain.tools.constants.FirestoreReferences.menuDocumentRef
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_MENU_VERSION
 import com.example.core.domain.tools.extensions.logE
 import com.example.domo.models.remoteRepository.interfaces.SSRemoteRepositoryInterface

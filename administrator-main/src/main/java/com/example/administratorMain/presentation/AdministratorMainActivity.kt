@@ -20,16 +20,11 @@ import com.example.core.domain.tools.extensions.Animations.prepareHide
 import com.example.core.domain.tools.extensions.Animations.prepareShow
 import com.example.core.domain.tools.extensions.Animations.prepareSlideDown
 import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
-import com.example.featureEmployees.domain.di.EmployeesAppComponentDeps
-import com.example.featureEmployees.domain.di.EmployeesDepsStore
 import com.example.featureLogIn.domain.di.LogInDeps
 import com.example.featureLogIn.domain.di.LogInDepsStore
-import com.example.featureProfile.domain.di.ProfileAppComponentDeps
-import com.example.featureProfile.domain.di.ProfileDepsStore
-import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
 
-class AdministratorMainActivity : AppCompatActivity(), BasePostActivity {
+class AdministratorMainActivity: AppCompatActivity(), BasePostActivity {
     private lateinit var binding: ActivityAdministratorBinding
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var navController: NavController

@@ -14,7 +14,7 @@ import com.example.cookMain.domain.di.CookMainDepsStore
 import com.example.cookMain.presentation.CookMainActivity
 import com.example.core.domain.Employee
 import com.example.core.domain.interfaces.EmployeeAuthCallback
-import com.example.core.domain.tools.ErrorMessages.checkNetworkConnectionMessage
+import com.example.core.domain.tools.constants.ErrorMessages.checkNetworkConnectionMessage
 import com.example.core.domain.tools.constants.EmployeePosts.ADMINISTRATOR
 import com.example.core.domain.tools.constants.EmployeePosts.COOK
 import com.example.core.domain.tools.constants.EmployeePosts.WAITER

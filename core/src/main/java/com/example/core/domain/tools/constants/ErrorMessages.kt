@@ -1,6 +1,7 @@
-package com.example.core.domain.tools
+package com.example.core.domain.tools.constants
 
 import com.example.core.R
+import com.example.core.domain.tools.ErrorMessage
 
 object ErrorMessages {
     val checkNetworkConnectionMessage = ErrorMessage(

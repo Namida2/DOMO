@@ -55,7 +55,10 @@ class EmployeeDetailDialog : DialogFragment() {
                     requireContext().createMessageDialog(it.errorMessage)
                         ?.show(parentFragmentManager, "")
                 }
-                is EmployeeDetailVMStates.OnSuccess -> ProcessAlertDialog.onSuccess()
+                is EmployeeDetailVMStates.OnSuccess -> {
+                    ProcessAlertDialog.onSuccess()
+                    this.dismiss()
+                }
                 is EmployeeDetailVMStates.Default -> {}
             }
         }

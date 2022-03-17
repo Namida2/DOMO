@@ -8,8 +8,8 @@ import com.example.core.data.database.Database
 import com.example.core.domain.Employee
 import com.example.core.domain.di.CoreAppComponentDeps
 import com.example.featureLogIn.domain.di.LogInDeps
-import com.example.featureSplashScreen.domain.GetCurrentEmployeeUseCase
-import com.example.featureSplashScreen.domain.ReadMenuUseCase
+import com.example.featureSplashScreen.domain.useCases.GetCurrentEmployeeUseCase
+import com.example.featureSplashScreen.domain.useCases.ReadMenuUseCase
 import com.example.featureSplashScreen.domain.di.modules.*
 import com.example.featureSplashScreen.presentation.ReadOrdersUseCase
 import com.example.waiterMain.domain.di.ProfileModuleDeps
@@ -18,6 +18,7 @@ import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
+//TODO: Add scops for appComponents
 @Singleton
 @Component(
     modules = [UseCasesModule::class, LocalRepositoryModule::class,

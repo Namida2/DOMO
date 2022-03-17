@@ -1,7 +1,7 @@
-package com.example.featureSplashScreen.domain
+package com.example.featureSplashScreen.domain.useCases
 
 import com.example.core.domain.tools.TaskWithEmployee
-import com.example.featureSplashScreen.data.UsersRemoteRepository
+import com.example.featureSplashScreen.domain.repositories.UsersRemoteRepository
 import javax.inject.Inject
 
 class GetCurrentEmployeeUseCaseImpl @Inject constructor(

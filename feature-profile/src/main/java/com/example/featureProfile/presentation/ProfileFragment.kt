@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.core.domain.tools.ErrorMessages.checkNetworkConnectionMessage
+import com.example.core.domain.tools.constants.ErrorMessages.checkNetworkConnectionMessage
 import com.example.core.domain.tools.constants.OtherStringConstants.ACTIVITY_IS_NOT_LEAVE_ACCOUNT_CALLBACK
 import com.example.core.domain.tools.dialogs.ClosedQuestionDialog
 import com.example.core.domain.tools.dialogs.ProcessAlertDialog

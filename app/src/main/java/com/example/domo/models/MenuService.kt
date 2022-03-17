@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.core.domain.menu.Category
 import com.example.core.domain.menu.CategoryName
 import com.example.core.domain.menu.Dish
-import com.example.core.domain.tools.FirestoreReferences.menuCollectionRef
+import com.example.core.domain.tools.constants.FirestoreReferences.menuCollectionRef
 import com.example.core.domain.tools.extensions.logE
 import com.example.domo.models.interfaces.MenuHolder
 import com.example.domo.models.interfaces.MenuHolderStates

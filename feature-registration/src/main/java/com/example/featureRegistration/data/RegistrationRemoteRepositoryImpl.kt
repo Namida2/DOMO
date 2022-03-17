@@ -1,17 +1,14 @@
 package com.example.featureRegistration.data
 
 import com.example.core.domain.Employee
-import com.example.core.domain.tools.ErrorMessages.defaultErrorMessage
-import com.example.core.domain.tools.ErrorMessages.emailAlreadyExistsMessage
-import com.example.core.domain.tools.FirestoreReferences.employeesCollectionRef
-import com.example.core.domain.tools.FirestoreReferences.fireStore
+import com.example.core.domain.tools.constants.ErrorMessages.defaultErrorMessage
+import com.example.core.domain.tools.constants.ErrorMessages.emailAlreadyExistsMessage
+import com.example.core.domain.tools.constants.FirestoreReferences.employeesCollectionRef
+import com.example.core.domain.tools.constants.FirestoreReferences.fireStore
 import com.example.core.domain.tools.TaskWithEmployee
-import com.example.core.domain.tools.constants.FirestoreConstants
 import com.example.core.domain.tools.extensions.logD
 import com.example.core.domain.tools.extensions.logE
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
 import javax.inject.Inject
 
 interface RegistrationRemoteRepository {

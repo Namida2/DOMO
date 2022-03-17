@@ -1,13 +1,15 @@
-package com.example.domo.splashScreen.data
+package com.example.featureSplashScreen.data
 
 import com.example.core.domain.menu.Category
 import com.example.core.domain.menu.Dish
 import com.example.core.domain.menu.MenuService
-import com.example.core.domain.tools.FirestoreReferences.menuCollectionRef
+import com.example.core.domain.tools.constants.FirestoreReferences
+import com.example.core.domain.tools.constants.FirestoreReferences.menuCollectionRef
 import com.example.core.domain.tools.extensions.logE
+import com.example.featureSplashScreen.domain.repositories.MenuRemoteRepository
 import javax.inject.Inject
 
-class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
+class MenuRemoteRepositoryImpl @Inject constructor(): MenuRemoteRepository {
 
     private val defaultMenuVersion = -1L
     private val menu: ArrayList<Category> = ArrayList()
@@ -55,7 +57,7 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
     }
 
     override fun readMenuVersion(onComplete: (version: Long) -> Unit) {
-        com.example.core.domain.tools.FirestoreReferences.menuDocumentRef.get()
+        FirestoreReferences.menuDocumentRef.get()
             .addOnSuccessListener {
                 val menuVersion =
                     it.data?.get(com.example.core.domain.tools.constants.FirestoreConstants.FIELD_MENU_VERSION)
@@ -70,9 +72,4 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
                 onComplete(defaultMenuVersion)
             }
     }
-}
-
-interface MenuRemoteRepository {
-    fun readNewMenu(onComplete: () -> Unit)
-    fun readMenuVersion(onComplete: (version: Long) -> Unit)
 }

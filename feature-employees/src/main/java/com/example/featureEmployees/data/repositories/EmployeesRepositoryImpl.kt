@@ -1,19 +1,23 @@
 package com.example.featureEmployees.data.repositories
 
 import com.example.core.domain.Employee
-import com.example.core.domain.tools.FirestoreReferences.employeesCollectionRef
-import com.example.core.domain.tools.FirestoreReferences.fireStore
-import com.example.core.domain.tools.FirestoreReferences.newPermissionDocumentRef
 import com.example.core.domain.tools.SimpleTask
+import com.example.core.domain.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_EMAIL
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_NEW_PERMISSION
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_PERMISSION
+import com.example.core.domain.tools.constants.FirestoreReferences.employeesCollectionRef
+import com.example.core.domain.tools.constants.FirestoreReferences.fireStore
+import com.example.core.domain.tools.constants.FirestoreReferences.newPermissionDocumentRef
 import com.example.core.domain.tools.extensions.getExceptionMessage
-import com.example.featureEmployees.domain.EmployeesService
 import com.example.featureEmployees.domain.repositories.EmployeesRepository
+import com.example.featureEmployees.domain.services.EmployeesService
+import com.google.firebase.firestore.Transaction
 import javax.inject.Inject
 
-class EmployeesRepositoryImpl @Inject constructor() : EmployeesRepository {
+class EmployeesRepositoryImpl @Inject constructor(
+    private val employeesService: EmployeesService
+) : EmployeesRepository {
 
     override fun readAllEmployees(task: SimpleTask) {
         employeesCollectionRef.get().addOnSuccessListener {
@@ -22,7 +26,7 @@ class EmployeesRepositoryImpl @Inject constructor() : EmployeesRepository {
                 employeeDoc.toObject(Employee::class.java)
                     ?.let { it -> employees.add(it) }
             }
-            EmployeesService.setNewEmployeesList(employees)
+            employeesService.setNewEmployeesList(employees)
             task.onSuccess(Unit)
         }.addOnFailureListener {
             task.onError(it.getExceptionMessage())
@@ -34,34 +38,64 @@ class EmployeesRepositoryImpl @Inject constructor() : EmployeesRepository {
         permission: Boolean,
         task: SimpleTask
     ) {
-        fireStore.runTransaction {
-            it.update(
-                employeesCollectionRef.document(employee.email),
-                FIELD_PERMISSION,
-                permission
-            )
-            it.update(
-                newPermissionDocumentRef, mapOf(
-                    FIELD_NEW_PERMISSION to mapOf(
-                        FIELD_EMAIL to employee.email,
-                        FIELD_PERMISSION to permission
-                    )
-                )
-            )
-        }.addOnSuccessListener {
-            task.onSuccess(Unit)
-        }.addOnFailureListener {
-            task.onError(it.getExceptionMessage())
+        setEmptyNewPermission(task) {
+            fireStore.runTransaction {
+                setPermissionsToDocuments(it, employee, permission)
+            }.addOnSuccessListener {
+                task.onSuccess(Unit)
+            }.addOnFailureListener {
+                task.onError(it.getExceptionMessage())
+            }
         }
     }
 
     override fun deleteEmployee(employee: Employee, task: SimpleTask) {
-        employeesCollectionRef.document(employee.email).delete().addOnSuccessListener {
-            task.onSuccess(Unit)
+        setEmptyNewPermission(task) {
+            fireStore.runTransaction {
+                setPermissionsToDocuments(it, employee, false)
+                it.delete(employeesCollectionRef.document(employee.email))
+            }.addOnSuccessListener {
+                task.onSuccess(Unit)
+            }.addOnFailureListener {
+                task.onError(it.getExceptionMessage())
+            }
+        }
+    }
+
+    private fun setEmptyNewPermission(
+        task: SimpleTask, onComplete: () -> Unit
+    ) {
+        newPermissionDocumentRef.update(
+            mapOf(
+                FIELD_NEW_PERMISSION to mapOf(
+                    FIELD_EMAIL to EMPTY_COMMENTARY,
+                    FIELD_PERMISSION to EMPTY_COMMENTARY
+                )
+            )
+        ).addOnSuccessListener {
+            onComplete.invoke()
         }.addOnFailureListener {
             task.onError(it.getExceptionMessage())
         }
     }
 
-
+    private fun setPermissionsToDocuments(
+        transaction: Transaction,
+        employee: Employee,
+        permission: Boolean
+    ) {
+        transaction.update(
+            employeesCollectionRef.document(employee.email),
+            FIELD_PERMISSION,
+            permission
+        )
+        transaction.update(
+            newPermissionDocumentRef, mapOf(
+                FIELD_NEW_PERMISSION to mapOf(
+                    FIELD_EMAIL to employee.email,
+                    FIELD_PERMISSION to permission
+                )
+            )
+        )
+    }
 }

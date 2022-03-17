@@ -18,6 +18,7 @@ import com.example.featureEmployees.presentation.recyclerView.EmployeesAdapterDe
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
 //TODO: Add a permission listener for all posts
+//TODO: Add a listener for new employees
 class EmployeesFragment : Fragment() {
 
     private lateinit var binding: FragmentEmployeesBinding

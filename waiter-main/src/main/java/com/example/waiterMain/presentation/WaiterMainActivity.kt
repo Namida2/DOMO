@@ -2,6 +2,7 @@ package com.example.waiterMain.presentation
 
 import android.graphics.Rect
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -14,6 +15,7 @@ import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
 import com.example.core.domain.Employee
 import com.example.core.domain.interfaces.BasePostActivity
+import com.example.core.domain.tools.constants.ErrorMessages.permissionDeniedMessage
 import com.example.core.domain.tools.extensions.Animations.prepareHide
 import com.example.core.domain.tools.extensions.Animations.prepareShow
 import com.example.core.domain.tools.extensions.Animations.prepareSlideDown
@@ -35,6 +37,7 @@ class WaiterMainActivity : AppCompatActivity(),
     private lateinit var binding: ActivityWaiterMainBinding
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
+    private val viewModel by viewModels<WaiterMainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,8 +51,8 @@ class WaiterMainActivity : AppCompatActivity(),
         showNavigationUI()
         setOnNavigationItemSelectedListener()
         makeWorkerRequests()
+        observeNewPermissionEvent()
     }
-
 
     override fun makeWorkerRequests() {
         val newOrdersWorkRequest: WorkRequest =
@@ -66,13 +69,6 @@ class WaiterMainActivity : AppCompatActivity(),
         WorkManager.getInstance(this).enqueue(newOrdersWorkRequest)
         WorkManager.getInstance(this).enqueue(newOrderItemsStateRequest)
         observeOrdersWorkerEvents()
-    }
-
-    private fun observeOrdersWorkerEvents() {
-        NewOrdersWorker.event.observe(this) {
-            val data = it.getData() ?: return@observe
-            createMessageDialog(data)?.show(supportFragmentManager, "")
-        }
     }
 
     override fun onDestinationChanged(
@@ -166,6 +162,21 @@ class WaiterMainActivity : AppCompatActivity(),
 
     override fun onEmployeeLoggedIn(employee: Employee?) {
         WaiterMainDepsStore.employeeAuthCallback.onEmployeeLoggedIn(employee)
+    }
+
+    private fun observeNewPermissionEvent() {
+        viewModel.newPermissionEvent.observe(this) {
+            it.getData().let {
+                createMessageDialog(permissionDeniedMessage)?.show(supportFragmentManager, "")
+            }
+        }
+    }
+
+    private fun observeOrdersWorkerEvents() {
+        NewOrdersWorker.event.observe(this) {
+            val data = it.getData() ?: return@observe
+            createMessageDialog(data)?.show(supportFragmentManager, "")
+        }
     }
 }
 

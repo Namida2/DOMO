@@ -1,8 +1,9 @@
-package com.example.domo.splashScreen.data
+package com.example.featureSplashScreen.data
 
 import com.example.core.domain.menu.Category
 import com.example.core.domain.menu.Dish
 import com.example.core.domain.menu.MenuService
+import com.example.featureSplashScreen.domain.repositories.MenuLocalRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
@@ -43,11 +44,5 @@ class MenuLocalRepositoryImpl @Inject constructor(
     private fun getAllDishes(menu: ArrayList<Category>): List<Dish> =
         menu.map { it.dishes }.flatten()
 
-}
-
-//TODO: Put it into domain layer
-interface MenuLocalRepository {
-    fun readExitingMenu()
-    fun insertCurrentMenu()
 }
 

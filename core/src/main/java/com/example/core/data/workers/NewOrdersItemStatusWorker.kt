@@ -8,8 +8,7 @@ import com.example.core.domain.di.CoreDepsStore
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.notofications.NotificationsTools
 import com.example.core.domain.order.OrdersServiceSub
-import com.example.core.domain.tools.FirestoreReferences.orderItemsStateListenerDocumentRef
-import com.example.core.domain.tools.constants.EmployeePosts.WAITER
+import com.example.core.domain.tools.constants.FirestoreReferences.orderItemsStateListenerDocumentRef
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ID
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ITEM_ID
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ITEM_INFO

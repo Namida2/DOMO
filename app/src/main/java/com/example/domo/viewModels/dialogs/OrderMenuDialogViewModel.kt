@@ -5,9 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domo.models.interfaces.OrderMenuDialogModelInterface
-import com.example.core.domain.tools.ErrorMessage
-import com.example.core.domain.tools.SimpleTask
-import com.example.core.domain.tools.ErrorMessages.defaultErrorMessage
+import com.example.core.domain.tools.constants.ErrorMessages.defaultErrorMessage
 
 sealed class OrderMenuDialogVMStates {
     object Default: OrderMenuDialogVMStates()

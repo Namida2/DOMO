@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.core.domain.Employee
 import com.example.core.domain.tools.ErrorMessage
-import com.example.core.domain.tools.ErrorMessages.emptyFieldMessage
-import com.example.core.domain.tools.ErrorMessages.wrongEmailOrPassword
+import com.example.core.domain.tools.constants.ErrorMessages.emptyFieldMessage
+import com.example.core.domain.tools.constants.ErrorMessages.wrongEmailOrPassword
 import com.example.featureLogIn.domain.LogInUseCase
 
 sealed class LogInViewModelStates {

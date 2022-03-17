@@ -1,11 +1,8 @@
 package com.example.core.domain.tools.extensions
 
 import com.example.core.domain.Employee
-import com.example.core.domain.tools.ErrorMessages.defaultErrorMessage
-import com.example.core.domain.tools.ErrorMessages.checkNetworkConnectionMessage
-import com.example.core.domain.tools.ErrorMessages.wrongEmailOrPassword
-import com.example.core.domain.tools.FirestoreReferences.employeesCollectionRef
-import com.google.firebase.FirebaseNetworkException
+import com.example.core.domain.tools.constants.ErrorMessages.wrongEmailOrPassword
+import com.example.core.domain.tools.constants.FirestoreReferences.employeesCollectionRef
 import com.google.firebase.firestore.ktx.toObject
 
 fun isEmptyField(vararg strings: String): Boolean {

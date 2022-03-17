@@ -1,8 +1,8 @@
 package com.example.cookCore.data.repositories
 
-import com.example.core.domain.tools.FirestoreReferences.fireStore
-import com.example.core.domain.tools.FirestoreReferences.orderItemsStateListenerDocumentRef
-import com.example.core.domain.tools.FirestoreReferences.ordersCollectionRef
+import com.example.core.domain.tools.constants.FirestoreReferences.fireStore
+import com.example.core.domain.tools.constants.FirestoreReferences.orderItemsStateListenerDocumentRef
+import com.example.core.domain.tools.constants.FirestoreReferences.ordersCollectionRef
 import com.example.core.domain.tools.SimpleTask
 import com.example.core.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ID

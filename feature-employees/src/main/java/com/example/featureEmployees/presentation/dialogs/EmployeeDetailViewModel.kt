@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.core.domain.Employee
 import com.example.core.domain.tools.ErrorMessage
-import com.example.core.domain.tools.ErrorMessages.defaultErrorMessage
 import com.example.core.domain.tools.SimpleTask
+import com.example.core.domain.tools.constants.ErrorMessages.defaultErrorMessage
 import com.example.featureEmployees.domain.useCases.DeleteEmployeeUseCase
 import com.example.featureEmployees.domain.useCases.SetPermissionUseCase
 
@@ -29,10 +29,13 @@ class EmployeeDetailViewModel(
         _state.value = EmployeeDetailVMStates.InProcess
         setPermissionUseCase.setPermissionForEmployee(employee, permission, object : SimpleTask {
             override fun onSuccess(arg: Unit) {
-                _state.value = EmployeeDetailVMStates.OnSuccess
+                setTerminatingState(EmployeeDetailVMStates.OnSuccess)
             }
+
             override fun onError(message: ErrorMessage?) {
-                _state.value = EmployeeDetailVMStates.OnFailure(message ?: defaultErrorMessage)
+                setTerminatingState(
+                    EmployeeDetailVMStates.OnFailure(message ?: defaultErrorMessage)
+                )
             }
         })
     }
@@ -41,11 +44,19 @@ class EmployeeDetailViewModel(
         _state.value = EmployeeDetailVMStates.InProcess
         deleteEmployeeUseCase.deleteEmployee(employee, object : SimpleTask {
             override fun onSuccess(arg: Unit) {
-                _state.value = EmployeeDetailVMStates.OnSuccess
+                setTerminatingState(EmployeeDetailVMStates.OnSuccess)
             }
+
             override fun onError(message: ErrorMessage?) {
-                _state.value = EmployeeDetailVMStates.OnFailure(message ?: defaultErrorMessage)
+                setTerminatingState(
+                    EmployeeDetailVMStates.OnFailure(message ?: defaultErrorMessage)
+                )
             }
         })
+    }
+
+    private fun setTerminatingState(state: EmployeeDetailVMStates) {
+        _state.value = state
+        _state.value = EmployeeDetailVMStates.Default
     }
 }

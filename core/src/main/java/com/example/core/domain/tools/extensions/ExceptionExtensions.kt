@@ -1,9 +1,9 @@
 package com.example.core.domain.tools.extensions
 
 import com.example.core.domain.tools.ErrorMessage
-import com.example.core.domain.tools.ErrorMessages.checkNetworkConnectionMessage
-import com.example.core.domain.tools.ErrorMessages.defaultErrorMessage
-import com.example.core.domain.tools.ErrorMessages.permissionDeniedMessage
+import com.example.core.domain.tools.constants.ErrorMessages.checkNetworkConnectionMessage
+import com.example.core.domain.tools.constants.ErrorMessages.defaultErrorMessage
+import com.example.core.domain.tools.constants.ErrorMessages.permissionDeniedMessage
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.firestore.FirebaseFirestoreException
 

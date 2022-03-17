@@ -4,6 +4,7 @@ import com.example.core.domain.Employee
 import com.example.core.domain.tools.ErrorMessage
 import com.example.core.domain.tools.TaskWithEmployee
 import com.example.core.domain.tools.extensions.readEmployeeByEmail
+import com.example.featureSplashScreen.domain.repositories.UsersRemoteRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import javax.inject.Inject
@@ -14,7 +15,6 @@ class UsersRemoteRepositoryImpl @Inject constructor(
 
     override fun getCurrentUser(): FirebaseUser? = auth.currentUser
 
-    //Check the current permission
     override fun readCurrentEmployee(
         currentUser: FirebaseUser,
         task: TaskWithEmployee
@@ -23,6 +23,7 @@ class UsersRemoteRepositoryImpl @Inject constructor(
             override fun onSuccess(arg: Employee) {
                 saveNewEmployeeData(arg, task)
             }
+
             override fun onError(message: ErrorMessage?) {
                 auth.signOut()
                 task.onError()
@@ -43,17 +44,4 @@ class UsersRemoteRepositoryImpl @Inject constructor(
 //        }
         task.onSuccess(newEmployee)
     }
-}
-
-interface UsersRemoteRepository {
-    fun getCurrentUser(): FirebaseUser?
-    fun readCurrentEmployee(
-        currentUser: FirebaseUser,
-        task: TaskWithEmployee
-    )
-
-    fun saveNewEmployeeData(
-        newEmployee: Employee,
-        task: TaskWithEmployee
-    )
 }

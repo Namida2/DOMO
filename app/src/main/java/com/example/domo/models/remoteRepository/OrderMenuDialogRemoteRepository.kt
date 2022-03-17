@@ -1,7 +1,7 @@
 package com.example.domo.models.remoteRepository
 
 import com.example.core.domain.order.Order
-import com.example.core.domain.tools.FirestoreReferences.ordersCollectionRef
+import com.example.core.domain.tools.constants.FirestoreReferences.ordersCollectionRef
 import com.example.core.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
 import com.example.core.domain.tools.extensions.logD

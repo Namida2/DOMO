@@ -1,9 +1,8 @@
-package com.example.core.domain.tools
+package com.example.core.domain.tools.constants
 
 import android.annotation.SuppressLint
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.example.core.domain.tools.constants.FirestoreConstants
 
 object FirestoreReferences {
     @SuppressLint("StaticFieldLeak")

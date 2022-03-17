@@ -1,8 +1,8 @@
 package com.example.featureOrder.data.repositories
 
 import com.example.core.domain.order.Order
-import com.example.core.domain.tools.FirestoreReferences.newOrdersListenerDocumentRef
-import com.example.core.domain.tools.FirestoreReferences.ordersCollectionRef
+import com.example.core.domain.tools.constants.FirestoreReferences.newOrdersListenerDocumentRef
+import com.example.core.domain.tools.constants.FirestoreReferences.ordersCollectionRef
 import com.example.core.domain.tools.SimpleTask
 import com.example.core.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
 import com.example.core.domain.tools.constants.FirestoreConstants.ORDER_ITEM_ID_DELIMITER
