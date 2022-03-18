@@ -11,7 +11,7 @@ import com.example.featureLogIn.domain.di.LogInDeps
 import com.example.featureSplashScreen.domain.useCases.GetCurrentEmployeeUseCase
 import com.example.featureSplashScreen.domain.useCases.ReadMenuUseCase
 import com.example.featureSplashScreen.domain.di.modules.*
-import com.example.featureSplashScreen.presentation.ReadOrdersUseCase
+import com.example.featureSplashScreen.domain.useCases.ReadOrdersUseCase
 import com.example.waiterMain.domain.di.ProfileModuleDeps
 import com.example.waiterMain.domain.di.WaiterMainDeps
 import dagger.BindsInstance

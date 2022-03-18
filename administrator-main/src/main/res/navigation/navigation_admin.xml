@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@id/employeesFragment"
-        android:name="com.example.featureEmployees.presentation.EmployeesFragment"
+        android:name="com.example.featureEmployees.presentation.fragments.EmployeesFragment"
         android:label="EmployeesFragment" />
     <fragment
         android:id="@+id/profileFragment"

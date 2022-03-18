@@ -1,4 +1,4 @@
-package com.example.featureOrder.domain.recyclerView.viewTypes
+package com.example.featureOrder.presentation.recyclerView.delegates
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

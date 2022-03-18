@@ -8,7 +8,7 @@ import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_NEW_PERM
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_PERMISSION
 import com.example.core.domain.tools.constants.FirestoreReferences.employeesCollectionRef
 import com.example.core.domain.tools.constants.FirestoreReferences.fireStore
-import com.example.core.domain.tools.constants.FirestoreReferences.newPermissionDocumentRef
+import com.example.core.domain.tools.constants.FirestoreReferences.newPermissionListenerDocumentRef
 import com.example.core.domain.tools.extensions.getExceptionMessage
 import com.example.featureEmployees.domain.repositories.EmployeesRepository
 import com.example.featureEmployees.domain.services.EmployeesService
@@ -65,7 +65,7 @@ class EmployeesRepositoryImpl @Inject constructor(
     private fun setEmptyNewPermission(
         task: SimpleTask, onComplete: () -> Unit
     ) {
-        newPermissionDocumentRef.update(
+        newPermissionListenerDocumentRef.update(
             mapOf(
                 FIELD_NEW_PERMISSION to mapOf(
                     FIELD_EMAIL to EMPTY_COMMENTARY,
@@ -90,7 +90,7 @@ class EmployeesRepositoryImpl @Inject constructor(
             permission
         )
         transaction.update(
-            newPermissionDocumentRef, mapOf(
+            newPermissionListenerDocumentRef, mapOf(
                 FIELD_NEW_PERMISSION to mapOf(
                     FIELD_EMAIL to employee.email,
                     FIELD_PERMISSION to permission

@@ -88,7 +88,7 @@ class MenuService @Inject constructor(
                 categories.add(it.categoryName)
             }
             categories.forEach { category ->
-                val dishes = allDishes.filter { it.categoryName == category }
+                val dishes = allDishes.filter { it.categoryName == category } as MutableList
                 menu.add(Category(category, dishes))
             }
             withContext(Main) {

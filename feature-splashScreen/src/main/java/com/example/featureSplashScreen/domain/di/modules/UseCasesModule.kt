@@ -4,8 +4,8 @@ import com.example.featureSplashScreen.domain.useCases.GetCurrentEmployeeUseCase
 import com.example.featureSplashScreen.domain.useCases.GetCurrentEmployeeUseCaseImpl
 import com.example.featureSplashScreen.domain.useCases.ReadMenuUseCase
 import com.example.featureSplashScreen.domain.useCases.ReadMenuUseCaseImpl
-import com.example.featureSplashScreen.presentation.ReadOrdersUseCase
-import com.example.featureSplashScreen.presentation.ReadOrdersUseCaseImpl
+import com.example.featureSplashScreen.domain.useCases.ReadOrdersUseCase
+import com.example.featureSplashScreen.domain.useCases.ReadOrdersUseCaseImpl
 import dagger.Binds
 import dagger.Module
 

@@ -7,17 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.ItemTouchHelper
+import com.example.core.domain.tools.extensions.logD
 import com.example.core.presentation.recyclerView.adapterDelegates.DishesAdapterDelegate
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
 import com.example.featureOrder.R
 import com.example.featureOrder.databinding.DialogMenuBinding
 import com.example.featureOrder.domain.ViewModelFactory
 import com.example.featureOrder.domain.interfaces.OnDismissListener
-import com.example.featureOrder.domain.recyclerView.itemDecorations.MenuItemDecorations
-import com.example.featureOrder.domain.recyclerView.viewTypes.CategoriesAdapterDelegate
-import com.example.featureOrder.domain.recyclerView.viewTypes.CategoryLargeRecyclerViewType
+import com.example.featureOrder.presentation.recyclerView.itemDecorations.MenuItemDecorations
+import com.example.featureOrder.presentation.recyclerView.delegates.CategoriesAdapterDelegate
+import com.example.featureOrder.presentation.recyclerView.delegates.CategoryLargeRecyclerViewType
 import com.example.featureOrder.presentation.order.doalogs.dishDialog.DishAlertDialog
+import com.example.featureOrder.presentation.recyclerView.ItemTouchCallback
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.Snackbar
 
 class MenuBottomSheetDialog(
     private val onDismissListener: OnDismissListener,
@@ -27,9 +31,10 @@ class MenuBottomSheetDialog(
     private var largeMargin: Int? = null
 
     private lateinit var binding: DialogMenuBinding
-    private val viewModel: MenuDialogViewModel by viewModels { ViewModelFactory }
+    private val viewModel by viewModels<MenuDialogViewModel>{ ViewModelFactory }
     private var dishDialog = DishAlertDialog()
-    private var menuAdapter: BaseRecyclerViewAdapter? = null
+    private lateinit var menuAdapter: BaseRecyclerViewAdapter
+    private lateinit var itemTouchCallback: ItemTouchCallback
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -43,6 +48,7 @@ class MenuBottomSheetDialog(
             )
         )
         binding = DialogMenuBinding.inflate(layoutInflater)
+        itemTouchCallback = ItemTouchCallback(viewModel::onDishDelete)
         initRecyclerView()
     }
 
@@ -51,18 +57,27 @@ class MenuBottomSheetDialog(
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        observeViewModelStates()
         observeDishEvent()
+        observeViewModelStates()
+        observeOnDishDeletedEvent()
         return binding.root
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        onDismissListener.onDismiss()
     }
 
     private fun observeViewModelStates() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is MenuDialogStates.MenuExists -> {
-                    menuAdapter?.submitList(it.types)
+                    val currentList = menuAdapter.currentList
+                    if(currentList == it.items)
+                        logD("same")
+                    menuAdapter.submitList(it.items)
                 }
-                else -> {} //other things
+                is MenuDialogStates.Default -> {}
             }
         }
     }
@@ -74,6 +89,7 @@ class MenuBottomSheetDialog(
             addItemDecoration(
                 MenuItemDecorations(smallMargin!!, largeMargin!!)
             )
+            ItemTouchHelper(itemTouchCallback).attachToRecyclerView(this)
         }
     }
 
@@ -86,9 +102,14 @@ class MenuBottomSheetDialog(
         }
     }
 
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
-        onDismissListener.onDismiss()
+    private fun observeOnDishDeletedEvent() {
+        viewModel.onDishDeleted.observe(viewLifecycleOwner) {
+            it.getData()?.let { deletedDishInfo ->
+                Snackbar.make(binding.fbaMenu, R.string.cancelAction, Snackbar.LENGTH_LONG).setAction(R.string.yes) {
+                    viewModel.addDish(deletedDishInfo)
+                }.show()
+            }
+        }
     }
 
 }

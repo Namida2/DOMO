@@ -1,4 +1,4 @@
-package com.example.core.domain.recyclerView.diffCalbacks
+package com.example.core.presentation.recyclerView.diffCalbacks
 
 import androidx.recyclerview.widget.DiffUtil
 import androidx.viewbinding.ViewBinding
@@ -13,20 +13,21 @@ class BaseAdapterDiffCallback(
         oldType: BaseRecyclerViewType,
         newType: BaseRecyclerViewType,
     ): Boolean =
-        if (newType::class != newType::class) false
+        if (oldType::class != newType::class) false
         else getDiffCallback(newType).areItemsTheSame(oldType, newType)
 
     override fun areContentsTheSame(
         oldType: BaseRecyclerViewType,
         newType: BaseRecyclerViewType,
     ): Boolean =
-        if (newType::class != newType::class) false
+        if (oldType::class != newType::class) false
         else getDiffCallback(newType).areContentsTheSame(oldType, newType)
 
     private fun getDiffCallback(
         type: BaseRecyclerViewType,
     ): DiffUtil.ItemCallback<BaseRecyclerViewType> {
-        return recyclerViewTypes.find { it.isItMe(type) }
-            ?.getDiffCallback() as DiffUtil.ItemCallback<BaseRecyclerViewType>
+        return recyclerViewTypes.find {
+            it.isItMe(type)
+        }?.getDiffCallback() as DiffUtil.ItemCallback<BaseRecyclerViewType>
     }
 }

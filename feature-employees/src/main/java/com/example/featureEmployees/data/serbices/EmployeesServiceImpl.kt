@@ -1,18 +1,23 @@
-package com.example.featureEmployees.data
+package com.example.featureEmployees.data.serbices
 
 import com.example.core.data.listeners.EmployeePermissionListener
 import com.example.core.domain.Employee
+import com.example.featureEmployees.domain.listeners.NewEmployeesListener
 import com.example.featureEmployees.domain.services.EmployeesService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
-class EmployeesServiceImpl @Inject constructor(): EmployeesService {
-    private var employeePermissionChangeJob: Job? = null
+class EmployeesServiceImpl @Inject constructor(
+    private val newEmployeesListener: NewEmployeesListener
+): EmployeesService {
+    private var coroutineScope: CoroutineScope = CoroutineScope(Main)
     private var employees = mutableListOf<Employee>()
     override val employeesChanges = MutableSharedFlow<List<Employee>>(replay = 1)
 
@@ -21,14 +26,27 @@ class EmployeesServiceImpl @Inject constructor(): EmployeesService {
         employeesChanges.tryEmit(employees)
     }
 
-    override fun listenEmployeesPermissionChanges() {
-        employeePermissionChangeJob = CoroutineScope(Main).launch {
+    override fun listenChanges() {
+        coroutineScope.launch {
             EmployeePermissionListener.permissionChanges.collect { newPermission ->
                 employees.indexOfFirst { employee ->
                     employee.email == newPermission.email
                 }.let { index ->
                     if (index == -1) return@collect
                     employees[index] = employees[index].copy(permission = newPermission.permission)
+                    employeesChanges.tryEmit(employees)
+                }
+            }
+        }
+        listenNewEmployees()
+    }
+
+    private fun listenNewEmployees(){
+        coroutineScope.launch {
+            newEmployeesListener.newEmployeesFlow.collect { newEmployee ->
+                employees.find {
+                    it.email == newEmployee.email
+                } ?: employees.add(newEmployee).also {
                     employeesChanges.tryEmit(employees)
                 }
             }
@@ -45,7 +63,7 @@ class EmployeesServiceImpl @Inject constructor(): EmployeesService {
     }
 
     override fun cancel() {
-        employeePermissionChangeJob?.cancel()
+        coroutineScope.cancel()
     }
 
 }

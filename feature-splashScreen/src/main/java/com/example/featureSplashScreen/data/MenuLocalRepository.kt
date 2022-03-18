@@ -25,7 +25,7 @@ class MenuLocalRepositoryImpl @Inject constructor(
                 categories.add(it.categoryName)
             }
             categories.forEach { category ->
-                val dishes = allDishes.filter { it.categoryName == category }
+                val dishes = allDishes.filter { it.categoryName == category } as MutableList
                 menu.add(Category(category, dishes))
             }
             withContext(Dispatchers.Main) {
@@ -41,7 +41,7 @@ class MenuLocalRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun getAllDishes(menu: ArrayList<Category>): List<Dish> =
+    private fun getAllDishes(menu: MutableList<Category>): List<Dish> =
         menu.map { it.dishes }.flatten()
 
 }

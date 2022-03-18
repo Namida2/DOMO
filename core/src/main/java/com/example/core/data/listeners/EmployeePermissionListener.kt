@@ -4,9 +4,7 @@ import com.example.core.domain.tools.NewPermission
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_EMAIL
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_NEW_PERMISSION
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_PERMISSION
-import com.example.core.domain.tools.constants.FirestoreReferences.newPermissionDocumentRef
-import com.example.core.domain.tools.constants.OtherStringConstants
-import com.example.core.domain.tools.extensions.logD
+import com.example.core.domain.tools.constants.FirestoreReferences.newPermissionListenerDocumentRef
 import com.example.core.domain.tools.extensions.logE
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -17,7 +15,7 @@ object EmployeePermissionListener {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val permissionChanges = callbackFlow {
-        val subscription = newPermissionDocumentRef.addSnapshotListener { value, error ->
+        val subscription = newPermissionListenerDocumentRef.addSnapshotListener { value, error ->
             when {
                 error != null -> {
                     logE("$this: $error")
@@ -39,7 +37,6 @@ object EmployeePermissionListener {
                     }
                     trySend(newPermission ?: return@addSnapshotListener)
                 }
-                else -> logD("$this@EmployeePermissionListener: ${OtherStringConstants.NULL_ORDER_INFO_MESSAGE}")
             }
         }
         awaitClose { subscription.remove() }

@@ -15,8 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.featureOrder.R
 import com.example.featureOrder.databinding.FragmentTablesBinding
 import com.example.featureOrder.domain.TablesItemDecorations
-import com.example.featureOrder.domain.recyclerView.adapters.TablesAdapter
-import com.google.android.material.transition.platform.MaterialContainerTransform
+import com.example.featureOrder.presentation.recyclerView.adapters.TablesAdapter
 import com.google.android.material.transition.platform.MaterialElevationScale
 import com.google.android.material.transition.platform.MaterialSharedAxis
 

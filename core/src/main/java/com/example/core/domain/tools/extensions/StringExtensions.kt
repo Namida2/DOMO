@@ -1,6 +1,7 @@
 package com.example.core.domain.tools.extensions
 
 import com.example.core.domain.Employee
+import com.example.core.domain.tools.TaskWithEmployee
 import com.example.core.domain.tools.constants.ErrorMessages.wrongEmailOrPassword
 import com.example.core.domain.tools.constants.FirestoreReferences.employeesCollectionRef
 import com.google.firebase.firestore.ktx.toObject
@@ -16,7 +17,7 @@ fun isEmptyField(vararg strings: String): Boolean {
 fun String.isValidEmail(): Boolean =
     android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
 
-fun String.readEmployeeByEmail (className: String, task: com.example.core.domain.tools.TaskWithEmployee) {
+fun String.readEmployeeByEmail (thisClass: String, task: TaskWithEmployee) {
     employeesCollectionRef.document(this).get().addOnSuccessListener { response ->
         val employee = response.toObject<Employee>()
         if(employee == null) {
@@ -25,7 +26,7 @@ fun String.readEmployeeByEmail (className: String, task: com.example.core.domain
         }
         task.onSuccess(employee)
     }.addOnFailureListener {
-        logE("$className, email = $this: ${it.message}")
+        logE("$thisClass, email = $this: ${it.message}")
         task.onError(it.getExceptionMessage())
     }
 }

@@ -3,8 +3,7 @@ package com.example.featureOrder.presentation.tables
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.featureOrder.domain.recyclerView.adapters.TablesAdapter
-import com.example.core.domain.tools.Event
+import com.example.featureOrder.presentation.recyclerView.adapters.TablesAdapter
 
 typealias OnTableClickEvent = com.example.core.domain.tools.Event<TablesAdapter.ViewOwner>
 

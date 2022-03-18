@@ -3,7 +3,7 @@ package com.example.featureOrder.domain
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.example.featureOrder.domain.recyclerView.adapters.TablesAdapter
+import com.example.featureOrder.presentation.recyclerView.adapters.TablesAdapter
 
 class TablesItemDecorations(
     private val smallMargin: Int,

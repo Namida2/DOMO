@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.core.domain.Employee
 import com.example.core.domain.tools.ErrorMessage
+import com.example.core.domain.tools.TaskWithEmployee
+import com.example.core.domain.tools.constants.EmployeePosts
 import com.example.core.domain.tools.constants.ErrorMessages.defaultErrorMessage
 import com.example.core.domain.tools.constants.ErrorMessages.emailAlreadyExistsMessage
 import com.example.core.domain.tools.constants.ErrorMessages.emptyFieldMessage
@@ -56,11 +58,11 @@ sealed class RegistrationViewModelStates {
 
 class RegistrationViewModel(
     private val getPostItemsUseCase: GetPostItemsUseCase,
-    private val registrationUseCaseImpl: RegistrationUseCase,
+    private val registrationUseCase: RegistrationUseCase,
 ) : ViewModel() {
 
-    var selectedPost: String = com.example.core.domain.tools.constants.EmployeePosts.COOK
-    private val MIN_PASSWORD_LENGH = 6
+    var selectedPost: String = EmployeePosts.COOK
+    private val minPasswordLength = 6
     private var _state =
         MutableLiveData<RegistrationViewModelStates>(RegistrationViewModelStates.Default)
     val state: LiveData<RegistrationViewModelStates> = _state
@@ -74,7 +76,7 @@ class RegistrationViewModel(
             !email.isValidEmail() -> {
                 _state.value = RegistrationViewModelStates.InvalidEmail; return
             }
-            password.length < MIN_PASSWORD_LENGH -> {
+            password.length < minPasswordLength -> {
                 _state.value = RegistrationViewModelStates.ShortPassword; return
             }
             password != confirmPassword -> {
@@ -83,13 +85,12 @@ class RegistrationViewModel(
         }
 
         val employee = Employee(email, name, selectedPost, password)
-        registrationUseCaseImpl.registration(
+        registrationUseCase.registration(
             employee,
-            object : com.example.core.domain.tools.TaskWithEmployee {
+            object : TaskWithEmployee {
                 override fun onSuccess(arg: Employee) {
                     _state.value = RegistrationViewModelStates.Valid(employee)
                 }
-
                 override fun onError(message: ErrorMessage?) {
                     when (message!!.titleId) {
                         R.string.emailAlreadyExitsTitle -> {

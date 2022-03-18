@@ -1,11 +1,15 @@
 package com.example.featureRegistration.data
 
 import com.example.core.domain.Employee
+import com.example.core.domain.tools.TaskWithEmployee
 import com.example.core.domain.tools.constants.ErrorMessages.defaultErrorMessage
 import com.example.core.domain.tools.constants.ErrorMessages.emailAlreadyExistsMessage
+import com.example.core.domain.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
+import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_EMAIL
 import com.example.core.domain.tools.constants.FirestoreReferences.employeesCollectionRef
 import com.example.core.domain.tools.constants.FirestoreReferences.fireStore
-import com.example.core.domain.tools.TaskWithEmployee
+import com.example.core.domain.tools.constants.FirestoreReferences.newEmployeeListenerDocumentRef
+import com.example.core.domain.tools.extensions.getExceptionMessage
 import com.example.core.domain.tools.extensions.logD
 import com.example.core.domain.tools.extensions.logE
 import com.google.firebase.auth.FirebaseAuth
@@ -38,6 +42,7 @@ class RegistrationRemoteRepositoryImpl @Inject constructor(
                     }
                 } else {
                     logE("${this}: ${it.exception.toString()}")
+                    task.onError(it.exception?.getExceptionMessage())
                 }
             }
     }
@@ -47,13 +52,11 @@ class RegistrationRemoteRepositoryImpl @Inject constructor(
         task: TaskWithEmployee,
     ) {
         auth.createUserWithEmailAndPassword(employee.email, employee.password)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    addEmployeeToCollection(employee, task)
-                } else {
-                    logE("${this}: ${it.exception.toString()}")
-                    task.onSuccess(employee)
-                }
+            .addOnSuccessListener {
+                addEmployeeToCollection(employee, task)
+            }.addOnFailureListener {
+                logE("${this}: $it")
+                task.onError(defaultErrorMessage)
             }
     }
 
@@ -61,16 +64,28 @@ class RegistrationRemoteRepositoryImpl @Inject constructor(
         employee: Employee,
         task: TaskWithEmployee,
     ) {
-        fireStore.runTransaction {
-            it.set(employeesCollectionRef.document(employee.email), employee)
-        }.addOnCompleteListener {
-            if (it.isSuccessful)
+        setEmptyEmailToNewEmployeeListener(task) {
+            fireStore.runTransaction {
+                it.set(employeesCollectionRef.document(employee.email), employee)
+                it.update(newEmployeeListenerDocumentRef, FIELD_EMAIL, employee.email)
+            }.addOnSuccessListener {
                 task.onSuccess(employee)
-            else {
-                logE("${this}: ${it.exception.toString()}")
+            }.addOnFailureListener {
+                logE("${this}: $it")
                 auth.currentUser?.delete()
-                task.onError(defaultErrorMessage)
+                task.onError(it.getExceptionMessage())
             }
         }
     }
+
+    private fun setEmptyEmailToNewEmployeeListener(task: TaskWithEmployee, onComplete: () -> Unit) {
+        newEmployeeListenerDocumentRef.update(
+            FIELD_EMAIL, EMPTY_COMMENTARY
+        ).addOnSuccessListener {
+            onComplete.invoke()
+        }.addOnFailureListener {
+            task.onError(it.getExceptionMessage())
+        }
+    }
 }
+

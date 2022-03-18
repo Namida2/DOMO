@@ -37,6 +37,8 @@ android {
 
 dependencies {
     implementation project(":core")
+
+    implementation 'com.getbase:floatingactionbutton:1.10.1'
     
     implementation (Dagger.dagger)
     kapt (Dagger.compiler)

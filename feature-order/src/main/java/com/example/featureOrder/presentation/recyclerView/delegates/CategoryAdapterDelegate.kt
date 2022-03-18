@@ -1,4 +1,4 @@
-package com.example.featureOrder.domain.recyclerView.viewTypes
+package com.example.featureOrder.presentation.recyclerView.delegates
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,10 +8,10 @@ import com.example.core.presentation.recyclerView.interfaces.BaseAdapterDelegate
 import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.core.presentation.recyclerView.interfaces.BaseViewHolder
 import com.example.featureOrder.R
-import com.example.featureOrder.databinding.LayoutCategoryLargeBinding
+import com.example.featureOrder.databinding.LayoutCategoryBinding
 
-class CategoryLargeRecyclerViewType :
-    BaseAdapterDelegate<LayoutCategoryLargeBinding, CategoryName> {
+class CategoryRecyclerViewType :
+    BaseAdapterDelegate<LayoutCategoryBinding, CategoryName> {
 
     override fun isItMe(recyclerViewType: BaseRecyclerViewType): Boolean =
         recyclerViewType is CategoryName
@@ -19,9 +19,9 @@ class CategoryLargeRecyclerViewType :
     override fun getViewHolder(
         inflater: LayoutInflater,
         parent: ViewGroup,
-    ): BaseViewHolder<LayoutCategoryLargeBinding, CategoryName> {
-        return CategoryLargeViewHolder(
-            LayoutCategoryLargeBinding.inflate(inflater, parent, false)
+    ): BaseViewHolder<LayoutCategoryBinding, CategoryName> {
+        return CategoryViewHolder(
+            LayoutCategoryBinding.inflate(inflater, parent, false)
         )
     }
 
@@ -37,9 +37,9 @@ class CategoryLargeRecyclerViewType :
     }
 }
 
-class CategoryLargeViewHolder(
-    override val binding: LayoutCategoryLargeBinding,
-) : BaseViewHolder<LayoutCategoryLargeBinding, CategoryName>(binding) {
+class CategoryViewHolder(
+    override val binding: LayoutCategoryBinding,
+) : BaseViewHolder<LayoutCategoryBinding, CategoryName>(binding) {
 
     override fun onBind(item: CategoryName) {
         binding.categoryName.text = item.name

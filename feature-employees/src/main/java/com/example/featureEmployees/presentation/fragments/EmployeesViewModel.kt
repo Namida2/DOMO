@@ -1,4 +1,4 @@
-package com.example.featureEmployees.presentation
+package com.example.featureEmployees.presentation.fragments
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +9,6 @@ import com.example.core.domain.tools.ErrorMessage
 import com.example.core.domain.tools.constants.ErrorMessages.defaultErrorMessage
 import com.example.core.domain.tools.Event
 import com.example.core.domain.tools.SimpleTask
-import com.example.featureEmployees.data.EmployeesServiceImpl
 import com.example.featureEmployees.domain.services.EmployeesService
 import com.example.featureEmployees.domain.useCases.ReadEmployeesUseCase
 import kotlinx.coroutines.flow.collect
@@ -36,7 +35,7 @@ class EmployeesViewModel(
     val newEmployeesEvent: LiveData<NewEmployeesEvent> = _newEmployeesEvent
 
     init {
-        employeesService.listenEmployeesPermissionChanges()
+        employeesService.listenChanges()
         viewModelScope.launch {
             employeesService.employeesChanges.collect {
                 _newEmployeesEvent.value = Event(it.toList())

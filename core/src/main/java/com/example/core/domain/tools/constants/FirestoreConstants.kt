@@ -17,6 +17,7 @@ object FirestoreConstants {
     const val DOCUMENT_NEW_ORDERS_LISTENER = "newOrdersListener"
     const val DOCUMENT_ORDER_ITEMS_STATE_LISTENER = "orderItemStateListener"
     const val DOCUMENT_PERMISSION_LISTENER = "permissionListener"
+    const val DOCUMENT_NEW_EMPLOYEE_LISTENER = "newEmployeeListener"
     //Fields
     const val FIELD_MENU_VERSION = "menuVersion"
     const val FIELD_GUESTS_COUNT = "guestsCount"

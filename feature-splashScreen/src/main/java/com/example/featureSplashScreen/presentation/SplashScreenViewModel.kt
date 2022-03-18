@@ -9,6 +9,7 @@ import com.example.core.domain.tools.constants.ErrorMessages.permissionDeniedMes
 import com.example.core.domain.tools.Task
 import com.example.featureSplashScreen.domain.useCases.GetCurrentEmployeeUseCase
 import com.example.featureSplashScreen.domain.useCases.ReadMenuUseCase
+import com.example.featureSplashScreen.domain.useCases.ReadOrdersUseCase
 import kotlinx.coroutines.launch
 
 sealed class SplashScreenStates {

@@ -26,7 +26,7 @@ class RegistrationFragment : Fragment() {
     private var smallMargin: Int? = null
     private var largeMargin: Int? = null
     private lateinit var employeeAuthCallback: EmployeeAuthCallback
-    private val viewModel: RegistrationViewModel by viewModels { ViewModelFactory }
+    private val viewModel by viewModels<RegistrationViewModel> { ViewModelFactory }
     lateinit var binding: FragmentRegistrationBinding
 
     override fun onAttach(context: Context) {

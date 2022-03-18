@@ -1,4 +1,4 @@
-package com.example.featureSplashScreen.presentation
+package com.example.featureSplashScreen.domain.useCases
 
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.menu.MenuService

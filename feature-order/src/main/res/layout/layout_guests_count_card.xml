@@ -19,9 +19,9 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
+            android:layout_marginStart="34dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="42dp"
+            android:layout_marginEnd="34dp"
             android:fontFamily="@font/montserrat_regular"
             android:text="Гостей"
             android:textSize="16sp"
@@ -33,10 +33,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/title"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="42dp"
+            android:layout_marginBottom="34dp"
             android:fontFamily="@font/montserrat_regular"
             android:text="17"
-            android:textSize="32sp"
+            android:textSize="24sp"
             android:textColor="@color/black"/>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

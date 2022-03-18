@@ -1,6 +1,6 @@
 package com.example.featureEmployees.domain.di.modules
 
-import com.example.featureEmployees.data.EmployeesServiceImpl
+import com.example.featureEmployees.data.serbices.EmployeesServiceImpl
 import com.example.featureEmployees.domain.services.EmployeesService
 import dagger.Binds
 import dagger.Module

@@ -1,4 +1,4 @@
-package com.example.featureOrder.domain.recyclerView.adapters
+package com.example.featureOrder.presentation.recyclerView.adapters
 
 import com.example.featureOrder.databinding.LayoutTableBinding
 import android.content.Context
