@@ -12,7 +12,7 @@ import com.example.administratorMain.domatn.di.AdminDepsStore
 import com.example.administratorMain.presentation.AdministratorMainActivity
 import com.example.cookMain.domain.di.CookMainDepsStore
 import com.example.cookMain.presentation.CookMainActivity
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.EmployeeAuthCallback
 import com.example.core.domain.tools.constants.ErrorMessages.checkNetworkConnectionMessage
 import com.example.core.domain.tools.constants.EmployeePosts.ADMINISTRATOR

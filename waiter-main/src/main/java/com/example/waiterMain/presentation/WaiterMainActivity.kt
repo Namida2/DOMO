@@ -13,7 +13,7 @@ import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.BasePostActivity
 import com.example.core.domain.tools.constants.ErrorMessages.permissionDeniedMessage
 import com.example.core.domain.tools.extensions.Animations.prepareHide
@@ -51,7 +51,7 @@ class WaiterMainActivity : AppCompatActivity(),
         showNavigationUI()
         setOnNavigationItemSelectedListener()
         makeWorkerRequests()
-        observeNewPermissionEvent()
+        observeOnNewPermissionEvent()
     }
 
     override fun makeWorkerRequests() {
@@ -164,10 +164,12 @@ class WaiterMainActivity : AppCompatActivity(),
         WaiterMainDepsStore.employeeAuthCallback.onEmployeeLoggedIn(employee)
     }
 
-    private fun observeNewPermissionEvent() {
+    override fun observeOnNewPermissionEvent() {
         viewModel.newPermissionEvent.observe(this) {
             it.getData().let {
-                createMessageDialog(permissionDeniedMessage)?.show(supportFragmentManager, "")
+                createMessageDialog(permissionDeniedMessage) {
+                    finish()
+                }?.show(supportFragmentManager, "")
             }
         }
     }

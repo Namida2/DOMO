@@ -1,6 +1,6 @@
 package com.example.domo.models.remoteRepository
 
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.tools.constants.FirestoreReferences.employeesCollectionRef
 import com.example.core.domain.tools.constants.FirestoreReferences.menuDocumentRef
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_MENU_VERSION

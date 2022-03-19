@@ -1,6 +1,6 @@
 package com.example.featureLogIn.data
 
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.tools.ErrorMessage
 import com.example.core.domain.tools.constants.ErrorMessages.permissionDeniedMessage
 import com.example.core.domain.tools.constants.ErrorMessages.wrongEmailOrPassword

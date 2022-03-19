@@ -1,6 +1,6 @@
 package com.example.featureEmployees.domain.repositories
 
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.tools.SimpleTask
 
 interface EmployeesRepository {

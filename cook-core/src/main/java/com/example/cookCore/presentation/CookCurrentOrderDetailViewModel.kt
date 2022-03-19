@@ -11,7 +11,7 @@ import com.example.core.domain.tools.SimpleTask
 sealed class CookCurrentOrderDetailVMStates {
     object UpdatingData : CookCurrentOrderDetailVMStates()
     object OnUpdatingSuccess : CookCurrentOrderDetailVMStates()
-    class OnUpdationgFailure(val errorMessage: ErrorMessage) : CookCurrentOrderDetailVMStates()
+    class OnUpdatingFailure(val errorMessage: ErrorMessage) : CookCurrentOrderDetailVMStates()
     object Default : CookCurrentOrderDetailVMStates()
 }
 
@@ -30,7 +30,7 @@ class CookCurrentOrderDetailViewModel(
             }
 
             override fun onError(message: ErrorMessage?) {
-                _state.value = CookCurrentOrderDetailVMStates.OnUpdationgFailure(
+                _state.value = CookCurrentOrderDetailVMStates.OnUpdatingFailure(
                     message ?: defaultErrorMessage
                 )
             }

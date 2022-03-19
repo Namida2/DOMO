@@ -1,7 +1,7 @@
 package com.example.domo.models
 
 import android.content.SharedPreferences
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.tools.Task
 import com.example.core.domain.tools.TaskWithEmployee
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_MENU_VERSION
@@ -11,7 +11,6 @@ import com.example.domo.models.interfaces.MenuLocalRepository
 import com.example.domo.models.interfaces.SplashScreenModelInterface
 import com.example.domo.models.remoteRepository.interfaces.SSRemoteRepositoryInterface
 import com.google.firebase.auth.FirebaseUser
-import entities.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main

@@ -1,7 +1,7 @@
 package com.example.domo.models.authorisation
 
 import android.view.View
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.tools.ErrorMessage
 import com.example.core.domain.tools.constants.EmployeePosts
 import com.example.domo.models.interfaces.RegistrationModelInterface

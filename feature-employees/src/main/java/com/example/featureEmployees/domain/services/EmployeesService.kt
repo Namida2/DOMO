@@ -1,6 +1,6 @@
 package com.example.featureEmployees.domain.services
 
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 interface EmployeesService {

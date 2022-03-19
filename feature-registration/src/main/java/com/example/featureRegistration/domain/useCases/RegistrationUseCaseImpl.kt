@@ -1,6 +1,6 @@
 package com.example.featureRegistration.domain.useCases
 
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.tools.ErrorMessage
 import com.example.core.domain.tools.TaskWithEmployee
 import com.example.featureRegistration.data.RegistrationRemoteRepository

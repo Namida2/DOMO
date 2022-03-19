@@ -65,7 +65,7 @@ class CurrentOrdersDetailFragment : Fragment() {
                 is CookCurrentOrderDetailVMStates.UpdatingData -> {
                     ProcessAlertDialog.show(parentFragmentManager, "")
                 }
-                is CookCurrentOrderDetailVMStates.OnUpdationgFailure -> {
+                is CookCurrentOrderDetailVMStates.OnUpdatingFailure -> {
                     ProcessAlertDialog.dismiss()
                     requireContext().createMessageDialog(it.errorMessage)
                         ?.show(parentFragmentManager, "")

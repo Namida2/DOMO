@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
 import com.example.featureEmployees.R
 import com.example.featureEmployees.databinding.FragmentEmployeesBinding

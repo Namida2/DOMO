@@ -1,6 +1,6 @@
 package com.example.administratorMain.domatn.di
 
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Component
 

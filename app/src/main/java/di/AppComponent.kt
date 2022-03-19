@@ -2,7 +2,7 @@ package di
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.order.OrdersServiceSub
 import com.example.domo.models.interfaces.*

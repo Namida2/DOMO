@@ -1,6 +1,6 @@
 package com.example.administratorMain.domatn.di
 
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.EmployeeAuthCallback
 import com.example.featureEmployees.domain.di.EmployeesAppComponentDeps
 import com.example.featureEmployees.domain.di.EmployeesDepsStore

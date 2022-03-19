@@ -2,7 +2,7 @@ package com.example.domo.viewModels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.tools.extensions.isValidEmail
 import com.example.domo.R
 import com.example.domo.models.interfaces.RegistrationModelInterface

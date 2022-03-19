@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.core.data.database.daos.EmployeeDao
 import com.example.core.data.database.daos.MenuDao
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.menu.Dish
 
 @Database(

@@ -1,6 +1,6 @@
 package com.example.core.domain.tools.extensions
 
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.tools.TaskWithEmployee
 import com.example.core.domain.tools.constants.ErrorMessages.wrongEmailOrPassword
 import com.example.core.domain.tools.constants.FirestoreReferences.employeesCollectionRef

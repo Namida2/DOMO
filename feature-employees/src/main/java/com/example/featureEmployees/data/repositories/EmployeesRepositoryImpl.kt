@@ -1,6 +1,6 @@
 package com.example.featureEmployees.data.repositories
 
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.tools.SimpleTask
 import com.example.core.domain.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_EMAIL

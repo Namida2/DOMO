@@ -7,7 +7,7 @@ import android.view.Gravity
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.tools.dialogs.ProcessAlertDialog
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.featureEmployees.R
@@ -54,10 +54,12 @@ class EmployeeDetailDialog : DialogFragment() {
                     ProcessAlertDialog.dismiss()
                     requireContext().createMessageDialog(it.errorMessage)
                         ?.show(parentFragmentManager, "")
+                    viewModel.resetViewModelSate()
                 }
                 is EmployeeDetailVMStates.OnSuccess -> {
                     ProcessAlertDialog.onSuccess()
                     this.dismiss()
+                    viewModel.resetViewModelSate()
                 }
                 is EmployeeDetailVMStates.Default -> {}
             }

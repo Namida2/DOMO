@@ -13,14 +13,14 @@ class BaseAdapterDiffCallback(
         oldType: BaseRecyclerViewType,
         newType: BaseRecyclerViewType,
     ): Boolean =
-        if (oldType::class != newType::class) false
+        if (newType::class != oldType::class) false
         else getDiffCallback(newType).areItemsTheSame(oldType, newType)
 
     override fun areContentsTheSame(
         oldType: BaseRecyclerViewType,
         newType: BaseRecyclerViewType,
     ): Boolean =
-        if (oldType::class != newType::class) false
+        if (newType::class != oldType::class) false
         else getDiffCallback(newType).areContentsTheSame(oldType, newType)
 
     private fun getDiffCallback(

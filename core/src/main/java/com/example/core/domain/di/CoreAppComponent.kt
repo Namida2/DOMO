@@ -1,7 +1,7 @@
 package com.example.core.domain.di
 
 import android.content.Context
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.di.modules.RemoteRepositoryModule
 import com.example.core.domain.di.modules.UseCasesModule
 import com.example.core.domain.interfaces.OrdersService

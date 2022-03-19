@@ -1,6 +1,6 @@
 package com.example.featureRegistration.data
 
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.tools.TaskWithEmployee
 import com.example.core.domain.tools.constants.ErrorMessages.defaultErrorMessage
 import com.example.core.domain.tools.constants.ErrorMessages.emailAlreadyExistsMessage

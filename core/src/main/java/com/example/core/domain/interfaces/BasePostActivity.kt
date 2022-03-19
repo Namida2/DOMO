@@ -5,4 +5,5 @@ interface BasePostActivity: EmployeeAuthCallback, LeaveAccountCallback {
     fun makeWorkerRequests()
     fun showNavigationUI()
     fun hideNavigationUI()
+    fun observeOnNewPermissionEvent()
 }

@@ -12,6 +12,8 @@ import androidx.fragment.app.DialogFragment
 import com.example.core.R
 import com.example.core.databinding.DialogMessageBinding
 import com.example.core.domain.tools.extensions.logD
+import com.example.core.domain.tools.extensions.logE
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
@@ -23,6 +25,10 @@ class MessageAlertDialog(
     private val message: String,
     private val action: (() -> Unit)? = null,
 ) : DialogFragment() {
+
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+        logE("$this: coroutineContext: $coroutineContext, throwable: ${throwable.message}")
+    }
 
     companion object {
         val isExist: AtomicBoolean = AtomicBoolean(false)
@@ -44,14 +50,6 @@ class MessageAlertDialog(
         super.onAttach(context)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
     @SuppressLint("ResourceType")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val binding = DialogMessageBinding.inflate(layoutInflater)
@@ -61,7 +59,7 @@ class MessageAlertDialog(
             messageTextView.text = message
             actionButton.setOnClickListener {
                 action?.let { notNullAction -> notNullAction() }
-                CoroutineScope(Main).launch {
+                CoroutineScope(Main).launch(coroutineExceptionHandler) {
                     delay(requireContext().resources.getInteger(R.integer.dismissDialogTime).toLong())
                     dismiss()
                 }

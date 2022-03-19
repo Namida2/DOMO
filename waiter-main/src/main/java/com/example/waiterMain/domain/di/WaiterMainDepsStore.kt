@@ -1,6 +1,6 @@
 package com.example.waiterMain.domain.di
 
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.EmployeeAuthCallback
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.order.OrdersServiceSub

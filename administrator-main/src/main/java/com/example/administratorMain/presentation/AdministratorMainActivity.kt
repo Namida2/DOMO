@@ -2,6 +2,7 @@ package com.example.administratorMain.presentation
 
 import android.graphics.Rect
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -14,12 +15,14 @@ import com.example.administratorMain.databinding.ActivityAdministratorBinding
 import com.example.administratorMain.domatn.di.AdminDepsStore
 import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.BasePostActivity
+import com.example.core.domain.tools.constants.ErrorMessages
 import com.example.core.domain.tools.extensions.Animations.prepareHide
 import com.example.core.domain.tools.extensions.Animations.prepareShow
 import com.example.core.domain.tools.extensions.Animations.prepareSlideDown
 import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
+import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.featureLogIn.domain.di.LogInDeps
 import com.example.featureLogIn.domain.di.LogInDepsStore
 import java.util.concurrent.TimeUnit
@@ -28,6 +31,8 @@ class AdministratorMainActivity: AppCompatActivity(), BasePostActivity {
     private lateinit var binding: ActivityAdministratorBinding
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var navController: NavController
+
+    private val viewModel by viewModels<AdminViewMode> ()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,6 +90,17 @@ class AdministratorMainActivity: AppCompatActivity(), BasePostActivity {
             if (bottomNavigation.getLocalVisibleRect(scrollBounds))
                 bottomNavigation.prepareSlideDown(bottomNavigation.height).start()
         }
+    }
+
+    override fun observeOnNewPermissionEvent() {
+        viewModel.newPermissionEvent.observe(this) {
+            it.getData().let {
+                createMessageDialog(ErrorMessages.permissionDeniedMessage) {
+                    finish()
+                }?.show(supportFragmentManager, "")
+            }
+        }
+
     }
 
     override fun showNavigationUI() {

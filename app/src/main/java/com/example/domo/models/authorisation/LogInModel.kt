@@ -1,6 +1,6 @@
 package com.example.domo.models.authorisation
 
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.tools.TaskWithEmployee
 import com.example.domo.models.interfaces.LogInModelInterface
 import com.example.domo.models.remoteRepository.authorisation.LogInRemoteRepository

@@ -1,6 +1,6 @@
 package com.example.core.domain.tools
 
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.order.Order
 
 typealias TaskWithEmployee = Task<Employee, Unit>

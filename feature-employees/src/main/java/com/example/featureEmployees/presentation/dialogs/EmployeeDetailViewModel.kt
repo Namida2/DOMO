@@ -3,7 +3,7 @@ package com.example.featureEmployees.presentation.dialogs
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.tools.ErrorMessage
 import com.example.core.domain.tools.SimpleTask
 import com.example.core.domain.tools.constants.ErrorMessages.defaultErrorMessage
@@ -29,13 +29,10 @@ class EmployeeDetailViewModel(
         _state.value = EmployeeDetailVMStates.InProcess
         setPermissionUseCase.setPermissionForEmployee(employee, permission, object : SimpleTask {
             override fun onSuccess(arg: Unit) {
-                setTerminatingState(EmployeeDetailVMStates.OnSuccess)
+                _state.value = EmployeeDetailVMStates.OnSuccess
             }
-
             override fun onError(message: ErrorMessage?) {
-                setTerminatingState(
-                    EmployeeDetailVMStates.OnFailure(message ?: defaultErrorMessage)
-                )
+                _state.value =  EmployeeDetailVMStates.OnFailure(message ?: defaultErrorMessage)
             }
         })
     }
@@ -44,19 +41,15 @@ class EmployeeDetailViewModel(
         _state.value = EmployeeDetailVMStates.InProcess
         deleteEmployeeUseCase.deleteEmployee(employee, object : SimpleTask {
             override fun onSuccess(arg: Unit) {
-                setTerminatingState(EmployeeDetailVMStates.OnSuccess)
+                _state.value = EmployeeDetailVMStates.OnSuccess
             }
-
             override fun onError(message: ErrorMessage?) {
-                setTerminatingState(
-                    EmployeeDetailVMStates.OnFailure(message ?: defaultErrorMessage)
-                )
+                _state.value =  EmployeeDetailVMStates.OnFailure(message ?: defaultErrorMessage)
             }
         })
     }
 
-    private fun setTerminatingState(state: EmployeeDetailVMStates) {
-        _state.value = state
+    fun resetViewModelSate() {
         _state.value = EmployeeDetailVMStates.Default
     }
 }

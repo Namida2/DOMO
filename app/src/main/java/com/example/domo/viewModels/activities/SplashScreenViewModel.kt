@@ -3,7 +3,7 @@ package com.example.domo.viewModels.activities
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.domo.models.interfaces.SplashScreenModelInterface
 import kotlinx.coroutines.launch
 

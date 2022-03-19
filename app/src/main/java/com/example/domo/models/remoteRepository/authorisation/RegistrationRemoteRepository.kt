@@ -1,6 +1,6 @@
 package com.example.domo.models.remoteRepository.authorisation
 
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.tools.constants.FirestoreConstants.COLLECTION_EMPLOYEES
 import com.example.core.domain.tools.constants.FirestoreConstants.COLLECTION_RESTAURANTS
 import com.example.core.domain.tools.constants.FirestoreConstants.DOCUMENT_DOMO

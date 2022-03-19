@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.example.administratorMain.domatn.di.AdminAppComponentDeps
 import com.example.cookMain.domain.di.CookMainDeps
 import com.example.core.data.database.Database
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.di.CoreAppComponentDeps
 import com.example.featureLogIn.domain.di.LogInDeps
 import com.example.featureSplashScreen.domain.useCases.GetCurrentEmployeeUseCase

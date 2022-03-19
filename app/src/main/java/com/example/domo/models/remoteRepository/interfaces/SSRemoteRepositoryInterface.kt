@@ -1,6 +1,6 @@
 package com.example.domo.models.remoteRepository.interfaces
 
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.google.firebase.auth.FirebaseUser
 
 interface SSRemoteRepositoryInterface {

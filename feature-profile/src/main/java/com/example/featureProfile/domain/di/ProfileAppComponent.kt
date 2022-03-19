@@ -1,6 +1,6 @@
 package com.example.featureProfile.domain.di
 
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.featureProfile.domain.LeaveAccountUseCase
 import com.example.featureProfile.domain.di.modules.UseCasesModule
 import com.google.firebase.auth.FirebaseAuth

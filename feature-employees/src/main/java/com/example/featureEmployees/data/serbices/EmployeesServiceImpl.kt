@@ -1,18 +1,16 @@
 package com.example.featureEmployees.data.serbices
 
 import com.example.core.data.listeners.EmployeePermissionListener
-import com.example.core.domain.Employee
+import com.example.core.domain.entities.Employee
 import com.example.featureEmployees.domain.listeners.NewEmployeesListener
 import com.example.featureEmployees.domain.services.EmployeesService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 class EmployeesServiceImpl @Inject constructor(
     private val newEmployeesListener: NewEmployeesListener
