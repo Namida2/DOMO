@@ -24,6 +24,7 @@ import com.example.featureMenuDialog.presentation.recyclerView.delegates.Categor
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 
+//TODO: Remove the edit views for waiter
 class MenuBottomSheetDialog(
     private val onDismissListener: OnDismissListener?,
 ) : BottomSheetDialogFragment() {
