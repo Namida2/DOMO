@@ -3,7 +3,6 @@ package com.example.core.domain.menu
 import com.example.core.domain.interfaces.BaseObservable
 import com.example.core.domain.tools.DeletedDishInfo
 import com.example.core.domain.tools.constants.OtherStringConstants.THIS_DISH_ALREADY_ADDED
-import com.example.core.domain.tools.constants.OtherStringConstants.UNKNOWN_CATEGORY_NAME
 import com.example.core.domain.tools.constants.OtherStringConstants.UNKNOWN_DISH_ID
 import kotlinx.coroutines.flow.MutableSharedFlow
 
@@ -29,9 +28,7 @@ object MenuService : BaseObservable<MenuServiceSub> {
 
     fun getAllCategories(): CategoriesNameHolder =
         CategoriesNameHolder(
-            menu.map {
-                it.name
-            }.map {
+            menu.map { it.name }.map {
                 CategoryName(it)
             }
         )
@@ -48,9 +45,10 @@ object MenuService : BaseObservable<MenuServiceSub> {
         return dish ?: throw IllegalArgumentException(UNKNOWN_DISH_ID + dishId)
     }
 
-    fun setMenuServiceState(menu: ArrayList<Category>?) {
+    fun setNewMenu(menu: MutableList<Category>?) {
         if (menu.isNullOrEmpty()) menuState = MenuServiceStates.MenuIsEmpty
         else {
+            menu.sort()
             this.menu = menu
             menuState = MenuServiceStates.MenuExists(this)
         }
@@ -64,15 +62,18 @@ object MenuService : BaseObservable<MenuServiceSub> {
 
     fun deleteDish(dish: Dish): DeletedDishInfo {
         var deletedDishInfo: DeletedDishInfo? = null
-        menu.forEach { category ->
+        menu.find { category ->
             category.dishes.indexOfFirst {
                 it.id == dish.id
-            }.also { index ->
-                if (index == -1) return@also
+            }.let { index ->
+                if (index == -1) return@find false
                 category.dishes.removeAt(index)
                 deletedDishInfo = DeletedDishInfo(category.name, dish)
-                return@forEach
+                return@find true
             }
+        }.also {
+            it ?: return@also
+            if (it.dishes.isEmpty()) menu.remove(it)
         }
         return if (deletedDishInfo != null) {
             menuChanges.tryEmit(menu)
@@ -81,17 +82,35 @@ object MenuService : BaseObservable<MenuServiceSub> {
     }
 
     fun addDish(deletedDishInfo: DeletedDishInfo) {
-        val category = menu.find {
+        var category: Category
+        menu.find {
             it.name == deletedDishInfo.categoryName
-        } ?: throw IllegalArgumentException(UNKNOWN_CATEGORY_NAME + deletedDishInfo.categoryName)
+        }.also {
+            if (it != null) {
+                category = it; return@also
+            }
+            menu.add(
+                Category(
+                    deletedDishInfo.categoryName,
+                    mutableListOf(deletedDishInfo.dish)
+                )
+            ).also {
+                menu.sort()
+                menuChanges.tryEmit(menu)
+                return
+            }
+        }
 
         category.dishes.find {
             it.id == deletedDishInfo.dish.id
         }.also { dish ->
+            //TODO: Remove this and return false
             if (dish != null) throw IllegalArgumentException(THIS_DISH_ALREADY_ADDED + dish.id)
         }
 
-        category.dishes.add(deletedDishInfo.dish)
+        category.dishes.add(deletedDishInfo.dish).also {
+            category.dishes.sort()
+        }
         menuChanges.tryEmit(menu)
     }
 

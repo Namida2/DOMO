@@ -28,6 +28,8 @@ object WaiterMainDepsStore {
 
     private fun provideFeatureOrderDeps() {
         OrderDepsStore.deps = object : OrderAppComponentDeps {
+            override val currentEmployee: Employee?
+                get() = deps.currentEmployee
             override val ordersService: OrdersService<OrdersServiceSub>
                 get() = deps.ordersService
         }
@@ -47,7 +49,7 @@ object WaiterMainDepsStore {
             override val currentEmployee: Employee?
                 get() = deps.currentEmployee
             override val firebaseAuth: FirebaseAuth
-                get() = WaiterMainDepsStore.profileDeps.firebaseAuth
+                get() = profileDeps.firebaseAuth
         }
     }
 }

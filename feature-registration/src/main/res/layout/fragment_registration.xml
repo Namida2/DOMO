@@ -133,21 +133,15 @@
                     android:overScrollMode="always"
                     android:scrollbars="none" />
 
-                <LinearLayout
+                <Button
+                    android:id="@+id/registrationButton"
+                    style="@style/buttonStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="bottom"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="32dp"
+                    android:text="Registration" />
 
-                    <Button
-                        android:id="@+id/registrationButton"
-                        style="@style/buttonStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="32dp"
-                        android:text="Registration" />
-                </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

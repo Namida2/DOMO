@@ -122,6 +122,10 @@
         <entry key="..\:/Projects/Graduate/DOMO/feature-logIn/src/main/res/layout/activity_authorization.xml" value="0.1717896174863388" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-logIn/src/main/res/layout/activity_main.xml" value="0.1717896174863388" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-logIn/src/main/res/layout/fragment_log_in.xml" value="0.1717896174863388" />
+        <entry key="..\:/Projects/Graduate/DOMO/feature-menuDialog/src/main/res/layout/activity_main.xml" value="0.24479166666666666" />
+        <entry key="..\:/Projects/Graduate/DOMO/feature-menuDialog/src/main/res/layout/dialog_dish.xml" value="0.24479166666666666" />
+        <entry key="..\:/Projects/Graduate/DOMO/feature-menuDialog/src/main/res/layout/dialog_menu.xml" value="0.24479166666666666" />
+        <entry key="..\:/Projects/Graduate/DOMO/feature-menuDialog/src/main/res/layout/layout_category_large.xml" value="0.24479166666666666" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-order/src/main/res/layout/dialog_dish.xml" value="0.24791666666666667" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-order/src/main/res/layout/dialog_guests_count.xml" value="0.25" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-order/src/main/res/layout/dialog_menu.xml" value="0.25" />
@@ -138,6 +142,7 @@
         <entry key="..\:/Projects/Graduate/DOMO/feature-profile/src/main/res/layout/fragment_frofile.xml" value="0.25" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-profile/src/main/res/layout/fragment_profile.xml" value="0.32215447154471544" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-registration/src/main/res/layout/fragment_registration.xml" value="0.1717896174863388" />
+        <entry key="..\:/Projects/Graduate/DOMO/feature-settings/src/main/res/layout/fragment_settings.xml" value="0.22" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-splashScreen/src/main/res/layout/activity_main.xml" value="0.15915300546448088" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-splashScreen/src/main/res/layout/activity_splash_screen.xml" value="0.11666666666666667" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-splashscreen/src/main/res/layout/activity_authorisation.xml" value="0.24791666666666667" />

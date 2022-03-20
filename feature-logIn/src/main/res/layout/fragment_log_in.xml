@@ -51,7 +51,7 @@
                 android:fontFamily="@font/montserrat_regular"
                 android:text="Войдите, чтобы продолжить..."
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/email"

@@ -1,6 +1,7 @@
 package application
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.room.Room
 import com.example.core.data.database.Database
 import com.example.core.domain.di.CoreDepsStore
@@ -14,7 +15,7 @@ import di.DaggerAppComponent
 class MyApplication : Application() {
 
     override fun onCreate() {
-        super.onCreate()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         SplashScreenDepsStore.appComponent =
             DaggerSplashScreenAppComponent
                 .builder()
@@ -33,6 +34,7 @@ class MyApplication : Application() {
                     )
                 ).build()
         CoreDepsStore.deps = SplashScreenDepsStore.appComponent
+        super.onCreate()
     }
 }
 

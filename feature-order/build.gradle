@@ -37,9 +37,8 @@ android {
 
 dependencies {
     implementation project(":core")
+    implementation project(":feature-menuDialog")
 
-    implementation 'com.getbase:floatingactionbutton:1.10.1'
-    
     implementation (Dagger.dagger)
     kapt (Dagger.compiler)
 
@@ -61,6 +60,7 @@ dependencies {
 
     implementation (AndroidX.core)
     implementation (AndroidX.appcompat)
+    implementation (Material.customFba)
     implementation (Material.material)
     implementation (AndroidX.constraintLayout)
     testImplementation (Tests.junit)

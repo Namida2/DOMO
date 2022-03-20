@@ -82,6 +82,7 @@ object AndroidX {
 
 object Material {
     const val material = "com.google.android.material:material:" + Versions.material
+    const val customFba = "com.getbase:floatingactionbutton:1.10.1"
 }
 
 object Tests {

@@ -52,7 +52,7 @@ class MenuRemoteRepositoryImpl @Inject constructor(): MenuRemoteRepository {
     }
 
     private fun onMenuLoadingFinish(onComplete: () -> Unit) {
-        MenuService.setMenuServiceState(menu)
+        MenuService.setNewMenu(menu)
         onComplete()
     }
 

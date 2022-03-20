@@ -7,6 +7,6 @@ import com.example.waiterCore.R
 class asd : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mainnnn)
+//        setContentView(R.layout.activity_mainnnn)
     }
 }

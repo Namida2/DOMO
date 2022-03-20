@@ -4,30 +4,26 @@ import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.tools.constants.FirestoreConstants.ORDER_ITEM_ID_DELIMITER
 import com.example.core.domain.tools.constants.OtherStringConstants.CURRENT_ORDER_NOT_INITIALIZED
 import com.example.core.domain.tools.constants.OtherStringConstants.ORDER_ITEM_NOT_FOUNT
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import javax.inject.Inject
 
 typealias OrdersServiceSub = (orders: List<Order>) -> Unit
 typealias CurrentOrderServiceSub = (orderItems: List<OrderItem>) -> Unit
 
 //TODO: Add states to showing the progress bar when the orders is reading
-class OrdersServiceImpl @Inject constructor():
+class OrdersServiceImpl @Inject constructor() :
     OrdersService<@JvmSuppressWildcards OrdersServiceSub> {
 
     override var currentOrder: Order? = null
         get() = field ?: throw IllegalStateException(CURRENT_ORDER_NOT_INITIALIZED)
 
     var orders = mutableListOf<Order>()
-    private var ordersSubscribers = MutableSharedFlow<List<Order>>(replay = 1)
-    private var currentOrderSubscribers = MutableSharedFlow<List<OrderItem>>(replay = 1)
+    private var ordersChanges = MutableSharedFlow<List<Order>>(replay = 1)
+    private var currentOrderChanges = MutableSharedFlow<List<OrderItem>>(replay = 1)
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    override fun subscribeOnOrdersChanges(): Flow<List<Order>> = ordersSubscribers
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    override fun subscribeOnCurrentOrderChanges(): Flow<List<OrderItem>> = currentOrderSubscribers
+    override fun subscribeOnOrdersChanges(): Flow<List<Order>> = ordersChanges
+    override fun subscribeOnCurrentOrderChanges(): Flow<List<OrderItem>> = currentOrderChanges
 
     override fun addOrderItem(orderItem: OrderItem): Boolean {
         val existingOrderItem = currentOrder!!.orderItems.find {
@@ -35,7 +31,7 @@ class OrdersServiceImpl @Inject constructor():
         }
         if (existingOrderItem == null) {
             currentOrder!!.orderItems.add(orderItem)
-            currentOrderSubscribers.tryEmit(currentOrder!!.orderItems)
+            currentOrderChanges.tryEmit(currentOrder!!.orderItems)
             return true
         }
         return false
@@ -55,7 +51,7 @@ class OrdersServiceImpl @Inject constructor():
             if (it.getOrderIemId() == aldOrderItemId) orderItem
             else it
         }.toMutableList()
-        currentOrderSubscribers.tryEmit(currentOrder!!.orderItems)
+        currentOrderChanges.tryEmit(currentOrder!!.orderItems)
         return true
     }
 
@@ -78,7 +74,7 @@ class OrdersServiceImpl @Inject constructor():
             newOrderItems.add(it.copy())
         }
         currentOrder?.orderItems = newOrderItems
-        currentOrderSubscribers.tryEmit(currentOrder!!.orderItems)
+        currentOrderChanges.tryEmit(currentOrder!!.orderItems)
     }
 
     override fun changeGuestsCount(newCount: Int) {
@@ -94,18 +90,18 @@ class OrdersServiceImpl @Inject constructor():
         orders.forEachIndexed { index, order ->
             if (order.orderId == newOrder.orderId) {
                 orders[index] = newOrder
-                ordersSubscribers.tryEmit(orders)
+                ordersChanges.tryEmit(orders)
                 return
             }
         }
         orders.add(newOrder)
-        ordersSubscribers.tryEmit(orders)
+        ordersChanges.tryEmit(orders)
     }
 
     override fun addListOfOrders(orders: List<Order>) {
         this.orders.clear()
         this.orders.addAll(orders)
-        ordersSubscribers.tryEmit(orders)
+        ordersChanges.tryEmit(orders)
     }
 
     override fun getOrderById(orderId: Int): Order? =
@@ -131,7 +127,7 @@ class OrdersServiceImpl @Inject constructor():
                 orders[index] = newOrder!!
             }
         }
-        ordersSubscribers.tryEmit(orders)
+        ordersChanges.tryEmit(orders)
     }
 }
 

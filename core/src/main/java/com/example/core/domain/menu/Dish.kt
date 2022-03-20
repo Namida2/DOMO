@@ -11,4 +11,6 @@ data class Dish(
     val categoryName: String = "",
     val cost: String = "",
     val weight: String = "",
-) : BaseRecyclerViewType
+) : BaseRecyclerViewType, Comparable<Dish> {
+    override fun compareTo(other: Dish): Int = id - other.id
+}

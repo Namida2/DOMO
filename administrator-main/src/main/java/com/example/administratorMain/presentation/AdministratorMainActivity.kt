@@ -54,6 +54,10 @@ class AdministratorMainActivity: AppCompatActivity(), BasePostActivity {
                     navController.navigate(R.id.employeesFragment)
                     true
                 }
+                R.id.settingsFragment -> {
+                    navController.navigate(R.id.settingsFragment)
+                    true
+                }
                 R.id.profileFragment -> {
                     navController.navigate(R.id.profileFragment)
                     true

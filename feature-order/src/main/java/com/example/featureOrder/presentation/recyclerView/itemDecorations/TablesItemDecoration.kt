@@ -1,4 +1,4 @@
-package com.example.featureOrder.domain
+package com.example.featureOrder.presentation.recyclerView.itemDecorations
 
 import android.graphics.Rect
 import android.view.View

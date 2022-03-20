@@ -13,16 +13,22 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.core.domain.entities.Employee
+import com.example.core.domain.interfaces.OrdersService
+import com.example.core.domain.order.OrdersServiceSub
 import com.example.core.presentation.recyclerView.adapterDelegates.OrderItemsAdapterDelegate
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
 import com.example.core.domain.tools.enims.AddingDishMods
 import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
+import com.example.featureMenuDialog.domain.MenuDialogDeps
+import com.example.featureMenuDialog.domain.MenuDialogModuleDeps
+import com.example.featureMenuDialog.presentation.dishDialog.DishAlertDialog
+import com.example.featureMenuDialog.presentation.menuDialog.MenuBottomSheetDialog
 import com.example.featureOrder.R
 import com.example.featureOrder.databinding.FragmentOrderBinding
 import com.example.featureOrder.domain.ViewModelFactory
-import com.example.featureOrder.presentation.order.doalogs.dishDialog.DishAlertDialog
+import com.example.featureOrder.domain.di.OrderDepsStore
 import com.example.featureOrder.presentation.order.doalogs.guestsCountDialog.GuestsCountBottomSheetDialog
-import com.example.featureOrder.presentation.order.doalogs.menuDialog.MenuBottomSheetDialog
 import com.example.featureOrder.presentation.order.doalogs.orderMenuDialog.OrderMenuBottomSheetDialog
 import com.google.android.material.transition.platform.MaterialContainerTransform
 import kotlinx.coroutines.CoroutineScope
@@ -38,7 +44,6 @@ class OrderFragment : Fragment() {
     private val defaultGuestsCount = 1
     private val guestCountShowingDelay = 400L
 
-    private var menuBottomSheetDialog: MenuBottomSheetDialog? = null
     private var guestCountDialog: GuestsCountBottomSheetDialog? = null
     private var orderMenuDialog: OrderMenuBottomSheetDialog? = null
     private var dishDialog = DishAlertDialog(AddingDishMods.UPDATING)
@@ -73,6 +78,7 @@ class OrderFragment : Fragment() {
         }
         initBinding()
         initDialogs()
+        provideMenuDialogDeps()
         observeCurrentOrderChangesEvent()
         postponeEnterTransition()
         observeViewModelStates()
@@ -80,11 +86,19 @@ class OrderFragment : Fragment() {
     }
 
     private fun initDialogs() {
-        menuBottomSheetDialog = MenuBottomSheetDialog(viewModel)
         orderMenuDialog = OrderMenuBottomSheetDialog(viewModel)
         guestCountDialog = GuestsCountBottomSheetDialog {
             binding.guestsCount.text = it.toString()
             viewModel.changeGuestsCount(it)
+        }
+    }
+
+    private fun provideMenuDialogDeps() {
+        MenuDialogDeps.moduleDeps = object: MenuDialogModuleDeps {
+            override val currentEmployee: Employee?
+                get() = OrderDepsStore.deps.currentEmployee
+            override val ordersService: OrdersService<OrdersServiceSub>
+                get() = OrderDepsStore.deps.ordersService
         }
     }
 
@@ -151,8 +165,7 @@ class OrderFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is OrderViewModelStates.ShowingMenuDialog -> {
-                    if (!menuBottomSheetDialog?.isAdded!!)
-                        menuBottomSheetDialog?.show(parentFragmentManager, "")
+                    MenuBottomSheetDialog(viewModel).show(parentFragmentManager, "")
                 }
                 is OrderViewModelStates.ShowingOrderMenuDialog -> {
                     if (!orderMenuDialog?.isAdded!!)

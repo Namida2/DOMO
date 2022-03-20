@@ -1,5 +1,6 @@
 package com.example.featureOrder.domain.di
 
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.order.OrdersServiceSub
 import com.example.featureOrder.domain.di.modules.FirebaseModule
@@ -29,5 +30,6 @@ interface OrderAppComponent {
 }
 
 interface OrderAppComponentDeps {
+    val currentEmployee: Employee?
     val ordersService: OrdersService<OrdersServiceSub>
 }

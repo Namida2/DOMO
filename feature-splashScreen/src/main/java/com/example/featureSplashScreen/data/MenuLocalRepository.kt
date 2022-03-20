@@ -29,7 +29,7 @@ class MenuLocalRepositoryImpl @Inject constructor(
                 menu.add(Category(category, dishes))
             }
             withContext(Dispatchers.Main) {
-                MenuService.setMenuServiceState(menu)
+                MenuService.setNewMenu(menu)
             }
         }
     }

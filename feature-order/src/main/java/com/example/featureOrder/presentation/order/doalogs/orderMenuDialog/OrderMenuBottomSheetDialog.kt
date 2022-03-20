@@ -12,7 +12,7 @@ import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.core.domain.tools.extensions.isNetworkConnected
 import com.example.featureOrder.databinding.DialogOrderMenuBinding
 import com.example.featureOrder.domain.ViewModelFactory
-import com.example.featureOrder.domain.interfaces.OnDismissListener
+import com.example.featureMenuDialog.domain.interfaces.OnDismissListener
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class OrderMenuBottomSheetDialog(

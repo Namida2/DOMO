@@ -14,5 +14,6 @@
         <item name="android:navigationBarColor">@color/black</item>
         <!-- Customize your theme here. -->
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
+        <item name="snackbarStyle">@style/Widget.App.Snackbar</item>
     </style>
 </resources>

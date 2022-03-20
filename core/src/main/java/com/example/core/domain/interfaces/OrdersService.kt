@@ -17,7 +17,7 @@ interface OrdersService<Subscriber> {
     fun changeGuestsCount(newCount: Int)
     fun getCurrentOrderItems(): Set<OrderItem>
 
-    fun addOrder(order: Order)
+    fun addOrder(newOrder: Order)
     fun addListOfOrders(orders: List<Order>)
     fun getOrderById(orderId: Int): Order?
     fun changeOrderItemStatus(orderId: Int, orderItemId: String)
