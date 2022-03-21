@@ -40,8 +40,8 @@ class LogInViewModel(
         }
         logInUseCaseImpl.logIn(email, password, object :
             com.example.core.domain.tools.TaskWithEmployee {
-            override fun onSuccess(arg: Employee) {
-                _state.value = LogInViewModelStates.Success(arg)
+            override fun onSuccess(result: Employee) {
+                _state.value = LogInViewModelStates.Success(result)
             }
 
             override fun onError(message: ErrorMessage?) {

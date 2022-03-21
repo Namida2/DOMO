@@ -3,13 +3,15 @@ package com.example.featureSplashScreen.data
 import com.example.core.domain.menu.Category
 import com.example.core.domain.menu.Dish
 import com.example.core.domain.menu.MenuService
+import com.example.core.domain.tools.constants.FirestoreConstants
 import com.example.core.domain.tools.constants.FirestoreReferences
 import com.example.core.domain.tools.constants.FirestoreReferences.menuCollectionRef
 import com.example.core.domain.tools.extensions.logE
 import com.example.featureSplashScreen.domain.repositories.MenuRemoteRepository
 import javax.inject.Inject
 
-class MenuRemoteRepositoryImpl @Inject constructor(): MenuRemoteRepository {
+
+class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
 
     private val defaultMenuVersion = -1L
     private val menu: ArrayList<Category> = ArrayList()
@@ -38,7 +40,7 @@ class MenuRemoteRepositoryImpl @Inject constructor(): MenuRemoteRepository {
     ) {
         val dishesCollectionRef =
             menuCollectionRef.document(category)
-                .collection(com.example.core.domain.tools.constants.FirestoreConstants.COLLECTION_DISHES)
+                .collection(FirestoreConstants.COLLECTION_DISHES)
         dishesCollectionRef.get().addOnSuccessListener {
             val dishes: ArrayList<Dish> = ArrayList()
             for (document in it)
@@ -51,6 +53,7 @@ class MenuRemoteRepositoryImpl @Inject constructor(): MenuRemoteRepository {
         }
     }
 
+
     private fun onMenuLoadingFinish(onComplete: () -> Unit) {
         MenuService.setNewMenu(menu)
         onComplete()
@@ -60,7 +63,7 @@ class MenuRemoteRepositoryImpl @Inject constructor(): MenuRemoteRepository {
         FirestoreReferences.menuDocumentRef.get()
             .addOnSuccessListener {
                 val menuVersion =
-                    it.data?.get(com.example.core.domain.tools.constants.FirestoreConstants.FIELD_MENU_VERSION)
+                    it.data?.get(FirestoreConstants.FIELD_MENU_VERSION)
                 if (menuVersion != null) {
                     onComplete(menuVersion as Long)
                 } else {

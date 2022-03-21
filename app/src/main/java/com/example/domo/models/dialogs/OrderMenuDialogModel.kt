@@ -13,7 +13,7 @@ class OrderMenuDialogModel @Inject constructor(
     override fun insertCurrentOrder(task: com.example.core.domain.tools.SimpleTask) {
         remoteRepository.insertCurrentOrder(ordersService.currentOrder!!, object :
             com.example.core.domain.tools.SimpleTask {
-            override fun onSuccess(arg: Unit) {
+            override fun onSuccess(result: Unit) {
                 ordersService.confirmCurrentOrder()
                 task.onSuccess(Unit)
             }

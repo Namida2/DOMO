@@ -42,8 +42,8 @@ class LogInViewModel(
             state.value = LogInViewModelStates.EmptyField; return
         }
         model.signIn(email, password, object : com.example.core.domain.tools.TaskWithEmployee {
-            override fun onSuccess(arg: Employee) {
-                state.value = LogInViewModelStates.Success(arg)
+            override fun onSuccess(result: Employee) {
+                state.value = LogInViewModelStates.Success(result)
             }
 
             override fun onError(message: com.example.core.domain.tools.ErrorMessage?) {

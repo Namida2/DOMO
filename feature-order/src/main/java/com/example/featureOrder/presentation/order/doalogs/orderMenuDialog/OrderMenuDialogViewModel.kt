@@ -28,7 +28,7 @@ class OrderMenuDialogViewModel(
     fun onConfirmOrderButtonClick(view: View) {
         _state.value = OrderMenuDialogVMStates.InsertingCurrentOrder
         insertOrderUseCase.insertCurrentOrder(object : SimpleTask {
-            override fun onSuccess(arg: Unit) {
+            override fun onSuccess(result: Unit) {
                 _state.value = OrderMenuDialogVMStates.InsertingWasSuccessful
             }
 

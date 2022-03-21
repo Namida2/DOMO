@@ -25,7 +25,7 @@ class CookCurrentOrderDetailViewModel(
     fun setOrderItemAsReady(orderId: Int, orderItemId: String) {
         _state.value = CookCurrentOrderDetailVMStates.UpdatingData
         changeOrderItemStateUseCase.setOrderItemAsReady(orderId, orderItemId, object : SimpleTask {
-            override fun onSuccess(arg: Unit) {
+            override fun onSuccess(result: Unit) {
                 _state.value = CookCurrentOrderDetailVMStates.OnUpdatingSuccess
             }
 

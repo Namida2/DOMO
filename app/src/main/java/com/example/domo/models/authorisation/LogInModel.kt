@@ -22,12 +22,12 @@ class LogInModel @Inject constructor(
     ) {
         remoteRepository.signIn(email, password, object :
             TaskWithEmployee {
-            override fun onSuccess(arg: Employee) {
+            override fun onSuccess(result: Employee) {
                 CoroutineScope(IO).launch {
                     employeeDao.deleteAll()
-                    employeeDao.insert(arg)
+                    employeeDao.insert(result)
                     withContext(Main) {
-                        task.onSuccess(arg)
+                        task.onSuccess(result)
                     }
                 }
             }

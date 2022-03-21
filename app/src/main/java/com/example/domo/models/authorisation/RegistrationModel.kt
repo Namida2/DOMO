@@ -26,7 +26,7 @@ class RegistrationModel @Inject constructor(
     ) {
         remoteRepository.registration(employee, object :
             com.example.core.domain.tools.TaskWithEmployee {
-            override fun onSuccess(arg: Employee) {
+            override fun onSuccess(result: Employee) {
                 CoroutineScope(IO).launch {
                     employeeDao.deleteAll()
                     employeeDao.insert(employee)
@@ -44,8 +44,8 @@ class RegistrationModel @Inject constructor(
 
     override fun getPostItems(): MutableList<PostItem> =
         mutableListOf(
-            PostItem(EmployeePosts.COOK, View.VISIBLE),
-            PostItem(EmployeePosts.WAITER, View.INVISIBLE),
-            PostItem(EmployeePosts.ADMINISTRATOR, View.INVISIBLE)
+            PostItem(EmployeePosts.COOK.value, View.VISIBLE),
+            PostItem(EmployeePosts.WAITER.value, View.INVISIBLE),
+            PostItem(EmployeePosts.ADMINISTRATOR.value, View.INVISIBLE)
         )
 }

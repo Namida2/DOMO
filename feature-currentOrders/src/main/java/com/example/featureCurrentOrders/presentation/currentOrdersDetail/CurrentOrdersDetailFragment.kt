@@ -86,7 +86,7 @@ class CurrentOrdersDetailFragment : Fragment() {
     }
 
     private fun checkEmployeePost() {
-        if (CurrentOrderDepsStore.deps.currentEmployee?.post != COOK) return
+        if (CurrentOrderDepsStore.deps.currentEmployee?.post != COOK.value) return
         isCook = true
         isDishCompletedDialog = ClosedQuestionDialog { orderItemId ->
             cookViewModel.setOrderItemAsReady(args.orderId, orderItemId!!)

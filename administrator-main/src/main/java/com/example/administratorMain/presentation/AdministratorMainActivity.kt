@@ -17,6 +17,8 @@ import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.BasePostActivity
+import com.example.core.domain.interfaces.OrdersService
+import com.example.core.domain.order.OrdersServiceSub
 import com.example.core.domain.tools.constants.ErrorMessages
 import com.example.core.domain.tools.extensions.Animations.prepareHide
 import com.example.core.domain.tools.extensions.Animations.prepareShow
@@ -25,6 +27,8 @@ import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.featureLogIn.domain.di.LogInDeps
 import com.example.featureLogIn.domain.di.LogInDepsStore
+import com.example.featureSettings.domain.SettingsDeps
+import com.example.featureSettings.domain.SettingsDepsStore
 import java.util.concurrent.TimeUnit
 
 class AdministratorMainActivity: AppCompatActivity(), BasePostActivity {
@@ -43,6 +47,7 @@ class AdministratorMainActivity: AppCompatActivity(), BasePostActivity {
         setOnNavigationItemSelectedListener()
         makeWorkerRequests()
         showNavigationUI()
+        provideSettingsDeps()
         setContentView(binding.root)
     }
 
@@ -139,4 +144,12 @@ class AdministratorMainActivity: AppCompatActivity(), BasePostActivity {
         AdminDepsStore.employeeAuthCallback.onEmployeeLoggedIn(employee)
     }
 
+    private fun provideSettingsDeps() {
+        SettingsDepsStore.deps = object: SettingsDeps {
+            override val currentEmployee: Employee?
+                get() = AdminDepsStore.deps.currentEmployee
+            override val ordersService: OrdersService<OrdersServiceSub>
+                get() = AdminDepsStore.deps.ordersService
+        }
+    }
 }

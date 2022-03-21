@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 sealed class SplashScreenStates {
     object DefaultState : SplashScreenStates()
-    object CheckingForCurrentEmployee : SplashScreenStates()
+    object ReadingData : SplashScreenStates()
     class EmployeeExists(
         var employee: Employee
     ) : SplashScreenStates()
@@ -43,11 +43,11 @@ class SplashScreenViewModel(
 
     fun getCurrentEmployee() {
         viewModelScope.launch {
-            _state.value = SplashScreenStates.CheckingForCurrentEmployee
+            _state.value = SplashScreenStates.ReadingData
             getCurrentEmployeeUseCase.getCurrentEmployee(object : Task<Employee, Unit> {
-                override fun onSuccess(employee: Employee) {
-                    if (employee.permission)
-                        _state.value = SplashScreenStates.EmployeeExists(employee)
+                override fun onSuccess(result: Employee) {
+                    if (result.permission)
+                        _state.value = SplashScreenStates.EmployeeExists(result)
                     else _state.value = SplashScreenStates.PermissionError()
                 }
 

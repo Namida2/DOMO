@@ -20,8 +20,8 @@ class UsersRemoteRepositoryImpl @Inject constructor(
         task: TaskWithEmployee
     ) {
         currentUser.email?.readEmployeeByEmail(this.toString(), object : TaskWithEmployee {
-            override fun onSuccess(arg: Employee) {
-                saveNewEmployeeData(arg, task)
+            override fun onSuccess(result: Employee) {
+                saveNewEmployeeData(result, task)
             }
 
             override fun onError(message: ErrorMessage?) {

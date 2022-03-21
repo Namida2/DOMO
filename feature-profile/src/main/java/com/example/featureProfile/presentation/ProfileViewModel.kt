@@ -31,7 +31,7 @@ class ProfileViewModel(
     fun leaveThisAccount() {
         _state.value = ProfileViewModelStates.TryingToLogOut
         leaveAccountUseCase.leaveThisAccount(object : SimpleTask {
-            override fun onSuccess(arg: Unit) {
+            override fun onSuccess(result: Unit) {
                 _state.value = ProfileViewModelStates.LogOutWasSuccessful
             }
 

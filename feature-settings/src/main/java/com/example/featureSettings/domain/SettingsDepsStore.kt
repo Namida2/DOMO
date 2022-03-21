@@ -1,14 +1,14 @@
-package com.example.featureMenuDialog.domain
+package com.example.featureSettings.domain
 
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.order.OrdersServiceSub
 
-object MenuDialogDeps {
-    lateinit var moduleDeps: MenuDialogModuleDeps
+object SettingsDepsStore {
+    lateinit var deps: SettingsDeps
 }
 
-interface MenuDialogModuleDeps {
+interface SettingsDeps {
     val currentEmployee: Employee?
     val ordersService: OrdersService<OrdersServiceSub>
 }

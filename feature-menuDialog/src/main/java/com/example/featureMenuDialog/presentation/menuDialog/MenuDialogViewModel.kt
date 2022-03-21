@@ -40,7 +40,6 @@ class MenuDialogViewModel : ViewModel() {
         }
     }
 
-
     fun onDishDelete(position: Int) {
         val dish = recyclerViewItems?.get(position) as? Dish ?: return
         _onDishDeleted.value = Event(
@@ -56,18 +55,6 @@ class MenuDialogViewModel : ViewModel() {
         _onDishSelected.value = Event(MenuService.getDishById(dishId))
     }
 
-    fun listenMenuChanges() {
-//        logD("init")
-//        viewModelScope.launch {
-//            try {
-//                MenuService.menuChanges.collect {
-//                    _state.value = MenuDialogStates.NewMenu(getRecyclerViewItems())
-//                }
-//            } catch (e: Exception) {
-//                logD("Exception")
-//            }
-//        }
-    }
 
     private fun getRecyclerViewItems(): List<BaseRecyclerViewType> =
         listOf(MenuService.getAllCategories()) +
@@ -76,9 +63,4 @@ class MenuDialogViewModel : ViewModel() {
                 }.flatten().also {
                     recyclerViewItems = it
                 }
-
-    override fun onCleared() {
-        logD("onCleared")
-        super.onCleared()
-    }
 }

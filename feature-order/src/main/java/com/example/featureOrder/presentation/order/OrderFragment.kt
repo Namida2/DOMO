@@ -16,12 +16,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.order.OrdersServiceSub
-import com.example.core.presentation.recyclerView.adapterDelegates.OrderItemsAdapterDelegate
-import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
 import com.example.core.domain.tools.enims.AddingDishMods
 import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
+import com.example.core.presentation.recyclerView.adapterDelegates.OrderItemsAdapterDelegate
+import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
 import com.example.featureMenuDialog.domain.MenuDialogDeps
-import com.example.featureMenuDialog.domain.MenuDialogModuleDeps
+import com.example.featureMenuDialog.domain.MenuDialogDepsStore
 import com.example.featureMenuDialog.presentation.dishDialog.DishAlertDialog
 import com.example.featureMenuDialog.presentation.menuDialog.MenuBottomSheetDialog
 import com.example.featureOrder.R
@@ -94,7 +94,7 @@ class OrderFragment : Fragment() {
     }
 
     private fun provideMenuDialogDeps() {
-        MenuDialogDeps.moduleDeps = object: MenuDialogModuleDeps {
+        MenuDialogDepsStore.deps = object : MenuDialogDeps {
             override val currentEmployee: Employee?
                 get() = OrderDepsStore.deps.currentEmployee
             override val ordersService: OrdersService<OrdersServiceSub>

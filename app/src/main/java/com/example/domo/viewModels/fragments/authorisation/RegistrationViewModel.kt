@@ -3,6 +3,7 @@ package com.example.domo.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.core.domain.entities.Employee
+import com.example.core.domain.tools.constants.EmployeePosts
 import com.example.core.domain.tools.extensions.isValidEmail
 import com.example.domo.R
 import com.example.domo.models.interfaces.RegistrationModelInterface
@@ -66,7 +67,7 @@ sealed class RegistrationViewModelStates {
 
 class RegistrationViewModel(private val model: RegistrationModelInterface) : ViewModel() {
 
-    var selectedPost: String = com.example.core.domain.tools.constants.EmployeePosts.COOK
+    var selectedPost: String = EmployeePosts.COOK.value
     private val MIN_PASSWORD_LENGH = 6
     private var _state =
         MutableLiveData<RegistrationViewModelStates>(RegistrationViewModelStates.Default)
@@ -98,7 +99,7 @@ class RegistrationViewModel(private val model: RegistrationModelInterface) : Vie
         model.registration(
             employee,
             object : com.example.core.domain.tools.TaskWithEmployee {
-                override fun onSuccess(arg: Employee) {
+                override fun onSuccess(result: Employee) {
                     state.value = RegistrationViewModelStates.Valid(employee)
                 }
 

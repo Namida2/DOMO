@@ -29,8 +29,8 @@ class SplashScreenViewModel(
         viewModelScope.launch {
             _state.value = SplashScreenStates.CheckingForCurrentEmployee
             model.getCurrentEmployee(object : com.example.core.domain.tools.Task<Employee, Unit> {
-                override fun onSuccess(arg: Employee) {
-                    state.value = SplashScreenStates.EmployeeExists(arg)
+                override fun onSuccess(result: Employee) {
+                    state.value = SplashScreenStates.EmployeeExists(result)
                 }
 
                 override fun onError(message: com.example.core.domain.tools.ErrorMessage?) {

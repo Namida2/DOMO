@@ -39,11 +39,11 @@ class UsersRemoteRepositoryImpl @Inject constructor(
     ) {
         email.readEmployeeByEmail(this.toString(), object :
             TaskWithEmployee {
-            override fun onSuccess(arg: Employee) {
-                if (!arg.permission) {
+            override fun onSuccess(result: Employee) {
+                if (!result.permission) {
                     auth.signOut()
                     task.onError(permissionDeniedMessage)
-                } else task.onSuccess(arg)
+                } else task.onSuccess(result)
             }
 
             override fun onError(message: ErrorMessage?) {

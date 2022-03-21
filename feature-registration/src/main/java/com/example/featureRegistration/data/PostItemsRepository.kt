@@ -8,8 +8,8 @@ import javax.inject.Inject
 class PostItemsRepository @Inject constructor(){
     fun getPostItems(): MutableList<PostItem> =
         mutableListOf(
-            PostItem(EmployeePosts.COOK, View.VISIBLE),
-            PostItem(EmployeePosts.WAITER, View.INVISIBLE),
-            PostItem(EmployeePosts.ADMINISTRATOR, View.INVISIBLE)
+            PostItem(EmployeePosts.COOK.value, View.VISIBLE),
+            PostItem(EmployeePosts.WAITER.value, View.INVISIBLE),
+            PostItem(EmployeePosts.ADMINISTRATOR.value, View.INVISIBLE)
         )
 }

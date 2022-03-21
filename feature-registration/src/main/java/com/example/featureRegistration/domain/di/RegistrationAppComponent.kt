@@ -1,6 +1,6 @@
 package com.example.featureRegistration.domain.di
 
-import com.example.domo.registration.domain.GetPostItemsUseCase
+import com.example.featureRegistration.domain.useCases.GetPostItemsUseCase
 import com.example.featureRegistration.domain.di.modules.RepositoriesModule
 import com.example.featureRegistration.domain.di.modules.UseCasesModule
 import com.example.featureRegistration.domain.useCases.RegistrationUseCase

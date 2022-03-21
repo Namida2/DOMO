@@ -7,14 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.example.core.domain.tools.constants.EmployeePosts.ADMINISTRATOR
 import com.example.core.domain.tools.extensions.logD
 import com.example.core.presentation.recyclerView.adapterDelegates.DishesAdapterDelegate
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
 import com.example.featureMenuDialog.R
 import com.example.featureMenuDialog.databinding.DialogMenuBinding
+import com.example.featureMenuDialog.domain.MenuDialogDepsStore.deps
 import com.example.featureMenuDialog.domain.interfaces.OnDismissListener
 import com.example.featureMenuDialog.presentation.dishDialog.DishAlertDialog
 import com.example.featureMenuDialog.presentation.recyclerView.ItemTouchCallback
@@ -32,6 +33,7 @@ class MenuBottomSheetDialog(
     private var smallMargin: Int? = null
     private var largeMargin: Int? = null
 
+    private var isAdmin = false
     private lateinit var binding: DialogMenuBinding
     private val viewModel by viewModels<MenuDialogViewModel>()
     private var dishDialog = DishAlertDialog()
@@ -40,16 +42,16 @@ class MenuBottomSheetDialog(
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        if (deps.currentEmployee?.post == ADMINISTRATOR.value) isAdmin = true
         smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
         largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
         menuAdapter = BaseRecyclerViewAdapter(
             listOf(
                 CategoriesAdapterDelegate(),
-                CategoryLargeRecyclerViewType(),
+                CategoryLargeRecyclerViewType(isAdmin),
                 DishesAdapterDelegate(viewModel::onDishClick)
             )
         )
-        viewModel.listenMenuChanges()
     }
 
     override fun onCreateView(
@@ -59,7 +61,7 @@ class MenuBottomSheetDialog(
     ): View? {
         binding = DialogMenuBinding.inflate(layoutInflater, container, false)
         itemTouchCallback = ItemTouchCallback(viewModel::onDishDelete)
-        initRecyclerView()
+        initBinding()
         observeDishEvent()
         observeViewModelStates()
         observeOnDishDeletedEvent()
@@ -85,14 +87,20 @@ class MenuBottomSheetDialog(
         }
     }
 
-    private fun initRecyclerView() {
-        with(binding.menuRecyclerView) {
-            setHasFixedSize(true)
-            adapter = menuAdapter
-            addItemDecoration(
+    private fun initBinding() {
+        with(binding) {
+            menuRecyclerView.setHasFixedSize(true)
+            menuRecyclerView.adapter = menuAdapter
+            menuRecyclerView.addItemDecoration(
                 MenuItemDecorations(smallMargin!!, largeMargin!!)
             )
-            ItemTouchHelper(itemTouchCallback).attachToRecyclerView(this)
+            if(isAdmin) {
+                ItemTouchHelper(itemTouchCallback)
+                    .attachToRecyclerView(menuRecyclerView)
+            } else {
+                fbaMenu.visibility = View.GONE
+                fba.visibility = View.VISIBLE
+            }
         }
     }
 

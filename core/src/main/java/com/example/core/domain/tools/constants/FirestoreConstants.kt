@@ -14,6 +14,7 @@ object FirestoreConstants {
     //Documents
     const val DOCUMENT_DOMO = "domo"
     const val DOCUMENT_MENU = "menu"
+    const val DOCUMENT_SETTINGS = "settings"
     const val DOCUMENT_NEW_ORDERS_LISTENER = "newOrdersListener"
     const val DOCUMENT_ORDER_ITEMS_STATE_LISTENER = "orderItemStateListener"
     const val DOCUMENT_PERMISSION_LISTENER = "permissionListener"
@@ -21,6 +22,7 @@ object FirestoreConstants {
     //Fields
     const val FIELD_MENU_VERSION = "menuVersion"
     const val FIELD_GUESTS_COUNT = "guestsCount"
+    const val FIELD_TABLES_COUNT = "tablesCount"
     const val FIELD_ORDER_ID = "orderId"
     const val FIELD_ORDER_ITEM_ID = "orderItemId"
     const val FIELD_ORDER_INFO= "orderInfo"

@@ -14,10 +14,8 @@ import com.example.cookMain.domain.di.CookMainDepsStore
 import com.example.cookMain.presentation.CookMainActivity
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.EmployeeAuthCallback
+import com.example.core.domain.tools.constants.EmployeePosts.*
 import com.example.core.domain.tools.constants.ErrorMessages.checkNetworkConnectionMessage
-import com.example.core.domain.tools.constants.EmployeePosts.ADMINISTRATOR
-import com.example.core.domain.tools.constants.EmployeePosts.COOK
-import com.example.core.domain.tools.constants.EmployeePosts.WAITER
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.core.domain.tools.extensions.isNetworkConnected
 import com.example.featureLogIn.R
@@ -40,10 +38,10 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback {
     @SuppressLint("SetTextI18n", "CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        checkPermissions()
+        checkInternetConnection()
     }
 
-    private fun checkPermissions() {
+    private fun checkInternetConnection() {
         if (isNetworkConnected())
             viewModel.getCurrentEmployee()
         else createMessageDialog(checkNetworkConnectionMessage) {
@@ -55,7 +53,7 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback {
     private fun subscribeToViewModelState() {
         viewModel.state.observe(this) { state ->
             when (state) {
-                is SplashScreenStates.CheckingForCurrentEmployee -> {
+                is SplashScreenStates.ReadingData -> {
                     //progressBar?
                 }
                 is SplashScreenStates.EmployeeDoesNotExit -> {
@@ -65,18 +63,18 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback {
                     //TODO: Modify the SplashScreenAppComponent //STOPPED//
                     setNewEmployeeData(state.employee)
                     when (state.employee.post) {
-                        COOK -> {
+                        COOK.value -> {
                             CookMainDepsStore.deps = SplashScreenDepsStore.appComponent
                             CookMainDepsStore.employeeAuthCallback = this
                             startActivity(Intent(this, CookMainActivity::class.java))
                         }
-                        WAITER -> {
+                        WAITER.value -> {
                             WaiterMainDepsStore.deps = SplashScreenDepsStore.appComponent
                             WaiterMainDepsStore.profileDeps = SplashScreenDepsStore.appComponent
                             WaiterMainDepsStore.employeeAuthCallback = this
                             startActivity(Intent(this, WaiterMainActivity::class.java))
                         }
-                        ADMINISTRATOR -> {
+                        ADMINISTRATOR.value -> {
                             AdminDepsStore.deps = SplashScreenDepsStore.appComponent
                             AdminDepsStore.employeeAuthCallback = this
                             startActivity(Intent(this, AdministratorMainActivity::class.java))

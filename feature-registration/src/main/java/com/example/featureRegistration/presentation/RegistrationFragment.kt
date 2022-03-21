@@ -78,7 +78,7 @@ class RegistrationFragment : Fragment() {
                 with(binding) {
                     viewModel.validation(
                         nameEditText.text.toString(),
-                        //TODO: Important thing
+                        //Important thing
                         emailEditText.text.toString().lowercase(),
                         passwordEditText.text.toString(),
                         confirmPasswordEditText.text.toString(),

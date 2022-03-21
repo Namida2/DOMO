@@ -1,7 +1,7 @@
 package com.example.core.domain.tools.constants
 
-object EmployeePosts {
-    const val WAITER = "официант"
-    const val COOK = "повар"
-    const val ADMINISTRATOR = "администратор"
+enum class EmployeePosts(val value: String) {
+    WAITER("официант"),
+    COOK("повар"),
+    ADMINISTRATOR("администратор")
 }

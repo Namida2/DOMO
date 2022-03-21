@@ -16,6 +16,11 @@ object FirestoreReferences {
             .document(FirestoreConstants.DOCUMENT_DOMO)
             .collection(FirestoreConstants.COLLECTION_DATA)
             .document(FirestoreConstants.DOCUMENT_MENU)
+    val settingsDocumentRef =
+        fireStore.collection(FirestoreConstants.COLLECTION_RESTAURANTS)
+            .document(FirestoreConstants.DOCUMENT_DOMO)
+            .collection(FirestoreConstants.COLLECTION_DATA)
+            .document(FirestoreConstants.DOCUMENT_SETTINGS)
     val menuCollectionRef =
         fireStore.collection(FirestoreConstants.COLLECTION_RESTAURANTS)
             .document(FirestoreConstants.DOCUMENT_DOMO)

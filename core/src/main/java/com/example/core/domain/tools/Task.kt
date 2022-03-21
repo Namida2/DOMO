@@ -8,6 +8,6 @@ typealias TaskWithOrder = Task<Order, Unit>
 typealias SimpleTask = Task<Unit, Unit>
 
 interface Task<ASuccess, RSuccess> {
-    fun onSuccess(arg: ASuccess): RSuccess
+    fun onSuccess(result: ASuccess): RSuccess
     fun onError(message: ErrorMessage? = null)
 }

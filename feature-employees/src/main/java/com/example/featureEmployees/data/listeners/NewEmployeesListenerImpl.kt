@@ -34,8 +34,8 @@ class NewEmployeesListenerImpl @Inject constructor() : NewEmployeesListener {
                     value.getString(FIELD_EMAIL).also {
                         if (it == EMPTY_COMMENTARY) return@addSnapshotListener
                     }?.readEmployeeByEmail(this.toString(), object : TaskWithEmployee {
-                        override fun onSuccess(arg: Employee) {
-                            trySend(arg)
+                        override fun onSuccess(result: Employee) {
+                            trySend(result)
                         }
                         override fun onError(message: ErrorMessage?) {
                             logE("$this: $message")

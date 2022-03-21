@@ -1,6 +1,7 @@
 package com.example.featureMenuDialog.presentation.recyclerView.delegates
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.example.core.domain.menu.CategoryName
@@ -10,7 +11,7 @@ import com.example.core.presentation.recyclerView.interfaces.BaseViewHolder
 import com.example.featureMenuDialog.R
 import com.example.featureMenuDialog.databinding.LayoutCategoryLargeBinding
 
-class CategoryLargeRecyclerViewType :
+class CategoryLargeRecyclerViewType(private val isAdmin: Boolean) :
     BaseAdapterDelegate<LayoutCategoryLargeBinding, CategoryName> {
 
     override fun isItMe(recyclerViewType: BaseRecyclerViewType): Boolean =
@@ -21,7 +22,8 @@ class CategoryLargeRecyclerViewType :
         parent: ViewGroup,
     ): BaseViewHolder<LayoutCategoryLargeBinding, CategoryName> {
         return CategoryLargeViewHolder(
-            LayoutCategoryLargeBinding.inflate(inflater, parent, false)
+            LayoutCategoryLargeBinding.inflate(inflater, parent, false),
+            isAdmin
         )
     }
 
@@ -39,9 +41,12 @@ class CategoryLargeRecyclerViewType :
 
 class CategoryLargeViewHolder(
     override val binding: LayoutCategoryLargeBinding,
+    private val isAdmin: Boolean
 ) : BaseViewHolder<LayoutCategoryLargeBinding, CategoryName>(binding) {
 
     override fun onBind(item: CategoryName) {
         binding.categoryName.text = item.name
+        if (isAdmin) binding.addCategoryFba.visibility = View.VISIBLE
+        else binding.addCategoryFba.visibility = View.GONE
     }
 }

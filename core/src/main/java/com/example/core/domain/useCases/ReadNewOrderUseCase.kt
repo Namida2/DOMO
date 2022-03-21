@@ -16,8 +16,8 @@ class ReadNewOrderUseCaseImpl @Inject constructor(
 
     override fun readNewOrder(order: Order, onError: (message: ErrorMessage) -> Unit) {
         ordersRepo.readOrderItems(order, object : TaskWithOrder {
-            override fun onSuccess(arg: Order) {
-                ordersService.addOrder(arg)
+            override fun onSuccess(result: Order) {
+                ordersService.addOrder(result)
             }
 
             override fun onError(message: ErrorMessage?) {

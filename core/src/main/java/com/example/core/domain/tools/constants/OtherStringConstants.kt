@@ -4,6 +4,7 @@ package com.example.core.domain.tools.constants
 object OtherStringConstants {
     const val UNKNOWN_VIEW_MODEL_CLASS = "Unknown viewViewClass: "
     const val UNKNOWN_DISH_ID = "Unknown dishId: "
+    const val CAN_NOT_FIND_SETTINGS = "Can not find the settings"
     const val UNKNOWN_CATEGORY_NAME = "Unknown categoryName: "
     const val THIS_DISH_ALREADY_ADDED = "This dish already added. Dish id: "
     const val NULL_ORDER_INFO_MESSAGE = "Order info is null."

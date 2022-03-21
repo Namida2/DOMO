@@ -28,7 +28,7 @@ class EmployeeDetailViewModel(
     fun setPermission(employee: Employee, permission: Boolean) {
         _state.value = EmployeeDetailVMStates.InProcess
         setPermissionUseCase.setPermissionForEmployee(employee, permission, object : SimpleTask {
-            override fun onSuccess(arg: Unit) {
+            override fun onSuccess(result: Unit) {
                 _state.value = EmployeeDetailVMStates.OnSuccess
             }
             override fun onError(message: ErrorMessage?) {
@@ -40,7 +40,7 @@ class EmployeeDetailViewModel(
     fun deleteEmployee(employee: Employee) {
         _state.value = EmployeeDetailVMStates.InProcess
         deleteEmployeeUseCase.deleteEmployee(employee, object : SimpleTask {
-            override fun onSuccess(arg: Unit) {
+            override fun onSuccess(result: Unit) {
                 _state.value = EmployeeDetailVMStates.OnSuccess
             }
             override fun onError(message: ErrorMessage?) {

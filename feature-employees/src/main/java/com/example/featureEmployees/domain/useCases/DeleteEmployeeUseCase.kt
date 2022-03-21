@@ -13,7 +13,7 @@ class DeleteEmployeeUseCase @Inject constructor(
 ) {
     fun deleteEmployee(employee: Employee, task: SimpleTask) {
         employeesRepository.deleteEmployee(employee, object: SimpleTask {
-            override fun onSuccess(arg: Unit) {
+            override fun onSuccess(result: Unit) {
                 employeesService.removeEmployee(employee)
                 task.onSuccess(Unit)
             }

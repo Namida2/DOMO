@@ -10,7 +10,7 @@ object ViewModelFactory : ViewModelProvider.Factory {
         val viewModel = when (modelClass) {
             DishDialogViewModel::class.java -> {
                 DishDialogViewModel(
-                    MenuDialogDeps.moduleDeps.ordersService
+                    MenuDialogDepsStore.deps.ordersService
                 )
             }
             else -> throw IllegalArgumentException(UNKNOWN_VIEW_MODEL_CLASS)

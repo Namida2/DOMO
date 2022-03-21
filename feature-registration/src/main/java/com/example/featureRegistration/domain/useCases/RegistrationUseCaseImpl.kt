@@ -17,7 +17,7 @@ class RegistrationUseCaseImpl @Inject constructor(
     ) {
         remoteRepository.registration(employee, object :
             TaskWithEmployee {
-            override fun onSuccess(arg: Employee) {
+            override fun onSuccess(result: Employee) {
                 task.onSuccess(employee)
             }
 

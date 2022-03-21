@@ -1,4 +1,4 @@
-package com.example.domo.registration.domain
+package com.example.featureRegistration.domain.useCases
 
 import android.view.View
 import com.example.core.domain.tools.constants.EmployeePosts
@@ -11,9 +11,9 @@ class GetPostItemsUseCaseImpl @Inject constructor(
 ) : GetPostItemsUseCase {
     override fun getPostItems(): MutableList<PostItem> =
         mutableListOf(
-            PostItem(EmployeePosts.COOK, View.VISIBLE),
-            PostItem(EmployeePosts.WAITER, View.INVISIBLE),
-            PostItem(EmployeePosts.ADMINISTRATOR, View.INVISIBLE)
+            PostItem(EmployeePosts.COOK.value, View.VISIBLE),
+            PostItem(EmployeePosts.WAITER.value, View.INVISIBLE),
+            PostItem(EmployeePosts.ADMINISTRATOR.value, View.INVISIBLE)
         )
 }
 

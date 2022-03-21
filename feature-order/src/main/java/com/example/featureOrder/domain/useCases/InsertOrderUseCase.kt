@@ -13,7 +13,7 @@ class InsertOrderUseCaseImpl @Inject constructor(
 ) : InsertOrderUseCase {
     override fun insertCurrentOrder(task: SimpleTask) {
         remoteRepository.insertCurrentOrder(ordersService.currentOrder!!, object: SimpleTask {
-            override fun onSuccess(arg: Unit) {
+            override fun onSuccess(result: Unit) {
                 ordersService.confirmCurrentOrder()
                 task.onSuccess(Unit)
             }

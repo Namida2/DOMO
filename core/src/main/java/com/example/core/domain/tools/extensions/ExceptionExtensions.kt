@@ -14,5 +14,8 @@ fun Exception.getExceptionMessage(): ErrorMessage = when (this) {
 }
 
 fun FirebaseFirestoreException.Code.getExceptionMessage(): ErrorMessage =
-    if (this == FirebaseFirestoreException.Code.PERMISSION_DENIED) permissionDeniedMessage
-    else defaultErrorMessage
+    when {
+        this == FirebaseFirestoreException.Code.PERMISSION_DENIED -> permissionDeniedMessage
+        this == FirebaseFirestoreException.Code.UNAVAILABLE -> checkNetworkConnectionMessage
+        else -> defaultErrorMessage
+    }

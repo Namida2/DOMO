@@ -15,7 +15,7 @@ import com.example.core.domain.tools.constants.ErrorMessages.wrongEmailOrPasswor
 import com.example.core.domain.tools.constants.ErrorMessages.wrongPasswordConfirmationMessage
 import com.example.core.domain.tools.extensions.isEmptyField
 import com.example.core.domain.tools.extensions.isValidEmail
-import com.example.domo.registration.domain.GetPostItemsUseCase
+import com.example.featureRegistration.domain.useCases.GetPostItemsUseCase
 import com.example.featureRegistration.R
 import com.example.featureRegistration.domain.PostItem
 import com.example.featureRegistration.domain.useCases.RegistrationUseCase
@@ -61,7 +61,7 @@ class RegistrationViewModel(
     private val registrationUseCase: RegistrationUseCase,
 ) : ViewModel() {
 
-    var selectedPost: String = EmployeePosts.COOK
+    var selectedPost: String = EmployeePosts.COOK.value
     private val minPasswordLength = 6
     private var _state =
         MutableLiveData<RegistrationViewModelStates>(RegistrationViewModelStates.Default)
@@ -88,7 +88,7 @@ class RegistrationViewModel(
         registrationUseCase.registration(
             employee,
             object : TaskWithEmployee {
-                override fun onSuccess(arg: Employee) {
+                override fun onSuccess(result: Employee) {
                     _state.value = RegistrationViewModelStates.Valid(employee)
                 }
                 override fun onError(message: ErrorMessage?) {

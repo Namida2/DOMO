@@ -46,7 +46,7 @@ class EmployeesViewModel(
     fun readEmployees() {
         _state.value = EmployeesVMStates.ReadingData
         readEmployeesUseCase.readEmployees(object : SimpleTask {
-            override fun onSuccess(arg: Unit) {
+            override fun onSuccess(result: Unit) {
                 _state.value = EmployeesVMStates.ReadingWasSuccessful
             }
             override fun onError(message: ErrorMessage?) {
