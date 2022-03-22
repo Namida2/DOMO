@@ -15,7 +15,6 @@ object AdminDepsStore {
         DaggerAdminAppComponent.builder().adminAppComponentDeps(deps).build()
     }.also {
         provideProfileDeps()
-        provideEmployeesDeps()
     }
 
     private fun provideProfileDeps() {
@@ -24,13 +23,6 @@ object AdminDepsStore {
                 get() = deps.currentEmployee
             override val firebaseAuth: FirebaseAuth
                 get() = deps.firestoreAuth
-        }
-    }
-
-    private fun provideEmployeesDeps() {
-        EmployeesDepsStore.deps = object : EmployeesAppComponentDeps {
-            override val currentEmployee: Employee?
-                get() = deps.currentEmployee
         }
     }
 

@@ -1,6 +1,11 @@
 package com.example.core.domain
 
-object Settings {
-    var tablesCount: Int = 0
-    var guestsCount: Int = 0
+import javax.inject.Inject
+import javax.inject.Singleton
+import kotlin.properties.Delegates
+
+@Singleton
+class Settings @Inject constructor() {
+    var tablesCount by Delegates.notNull<Int>()
+    var guestsCount by Delegates.notNull<Int>()
 }

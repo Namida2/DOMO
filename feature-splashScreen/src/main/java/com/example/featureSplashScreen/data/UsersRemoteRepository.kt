@@ -21,12 +21,11 @@ class UsersRemoteRepositoryImpl @Inject constructor(
     ) {
         currentUser.email?.readEmployeeByEmail(this.toString(), object : TaskWithEmployee {
             override fun onSuccess(result: Employee) {
-                saveNewEmployeeData(result, task)
+                task.onSuccess(result)
             }
-
             override fun onError(message: ErrorMessage?) {
                 auth.signOut()
-                task.onError()
+                task.onError(message)
             }
         })
     }
@@ -42,6 +41,6 @@ class UsersRemoteRepositoryImpl @Inject constructor(
 //                employeeDao.insert(newEmployee)
 //            }
 //        }
-        task.onSuccess(newEmployee)
+//        task.onSuccess(newEmployee)
     }
 }

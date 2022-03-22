@@ -7,12 +7,16 @@ import android.view.Gravity
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.tools.dialogs.ProcessAlertDialog
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.featureEmployees.R
 import com.example.featureEmployees.databinding.DialogEmployeeDetailBinding
 import com.example.featureEmployees.domain.ViewModelFactory
+import com.example.featureEmployees.presentation.fragments.EmployeesFragment
+import com.example.featureEmployees.presentation.fragments.EmployeesViewModel
 
 class EmployeeDetailDialog : DialogFragment() {
 

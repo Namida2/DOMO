@@ -18,6 +18,7 @@ import com.example.core.domain.tools.constants.EmployeePosts.*
 import com.example.core.domain.tools.constants.ErrorMessages.checkNetworkConnectionMessage
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.core.domain.tools.extensions.isNetworkConnected
+import com.example.core.domain.tools.extensions.logD
 import com.example.featureLogIn.R
 import com.example.featureLogIn.domain.di.LogInDepsStore
 import com.example.featureSplashScreen.databinding.ActivitySplashScreenBinding
@@ -42,9 +43,10 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback {
     }
 
     private fun checkInternetConnection() {
-        if (isNetworkConnected())
+        if (isNetworkConnected()) {
             viewModel.getCurrentEmployee()
-        else createMessageDialog(checkNetworkConnectionMessage) {
+            viewModel.readSettings()
+        } else createMessageDialog(checkNetworkConnectionMessage) {
             this.finish()
         }?.show(supportFragmentManager, "")
         subscribeToViewModelState()
@@ -56,10 +58,10 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback {
                 is SplashScreenStates.ReadingData -> {
                     //progressBar?
                 }
-                is SplashScreenStates.EmployeeDoesNotExit -> {
+                is SplashScreenStates.EmployeeDoesNotExists -> {
                     prepareLogInScreen()
                 }
-                is SplashScreenStates.EmployeeExists -> {
+                is SplashScreenStates.EmployeeAndSettingsExist -> {
                     //TODO: Modify the SplashScreenAppComponent //STOPPED//
                     setNewEmployeeData(state.employee)
                     when (state.employee.post) {
@@ -70,6 +72,8 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback {
                         }
                         WAITER.value -> {
                             WaiterMainDepsStore.deps = SplashScreenDepsStore.appComponent
+                            val o = WaiterMainDepsStore.deps.settings
+                            logD(o.toString())
                             WaiterMainDepsStore.profileDeps = SplashScreenDepsStore.appComponent
                             WaiterMainDepsStore.employeeAuthCallback = this
                             startActivity(Intent(this, WaiterMainActivity::class.java))
@@ -81,9 +85,10 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback {
                         }
                     }
                 }
-                is SplashScreenStates.PermissionError -> {
-                    createMessageDialog(state.message)
-                        ?.show(supportFragmentManager, "")
+                is SplashScreenStates.OnFailure -> {
+                    createMessageDialog(state.message) {
+                        finish()
+                    }?.show(supportFragmentManager, "")
                 }
                 SplashScreenStates.DefaultState -> {}
             }
@@ -91,6 +96,7 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback {
     }
 
     private fun prepareLogInScreen() {
+        if (this::navController.isInitialized) return
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         val navHostFragment =
             supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment

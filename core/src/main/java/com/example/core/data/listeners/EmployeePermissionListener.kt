@@ -39,6 +39,8 @@ object EmployeePermissionListener {
                 }
             }
         }
-        awaitClose { subscription.remove() }
+        awaitClose {
+            subscription.remove()
+        }
     }
 }

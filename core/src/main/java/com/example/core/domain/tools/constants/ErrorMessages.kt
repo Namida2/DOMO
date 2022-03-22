@@ -12,6 +12,10 @@ object ErrorMessages {
         R.string.defaultTitle,
         R.string.defaultMessage
     )
+    val employeeDoesNotExists = ErrorMessage(
+        R.string.defaultTitle,
+        R.string.employeeDoesNotExists
+    )
     val permissionDeniedMessage = ErrorMessage(
         R.string.permissionDeniedTitle,
         R.string.permissionDeniedMessage

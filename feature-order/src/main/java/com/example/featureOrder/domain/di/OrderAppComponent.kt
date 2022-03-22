@@ -1,5 +1,6 @@
 package com.example.featureOrder.domain.di
 
+import com.example.core.domain.Settings
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.order.OrdersServiceSub
@@ -30,6 +31,7 @@ interface OrderAppComponent {
 }
 
 interface OrderAppComponentDeps {
+    val settings: Settings
     val currentEmployee: Employee?
     val ordersService: OrdersService<OrdersServiceSub>
 }

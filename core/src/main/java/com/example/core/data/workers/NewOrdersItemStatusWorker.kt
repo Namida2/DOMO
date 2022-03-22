@@ -27,16 +27,18 @@ class NewOrdersItemStatusWorker(
         CoreDepsStore.deps.ordersService
     private var notificationManager: NotificationManager? = null
     companion object {
-        val newOrderItemsStateListener: ListenerRegistration? = null
+        var newOrderItemsStateListener: ListenerRegistration? = null
     }
 
     override suspend fun doWork(): Result {
         if (newOrderItemsStateListener != null) return Result.retry()
         notificationManager = NotificationsTools.createNotificationChannel(context)
-        orderItemsStateListenerDocumentRef.addSnapshotListener { snapshot, error ->
+        newOrderItemsStateListener = orderItemsStateListenerDocumentRef.addSnapshotListener { snapshot, error ->
             when {
                 error != null -> {
                     logE("$this: $error")
+                    newOrderItemsStateListener?.remove()
+                    newOrderItemsStateListener = null
                     return@addSnapshotListener
                 }
                 snapshot != null && snapshot.exists() && snapshot.data != null -> {

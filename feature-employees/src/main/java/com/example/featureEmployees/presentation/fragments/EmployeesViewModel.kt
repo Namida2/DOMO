@@ -9,6 +9,8 @@ import com.example.core.domain.tools.ErrorMessage
 import com.example.core.domain.tools.constants.ErrorMessages.defaultErrorMessage
 import com.example.core.domain.tools.Event
 import com.example.core.domain.tools.SimpleTask
+import com.example.core.domain.tools.extensions.logD
+import com.example.featureEmployees.domain.di.EmployeesAppComponent
 import com.example.featureEmployees.domain.services.EmployeesService
 import com.example.featureEmployees.domain.useCases.ReadEmployeesUseCase
 import kotlinx.coroutines.flow.collect
@@ -26,7 +28,7 @@ sealed class EmployeesVMStates {
 
 class EmployeesViewModel(
     private val readEmployeesUseCase: ReadEmployeesUseCase,
-    private val employeesService: EmployeesService
+    private val employeesService: EmployeesService,
 ) : ViewModel() {
 
     private val _state = MutableLiveData<EmployeesVMStates>()
@@ -57,6 +59,7 @@ class EmployeesViewModel(
 
     override fun onCleared() {
         employeesService.cancel()
+        logD("EmployeesViewModel: onCleared()")
         super.onCleared()
     }
 }

@@ -1,5 +1,6 @@
 package com.example.waiterMain.domain.di
 
+import com.example.core.domain.Settings
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.EmployeeAuthCallback
 import com.example.core.domain.interfaces.OrdersService
@@ -28,6 +29,8 @@ object WaiterMainDepsStore {
 
     private fun provideFeatureOrderDeps() {
         OrderDepsStore.deps = object : OrderAppComponentDeps {
+            override val settings: Settings
+                get() = deps.settings
             override val currentEmployee: Employee?
                 get() = deps.currentEmployee
             override val ordersService: OrdersService<OrdersServiceSub>

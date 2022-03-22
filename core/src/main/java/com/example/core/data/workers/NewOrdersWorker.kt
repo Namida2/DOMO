@@ -56,6 +56,8 @@ class NewOrdersWorker(
             when {
                 error != null -> {
                     logE("$this: $error")
+                    ordersListener?.remove()
+                    ordersListener = null
                     return@addSnapshotListener
                 }
                 snapshot != null && snapshot.exists() && snapshot.data != null -> {
@@ -88,89 +90,89 @@ class NewOrdersWorker(
 
 
 //TODO: Start a foreground service (maybe)
-class NewOrdersService : Service() {
-
-    private var id = 1
-    private var isFirstNotification = true
-    private var notificationManager: NotificationManager? = null
-    private var readNewOrderUseCase: ReadNewOrderUseCase =
-        CoreDepsStore.appComponent.provideReadNewOrderUseCase()
-
-    companion object {
-        var isRunning = false
-        var ordersListener: ListenerRegistration? = null
-        private val _event: MutableLiveData<ErrorMessageEvent> = MutableLiveData()
-        val event: LiveData<ErrorMessageEvent> = _event
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-        notificationManager = createNotificationChannel(this)
-//        startForeground(id++, createNotification(this, "NewOrdersService"))
-    }
-
-    //TODO: Don't show the notification when it receive the fist notification
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Toast.makeText(this, "onStartCommand", Toast.LENGTH_SHORT).show()
-        isRunning = true
-        if (ordersListener != null) return START_STICKY
-        ordersListener = newOrdersListenerDocumentRef.addSnapshotListener { snapshot, error ->
-            when {
-                error != null -> {
-                    logE("$this: $error")
-                    return@addSnapshotListener
-                }
-                snapshot != null && snapshot.exists() && snapshot.data != null -> {
-                    if (!isFirstNotification)
-                        onNewOrder(snapshot.data!!)
-                    isFirstNotification = false
-                }
-                else -> logD("$this: $NULL_ORDER_INFO_MESSAGE")
-            }
-        }
-        return START_STICKY
-    }
-
-    override fun onDestroy() {
-        isRunning = false
-        ordersListener?.remove()
-        val intent = Intent("restartservice")
-        sendBroadcast(intent)
-        super.onDestroy()
-    }
-
-    override fun onTaskRemoved(rootIntent: Intent?) {
-        val intent = Intent("YOUR_ACTION_NAME")
-        intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
-        val pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0)
-        val restartService = Intent(
-            applicationContext,
-            this.javaClass
-        )
-        restartService.setPackage(packageName)
-        val alarmService = applicationContext.getSystemService(ALARM_SERVICE) as AlarmManager
-        alarmService[AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000] =
-            pendingIntent
-        super.onTaskRemoved(rootIntent)
-    }
-
-    override fun onBind(intent: Intent?): IBinder? = null
-
-    private fun onNewOrder(data: MutableMap<String, Any>) {
-//        if (WaiterMainDepsStore.currentEmployee!!.post == COOK)
-        notificationManager?.notify(
-            id++, createNotification(this, data.toString())
-        )
-        val orderInfo = data[FIELD_ORDER_INFO] as Map<*, *>
-        val tableId = (orderInfo[FIELD_ORDER_ID] as Long).toInt()
-        val guestCount = (orderInfo[FIELD_GUESTS_COUNT] as Long).toInt()
-        readNewOrderUseCase.readNewOrder(
-            Order(tableId, guestCount)
-        ) {
-            _event.value = ErrorMessageEvent(it)
-        }
-    }
-}
+//class NewOrdersService : Service() {
+//
+//    private var id = 1
+//    private var isFirstNotification = true
+//    private var notificationManager: NotificationManager? = null
+//    private var readNewOrderUseCase: ReadNewOrderUseCase =
+//        CoreDepsStore.appComponent.provideReadNewOrderUseCase()
+//
+//    companion object {
+//        var isRunning = false
+//        var ordersListener: ListenerRegistration? = null
+//        private val _event: MutableLiveData<ErrorMessageEvent> = MutableLiveData()
+//        val event: LiveData<ErrorMessageEvent> = _event
+//    }
+//
+//    override fun onCreate() {
+//        super.onCreate()
+//        notificationManager = createNotificationChannel(this)
+////        startForeground(id++, createNotification(this, "NewOrdersService"))
+//    }
+//
+//    //TODO: Don't show the notification when it receive the fist notification
+//    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+//        Toast.makeText(this, "onStartCommand", Toast.LENGTH_SHORT).show()
+//        isRunning = true
+//        if (ordersListener != null) return START_STICKY
+//        ordersListener = newOrdersListenerDocumentRef.addSnapshotListener { snapshot, error ->
+//            when {
+//                error != null -> {
+//                    logE("$this: $error")
+//                    return@addSnapshotListener
+//                }
+//                snapshot != null && snapshot.exists() && snapshot.data != null -> {
+//                    if (!isFirstNotification)
+//                        onNewOrder(snapshot.data!!)
+//                    isFirstNotification = false
+//                }
+//                else -> logD("$this: $NULL_ORDER_INFO_MESSAGE")
+//            }
+//        }
+//        return START_STICKY
+//    }
+//
+//    override fun onDestroy() {
+//        isRunning = false
+//        ordersListener?.remove()
+//        val intent = Intent("restartservice")
+//        sendBroadcast(intent)
+//        super.onDestroy()
+//    }
+//
+//    override fun onTaskRemoved(rootIntent: Intent?) {
+//        val intent = Intent("YOUR_ACTION_NAME")
+//        intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
+//        val pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0)
+//        val restartService = Intent(
+//            applicationContext,
+//            this.javaClass
+//        )
+//        restartService.setPackage(packageName)
+//        val alarmService = applicationContext.getSystemService(ALARM_SERVICE) as AlarmManager
+//        alarmService[AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1000] =
+//            pendingIntent
+//        super.onTaskRemoved(rootIntent)
+//    }
+//
+//    override fun onBind(intent: Intent?): IBinder? = null
+//
+//    private fun onNewOrder(data: MutableMap<String, Any>) {
+////        if (WaiterMainDepsStore.currentEmployee!!.post == COOK)
+//        notificationManager?.notify(
+//            id++, createNotification(this, data.toString())
+//        )
+//        val orderInfo = data[FIELD_ORDER_INFO] as Map<*, *>
+//        val tableId = (orderInfo[FIELD_ORDER_ID] as Long).toInt()
+//        val guestCount = (orderInfo[FIELD_GUESTS_COUNT] as Long).toInt()
+//        readNewOrderUseCase.readNewOrder(
+//            Order(tableId, guestCount)
+//        ) {
+//            _event.value = ErrorMessageEvent(it)
+//        }
+//    }
+//}
 
 class Restarter : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {

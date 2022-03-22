@@ -12,8 +12,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.core.domain.Settings
 import com.example.featureOrder.R
 import com.example.featureOrder.databinding.FragmentTablesBinding
+import com.example.featureOrder.domain.di.OrderDepsStore
+import com.example.featureOrder.domain.di.OrderDepsStore.deps
 import com.example.featureOrder.presentation.recyclerView.itemDecorations.TablesItemDecorations
 import com.example.featureOrder.presentation.recyclerView.adapters.TablesAdapter
 import com.google.android.material.transition.platform.MaterialElevationScale
@@ -27,7 +30,6 @@ class TablesFragment : Fragment() {
     }
 
     private val spanCount = 2
-    private val tablesCount = 28
     private var smallMargin: Int? = null
     private var largeMargin: Int? = null
     private var topTablesMargin: Int? = null
@@ -58,7 +60,7 @@ class TablesFragment : Fragment() {
     private fun initRecyclerView(container: ViewGroup?) {
         with(binding.tablesContainerRecyclerView) {
             layoutManager = GridLayoutManager(container?.context, spanCount)
-            adapter = TablesAdapter(tablesCount, viewModel::onTableClick)
+            adapter = TablesAdapter(deps.settings.tablesCount, viewModel::onTableClick)
             addItemDecoration(
                 TablesItemDecorations(
                     smallMargin!!,

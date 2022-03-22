@@ -14,6 +14,7 @@ object ViewModelFactory : ViewModelProvider.Factory {
             SplashScreenViewModel::class.java -> SplashScreenViewModel(
                 appComponent.provideReadMenuUseCase(),
                 appComponent.provideReadOrdersUseCase(),
+                appComponent.provideReadSettingsUseCase(),
                 appComponent.provideGetCurrentEmployeeUseCase()
             )
             else -> throw IllegalArgumentException(UNKNOWN_VIEW_MODEL_CLASS + modelClass)

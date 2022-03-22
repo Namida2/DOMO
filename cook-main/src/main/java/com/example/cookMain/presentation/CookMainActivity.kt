@@ -1,9 +1,7 @@
 package com.example.cookMain.presentation
 
-import android.graphics.Rect
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.work.PeriodicWorkRequest.MIN_PERIODIC_FLEX_MILLIS
@@ -20,10 +18,6 @@ import com.example.core.domain.interfaces.BasePostActivity
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.order.OrdersServiceSub
 import com.example.core.domain.tools.constants.ErrorMessages
-import com.example.core.domain.tools.extensions.Animations.prepareHide
-import com.example.core.domain.tools.extensions.Animations.prepareShow
-import com.example.core.domain.tools.extensions.Animations.prepareSlideDown
-import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
 import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponentDeps
@@ -34,7 +28,7 @@ import com.example.featureProfile.domain.di.ProfileDepsStore
 import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
 
-class CookMainActivity : AppCompatActivity(), BasePostActivity {
+class CookMainActivity : BasePostActivity() {
 
     private lateinit var binding: ActivityCookMainBinding
     private lateinit var navHostFragment: NavHostFragment
@@ -48,7 +42,7 @@ class CookMainActivity : AppCompatActivity(), BasePostActivity {
         navHostFragment =
             supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
         navController = navHostFragment.navController
-        showNavigationUI()
+        showNavigationUI(binding.root, binding.appBar, binding.bottomNavigation)
         provideCurrentOrderDeps()
         provideProfileDeps()
         makeWorkerRequests()
@@ -74,18 +68,6 @@ class CookMainActivity : AppCompatActivity(), BasePostActivity {
         }
     }
 
-    override fun hideNavigationUI() {
-        with(binding) {
-            appBar.prepareHide(appBar.height).start()
-            val scrollBounds = Rect()
-            rootCoordinationLayout.getHitRect(scrollBounds)
-            if (appBar.getLocalVisibleRect(scrollBounds))
-                appBar.prepareHide(appBar.height).start()
-            if (bottomNavigation.getLocalVisibleRect(scrollBounds))
-                bottomNavigation.prepareSlideDown(bottomNavigation.height).start()
-        }
-    }
-
     override fun observeOnNewPermissionEvent() {
         viewModel.newPermissionEvent.observe(this) {
             it.getData().let {
@@ -96,36 +78,34 @@ class CookMainActivity : AppCompatActivity(), BasePostActivity {
         }
     }
 
-    override fun showNavigationUI() {
-        with(binding) {
-            val scrollBounds = Rect()
-            rootCoordinationLayout.getHitRect(scrollBounds)
-            if (!appBar.getLocalVisibleRect(scrollBounds))
-                appBar.prepareShow(
-                    appBar.height,
-                    startDelay = resources.getInteger(R.integer.navigationUIStartDelay).toLong()
-                ).start()
-            if (!bottomNavigation.getLocalVisibleRect(scrollBounds))
-                bottomNavigation.prepareSlideUp(
-                    bottomNavigation.height,
-                    startDelay = resources.getInteger(R.integer.navigationUIStartDelay).toLong()
-                ).start()
-        }
-    }
-
     override fun onBackPressed() {
-        showNavigationUI()
+        showNavigationUI(binding.root, binding.appBar, binding.bottomNavigation)
         super.onBackPressed()
     }
 
     override fun onLeaveAccount() {
-        hideNavigationUI()
+        hideNavigationUI(binding.root, binding.appBar, binding.bottomNavigation)
         LogInDepsStore.deps = CookMainDepsStore.deps as LogInDeps
         navController.setGraph(R.navigation.navigation_log_in)
     }
 
     override fun onEmployeeLoggedIn(employee: Employee?) {
         CookMainDepsStore.employeeAuthCallback.onEmployeeLoggedIn(employee)
+    }
+
+    override fun makeWorkerRequests() {
+        val newOrdersWorkRequest: WorkRequest =
+            PeriodicWorkRequestBuilder<NewOrdersWorker>(
+                MIN_PERIODIC_FLEX_MILLIS,
+                TimeUnit.MINUTES
+            ).build()
+        val newOrderItemsStateRequest: WorkRequest =
+            PeriodicWorkRequestBuilder<NewOrdersItemStatusWorker>(
+                MIN_PERIODIC_FLEX_MILLIS,
+                TimeUnit.MINUTES
+            ).build()
+        WorkManager.getInstance(this).enqueue(newOrdersWorkRequest)
+        WorkManager.getInstance(this).enqueue(newOrderItemsStateRequest)
     }
 
     private fun provideProfileDeps() {
@@ -144,20 +124,5 @@ class CookMainActivity : AppCompatActivity(), BasePostActivity {
             override val ordersService: OrdersService<OrdersServiceSub>
                 get() = CookMainDepsStore.deps.ordersService
         }
-    }
-
-    override fun makeWorkerRequests() {
-        val newOrdersWorkRequest: WorkRequest =
-            PeriodicWorkRequestBuilder<NewOrdersWorker>(
-                MIN_PERIODIC_FLEX_MILLIS,
-                TimeUnit.MINUTES
-            ).build()
-        val newOrderItemsStateRequest: WorkRequest =
-            PeriodicWorkRequestBuilder<NewOrdersItemStatusWorker>(
-                MIN_PERIODIC_FLEX_MILLIS,
-                TimeUnit.MINUTES
-            ).build()
-        WorkManager.getInstance(this).enqueue(newOrdersWorkRequest)
-        WorkManager.getInstance(this).enqueue(newOrderItemsStateRequest)
     }
 }

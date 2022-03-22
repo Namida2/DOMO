@@ -13,6 +13,7 @@
     <!--ErrorAlertDialog messages and titles-->
     <string name="defaultTitle">Oops!</string>
     <string name="defaultMessage">Что-то пошло не так. Попробуйте выполнить послднее действие позже.</string>
+    <string name="employeeDoesNotExists">Работник не существует.</string>
 
     <string name="emptyFieldTitle">Пустоле поле</string>
     <string name="emptyFieldMessage">Пожалуйста, заполниет все поля.</string>

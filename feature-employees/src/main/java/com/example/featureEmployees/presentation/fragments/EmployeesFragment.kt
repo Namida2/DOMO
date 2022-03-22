@@ -17,9 +17,9 @@ import com.example.featureEmployees.presentation.dialogs.EmployeeDetailDialog
 import com.example.featureEmployees.presentation.recyclerView.EmployeesAdapterDelegate
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
-//TODO: Add a permission listener for all posts
-//TODO: Add a listener for new employees
-class EmployeesFragment : Fragment() {
+//TODO: Store appComponents in Activities
+//TODO: Save new Settings //STOPPED//
+class EmployeesFragment: Fragment() {
 
     private lateinit var binding: FragmentEmployeesBinding
     private val viewModel by viewModels<EmployeesViewModel> { ViewModelFactory }

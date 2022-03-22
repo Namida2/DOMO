@@ -1,6 +1,7 @@
 package com.example.waiterMain.domain.di
 
 import android.content.Context
+import com.example.core.domain.Settings
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.di.modules.RemoteRepositoryModule
 import com.example.core.domain.di.modules.UseCasesModule
@@ -24,7 +25,7 @@ interface WaiterMainAppComponent {
 }
 
 interface WaiterMainDeps {
+    val settings: Settings
     val currentEmployee: Employee?
-    val context: Context
     val ordersService: OrdersService<OrdersServiceSub>
 }
