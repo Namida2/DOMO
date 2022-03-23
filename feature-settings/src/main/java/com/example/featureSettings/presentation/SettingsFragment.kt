@@ -1,5 +1,6 @@
 package com.example.featureSettings.presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,17 +10,29 @@ import androidx.fragment.app.viewModels
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.order.OrdersServiceSub
+import com.example.core.domain.tools.dialogs.ClosedQuestionDialog
 import com.example.featureMenuDialog.domain.MenuDialogDeps
 import com.example.featureMenuDialog.domain.MenuDialogDepsStore
 import com.example.featureMenuDialog.presentation.menuDialog.MenuBottomSheetDialog
 import com.example.featureSettings.R
 import com.example.featureSettings.databinding.FragmentSettingsBinding
-import com.example.featureSettings.domain.SettingsDepsStore
+import com.example.featureSettings.domain.di.SettingsDepsStore
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
+    private lateinit var closedQuestionDialog: ClosedQuestionDialog<Unit>
     private val viewModel by viewModels<SettingsViewModel>()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        closedQuestionDialog = ClosedQuestionDialog(
+            resources.getString(R.string.saveMenuChangesTitle),
+            resources.getString(R.string.saveMenuChangesMessage),
+            { viewModel.onCancelNewMenu() },
+            { viewModel.onAcceptNewMenu() }
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,11 +48,13 @@ class SettingsFragment : Fragment() {
         }
         initBinding()
         provideMenuDialogDeps()
+        observeOnMenuDialogDismissEvent()
         return binding.root
     }
 
     private fun initBinding() {
         binding.editMenu.setOnClickListener {
+            viewModel.sameMenuBeforeChanges()
             MenuBottomSheetDialog(viewModel).show(parentFragmentManager, "")
         }
     }
@@ -51,6 +66,13 @@ class SettingsFragment : Fragment() {
             override val ordersService: OrdersService<OrdersServiceSub>
                 get() = SettingsDepsStore.deps.ordersService
 
+        }
+    }
+
+    private fun observeOnMenuDialogDismissEvent() {
+        viewModel.onMenuDialogDismissEvent.observe(viewLifecycleOwner) {
+            it.getData() ?: return@observe
+            closedQuestionDialog.show(parentFragmentManager, "")
         }
     }
 }

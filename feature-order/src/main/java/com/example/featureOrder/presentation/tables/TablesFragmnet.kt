@@ -23,7 +23,7 @@ import com.google.android.material.transition.platform.MaterialElevationScale
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
 //TODO: Start implementing this module
-class TablesFragment : Fragment() {
+class TablesFragment: Fragment() {
 
     companion object {
         const val isReturnedFromOrderFragment = "isReturnedFromOrderFragment"

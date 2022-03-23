@@ -21,39 +21,6 @@ object WaiterMainDepsStore {
         DaggerWaiterMainAppComponent.builder()
             .provideWaiterMainDeps(deps)
             .build()
-    }.also {
-        provideFeatureOrderDeps()
-        provideCurrentOrderDeps()
-        provideProfileDeps()
-    }
-
-    private fun provideFeatureOrderDeps() {
-        OrderDepsStore.deps = object : OrderAppComponentDeps {
-            override val settings: Settings
-                get() = deps.settings
-            override val currentEmployee: Employee?
-                get() = deps.currentEmployee
-            override val ordersService: OrdersService<OrdersServiceSub>
-                get() = deps.ordersService
-        }
-    }
-
-    private fun provideCurrentOrderDeps() {
-        CurrentOrderDepsStore.deps = object : CurrentOrdersAppComponentDeps {
-            override val currentEmployee: Employee?
-                get() = deps.currentEmployee
-            override val ordersService: OrdersService<OrdersServiceSub>
-                get() = deps.ordersService
-        }
-    }
-
-    private fun provideProfileDeps() {
-        ProfileDepsStore.deps = object : ProfileAppComponentDeps {
-            override val currentEmployee: Employee?
-                get() = deps.currentEmployee
-            override val firebaseAuth: FirebaseAuth
-                get() = profileDeps.firebaseAuth
-        }
     }
 }
 

@@ -13,6 +13,7 @@ import com.example.administratorMain.databinding.ActivityAdministratorBinding
 import com.example.administratorMain.domatn.di.AdminDepsStore
 import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
+import com.example.core.domain.Settings
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.BasePostActivity
 import com.example.core.domain.interfaces.OrdersService
@@ -25,13 +26,22 @@ import com.example.featureEmployees.domain.di.EmployeesAppComponentDeps
 import com.example.featureEmployees.domain.di.EmployeesDepsStore
 import com.example.featureLogIn.domain.di.LogInDeps
 import com.example.featureLogIn.domain.di.LogInDepsStore
-import com.example.featureSettings.domain.SettingsDeps
-import com.example.featureSettings.domain.SettingsDepsStore
+import com.example.featureProfile.domain.di.DaggerProfileAppComponent
+import com.example.featureProfile.domain.di.ProfileAppComponent
+import com.example.featureProfile.domain.di.ProfileAppComponentDeps
+import com.example.featureProfile.domain.di.ProfileDepsStore
+import com.example.featureSettings.domain.di.DaggerSettingsAppComponent
+import com.example.featureSettings.domain.di.SettingsAppComponent
+import com.example.featureSettings.domain.di.SettingsAppComponentDeps
+import com.example.featureSettings.domain.di.SettingsDepsStore
+import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
 
 class AdministratorMainActivity : BasePostActivity() {
 
     private lateinit var employeesAppComponent: EmployeesAppComponent
+    private lateinit var profileAppComponent: ProfileAppComponent
+    private lateinit var settingsAppComponent: SettingsAppComponent
 
     private lateinit var binding: ActivityAdministratorBinding
     private lateinit var navHostFragment: NavHostFragment
@@ -59,6 +69,7 @@ class AdministratorMainActivity : BasePostActivity() {
     private fun provideDeps() {
         provideEmployeeAppComponent()
         provideSettingsDeps()
+        provideProfileDeps()
     }
 
     private fun provideEmployeeAppComponent() {
@@ -70,6 +81,35 @@ class AdministratorMainActivity : BasePostActivity() {
             .employeesAppComponentDeps(employeesModuleDeps).build()
         EmployeesDepsStore.deps = employeesModuleDeps
         EmployeesDepsStore.appComponent = employeesAppComponent
+    }
+
+    private fun provideProfileDeps() {
+        val profileModuleDeps = object : ProfileAppComponentDeps {
+            override val currentEmployee: Employee?
+                get() = AdminDepsStore.deps.currentEmployee
+            override val firebaseAuth: FirebaseAuth
+                get() = AdminDepsStore.deps.firestoreAuth
+        }
+        profileAppComponent = DaggerProfileAppComponent.builder()
+            .profileAppComponentDeps(profileModuleDeps).build()
+//        ProfileDepsStore.deps = profileModuleDeps
+        ProfileDepsStore.appComponent = profileAppComponent
+    }
+
+    private fun provideSettingsDeps() {
+        val settingsModuleDeps = object : SettingsAppComponentDeps {
+            override val settings: Settings
+                get() = AdminDepsStore.deps.settings
+            override val currentEmployee: Employee?
+                get() = AdminDepsStore.deps.currentEmployee
+            override val ordersService: OrdersService<OrdersServiceSub>
+                get() = AdminDepsStore.deps.ordersService
+        }
+        settingsAppComponent =
+            DaggerSettingsAppComponent.builder()
+                .settingsAppComponentDeps(settingsModuleDeps).build()
+//        SettingsDepsStore.deps = settingsModuleDeps
+        SettingsDepsStore.appComponent = settingsAppComponent
     }
 
     override fun setOnNavigationItemSelectedListener() {
@@ -118,7 +158,6 @@ class AdministratorMainActivity : BasePostActivity() {
                 }?.show(supportFragmentManager, "")
             }
         }
-
     }
 
     override fun onBackPressed() {
@@ -134,14 +173,5 @@ class AdministratorMainActivity : BasePostActivity() {
 
     override fun onEmployeeLoggedIn(employee: Employee?) {
         AdminDepsStore.employeeAuthCallback.onEmployeeLoggedIn(employee)
-    }
-
-    private fun provideSettingsDeps() {
-        SettingsDepsStore.deps = object : SettingsDeps {
-            override val currentEmployee: Employee?
-                get() = AdminDepsStore.deps.currentEmployee
-            override val ordersService: OrdersService<OrdersServiceSub>
-                get() = AdminDepsStore.deps.ordersService
-        }
     }
 }

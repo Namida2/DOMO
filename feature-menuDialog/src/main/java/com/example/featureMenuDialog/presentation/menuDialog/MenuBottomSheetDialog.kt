@@ -89,7 +89,6 @@ class MenuBottomSheetDialog(
 
     private fun initBinding() {
         with(binding) {
-            menuRecyclerView.setHasFixedSize(true)
             menuRecyclerView.adapter = menuAdapter
             menuRecyclerView.addItemDecoration(
                 MenuItemDecorations(smallMargin!!, largeMargin!!)

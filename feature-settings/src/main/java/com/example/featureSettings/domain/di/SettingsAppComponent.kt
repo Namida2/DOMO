@@ -1,18 +1,17 @@
-package com.example.administratorMain.domatn.di
+package com.example.featureSettings.domain.di
 
 import com.example.core.domain.Settings
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.order.OrdersServiceSub
-import com.google.firebase.auth.FirebaseAuth
+import com.example.featureSettings.domain.di.modules.RepositoriesModule
 import dagger.Component
 
-@Component(dependencies = [AdminAppComponentDeps::class])
-interface AdminAppComponent
+@Component(dependencies = [SettingsAppComponentDeps::class], modules = [RepositoriesModule::class])
+interface SettingsAppComponent : SettingsAppComponentDeps
 
-interface AdminAppComponentDeps {
+interface SettingsAppComponentDeps {
     val settings: Settings
     val currentEmployee: Employee?
-    val firestoreAuth: FirebaseAuth
     val ordersService: OrdersService<OrdersServiceSub>
 }

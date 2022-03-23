@@ -11,23 +11,42 @@ import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
+import com.example.core.domain.Settings
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.BasePostActivity
+import com.example.core.domain.interfaces.OrdersService
+import com.example.core.domain.order.OrdersServiceSub
 import com.example.core.domain.tools.constants.ErrorMessages.permissionDeniedMessage
 import com.example.core.domain.tools.extensions.createMessageDialog
+import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
+import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponent
+import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponentDeps
+import com.example.featureCurrentOrders.domain.di.DaggerCurrentOrdersAppComponent
 import com.example.featureLogIn.domain.di.LogInDeps
 import com.example.featureLogIn.domain.di.LogInDepsStore
+import com.example.featureOrder.domain.di.DaggerOrderAppComponent
+import com.example.featureOrder.domain.di.OrderAppComponent
+import com.example.featureOrder.domain.di.OrderAppComponentDeps
+import com.example.featureOrder.domain.di.OrderDepsStore
 import com.example.featureOrder.presentation.order.OrderFragment
 import com.example.featureOrder.presentation.tables.TablesFragment
+import com.example.featureProfile.domain.di.DaggerProfileAppComponent
+import com.example.featureProfile.domain.di.ProfileAppComponent
+import com.example.featureProfile.domain.di.ProfileAppComponentDeps
+import com.example.featureProfile.domain.di.ProfileDepsStore
 import com.example.waiterMain.R
 import com.example.waiterMain.databinding.ActivityWaiterMainBinding
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
+import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
 
 class WaiterMainActivity : BasePostActivity(),
     NavController.OnDestinationChangedListener {
 
     private val currentDestination = 0
+    private lateinit var profileAppComponent: ProfileAppComponent
+    private lateinit var orderAppComponents: OrderAppComponent
+    private lateinit var currentOrdersAppComponents: CurrentOrdersAppComponent
     private lateinit var binding: ActivityWaiterMainBinding
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
@@ -35,6 +54,7 @@ class WaiterMainActivity : BasePostActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        provideDeps()
         binding = ActivityWaiterMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         navHostFragment =
@@ -46,6 +66,54 @@ class WaiterMainActivity : BasePostActivity(),
         setOnNavigationItemSelectedListener()
         makeWorkerRequests()
         observeOnNewPermissionEvent()
+    }
+
+    private fun provideDeps() {
+        provideOrderDeps()
+        provideCurrentOrdersDeps()
+        provideProfileDeps()
+    }
+
+
+    private fun provideOrderDeps() {
+        val orderModuleDeps = object : OrderAppComponentDeps {
+            override val settings: Settings
+                get() = WaiterMainDepsStore.deps.settings
+            override val currentEmployee: Employee?
+                get() = WaiterMainDepsStore.deps.currentEmployee
+            override val ordersService: OrdersService<OrdersServiceSub>
+                get() = WaiterMainDepsStore.deps.ordersService
+        }
+        orderAppComponents =
+            DaggerOrderAppComponent.builder().provideOrderAppComponentDeps(orderModuleDeps).build()
+        OrderDepsStore.deps = orderModuleDeps
+        OrderDepsStore.appComponent = orderAppComponents
+    }
+
+    private fun provideCurrentOrdersDeps() {
+        val currentOrdersModuleDeps = object : CurrentOrdersAppComponentDeps {
+            override val currentEmployee: Employee?
+                get() = WaiterMainDepsStore.deps.currentEmployee
+            override val ordersService: OrdersService<OrdersServiceSub>
+                get() = WaiterMainDepsStore.deps.ordersService
+        }
+        currentOrdersAppComponents = DaggerCurrentOrdersAppComponent.builder()
+            .provideCurrentOrdersDeps(currentOrdersModuleDeps).build()
+        CurrentOrderDepsStore.deps = currentOrdersModuleDeps
+        CurrentOrderDepsStore.appComponent = currentOrdersAppComponents
+    }
+
+    private fun provideProfileDeps() {
+        val profileModuleDeps = object : ProfileAppComponentDeps {
+            override val currentEmployee: Employee?
+                get() = WaiterMainDepsStore.deps.currentEmployee
+            override val firebaseAuth: FirebaseAuth
+                get() = WaiterMainDepsStore.profileDeps.firebaseAuth
+        }
+        profileAppComponent = DaggerProfileAppComponent.builder()
+            .profileAppComponentDeps(profileModuleDeps).build()
+        ProfileDepsStore.deps = profileModuleDeps
+        ProfileDepsStore.appComponent = profileAppComponent
     }
 
     override fun makeWorkerRequests() {

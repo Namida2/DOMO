@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 class ClosedQuestionDialog<A>(
     private val title: String? = null,
     private val message: String? = null,
+    private val onCancel: () -> Unit = {},
     private val onAccept: (arg: A?) -> Unit
 ) : DialogFragment() {
 
@@ -28,6 +29,7 @@ class ClosedQuestionDialog<A>(
             this@ClosedQuestionDialog.title?.let { title.text = it }
             this@ClosedQuestionDialog.message?.let { message.text = it }
             cancelButton.setOnClickListener {
+                onCancel.invoke()
                 myDismiss()
             }
             acceptButton.setOnClickListener {

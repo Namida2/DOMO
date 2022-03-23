@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">FeatureSettings</string>
+    <string name="saveMenuChangesTitle">Новое меню</string>
+    <string name="saveMenuChangesMessage">Сохранить изменения в меню?</string>
 </resources>

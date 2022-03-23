@@ -20,9 +20,13 @@ import com.example.core.domain.order.OrdersServiceSub
 import com.example.core.domain.tools.constants.ErrorMessages
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
+import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponent
 import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponentDeps
+import com.example.featureCurrentOrders.domain.di.DaggerCurrentOrdersAppComponent
 import com.example.featureLogIn.domain.di.LogInDeps
 import com.example.featureLogIn.domain.di.LogInDepsStore
+import com.example.featureProfile.domain.di.DaggerProfileAppComponent
+import com.example.featureProfile.domain.di.ProfileAppComponent
 import com.example.featureProfile.domain.di.ProfileAppComponentDeps
 import com.example.featureProfile.domain.di.ProfileDepsStore
 import com.google.firebase.auth.FirebaseAuth
@@ -30,6 +34,8 @@ import java.util.concurrent.TimeUnit
 
 class CookMainActivity : BasePostActivity() {
 
+    private lateinit var currentOrdersAppComponents: CurrentOrdersAppComponent
+    private lateinit var profileAppComponent: ProfileAppComponent
     private lateinit var binding: ActivityCookMainBinding
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var navController: NavController
@@ -37,16 +43,46 @@ class CookMainActivity : BasePostActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        provideDeps()
         binding = ActivityCookMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         navHostFragment =
             supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
         navController = navHostFragment.navController
         showNavigationUI(binding.root, binding.appBar, binding.bottomNavigation)
-        provideCurrentOrderDeps()
-        provideProfileDeps()
         makeWorkerRequests()
         setOnNavigationItemSelectedListener()
+    }
+
+    private fun provideDeps() {
+        provideCurrentOrdersDeps()
+        provideProfileDeps()
+    }
+
+    private fun provideCurrentOrdersDeps() {
+        val currentOrdersModuleDeps = object : CurrentOrdersAppComponentDeps {
+            override val currentEmployee: Employee?
+                get() = CookMainDepsStore.deps.currentEmployee
+            override val ordersService: OrdersService<OrdersServiceSub>
+                get() = CookMainDepsStore.deps.ordersService
+        }
+        currentOrdersAppComponents = DaggerCurrentOrdersAppComponent.builder()
+            .provideCurrentOrdersDeps(currentOrdersModuleDeps).build()
+        CurrentOrderDepsStore.deps = currentOrdersModuleDeps
+        CurrentOrderDepsStore.appComponent = currentOrdersAppComponents
+    }
+
+    private fun provideProfileDeps() {
+        val profileModuleDeps = object : ProfileAppComponentDeps {
+            override val currentEmployee: Employee?
+                get() = CookMainDepsStore.deps.currentEmployee
+            override val firebaseAuth: FirebaseAuth
+                get() = CookMainDepsStore.deps.firebaseAuth
+        }
+        profileAppComponent = DaggerProfileAppComponent.builder()
+            .profileAppComponentDeps(profileModuleDeps).build()
+        ProfileDepsStore.deps = profileModuleDeps
+        ProfileDepsStore.appComponent = profileAppComponent
     }
 
     override fun setOnNavigationItemSelectedListener() {
@@ -106,23 +142,5 @@ class CookMainActivity : BasePostActivity() {
             ).build()
         WorkManager.getInstance(this).enqueue(newOrdersWorkRequest)
         WorkManager.getInstance(this).enqueue(newOrderItemsStateRequest)
-    }
-
-    private fun provideProfileDeps() {
-        ProfileDepsStore.deps = object : ProfileAppComponentDeps {
-            override val currentEmployee: Employee?
-                get() = CookMainDepsStore.deps.currentEmployee
-            override val firebaseAuth: FirebaseAuth
-                get() = CookMainDepsStore.deps.firebaseAuth
-        }
-    }
-
-    private fun provideCurrentOrderDeps() {
-        CurrentOrderDepsStore.deps = object : CurrentOrdersAppComponentDeps {
-            override val currentEmployee: Employee?
-                get() = CookMainDepsStore.deps.currentEmployee
-            override val ordersService: OrdersService<OrdersServiceSub>
-                get() = CookMainDepsStore.deps.ordersService
-        }
     }
 }

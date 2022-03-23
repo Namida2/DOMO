@@ -57,7 +57,6 @@ class SplashScreenViewModel(
                         _state.value = SplashScreenStates.EmployeeAndSettingsExist(result)
                 } else _state.value = SplashScreenStates.OnFailure(permissionDeniedMessage)
             }
-
             override fun onError(message: ErrorMessage?) {
                 if (message == employeeDoesNotExists)
                     _state.value = SplashScreenStates.EmployeeDoesNotExists
@@ -70,13 +69,11 @@ class SplashScreenViewModel(
     fun readSettings() {
         settingsUseCase.readSettings(object : SimpleTask {
             override fun onSuccess(result: Unit) {
-                logD("readSettings")
                 isSettingsExists = true
                 if (currentEmployee != null)
                     _state.value =
                         SplashScreenStates.EmployeeAndSettingsExist(currentEmployee!!)
             }
-
             override fun onError(message: ErrorMessage?) {
                 if(currentEmployee == null) return
                 _state.value = SplashScreenStates.OnFailure(message ?: defaultErrorMessage)

@@ -87,7 +87,8 @@ object MenuService : BaseObservable<MenuServiceSub> {
             it.name == deletedDishInfo.categoryName
         }.also {
             if (it != null) {
-                category = it; return@also
+                category = it
+                return@also
             }
             menu.add(
                 Category(
@@ -100,14 +101,12 @@ object MenuService : BaseObservable<MenuServiceSub> {
                 return
             }
         }
-
         category.dishes.find {
             it.id == deletedDishInfo.dish.id
         }.also { dish ->
             //TODO: Remove this and return false
             if (dish != null) throw IllegalArgumentException(THIS_DISH_ALREADY_ADDED + dish.id)
         }
-
         category.dishes.add(deletedDishInfo.dish).also {
             category.dishes.sort()
         }
@@ -131,4 +130,17 @@ object MenuService : BaseObservable<MenuServiceSub> {
             it.invoke(menuState)
         }
     }
+}
+
+infix fun Collection<Category>.isTheSameMenu(other: Collection<Category>): Boolean {
+    if (this.size != other.size) return false
+    val areNotEqual = this.asSequence()
+        .zip(other.asSequence())
+        .map { (fromThis, fromOther) ->
+            if (fromThis != fromOther) false
+            else fromThis.dishes.zip(fromOther.dishes).map { (dishesFromThis, dishesFromOther) ->
+                dishesFromThis == dishesFromOther
+            }
+        }.contains(false)
+    return !areNotEqual
 }

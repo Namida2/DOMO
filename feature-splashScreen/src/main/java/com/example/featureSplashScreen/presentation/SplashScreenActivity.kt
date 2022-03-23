@@ -28,7 +28,6 @@ import com.example.featureSplashScreen.domain.di.SplashScreenDepsStore.setNewEmp
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
 import com.example.waiterMain.presentation.WaiterMainActivity
 
-//TODO: Implement closing ProfileFragment when it should to be
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback {
 
