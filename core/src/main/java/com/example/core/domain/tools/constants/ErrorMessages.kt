@@ -8,6 +8,10 @@ object ErrorMessages {
         R.string.defaultTitle,
         R.string.networkConnectionMessage
     )
+    val categoryAlreadyExists = ErrorMessage(
+        R.string.defaultTitle,
+        R.string.categoryAlreadyExistsMessage
+    )
     val defaultErrorMessage = ErrorMessage(
         R.string.defaultTitle,
         R.string.defaultMessage

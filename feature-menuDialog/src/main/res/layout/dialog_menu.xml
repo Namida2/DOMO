@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/rootView"
     android:transitionName="end">
 
     <View
@@ -24,7 +25,7 @@
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:layout_width="wrap_content"
-        android:id="@+id/fbaMenu"
+        android:id="@+id/fab_menu"
         android:layout_gravity="bottom|end"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         app:fab_addButtonColorNormal="@color/black"

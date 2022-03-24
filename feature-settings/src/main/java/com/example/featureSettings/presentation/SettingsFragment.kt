@@ -11,18 +11,21 @@ import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.order.OrdersServiceSub
 import com.example.core.domain.tools.dialogs.ClosedQuestionDialog
+import com.example.core.domain.tools.dialogs.ProcessAlertDialog
+import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.featureMenuDialog.domain.MenuDialogDeps
 import com.example.featureMenuDialog.domain.MenuDialogDepsStore
 import com.example.featureMenuDialog.presentation.menuDialog.MenuBottomSheetDialog
 import com.example.featureSettings.R
 import com.example.featureSettings.databinding.FragmentSettingsBinding
+import com.example.featureSettings.domain.ViewModelFactory
 import com.example.featureSettings.domain.di.SettingsDepsStore
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
     private lateinit var closedQuestionDialog: ClosedQuestionDialog<Unit>
-    private val viewModel by viewModels<SettingsViewModel>()
+    private val viewModel by viewModels<SettingsViewModel> { ViewModelFactory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -49,11 +52,12 @@ class SettingsFragment : Fragment() {
         initBinding()
         provideMenuDialogDeps()
         observeOnMenuDialogDismissEvent()
+        observeViewModelStates()
         return binding.root
     }
 
     private fun initBinding() {
-        binding.editMenu.setOnClickListener {
+        binding.editMenuCard.setOnClickListener {
             viewModel.sameMenuBeforeChanges()
             MenuBottomSheetDialog(viewModel).show(parentFragmentManager, "")
         }
@@ -74,5 +78,23 @@ class SettingsFragment : Fragment() {
             it.getData() ?: return@observe
             closedQuestionDialog.show(parentFragmentManager, "")
         }
+    }
+
+    private fun observeViewModelStates() {
+        viewModel.state.observe(viewLifecycleOwner) {
+            when (it) {
+                is SettingsVMStates.SavingMenu ->
+                    ProcessAlertDialog.show(parentFragmentManager, "")
+                is SettingsVMStates.OnSavingFailed -> {
+                    ProcessAlertDialog.dismiss()
+                    requireContext().createMessageDialog(it.message)
+                        ?.show(parentFragmentManager, "")
+                }
+                is SettingsVMStates.OnSavingSuccess ->
+                    ProcessAlertDialog.onSuccess()
+                is SettingsVMStates.Default -> {}
+            }
+        }
+
     }
 }

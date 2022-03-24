@@ -2,6 +2,7 @@ package com.example.featureMenuDialog.presentation.menuDialog
 
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.example.core.domain.tools.constants.EmployeePosts.ADMINISTRATOR
+import com.example.core.domain.tools.extensions.Animations.prepareHide
+import com.example.core.domain.tools.extensions.Animations.prepareSlideDown
 import com.example.core.domain.tools.extensions.logD
 import com.example.core.presentation.recyclerView.adapterDelegates.DishesAdapterDelegate
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
@@ -17,7 +20,9 @@ import com.example.featureMenuDialog.R
 import com.example.featureMenuDialog.databinding.DialogMenuBinding
 import com.example.featureMenuDialog.domain.MenuDialogDepsStore.deps
 import com.example.featureMenuDialog.domain.interfaces.OnDismissListener
+import com.example.featureMenuDialog.domain.tools.MenuItemsEnum
 import com.example.featureMenuDialog.presentation.dishDialog.DishAlertDialog
+import com.example.featureMenuDialog.presentation.editMenuItemDialog.EditMenuItemDialog
 import com.example.featureMenuDialog.presentation.recyclerView.ItemTouchCallback
 import com.example.featureMenuDialog.presentation.recyclerView.MenuItemDecorations
 import com.example.featureMenuDialog.presentation.recyclerView.delegates.CategoriesAdapterDelegate
@@ -48,7 +53,7 @@ class MenuBottomSheetDialog(
         menuAdapter = BaseRecyclerViewAdapter(
             listOf(
                 CategoriesAdapterDelegate(),
-                CategoryLargeRecyclerViewType(isAdmin),
+                CategoryLargeRecyclerViewType(isAdmin, ::onAddDishButtonClick),
                 DishesAdapterDelegate(viewModel::onDishClick)
             )
         )
@@ -97,7 +102,7 @@ class MenuBottomSheetDialog(
                 ItemTouchHelper(itemTouchCallback)
                     .attachToRecyclerView(menuRecyclerView)
             } else {
-                fbaMenu.visibility = View.GONE
+                fabMenu.visibility = View.GONE
                 fba.visibility = View.VISIBLE
             }
         }
@@ -115,7 +120,8 @@ class MenuBottomSheetDialog(
     private fun observeOnDishDeletedEvent() {
         viewModel.onDishDeleted.observe(viewLifecycleOwner) {
             it.getData()?.let { deletedDishInfo ->
-                Snackbar.make(binding.fbaMenu, R.string.cancelAction, Snackbar.LENGTH_LONG)
+                hideFabMenu()
+                Snackbar.make(binding.fabMenu, R.string.cancelAction, Snackbar.LENGTH_LONG)
                     .setAction(R.string.yes) {
                         viewModel.addDish(deletedDishInfo)
                     }.setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.black))
@@ -123,6 +129,17 @@ class MenuBottomSheetDialog(
                     .show()
             }
         }
+    }
+
+    private fun hideFabMenu() {
+        val scrollBounds = Rect()
+        binding.rootView.getHitRect(scrollBounds)
+        if (binding.fabMenu.getLocalVisibleRect(scrollBounds))
+            binding.fabMenu.prepareSlideDown(binding.fabMenu.height).start()
+    }
+
+    private fun onAddDishButtonClick(categoryName: String) {
+        EditMenuItemDialog(MenuItemsEnum.CATEGORY).show(parentFragmentManager, "")
     }
 
 }

@@ -10,7 +10,6 @@ import com.example.core.domain.tools.extensions.logE
 import com.example.featureSplashScreen.domain.repositories.MenuRemoteRepository
 import javax.inject.Inject
 
-
 class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
 
     private val defaultMenuVersion = -1L

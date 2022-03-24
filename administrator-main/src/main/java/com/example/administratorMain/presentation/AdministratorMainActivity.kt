@@ -92,7 +92,7 @@ class AdministratorMainActivity : BasePostActivity() {
         }
         profileAppComponent = DaggerProfileAppComponent.builder()
             .profileAppComponentDeps(profileModuleDeps).build()
-//        ProfileDepsStore.deps = profileModuleDeps
+        ProfileDepsStore.deps = profileModuleDeps
         ProfileDepsStore.appComponent = profileAppComponent
     }
 
@@ -108,7 +108,7 @@ class AdministratorMainActivity : BasePostActivity() {
         settingsAppComponent =
             DaggerSettingsAppComponent.builder()
                 .settingsAppComponentDeps(settingsModuleDeps).build()
-//        SettingsDepsStore.deps = settingsModuleDeps
+        SettingsDepsStore.deps = settingsModuleDeps
         SettingsDepsStore.appComponent = settingsAppComponent
     }
 

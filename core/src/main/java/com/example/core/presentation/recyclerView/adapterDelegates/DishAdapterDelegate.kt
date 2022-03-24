@@ -12,7 +12,7 @@ import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewTyp
 import com.example.core.presentation.recyclerView.interfaces.BaseViewHolder
 
 class DishesAdapterDelegate(
-    private val onDishSelected: (dishId: Int) -> Unit,
+    private val onDishSelected: (dish: Dish) -> Unit,
 ) : BaseAdapterDelegate<LayoutDishBinding, Dish>, View.OnClickListener {
 
     private val diffCallback = object : DiffUtil.ItemCallback<Dish>() {
@@ -28,15 +28,17 @@ class DishesAdapterDelegate(
         inflater: LayoutInflater,
         parent: ViewGroup,
     ): BaseViewHolder<LayoutDishBinding, Dish> {
-        val binding = LayoutDishBinding.inflate(inflater, parent, false)
-        binding.root.setOnClickListener(this)
-        return DishViewHolder(binding)
+        return DishViewHolder(
+            LayoutDishBinding.inflate(inflater, parent, false).also {
+                it.root.setOnClickListener(this)
+            }
+        )
     }
 
     override fun getDiffCallback(): DiffUtil.ItemCallback<Dish> = diffCallback
 
     override fun onClick(view: View?) {
-        onDishSelected.invoke(view?.tag as Int)
+        onDishSelected.invoke(view?.tag as Dish)
     }
 }
 
@@ -49,7 +51,7 @@ class DishViewHolder(
             dishName.text = item.name
             dishConst.text = item.cost
             dishWeight.text = item.weight
-            root.tag = item.id
+            root.tag = item
         }
     }
 }

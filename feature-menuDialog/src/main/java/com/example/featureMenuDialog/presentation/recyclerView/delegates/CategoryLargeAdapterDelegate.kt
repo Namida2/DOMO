@@ -11,8 +11,10 @@ import com.example.core.presentation.recyclerView.interfaces.BaseViewHolder
 import com.example.featureMenuDialog.R
 import com.example.featureMenuDialog.databinding.LayoutCategoryLargeBinding
 
-class CategoryLargeRecyclerViewType(private val isAdmin: Boolean) :
-    BaseAdapterDelegate<LayoutCategoryLargeBinding, CategoryName> {
+class CategoryLargeRecyclerViewType(
+    private val isAdmin: Boolean,
+    private val onAddDishButtonClick: (categoryName: String) -> Unit
+) : BaseAdapterDelegate<LayoutCategoryLargeBinding, CategoryName>, View.OnClickListener{
 
     override fun isItMe(recyclerViewType: BaseRecyclerViewType): Boolean =
         recyclerViewType is CategoryName
@@ -22,8 +24,9 @@ class CategoryLargeRecyclerViewType(private val isAdmin: Boolean) :
         parent: ViewGroup,
     ): BaseViewHolder<LayoutCategoryLargeBinding, CategoryName> {
         return CategoryLargeViewHolder(
-            LayoutCategoryLargeBinding.inflate(inflater, parent, false),
-            isAdmin
+            LayoutCategoryLargeBinding.inflate(inflater, parent, false).also {
+                it.addCategoryFab.setOnClickListener(this)
+            }, isAdmin
         )
     }
 
@@ -37,6 +40,10 @@ class CategoryLargeRecyclerViewType(private val isAdmin: Boolean) :
         override fun areContentsTheSame(oldItem: CategoryName, newItem: CategoryName): Boolean =
             oldItem == newItem
     }
+
+    override fun onClick(v: View?) {
+        v?.tag?.let { onAddDishButtonClick(it as String) }
+    }
 }
 
 class CategoryLargeViewHolder(
@@ -45,8 +52,9 @@ class CategoryLargeViewHolder(
 ) : BaseViewHolder<LayoutCategoryLargeBinding, CategoryName>(binding) {
 
     override fun onBind(item: CategoryName) {
+        binding.addCategoryFab.tag = item.name
         binding.categoryName.text = item.name
-        if (isAdmin) binding.addCategoryFba.visibility = View.VISIBLE
-        else binding.addCategoryFba.visibility = View.GONE
+        if (isAdmin) binding.addCategoryFab.visibility = View.VISIBLE
+        else binding.addCategoryFab.visibility = View.GONE
     }
 }

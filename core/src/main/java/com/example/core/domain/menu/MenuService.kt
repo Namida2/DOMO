@@ -113,6 +113,33 @@ object MenuService : BaseObservable<MenuServiceSub> {
         menuChanges.tryEmit(menu)
     }
 
+    fun addDish(categoryName: String, dish: Dish): Boolean {
+        menu.find {
+            it.name == categoryName
+        }.also { category ->
+            if (category == null) return false
+            category.dishes.find {
+                it.name == dish.name
+            }.also { existingDish ->
+                if (existingDish != null) return false
+                category.dishes.add(dish)
+                category.dishes.sort()
+                menuChanges.tryEmit(menu)
+                return true
+            }
+        }
+    }
+
+    fun addCategory(categoryName: String): Boolean {
+        menu.find {
+            it.name == categoryName
+        }.also { category ->
+            if (category != null) return false
+            menu.add(Category(categoryName, mutableListOf()))
+            menuChanges.tryEmit(menu)
+            return true
+        }
+    }
 
     override fun subscribe(subscriber: MenuServiceSub) {
         subscribers.find {
@@ -130,6 +157,20 @@ object MenuService : BaseObservable<MenuServiceSub> {
             it.invoke(menuState)
         }
     }
+    fun copyMenu(): MutableList<Category> =
+        menu.map { category ->
+            val newDishes = mutableListOf<Dish>().also {
+                category.dishes.forEach { dish ->
+                    it.add(dish.copy())
+                }
+            }
+            category.copy(dishes = newDishes)
+        }.toMutableList()
+
+    fun getDishesCount(): Int =
+        menu.sumOf { it.dishes.size }
+
+
 }
 
 infix fun Collection<Category>.isTheSameMenu(other: Collection<Category>): Boolean {

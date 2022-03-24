@@ -9,7 +9,6 @@ import com.example.core.domain.menu.Dish
 import com.example.core.domain.menu.MenuService
 import com.example.core.domain.tools.DeletedDishInfo
 import com.example.core.domain.tools.Event
-import com.example.core.domain.tools.extensions.logD
 import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -51,8 +50,8 @@ class MenuDialogViewModel : ViewModel() {
         MenuService.addDish(deletedDishInfo)
     }
 
-    fun onDishClick(dishId: Int) {
-        _onDishSelected.value = Event(MenuService.getDishById(dishId))
+    fun onDishClick(dish: Dish) {
+        _onDishSelected.value = Event(dish)
     }
 
 

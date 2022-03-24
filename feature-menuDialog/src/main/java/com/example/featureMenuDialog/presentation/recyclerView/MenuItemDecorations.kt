@@ -3,6 +3,7 @@ package com.example.featureMenuDialog.presentation.recyclerView
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.example.core.domain.menu.CategoryName
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
 
 class MenuItemDecorations(
@@ -18,6 +19,10 @@ class MenuItemDecorations(
         super.getItemOffsets(outRect, view, parent, state)
         val adapter = parent.adapter as BaseRecyclerViewAdapter
         val position = parent.getChildAdapterPosition(view)
+        if (position == -1 || adapter.currentList[position] is CategoryName) {
+            setHorizontalMargins(position, outRect)
+            return
+        }
         when (position) {
             0 -> {
                 outRect.top = largeMargin
@@ -32,6 +37,10 @@ class MenuItemDecorations(
                 outRect.bottom = smallMargin
             }
         }
+        setHorizontalMargins(position, outRect)
+    }
+
+    private fun setHorizontalMargins(position: Int, outRect: Rect) {
         if (position != 0) {
             outRect.left = largeMargin
             outRect.right = smallMargin

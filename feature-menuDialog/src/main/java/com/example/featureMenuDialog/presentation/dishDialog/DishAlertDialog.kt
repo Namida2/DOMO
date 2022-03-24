@@ -21,7 +21,7 @@ class DishAlertDialog(
     private var count: Int = 1
     private var aldCommentary: String = ""
 
-    private var binding: DialogDishBinding? = null
+    private lateinit var binding: DialogDishBinding
     private val viewModel by viewModels<DishDialogViewModel> { ViewModelFactory }
 
     override fun onAttach(context: Context) {
