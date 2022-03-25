@@ -32,7 +32,7 @@ class SettingsViewModel(
     val state: LiveData<SettingsVMStates> = _state
 
     override fun onDismiss() {
-//        if (MenuService.menu isTheSameMenu lastSavedMenu) return
+        if (MenuService.menu isTheSameMenu lastSavedMenu) return
         _onMenuDialogDismissEvent.value = Event(Unit)
     }
 

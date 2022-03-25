@@ -12,6 +12,10 @@ object ErrorMessages {
         R.string.defaultTitle,
         R.string.categoryAlreadyExistsMessage
     )
+    val dishAlreadyExists = ErrorMessage(
+        R.string.defaultTitle,
+        R.string.gishAlreadyExistsMessage
+    )
     val defaultErrorMessage = ErrorMessage(
         R.string.defaultTitle,
         R.string.defaultMessage

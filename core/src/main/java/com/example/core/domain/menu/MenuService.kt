@@ -113,9 +113,9 @@ object MenuService : BaseObservable<MenuServiceSub> {
         menuChanges.tryEmit(menu)
     }
 
-    fun addDish(categoryName: String, dish: Dish): Boolean {
+    fun addDish(dish: Dish): Boolean {
         menu.find {
-            it.name == categoryName
+            it.name == dish.categoryName
         }.also { category ->
             if (category == null) return false
             category.dishes.find {

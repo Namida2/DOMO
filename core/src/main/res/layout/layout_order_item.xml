@@ -84,7 +84,7 @@
                     app:layout_constraintTop_toTopOf="@+id/category" />
 
                 <TextView
-                    android:id="@+id/dish_name"
+                    android:id="@+id/dishName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -114,7 +114,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/dish_name" />
+                    app:layout_constraintTop_toBottomOf="@+id/menuItemName" />
 
                 <TextView
                     android:id="@+id/dish_count"
@@ -125,9 +125,9 @@
                     android:text="1шт"
                     android:textColor="@color/black"
                     android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/dish_name"
+                    app:layout_constraintBottom_toBottomOf="@+id/menuItemName"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/dish_name" />
+                    app:layout_constraintTop_toTopOf="@+id/menuItemName" />
 
                 <TextView
                     android:id="@+id/dish_cost"

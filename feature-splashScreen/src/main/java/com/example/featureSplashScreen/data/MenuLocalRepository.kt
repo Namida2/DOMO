@@ -1,5 +1,6 @@
 package com.example.featureSplashScreen.data
 
+import com.example.core.data.database.daos.MenuDao
 import com.example.core.domain.menu.Category
 import com.example.core.domain.menu.Dish
 import com.example.core.domain.menu.MenuService
@@ -12,7 +13,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MenuLocalRepositoryImpl @Inject constructor(
-    private val menuDao: com.example.core.data.database.daos.MenuDao
+    private val menuDao: MenuDao
 ) : MenuLocalRepository {
 
     private var menu: ArrayList<Category> = ArrayList()

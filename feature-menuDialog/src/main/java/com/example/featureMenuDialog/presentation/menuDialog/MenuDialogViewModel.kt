@@ -54,7 +54,6 @@ class MenuDialogViewModel : ViewModel() {
         _onDishSelected.value = Event(dish)
     }
 
-
     private fun getRecyclerViewItems(): List<BaseRecyclerViewType> =
         listOf(MenuService.getAllCategories()) +
                 MenuService.menu.map {

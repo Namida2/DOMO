@@ -2,7 +2,6 @@ package com.example.featureMenuDialog.presentation.editMenuItemDialog
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -10,17 +9,23 @@ import com.example.core.domain.menu.Dish
 import com.example.core.domain.tools.extensions.createMessageDialog
 import com.example.featureMenuDialog.R
 import com.example.featureMenuDialog.databinding.DialogEditMenuItemBinding
-import com.example.featureMenuDialog.domain.ViewModelFactory
-import com.example.featureMenuDialog.domain.tools.MenuItemsEnum
+import com.example.featureMenuDialog.domain.tools.EditMenuDialogModes
 
 class EditMenuItemDialog(
-    private val mode: MenuItemsEnum,
-    private val categoryName: String? = null,
-    private val dish: Dish? = null
+    private val mode: EditMenuDialogModes,
+    private var dish: Dish? = null
 ) : DialogFragment() {
 
+    private var categoryName: String? = null
     private lateinit var binding: DialogEditMenuItemBinding
-    private val viewModel by viewModels<EditMenuItemViewModel> { ViewModelFactory }
+    private val viewModel by viewModels<EditMenuItemViewModel>()
+
+    constructor(
+        mode: EditMenuDialogModes,
+        categoryName: String,
+    ) : this(mode) {
+        this.categoryName = categoryName
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireContext(), R.style.alertDialogStyle)
@@ -34,12 +39,10 @@ class EditMenuItemDialog(
         viewModel.state.observe(this) {
             when (it) {
                 is EditMenuItemVMState.ItemAlreadyExists -> {
-                    viewModel.resetState()
                     requireContext().createMessageDialog(it.message)
                         ?.show(parentFragmentManager, "")
                 }
                 is EditMenuItemVMState.ItemAdded -> {
-                    viewModel.resetState()
                     this.dismiss()
                 }
                 EditMenuItemVMState.Default -> {}
@@ -51,12 +54,19 @@ class EditMenuItemDialog(
         binding = DialogEditMenuItemBinding.inflate(layoutInflater).also {
             it.confirmButton.setOnClickListener {
                 when (mode) {
-                    MenuItemsEnum.CATEGORY -> {
-                        viewModel.addCategory(binding.itemName.text.toString())
+                    EditMenuDialogModes.ADD_DISH -> {
+                        with(binding) {
+                            viewModel.addDish(
+                                categoryName!!,
+                                menuItemName.text.toString(),
+                                dishCost.text.toString(),
+                                dishWeight.text.toString()
+                            )
+                        }
                     }
-                    MenuItemsEnum.DISH -> {
-                        //TODO: Complete this part //STOPPED//
-                        viewModel.addDish()
+                    //Add this part //STOPPED//
+                    EditMenuDialogModes.EDIT_DISH -> {
+//                        viewModel.addDish()
                     }
                 }
             }
@@ -67,15 +77,12 @@ class EditMenuItemDialog(
     private fun initView() {
         with(binding) {
             when (mode) {
-                MenuItemsEnum.CATEGORY -> {
-                    cost.visibility = View.GONE
-                    weight.visibility = View.GONE
+                EditMenuDialogModes.EDIT_DISH -> {
+                    menuItemName.setText(dish?.name)
+                    dishCost.setText(dish?.cost)
+                    dishWeight.setText(dish?.weight)
                 }
-                MenuItemsEnum.DISH -> {
-                    itemName.setText(dish?.name)
-                    cost.setText(dish?.cost)
-                    weight.setText(dish?.weight)
-                }
+                EditMenuDialogModes.ADD_DISH -> {}
             }
         }
     }

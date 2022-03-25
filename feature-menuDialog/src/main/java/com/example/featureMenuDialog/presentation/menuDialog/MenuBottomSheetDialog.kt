@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.example.core.domain.tools.constants.EmployeePosts.ADMINISTRATOR
-import com.example.core.domain.tools.extensions.Animations.prepareHide
 import com.example.core.domain.tools.extensions.Animations.prepareSlideDown
 import com.example.core.domain.tools.extensions.logD
 import com.example.core.presentation.recyclerView.adapterDelegates.DishesAdapterDelegate
@@ -20,7 +19,7 @@ import com.example.featureMenuDialog.R
 import com.example.featureMenuDialog.databinding.DialogMenuBinding
 import com.example.featureMenuDialog.domain.MenuDialogDepsStore.deps
 import com.example.featureMenuDialog.domain.interfaces.OnDismissListener
-import com.example.featureMenuDialog.domain.tools.MenuItemsEnum
+import com.example.featureMenuDialog.domain.tools.EditMenuDialogModes
 import com.example.featureMenuDialog.presentation.dishDialog.DishAlertDialog
 import com.example.featureMenuDialog.presentation.editMenuItemDialog.EditMenuItemDialog
 import com.example.featureMenuDialog.presentation.recyclerView.ItemTouchCallback
@@ -98,7 +97,7 @@ class MenuBottomSheetDialog(
             menuRecyclerView.addItemDecoration(
                 MenuItemDecorations(smallMargin!!, largeMargin!!)
             )
-            if(isAdmin) {
+            if (isAdmin) {
                 ItemTouchHelper(itemTouchCallback)
                     .attachToRecyclerView(menuRecyclerView)
             } else {
@@ -139,7 +138,10 @@ class MenuBottomSheetDialog(
     }
 
     private fun onAddDishButtonClick(categoryName: String) {
-        EditMenuItemDialog(MenuItemsEnum.CATEGORY).show(parentFragmentManager, "")
+        EditMenuItemDialog(
+            EditMenuDialogModes.ADD_DISH,
+            categoryName
+        ).show(parentFragmentManager, "")
     }
 
 }

@@ -58,7 +58,7 @@ class DishAlertDialog(
     private fun initBinding() {
         binding = DialogDishBinding.inflate(layoutInflater)
         binding?.viewModel = viewModel
-        initView(binding!!)
+        initView(binding)
     }
 
     private fun initView(binding: DialogDishBinding) {

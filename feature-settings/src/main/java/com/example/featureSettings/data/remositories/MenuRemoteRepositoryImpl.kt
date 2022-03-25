@@ -84,9 +84,9 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
         task: SimpleTask,
         isLastDocument: Boolean = false
     ) {
+        logD("lastIndexOfDish in ${category.name}")
         category.dishes.forEachIndexed { index, dish ->
             val lastIndexOfDish = category.dishes.lastIndex
-            logD("lastIndexOfDish in ${category.name}")
             menuCollectionRef.document(category.name)
                 .set(mapOf(category.name to category.dishes.size))
                 .addOnSuccessListener {
