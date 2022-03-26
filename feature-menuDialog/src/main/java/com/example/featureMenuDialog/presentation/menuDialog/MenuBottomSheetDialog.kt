@@ -100,6 +100,10 @@ class MenuBottomSheetDialog(
             if (isAdmin) {
                 ItemTouchHelper(itemTouchCallback)
                     .attachToRecyclerView(menuRecyclerView)
+                //TODO: Add adding a new category //STOPPED//
+                createNewCategoryFba.setOnClickListener {
+
+                }
             } else {
                 fabMenu.visibility = View.GONE
                 fba.visibility = View.VISIBLE

@@ -6,7 +6,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.example.core.domain.menu.Dish
+import com.example.core.domain.tools.constants.ErrorMessages.emptyFieldMessage
 import com.example.core.domain.tools.extensions.createMessageDialog
+import com.example.core.domain.tools.extensions.isEmptyField
 import com.example.featureMenuDialog.R
 import com.example.featureMenuDialog.databinding.DialogEditMenuItemBinding
 import com.example.featureMenuDialog.domain.tools.EditMenuDialogModes
@@ -56,11 +58,17 @@ class EditMenuItemDialog(
                 when (mode) {
                     EditMenuDialogModes.ADD_DISH -> {
                         with(binding) {
+                            val menuItemName = menuItemName.text.toString()
+                            val dishCost = dishCost.text.toString()
+                            val dishWeight = dishWeight.text.toString()
+                            if(isEmptyField(menuItemName, dishCost, dishWeight)) {
+                                requireContext().createMessageDialog(
+                                    emptyFieldMessage
+                                )?.show(parentFragmentManager, "")
+                                return@setOnClickListener
+                            }
                             viewModel.addDish(
-                                categoryName!!,
-                                menuItemName.text.toString(),
-                                dishCost.text.toString(),
-                                dishWeight.text.toString()
+                                categoryName!!, menuItemName, dishCost, dishWeight
                             )
                         }
                     }

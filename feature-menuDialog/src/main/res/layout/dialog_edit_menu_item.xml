@@ -47,6 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:hint="Наименование"
+        android:maxLength="80"
         android:inputType="text"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
@@ -54,7 +55,7 @@
 
 
     <EditText
-        android:id="@+id/dish_cost"
+        android:id="@+id/dishCost"
         style="@style/editTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,13 +64,14 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/bg_edit_text"
         android:hint="Цена"
-        android:inputType="number"
+        android:maxLength="14"
+        android:inputType="text"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
         android:textColor="@color/black" />
 
     <EditText
-        android:id="@+id/dish_weight"
+        android:id="@+id/dishWeight"
         style="@style/editTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,7 +80,8 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/bg_edit_text"
         android:hint="Веc/объем"
-        android:inputType="number"
+        android:maxLength="14"
+        android:inputType="text"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
         android:textColor="@color/black" />

@@ -100,7 +100,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/category" />
 
                 <TextView
-                    android:id="@+id/dish_weight"
+                    android:id="@+id/dishWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -130,7 +130,7 @@
                     app:layout_constraintTop_toTopOf="@+id/menuItemName" />
 
                 <TextView
-                    android:id="@+id/dish_cost"
+                    android:id="@+id/dishCost"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -138,9 +138,9 @@
                     android:text="225Р"
                     android:textColor="@color/black"
                     android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/dish_weight"
+                    app:layout_constraintBottom_toBottomOf="@+id/dishWeight"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/dish_weight" />
+                    app:layout_constraintTop_toTopOf="@+id/dishWeight" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
