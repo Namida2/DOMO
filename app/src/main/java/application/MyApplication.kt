@@ -9,8 +9,6 @@ import com.example.core.domain.tools.constants.SharedPreferencesConstants
 import com.example.domo.R
 import com.example.featureSplashScreen.domain.di.DaggerSplashScreenAppComponent
 import com.example.featureSplashScreen.domain.di.SplashScreenDepsStore
-import di.AppComponent
-import di.DaggerAppComponent
 
 class MyApplication : Application() {
 
