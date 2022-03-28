@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.featureOrder.presentation.recyclerView.adapters.TablesAdapter
 
 class TablesItemDecorations(
-    private val smallMargin: Int,
+    private val topMargin: Int,
     private val largeMargin: Int,
-    private val topMargin: Int
+    private val smallMargin: Int
 ) : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
         outRect: Rect,
@@ -30,18 +30,6 @@ class TablesItemDecorations(
                 outRect.left = smallMargin
                 outRect.right = largeMargin
             }
-            position % 2 == 0 && position == adapter.itemCount - 2 -> {
-                outRect.top = largeMargin
-                outRect.left = largeMargin
-                outRect.right = smallMargin
-                outRect.bottom = largeMargin
-            }
-            position % 2 == 1 && position == adapter.itemCount - 1 -> {
-                outRect.top = largeMargin
-                outRect.left = smallMargin
-                outRect.right = largeMargin
-                outRect.bottom = largeMargin
-            }
             position % 2 == 0 -> {
                 outRect.top = largeMargin
                 outRect.left = largeMargin
@@ -53,5 +41,7 @@ class TablesItemDecorations(
                 outRect.right = largeMargin
             }
         }
+        if (position == adapter.itemCount - 1 || (adapter.itemCount % 2 == 0 && position == adapter.itemCount - 2))
+            outRect.bottom = largeMargin
     }
 }

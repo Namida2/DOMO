@@ -43,7 +43,7 @@
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="36dp"
             android:fontFamily="@font/montserrat_regular"
-            android:text="Отметить это блюдо как готовое?"
+            android:text="Изменить готовность этого блюда?"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="14sp"

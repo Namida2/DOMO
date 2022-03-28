@@ -1,0 +1,59 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.core.presentation.recyclerView.itemDecorations.CompletedOrderViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center|top"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="120dp"
+            android:background="@drawable/bg_black_rounded_24" />
+
+        <Button
+            android:id="@+id/showDetailButton"
+            style="@style/emptyButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawableTint="@color/black"
+            android:gravity="start|center"
+            android:onClick="@{view -> viewModel.onShowDetailButtonClick()}"
+            android:paddingStart="24dp"
+            android:text="Открыть список блюд"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/deleteOrderButton"
+            style="@style/buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="32dp"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawableTint="@color/white"
+            android:gravity="start|center"
+            android:onClick="@{view -> viewModel.onDeleteOrderButtonClick()}"
+            android:paddingStart="24dp"
+            android:text="Удалить заказ"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/line" />
+
+    </LinearLayout>
+
+</layout>
+

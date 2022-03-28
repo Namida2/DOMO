@@ -93,7 +93,10 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
                     menuCollectionRef.document(category.name).collection(COLLECTION_DISHES)
                         .document(dish.name).set(dish).addOnSuccessListener {
                             logD("set ${dish.name}")
-                            if (lastIndexOfDish == index && isLastDocument) task.onSuccess(Unit)
+                            if (lastIndexOfDish == index && isLastDocument) {
+                                logD("insertDishes::onSuccess")
+                                task.onSuccess(Unit)
+                            }
                         }.addOnFailureListener { exception ->
                             task.onError(exception.getExceptionMessage())
                         }

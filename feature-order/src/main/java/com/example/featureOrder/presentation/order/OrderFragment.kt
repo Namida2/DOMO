@@ -20,6 +20,7 @@ import com.example.core.domain.tools.enims.AddingDishMods
 import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
 import com.example.core.presentation.recyclerView.adapterDelegates.OrderItemsAdapterDelegate
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
+import com.example.core.presentation.recyclerView.itemDecorations.SimpleListItemDecoration
 import com.example.featureMenuDialog.domain.MenuDialogDeps
 import com.example.featureMenuDialog.domain.MenuDialogDepsStore
 import com.example.featureMenuDialog.presentation.dishDialog.DishAlertDialog
@@ -37,12 +38,16 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.properties.Delegates
 
 class OrderFragment : Fragment() {
 
     private var orderId = 0
     private val defaultGuestsCount = 1
     private val guestCountShowingDelay = 400L
+    private var smallMargin by Delegates.notNull<Int>()
+    private var largeMargin by Delegates.notNull<Int>()
+    private var topMargin by Delegates.notNull<Int>()
 
     private var guestCountDialog: GuestsCountBottomSheetDialog? = null
     private var orderMenuDialog: OrderMenuBottomSheetDialog? = null
@@ -56,6 +61,9 @@ class OrderFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
+        largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
+        topMargin = resources.getDimensionPixelSize(R.dimen.top_tables_margin)
         //TODO: Add a delegate for viewModels
         adapter = BaseRecyclerViewAdapter(
             listOf(
@@ -121,9 +129,17 @@ class OrderFragment : Fragment() {
             binding.guestsCount.text = currentOrder.guestsCount.toString()
             adapter?.submitList(currentOrder.orderItems.toList())
 
+            orderRecyclerView.addItemDecoration(
+                SimpleListItemDecoration(
+                    topMargin,
+                    largeMargin,
+                    smallMargin
+                )
+            )
             orderRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             orderRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
             })
         }
     }

@@ -38,6 +38,7 @@ class MenuLocalRepositoryImpl @Inject constructor(
     override fun insertCurrentMenu() {
         val dishes = getAllDishes(MenuService.menu)
         CoroutineScope(IO).launch {
+            menuDao.deleteAll()
             menuDao.insert(dishes)
         }
     }

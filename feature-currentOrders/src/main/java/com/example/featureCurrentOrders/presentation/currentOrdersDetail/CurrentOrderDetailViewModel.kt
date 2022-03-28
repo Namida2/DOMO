@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.order.Order
 import com.example.core.domain.order.OrderItem
 import com.example.core.domain.order.OrdersServiceSub
 import com.example.core.domain.tools.Event

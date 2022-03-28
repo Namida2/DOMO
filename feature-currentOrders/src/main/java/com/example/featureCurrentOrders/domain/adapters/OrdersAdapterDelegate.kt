@@ -14,7 +14,7 @@ import com.example.featureCurrentOrders.databinding.LayoutOrderCardBinding
 
 //TODO: Implement this part //STOPPED//
 class OrdersAdapterDelegate(
-    private val onOrderSelected: (tableId: Int) -> Unit
+    private val onOrderSelected: (order: Order) -> Unit
 ) : BaseAdapterDelegate<LayoutOrderCardBinding, Order>, View.OnClickListener {
 
     override fun isItMe(recyclerViewType: BaseRecyclerViewType): Boolean = recyclerViewType is Order
@@ -40,7 +40,7 @@ class OrdersAdapterDelegate(
 
     override fun getDiffCallback(): DiffUtil.ItemCallback<Order> = diffCallback
     override fun onClick(v: View?) {
-        v?.tag?.let { onOrderSelected.invoke(it as Int) }
+        v?.tag?.let { onOrderSelected.invoke(it as Order) }
     }
 }
 
@@ -54,8 +54,8 @@ class OrdersViewHolder(
     override fun onBind(item: Order) {
         var preview = ""
         var allReady = true
-        binding.largeOrderContainer.tag = item.orderId
-        binding.orderContainerCardView.tag = item.orderId
+        binding.largeOrderContainer.tag = item
+        binding.orderContainerCardView.tag = item
         binding.orderId.text = item.orderId.toString()
         val count = item.orderItems.size.coerceAtMost(averageOrderItemsCount)
         item.orderItems.take(count).forEach {

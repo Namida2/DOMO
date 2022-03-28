@@ -8,6 +8,7 @@ import com.example.core.domain.di.CoreDepsStore
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.notofications.NotificationsTools
 import com.example.core.domain.order.OrdersServiceSub
+import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_IS_READY
 import com.example.core.domain.tools.constants.FirestoreReferences.orderItemsStateListenerDocumentRef
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ID
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ITEM_ID
@@ -56,7 +57,8 @@ class NewOrdersItemStatusWorker(
         val orderItemInfo = data[FIELD_ORDER_ITEM_INFO] as Map<*, *>
         val orderId = (orderItemInfo[FIELD_ORDER_ID] as? Long)?.toInt() ?: return
         val orderItemId = orderItemInfo[FIELD_ORDER_ITEM_ID] as? String ?: return
-        orderService.changeOrderItemStatus(orderId, orderItemId)
+        val isReady = orderItemInfo[FIELD_IS_READY] as? Boolean ?: return
+        orderService.changeOrderItemStatus(orderId, orderItemId, isReady)
 //        if (CoreDepsStore.deps.currentEmployee!!.post == WAITER)
             notificationManager?.notify( id++,
                 NotificationsTools.createNotification(context, data.toString())

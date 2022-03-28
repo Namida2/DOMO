@@ -20,7 +20,6 @@ class ClosedQuestionDialog<A>(
 ) : DialogFragment() {
 
     var arg: A? = null
-
     @SuppressLint("ResourceType")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val binding = DialogClodsedQuestionBinding.inflate(layoutInflater)

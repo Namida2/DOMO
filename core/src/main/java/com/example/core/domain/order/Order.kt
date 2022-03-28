@@ -6,4 +6,8 @@ data class Order(
     var orderId: Int,
     var guestsCount: Int,
     var orderItems: MutableList<OrderItem> = mutableListOf(),
-) : BaseRecyclerViewType
+) : BaseRecyclerViewType {
+    fun isCompleted(): Boolean = !orderItems.map {
+        it.isReady
+    }.contains(false)
+}

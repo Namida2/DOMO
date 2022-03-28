@@ -12,10 +12,7 @@ import com.example.core.domain.order.Order
 import com.example.core.domain.order.OrderItem
 import com.example.core.domain.order.OrdersServiceSub
 import com.example.core.domain.tools.Event
-import com.example.core.domain.tools.constants.OtherStringConstants.ORDER_ITEM_NOT_FOUNT
-import com.example.core.domain.tools.extensions.logD
 import com.example.featureMenuDialog.domain.interfaces.OnDismissListener
-import com.example.featureMenuDialog.presentation.menuDialog.MenuDialogStates
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -75,10 +72,7 @@ class OrderViewModel(
         _state.value = OrderViewModelStates.ShowingOrderMenuDialog
     }
 
-    fun onOrderItemSelected(orderItemId: String) {
-        val orderItem = ordersService.currentOrder!!.orderItems.find {
-            it.getOrderIemId() == orderItemId
-        } ?: throw IllegalArgumentException(ORDER_ITEM_NOT_FOUNT + orderItemId)
+    fun onOrderItemSelected(orderItem: OrderItem) {
         _state.value = OrderViewModelStates.ShowingDishMenuDialog(
             orderItem,
             MenuService.getDishById(orderItem.dishId)

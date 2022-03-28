@@ -109,7 +109,7 @@ class OrdersServiceImpl @Inject constructor() :
             it.orderId == orderId
         }
 
-    override fun changeOrderItemStatus(orderId: Int, orderItemId: String) {
+    override fun changeOrderItemStatus(orderId: Int, orderItemId: String, isReady: Boolean) {
         var newOrder: Order? = null
         orders.find {
             it.orderId == orderId
@@ -117,7 +117,7 @@ class OrdersServiceImpl @Inject constructor() :
             newOrder = it?.copy(
                 orderItems = it.orderItems.map { orderItem ->
                     if (orderItem.getOrderIemId() == orderItemId)
-                        orderItem.copy(isReady = true)
+                        orderItem.copy(isReady = isReady)
                     else orderItem
                 }.toMutableList()
             )

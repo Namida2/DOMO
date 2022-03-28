@@ -27,7 +27,7 @@ object FirestoreConstants {
     const val FIELD_ORDER_ITEM_ID = "orderItemId"
     const val FIELD_ORDER_INFO= "orderInfo"
     const val FIELD_ORDER_ITEM_INFO= "orderItemInfo"
-    const val FIELD_ORDER_IS_READY= "ready"
+    const val FIELD_IS_READY= "ready"
     const val FIELD_PERMISSION= "permission"
     const val FIELD_EMAIL = "email"
     const val FIELD_NEW_PERMISSION= "newPermission"

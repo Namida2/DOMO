@@ -12,27 +12,26 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.core.domain.Settings
 import com.example.featureOrder.R
 import com.example.featureOrder.databinding.FragmentTablesBinding
-import com.example.featureOrder.domain.di.OrderDepsStore
 import com.example.featureOrder.domain.di.OrderDepsStore.deps
-import com.example.featureOrder.presentation.recyclerView.itemDecorations.TablesItemDecorations
 import com.example.featureOrder.presentation.recyclerView.adapters.TablesAdapter
+import com.example.featureOrder.presentation.recyclerView.itemDecorations.TablesItemDecorations
 import com.google.android.material.transition.platform.MaterialElevationScale
 import com.google.android.material.transition.platform.MaterialSharedAxis
+import kotlin.properties.Delegates
 
 //TODO: Start implementing this module
-class TablesFragment: Fragment() {
+class TablesFragment : Fragment() {
 
     companion object {
         const val isReturnedFromOrderFragment = "isReturnedFromOrderFragment"
     }
 
     private val spanCount = 2
-    private var smallMargin: Int? = null
-    private var largeMargin: Int? = null
-    private var topTablesMargin: Int? = null
+    private var smallMargin by Delegates.notNull<Int>()
+    private var largeMargin by Delegates.notNull<Int>()
+    private var topMargin by Delegates.notNull<Int>()
 
     private val viewModel: TablesViewModel by viewModels()
     private lateinit var binding: FragmentTablesBinding
@@ -41,7 +40,7 @@ class TablesFragment: Fragment() {
         super.onAttach(context)
         smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
         largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
-        topTablesMargin = resources.getDimensionPixelSize(R.dimen.top_tables_margin)
+        topMargin = resources.getDimensionPixelSize(R.dimen.top_tables_margin)
     }
 
     @SuppressLint("ResourceType")
@@ -62,11 +61,7 @@ class TablesFragment: Fragment() {
             layoutManager = GridLayoutManager(container?.context, spanCount)
             adapter = TablesAdapter(deps.settings.tablesCount, viewModel::onTableClick)
             addItemDecoration(
-                TablesItemDecorations(
-                    smallMargin!!,
-                    largeMargin!!,
-                    topTablesMargin!!
-                )
+                TablesItemDecorations(topMargin, largeMargin, smallMargin)
             )
         }
     }

@@ -10,8 +10,8 @@ import com.example.core.domain.menu.Dish
 interface MenuDao {
     @Query("SELECT * FROM menu")
     suspend fun readAll(): List<Dish>
-
-    //TODO: Add 'deleteAll method'
+    @Query("DELETE FROM menu")
+    suspend fun deleteAll()
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(dishes: List<Dish>)
 }

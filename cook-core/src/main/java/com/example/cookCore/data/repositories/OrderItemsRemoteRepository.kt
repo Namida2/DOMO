@@ -1,26 +1,32 @@
 package com.example.cookCore.data.repositories
 
-import com.example.core.domain.tools.constants.FirestoreReferences.fireStore
-import com.example.core.domain.tools.constants.FirestoreReferences.orderItemsStateListenerDocumentRef
-import com.example.core.domain.tools.constants.FirestoreReferences.ordersCollectionRef
 import com.example.core.domain.tools.SimpleTask
 import com.example.core.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ID
-import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_IS_READY
+import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_IS_READY
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ITEM_ID
 import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ITEM_INFO
+import com.example.core.domain.tools.constants.FirestoreReferences.fireStore
+import com.example.core.domain.tools.constants.FirestoreReferences.orderItemsStateListenerDocumentRef
+import com.example.core.domain.tools.constants.FirestoreReferences.ordersCollectionRef
 import com.example.core.domain.tools.extensions.getExceptionMessage
 import com.google.firebase.firestore.Transaction
 import javax.inject.Inject
 
 class OrderItemsRemoteRepositoryImpl @Inject constructor() : OrderItemsRemoteRepository {
-    override fun setOrderItemAsReady(orderId: Int, orderItemId: String, task: SimpleTask) {
+
+    override fun setOrderItemAsReady(
+        orderId: Int,
+        orderItemId: String,
+        isReady: Boolean,
+        task: SimpleTask
+    ) {
         val orderItemDocumentRef = ordersCollectionRef.document(orderId.toString())
             .collection(COLLECTION_ORDER_ITEMS).document(orderItemId)
         resetOrderItemState(task) {
             fireStore.runTransaction {
-                it.update(orderItemDocumentRef, FIELD_ORDER_IS_READY, true)
-                updateOrderItemsStateListener(orderId, orderItemId, it)
+                it.update(orderItemDocumentRef, FIELD_IS_READY, isReady)
+                updateOrderItemsStateListener(orderId, orderItemId, isReady, it)
             }.addOnSuccessListener {
                 task.onSuccess(Unit)
             }.addOnFailureListener {
@@ -34,7 +40,8 @@ class OrderItemsRemoteRepositoryImpl @Inject constructor() : OrderItemsRemoteRep
             mapOf<String, Any>(
                 FIELD_ORDER_ITEM_INFO to mapOf<String, Any>(
                     FIELD_ORDER_ID to "",
-                    FIELD_ORDER_ITEM_ID to ""
+                    FIELD_ORDER_ITEM_ID to "",
+                    FIELD_IS_READY to ""
                 )
             )
         ).addOnSuccessListener {
@@ -48,12 +55,14 @@ class OrderItemsRemoteRepositoryImpl @Inject constructor() : OrderItemsRemoteRep
     private fun updateOrderItemsStateListener(
         orderId: Int,
         orderItemId: String,
+        isReady: Boolean,
         transaction: Transaction
     ) {
         val orderItemInfo = mapOf<String, Any>(
             FIELD_ORDER_ITEM_INFO to mapOf<String, Any>(
                 FIELD_ORDER_ID to orderId,
-                FIELD_ORDER_ITEM_ID to orderItemId
+                FIELD_ORDER_ITEM_ID to orderItemId,
+                FIELD_IS_READY to isReady
             )
         )
         transaction.update(orderItemsStateListenerDocumentRef, orderItemInfo)
@@ -62,5 +71,5 @@ class OrderItemsRemoteRepositoryImpl @Inject constructor() : OrderItemsRemoteRep
 }
 
 interface OrderItemsRemoteRepository {
-    fun setOrderItemAsReady(orderId: Int, orderItemId: String, task: SimpleTask)
+    fun setOrderItemAsReady(orderId: Int, orderItemId: String, isReady: Boolean, task: SimpleTask)
 }

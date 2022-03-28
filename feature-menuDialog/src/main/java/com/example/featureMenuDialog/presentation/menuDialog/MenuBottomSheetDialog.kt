@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.example.core.domain.tools.DeletedDishInfo
 import com.example.core.domain.tools.constants.EmployeePosts.ADMINISTRATOR
 import com.example.core.domain.tools.extensions.Animations.prepareSlideDown
+import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
 import com.example.core.domain.tools.extensions.logD
 import com.example.core.presentation.recyclerView.adapterDelegates.DishesAdapterDelegate
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
@@ -27,6 +29,8 @@ import com.example.featureMenuDialog.presentation.recyclerView.MenuItemDecoratio
 import com.example.featureMenuDialog.presentation.recyclerView.delegates.CategoriesAdapterDelegate
 import com.example.featureMenuDialog.presentation.recyclerView.delegates.CategoryLargeRecyclerViewType
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.BaseTransientBottomBar.BaseCallback
 import com.google.android.material.snackbar.Snackbar
 
 //TODO: Remove the edit views for waiter
@@ -124,14 +128,22 @@ class MenuBottomSheetDialog(
         viewModel.onDishDeleted.observe(viewLifecycleOwner) {
             it.getData()?.let { deletedDishInfo ->
                 hideFabMenu()
-                Snackbar.make(binding.fabMenu, R.string.cancelAction, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.yes) {
-                        viewModel.addDish(deletedDishInfo)
-                    }.setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.black))
-                    .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-                    .show()
+                showCancelActionSnackBar(deletedDishInfo)
             }
         }
+    }
+
+    private fun showCancelActionSnackBar(deletedDishInfo: DeletedDishInfo) {
+        Snackbar.make(binding.fabMenu, R.string.cancelAction, Snackbar.LENGTH_LONG)
+            .setAction(R.string.yes) {
+                viewModel.addDish(deletedDishInfo)
+            }.setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.black))
+            .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            .addCallback(object: BaseCallback<Snackbar>() {
+                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                    showFabMenu()
+                }
+            }).show()
     }
 
     private fun hideFabMenu() {
@@ -139,6 +151,13 @@ class MenuBottomSheetDialog(
         binding.rootView.getHitRect(scrollBounds)
         if (binding.fabMenu.getLocalVisibleRect(scrollBounds))
             binding.fabMenu.prepareSlideDown(binding.fabMenu.height).start()
+    }
+
+    private fun showFabMenu() {
+        val scrollBounds = Rect()
+        binding.rootView.getHitRect(scrollBounds)
+        if (!binding.fabMenu.getLocalVisibleRect(scrollBounds))
+            binding.fabMenu.prepareSlideUp(binding.fabMenu.height).start()
     }
 
     private fun onAddDishButtonClick(categoryName: String) {

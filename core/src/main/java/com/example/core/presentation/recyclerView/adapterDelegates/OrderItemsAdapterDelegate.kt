@@ -16,7 +16,7 @@ import com.example.core.domain.tools.constants.FirestoreConstants.EMPTY_COMMENTA
 import javax.inject.Inject
 
 class OrderItemsAdapterDelegate @Inject constructor(
-    private val onOrderSelected: (orderItemId: String) -> Unit
+    private val onOrderSelected: (orderItem: OrderItem) -> Unit
 ) : BaseAdapterDelegate<LayoutOrderItemBinding, OrderItem>, View.OnClickListener {
     override fun isItMe(recyclerViewType: BaseRecyclerViewType): Boolean =
         recyclerViewType is OrderItem
@@ -43,7 +43,7 @@ class OrderItemsAdapterDelegate @Inject constructor(
     override fun getDiffCallback(): DiffUtil.ItemCallback<OrderItem> = diffCallback
 
     override fun onClick(v: View?) {
-        v?.tag?.let { onOrderSelected.invoke(it as String) }
+        v?.tag?.let { onOrderSelected.invoke(it as OrderItem) }
     }
 }
 
@@ -53,11 +53,11 @@ class OrderItemViewHolder(
 
     override fun onBind(item: OrderItem) {
         val dish = MenuService.getDishById(item.dishId)
-        val orderItemId = dish.id.toString() + ORDER_ITEM_ID_DELIMITER + item.commentary
+//        val orderItemId = dish.id.toString() + ORDER_ITEM_ID_DELIMITER + item.commentary
         with(binding) {
-            orderLargeContainer.tag = orderItemId
-            orderSmallContainer.tag = orderItemId
-            category.text = dish.categoryName
+            orderLargeContainer.tag = item
+            orderSmallContainer.tag = item
+            categoryName.text = dish.categoryName
             dishName.text = dish.name
             dishCost.text = dish.cost
             dishWeight.text = dish.weight

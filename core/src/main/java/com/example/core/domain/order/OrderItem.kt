@@ -1,7 +1,8 @@
 package com.example.core.domain.order
 
-import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
+import com.example.core.domain.menu.MenuService
 import com.example.core.domain.tools.constants.FirestoreConstants.ORDER_ITEM_ID_DELIMITER
+import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 
 data class OrderItem(
     var dishId: Int,

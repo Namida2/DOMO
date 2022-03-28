@@ -12,19 +12,25 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cookCore.presentation.CookCurrentOrderDetailVMStates
 import com.example.cookCore.presentation.CookCurrentOrderDetailViewModel
-import com.example.core.presentation.recyclerView.adapterDelegates.OrderItemsAdapterDelegate
-import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
+import com.example.core.domain.order.OrderItem
 import com.example.core.domain.tools.constants.EmployeePosts.COOK
 import com.example.core.domain.tools.dialogs.ClosedQuestionDialog
 import com.example.core.domain.tools.dialogs.ProcessAlertDialog
 import com.example.core.domain.tools.extensions.createMessageDialog
+import com.example.core.presentation.recyclerView.adapterDelegates.OrderItemsAdapterDelegate
+import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
+import com.example.core.presentation.recyclerView.itemDecorations.SimpleListItemDecoration
 import com.example.featureCurrentOrders.R
 import com.example.featureCurrentOrders.databinding.FragmentCurrentOrdersDetailBinding
 import com.example.featureCurrentOrders.domain.ViewModelFactory
 import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
 import com.google.android.material.transition.platform.MaterialSharedAxis
+import kotlin.properties.Delegates
 
 class CurrentOrdersDetailFragment : Fragment() {
+    private var smallMargin by Delegates.notNull<Int>()
+    private var largeMargin by Delegates.notNull<Int>()
+    private var topMargin by Delegates.notNull<Int>()
     private val args: CurrentOrdersDetailFragmentArgs by navArgs()
     private lateinit var binding: FragmentCurrentOrdersDetailBinding
     private val viewModel by viewModels<CurrentOrderDetailViewModel> { ViewModelFactory }
@@ -32,12 +38,15 @@ class CurrentOrdersDetailFragment : Fragment() {
     private val adapter = BaseRecyclerViewAdapter(
         listOf(OrderItemsAdapterDelegate(::onDishSelected))
     )
-    private var isDishCompletedDialog: ClosedQuestionDialog<String>? = null
+    private lateinit var isDishCompletedDialog: ClosedQuestionDialog<OrderItem>
     private var isCook = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         viewModel.orderId = args.orderId
+        smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
+        largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
+        topMargin = resources.getDimensionPixelSize(R.dimen.top_tables_margin)
     }
 
     override fun onCreateView(
@@ -101,6 +110,9 @@ class CurrentOrdersDetailFragment : Fragment() {
                 false
             )
             dishesRecyclerView.adapter = adapter
+            dishesRecyclerView.addItemDecoration(
+                SimpleListItemDecoration(topMargin, largeMargin, smallMargin)
+            )
         }
     }
 
@@ -112,9 +124,18 @@ class CurrentOrdersDetailFragment : Fragment() {
         }
     }
 
-    private fun onDishSelected(orderItemId: String) {
-        if (!isCook) return
-        isDishCompletedDialog?.arg = orderItemId
-        isDishCompletedDialog?.show(parentFragmentManager, "")
+    private fun onDishSelected(orderItem: OrderItem) {
+        if (isCook) onDishClickByCook(orderItem)
+        else onDishClickByWaiter(orderItem)
+    }
+
+    private fun onDishClickByCook(orderItem: OrderItem) {
+        if (isDishCompletedDialog.isAdded) return
+        isDishCompletedDialog.arg = orderItem
+        isDishCompletedDialog.show(parentFragmentManager, "")
+    }
+
+    private fun onDishClickByWaiter(orderItemId: OrderItem) {
+
     }
 }

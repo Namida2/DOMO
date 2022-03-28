@@ -98,7 +98,7 @@
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/dialog_clodsed_question.xml" value="0.33" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/dialog_process.xml" value="0.5" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/layout_dish.xml" value="0.24479166666666666" />
-        <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/layout_order_item.xml" value="0.2" />
+        <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/layout_order_item.xml" value="0.25" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/layout_profile.xml" value="0.49606299212598426" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-authorisation/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-authorisation/src/main/res/drawable/bg_top_card.xml" value="0.2586805555555556" />
@@ -111,6 +111,7 @@
         <entry key="..\:/Projects/Graduate/DOMO/feature-authorization/src/main/res/layout/fragment_log_in.xml" value="0.12167689161554192" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-currentOrders/src/main/res/drawable/bg_black_rounded_24.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-currentOrders/src/main/res/layout/activity_main.xml" value="0.24791666666666667" />
+        <entry key="..\:/Projects/Graduate/DOMO/feature-currentOrders/src/main/res/layout/dialog_completed_order.xml" value="0.33" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-currentOrders/src/main/res/layout/fragment_current_orders.xml" value="0.20013661202185792" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-currentOrders/src/main/res/layout/fragment_current_orders_detail.xml" value="0.24791666666666667" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-currentOrders/src/main/res/layout/layout_order_card.xml" value="0.22" />

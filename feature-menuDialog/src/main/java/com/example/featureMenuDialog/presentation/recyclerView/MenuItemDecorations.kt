@@ -21,6 +21,8 @@ class MenuItemDecorations(
         val position = parent.getChildAdapterPosition(view)
         if (position == -1 || adapter.currentList[position] is CategoryName) {
             setHorizontalMargins(position, outRect)
+            outRect.top = largeMargin
+            outRect.bottom = largeMargin
             return
         }
         when (position) {

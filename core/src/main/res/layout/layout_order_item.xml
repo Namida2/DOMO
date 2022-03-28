@@ -4,10 +4,7 @@
     android:id="@+id/orderLargeContainer"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginBottom="8dp"
+
     android:clickable="true"
     android:focusable="true"
     app:cardBackgroundColor="@color/black"
@@ -49,14 +46,14 @@
                     android:alpha="1"
                     android:src="@drawable/ic_selected"
                     android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="@+id/category"
-                    app:layout_constraintEnd_toStartOf="@+id/category"
+                    app:layout_constraintBottom_toBottomOf="@+id/categoryName"
+                    app:layout_constraintEnd_toStartOf="@+id/categoryName"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/category" />
+                    app:layout_constraintTop_toTopOf="@+id/categoryName" />
 
                 <TextView
-                    android:id="@+id/category"
+                    android:id="@+id/categoryName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="88dp"
@@ -77,11 +74,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:src="@drawable/ic_more"
-                    app:layout_constraintBottom_toBottomOf="@+id/category"
+                    app:layout_constraintBottom_toBottomOf="@+id/categoryName"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/category"
-                    app:layout_constraintTop_toTopOf="@+id/category" />
+                    app:layout_constraintStart_toEndOf="@+id/categoryName"
+                    app:layout_constraintTop_toTopOf="@+id/categoryName" />
 
                 <TextView
                     android:id="@+id/dishName"
@@ -97,7 +94,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/category" />
+                    app:layout_constraintTop_toBottomOf="@+id/categoryName" />
 
                 <TextView
                     android:id="@+id/dishWeight"
@@ -105,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="12dp"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginBottom="18dp"
                     android:fontFamily="@font/montserrat_regular"
                     android:text="125/225гр"
                     android:textColor="@color/black"
@@ -114,10 +111,10 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/menuItemName" />
+                    app:layout_constraintTop_toBottomOf="@+id/dishName" />
 
                 <TextView
-                    android:id="@+id/dish_count"
+                    android:id="@+id/dishCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -125,9 +122,9 @@
                     android:text="1шт"
                     android:textColor="@color/black"
                     android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/menuItemName"
+                    app:layout_constraintBottom_toBottomOf="@+id/dishName"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/menuItemName" />
+                    app:layout_constraintTop_toTopOf="@+id/dishName" />
 
                 <TextView
                     android:id="@+id/dishCost"
