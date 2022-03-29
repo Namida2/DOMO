@@ -3,7 +3,7 @@ package com.example.featureMenuDialog.presentation.recyclerView
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.example.core.domain.menu.CategoryName
+import com.example.core.domain.entities.menu.CategoryName
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
 
 class MenuItemDecorations(

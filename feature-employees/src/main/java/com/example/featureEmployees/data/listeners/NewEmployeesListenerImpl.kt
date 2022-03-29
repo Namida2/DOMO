@@ -1,13 +1,13 @@
 package com.example.featureEmployees.data.listeners
 
 import com.example.core.domain.entities.Employee
-import com.example.core.domain.tools.ErrorMessage
-import com.example.core.domain.tools.TaskWithEmployee
-import com.example.core.domain.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
-import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_EMAIL
-import com.example.core.domain.tools.constants.FirestoreReferences.newEmployeeListenerDocumentRef
-import com.example.core.domain.tools.extensions.logE
-import com.example.core.domain.tools.extensions.readEmployeeByEmail
+import com.example.core.domain.entities.tools.ErrorMessage
+import com.example.core.domain.entities.tools.TaskWithEmployee
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_EMAIL
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.newEmployeeListenerDocumentRef
+import com.example.core.domain.entities.tools.extensions.logE
+import com.example.core.domain.entities.tools.extensions.readEmployeeByEmail
 import com.example.featureEmployees.domain.listeners.NewEmployeesListener
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose

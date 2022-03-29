@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.core.presentation.recyclerView.itemDecorations.CompletedOrderViewModel" />
+            type="com.example.featureCurrentOrders.presentation.completedOrderMenu.CompletedOrderViewModel" />
     </data>
 
     <LinearLayout

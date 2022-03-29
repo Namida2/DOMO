@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.core.domain.tools.constants.EmployeePosts
+import com.example.core.domain.entities.tools.constants.EmployeePosts
 import com.example.featureRegistration.databinding.LayoutPostItemBinding
 import com.example.featureRegistration.domain.PostItem
 

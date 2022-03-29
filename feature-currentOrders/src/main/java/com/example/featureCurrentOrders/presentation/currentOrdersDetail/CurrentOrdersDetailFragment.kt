@@ -12,11 +12,11 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cookCore.presentation.CookCurrentOrderDetailVMStates
 import com.example.cookCore.presentation.CookCurrentOrderDetailViewModel
-import com.example.core.domain.order.OrderItem
-import com.example.core.domain.tools.constants.EmployeePosts.COOK
-import com.example.core.domain.tools.dialogs.ClosedQuestionDialog
-import com.example.core.domain.tools.dialogs.ProcessAlertDialog
-import com.example.core.domain.tools.extensions.createMessageDialog
+import com.example.core.domain.entities.order.OrderItem
+import com.example.core.domain.entities.tools.constants.EmployeePosts.COOK
+import com.example.core.domain.entities.tools.dialogs.ClosedQuestionDialog
+import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
+import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.presentation.recyclerView.adapterDelegates.OrderItemsAdapterDelegate
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
 import com.example.core.presentation.recyclerView.itemDecorations.SimpleListItemDecoration

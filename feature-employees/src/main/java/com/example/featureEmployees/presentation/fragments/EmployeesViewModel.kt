@@ -5,12 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.entities.Employee
-import com.example.core.domain.tools.ErrorMessage
-import com.example.core.domain.tools.constants.ErrorMessages.defaultErrorMessage
-import com.example.core.domain.tools.Event
-import com.example.core.domain.tools.SimpleTask
-import com.example.core.domain.tools.extensions.logD
-import com.example.featureEmployees.domain.di.EmployeesAppComponent
+import com.example.core.domain.entities.tools.ErrorMessage
+import com.example.core.domain.entities.tools.constants.ErrorMessages.defaultErrorMessage
+import com.example.core.domain.entities.tools.Event
+import com.example.core.domain.entities.tools.SimpleTask
+import com.example.core.domain.entities.tools.extensions.logD
 import com.example.featureEmployees.domain.services.EmployeesService
 import com.example.featureEmployees.domain.useCases.ReadEmployeesUseCase
 import kotlinx.coroutines.flow.collect

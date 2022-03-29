@@ -1,9 +1,9 @@
 package com.example.featureSplashScreen.data
 
 import com.example.core.data.database.daos.MenuDao
-import com.example.core.domain.menu.Category
-import com.example.core.domain.menu.Dish
-import com.example.core.domain.menu.MenuService
+import com.example.core.domain.entities.menu.Category
+import com.example.core.domain.entities.menu.Dish
+import com.example.core.domain.entities.menu.MenuService
 import com.example.featureSplashScreen.domain.repositories.MenuLocalRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

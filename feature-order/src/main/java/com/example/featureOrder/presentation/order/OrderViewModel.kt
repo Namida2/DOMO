@@ -6,12 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.menu.Dish
-import com.example.core.domain.menu.MenuService
-import com.example.core.domain.order.Order
-import com.example.core.domain.order.OrderItem
-import com.example.core.domain.order.OrdersServiceSub
-import com.example.core.domain.tools.Event
+import com.example.core.domain.entities.menu.Dish
+import com.example.core.domain.entities.menu.MenuService
+import com.example.core.domain.entities.order.Order
+import com.example.core.domain.entities.order.OrderItem
+import com.example.core.domain.entities.order.OrdersServiceSub
+import com.example.core.domain.entities.tools.Event
 import com.example.featureMenuDialog.domain.interfaces.OnDismissListener
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -38,7 +38,7 @@ sealed class OrderItemsRecyclerViewStates {
 
 //TODO: Subscribe on the order list changes and show a loader if the order screen was opened earlier than orders were loaded //STOPPED//
 class OrderViewModel(
-    private val ordersService: OrdersService<OrdersServiceSub>
+    private val ordersService: OrdersService
 ) : ViewModel(), OnDismissListener {
 
     private val _state: MutableLiveData<OrderViewModelStates> =

@@ -6,13 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.example.core.R
 import com.example.core.databinding.LayoutOrderItemBinding
-import com.example.core.domain.menu.MenuService
-import com.example.core.domain.order.OrderItem
+import com.example.core.domain.entities.menu.MenuService
+import com.example.core.domain.entities.order.OrderItem
 import com.example.core.presentation.recyclerView.interfaces.BaseAdapterDelegate
 import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.core.presentation.recyclerView.interfaces.BaseViewHolder
-import com.example.core.domain.tools.constants.FirestoreConstants.ORDER_ITEM_ID_DELIMITER
-import com.example.core.domain.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
 import javax.inject.Inject
 
 class OrderItemsAdapterDelegate @Inject constructor(

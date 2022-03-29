@@ -1,12 +1,12 @@
 package com.example.core.data.repositorues
 
-import com.example.core.domain.order.Order
-import com.example.core.domain.order.OrderItem
-import com.example.core.domain.tools.constants.ErrorMessages
-import com.example.core.domain.tools.constants.FirestoreReferences.ordersCollectionRef
-import com.example.core.domain.tools.TaskWithOrder
-import com.example.core.domain.tools.constants.FirestoreConstants
-import com.example.core.domain.tools.extensions.logE
+import com.example.core.domain.entities.order.Order
+import com.example.core.domain.entities.order.OrderItem
+import com.example.core.domain.entities.tools.constants.ErrorMessages
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.ordersCollectionRef
+import com.example.core.domain.entities.tools.TaskWithOrder
+import com.example.core.domain.entities.tools.constants.FirestoreConstants
+import com.example.core.domain.entities.tools.extensions.logE
 import com.google.firebase.FirebaseNetworkException
 import javax.inject.Inject
 

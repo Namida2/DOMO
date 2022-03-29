@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.example.core.domain.order.Order
-import com.example.core.presentation.recyclerView.itemDecorations.CompletedOrderVMStates
-import com.example.core.presentation.recyclerView.itemDecorations.CompletedOrderViewModel
+import com.example.core.domain.entities.order.Order
+import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
+import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.featureCurrentOrders.databinding.DialogCompletedOrderBinding
+import com.example.featureCurrentOrders.domain.ViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.coroutines.flow.callbackFlow
 
 //TODO: Cool thing
 abstract class CompletedOrderDialogCallback {
@@ -24,38 +24,44 @@ class CompletedOrderMenuDialog(
 ) : BottomSheetDialogFragment() {
 
     lateinit var order: Order
-    private lateinit var bidning: DialogCompletedOrderBinding
-    private val viewModel by viewModels<CompletedOrderViewModel>()
+    private lateinit var binding: DialogCompletedOrderBinding
+    private val viewModel by viewModels<CompletedOrderViewModel> { ViewModelFactory }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        viewModel.orderId = order.orderId
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        bidning = DialogCompletedOrderBinding.inflate(inflater, container, false)
-        bidning.viewModel = viewModel
+        binding = DialogCompletedOrderBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
         observeViewModelStates()
-        return bidning.root
+        return binding.root
     }
 
     private fun observeViewModelStates() {
         viewModel.state.observe(viewLifecycleOwner) {
-            //TODO: Delete the selected order //STOPPED//
             when (it) {
-                CompletedOrderVMStates.ShowDetail -> {
+                is CompletedOrderVMStates.ShowDetail -> {
                     dismiss()
                     completedOrderDialogCallback.showDetail(order)
                 }
-                CompletedOrderVMStates.DeletingOrder -> {
-
+                is CompletedOrderVMStates.DeletingOrder -> {
+                    ProcessAlertDialog.show(parentFragmentManager, "")
                 }
-                CompletedOrderVMStates.OrderDeleted -> {
-
+                is CompletedOrderVMStates.OrderDeleted -> {
+                    ProcessAlertDialog.onSuccess()
                 }
-                CompletedOrderVMStates.Default -> {
-
+                is CompletedOrderVMStates.OnOrderDeletingFailure -> {
+                    ProcessAlertDialog.dismiss()
+                    requireContext().createMessageDialog(it.errorMessage)
+                        ?.show(parentFragmentManager, "")
                 }
+                is CompletedOrderVMStates.Default -> {}
             }
         }
     }

@@ -3,7 +3,7 @@ package com.example.featureMenuDialog.presentation.recyclerView.delegates
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import com.example.core.domain.menu.CategoryName
+import com.example.core.domain.entities.menu.CategoryName
 import com.example.core.presentation.recyclerView.interfaces.BaseAdapterDelegate
 import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.core.presentation.recyclerView.interfaces.BaseViewHolder

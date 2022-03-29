@@ -1,6 +1,6 @@
 package com.example.featureSplashScreen.domain.useCases
 
-import com.example.core.domain.tools.SimpleTask
+import com.example.core.domain.entities.tools.SimpleTask
 import com.example.featureSplashScreen.domain.repositories.SettingsRemoteRepository
 import javax.inject.Inject
 

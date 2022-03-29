@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.core.domain.tools.constants.ErrorMessages.checkNetworkConnectionMessage
-import com.example.core.domain.tools.constants.OtherStringConstants.ACTIVITY_IS_NOT_EMPLOYEE_AUTHORIZATION_CALLBACK
-import com.example.core.domain.tools.extensions.createMessageDialog
-import com.example.core.domain.tools.extensions.isNetworkConnected
+import com.example.core.domain.entities.tools.constants.ErrorMessages.checkNetworkConnectionMessage
+import com.example.core.domain.entities.tools.constants.OtherStringConstants.ACTIVITY_IS_NOT_EMPLOYEE_AUTHORIZATION_CALLBACK
+import com.example.core.domain.entities.tools.extensions.createMessageDialog
+import com.example.core.domain.entities.tools.extensions.isNetworkConnected
 import com.example.featureLogIn.R
 import com.example.featureLogIn.databinding.FragmentLogInBinding
 import com.example.featureLogIn.domain.ViewModelFactory
@@ -73,18 +73,18 @@ class LogInFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is LogInViewModelStates.Validating -> {
-                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.show(
+                    com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog.show(
                         parentFragmentManager,
                         ""
                     )
                 }
                 is LogInViewModelStates.Success -> {
-                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.dismiss()
+                    com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog.dismiss()
                     employeeAuthCallback.onEmployeeLoggedIn(it.employee)
                 }
                 else -> {
                     if (it is LogInViewModelStates.Default) return@observe
-                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.dismiss()
+                    com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog.dismiss()
                     if (it.errorMessage == null) return@observe
                     requireContext().createMessageDialog(it.errorMessage!!)
                         ?.show(parentFragmentManager, "")

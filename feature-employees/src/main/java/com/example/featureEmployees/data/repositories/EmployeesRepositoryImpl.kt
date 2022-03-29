@@ -1,15 +1,15 @@
 package com.example.featureEmployees.data.repositories
 
 import com.example.core.domain.entities.Employee
-import com.example.core.domain.tools.SimpleTask
-import com.example.core.domain.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
-import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_EMAIL
-import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_NEW_PERMISSION
-import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_PERMISSION
-import com.example.core.domain.tools.constants.FirestoreReferences.employeesCollectionRef
-import com.example.core.domain.tools.constants.FirestoreReferences.fireStore
-import com.example.core.domain.tools.constants.FirestoreReferences.newPermissionListenerDocumentRef
-import com.example.core.domain.tools.extensions.getExceptionMessage
+import com.example.core.domain.entities.tools.SimpleTask
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_EMAIL
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_NEW_PERMISSION
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_PERMISSION
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.employeesCollectionRef
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.fireStore
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.newPermissionListenerDocumentRef
+import com.example.core.domain.entities.tools.extensions.getExceptionMessage
 import com.example.featureEmployees.domain.repositories.EmployeesRepository
 import com.example.featureEmployees.domain.services.EmployeesService
 import com.google.firebase.firestore.Transaction

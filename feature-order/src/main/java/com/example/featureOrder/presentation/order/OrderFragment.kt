@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.order.OrdersServiceSub
-import com.example.core.domain.tools.enims.AddingDishMods
-import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
+import com.example.core.domain.entities.order.OrdersServiceSub
+import com.example.core.domain.entities.tools.enims.AddingDishMods
+import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideUp
 import com.example.core.presentation.recyclerView.adapterDelegates.OrderItemsAdapterDelegate
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
 import com.example.core.presentation.recyclerView.itemDecorations.SimpleListItemDecoration
@@ -65,6 +65,7 @@ class OrderFragment : Fragment() {
         largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
         topMargin = resources.getDimensionPixelSize(R.dimen.top_tables_margin)
         //TODO: Add a delegate for viewModels
+        //TODO: Subscribe on orders changes
         adapter = BaseRecyclerViewAdapter(
             listOf(
                 OrderItemsAdapterDelegate(
@@ -105,7 +106,7 @@ class OrderFragment : Fragment() {
         MenuDialogDepsStore.deps = object : MenuDialogDeps {
             override val currentEmployee: Employee?
                 get() = OrderDepsStore.deps.currentEmployee
-            override val ordersService: OrdersService<OrdersServiceSub>
+            override val ordersService: OrdersService
                 get() = OrderDepsStore.deps.ordersService
         }
     }

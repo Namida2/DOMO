@@ -43,6 +43,11 @@ dependencies {
     implementation (Navigation.navigationUiKtx)
     implementation (Navigation.navigationFeaturesSupport)
 
+    implementation platform (Firebase.firebaseBom)
+    implementation (Firebase.firebaseAuth)
+    implementation (Firebase.firebaseFirestore)
+    implementation (Firebase.firebaseAnalytics)
+
     implementation (Dagger.dagger)
     kapt (Dagger.compiler)
 

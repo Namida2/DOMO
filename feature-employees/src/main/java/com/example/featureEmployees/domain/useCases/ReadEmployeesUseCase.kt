@@ -1,6 +1,6 @@
 package com.example.featureEmployees.domain.useCases
 
-import com.example.core.domain.tools.SimpleTask
+import com.example.core.domain.entities.tools.SimpleTask
 import com.example.featureEmployees.domain.repositories.EmployeesRepository
 import javax.inject.Inject
 

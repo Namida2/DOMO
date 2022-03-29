@@ -2,7 +2,7 @@ package com.example.featureSplashScreen.domain
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.core.domain.tools.constants.OtherStringConstants.UNKNOWN_VIEW_MODEL_CLASS
+import com.example.core.domain.entities.tools.constants.OtherStringConstants.UNKNOWN_VIEW_MODEL_CLASS
 import com.example.featureSplashScreen.domain.di.SplashScreenDepsStore
 import com.example.featureSplashScreen.presentation.SplashScreenViewModel
 

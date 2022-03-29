@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.room.Room
 import com.example.core.data.database.Database
 import com.example.core.domain.di.CoreDepsStore
-import com.example.core.domain.tools.constants.SharedPreferencesConstants
+import com.example.core.domain.entities.tools.constants.SharedPreferencesConstants
 import com.example.domo.R
 import com.example.featureSplashScreen.domain.di.DaggerSplashScreenAppComponent
 import com.example.featureSplashScreen.domain.di.SplashScreenDepsStore

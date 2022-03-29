@@ -7,7 +7,9 @@ import com.example.cookCore.presentation.CookCurrentOrderDetailViewModel
 import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
 import com.example.featureCurrentOrders.presentation.currentOrdersDetail.CurrentOrderDetailViewModel
 import com.example.featureCurrentOrders.presentation.currentOrders.CurrentOrdersViewModel
-import com.example.core.domain.tools.constants.OtherStringConstants.UNKNOWN_VIEW_MODEL_CLASS
+import com.example.core.domain.entities.tools.constants.OtherStringConstants.UNKNOWN_VIEW_MODEL_CLASS
+import com.example.featureCurrentOrders.presentation.completedOrderMenu.CompletedOrderMenuDialog
+import com.example.featureCurrentOrders.presentation.completedOrderMenu.CompletedOrderViewModel
 
 object ViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -19,9 +21,11 @@ object ViewModelFactory : ViewModelProvider.Factory {
             CurrentOrderDetailViewModel::class.java -> CurrentOrderDetailViewModel(
                 CurrentOrderDepsStore.deps.ordersService
             )
-            //TODO: Provide the dependencies //STOPPED//
             CookCurrentOrderDetailViewModel::class.java -> CookCurrentOrderDetailViewModel(
                 CookCoreAppComponentStore.cookCoreAppComponent.provideChangeOrderItemStateUseCase()
+            )
+            CompletedOrderViewModel::class.java -> CompletedOrderViewModel(
+                CurrentOrderDepsStore.appComponent.provideDeleteOrderUseCase()
             )
             else -> throw IllegalArgumentException(UNKNOWN_VIEW_MODEL_CLASS)
         }

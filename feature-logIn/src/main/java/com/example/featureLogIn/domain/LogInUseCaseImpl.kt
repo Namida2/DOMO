@@ -1,6 +1,6 @@
 package com.example.featureLogIn.domain
 
-import com.example.core.domain.tools.TaskWithEmployee
+import com.example.core.domain.entities.tools.TaskWithEmployee
 import com.example.featureLogIn.data.UsersRemoteRepository
 import javax.inject.Inject
 

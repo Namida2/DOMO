@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.core.domain.interfaces.Stateful
 import com.example.core.domain.interfaces.TerminatingState
-import com.example.core.domain.menu.MenuService
-import com.example.core.domain.tools.ErrorMessage
-import com.example.core.domain.tools.constants.ErrorMessages
+import com.example.core.domain.entities.menu.MenuService
+import com.example.core.domain.entities.tools.ErrorMessage
+import com.example.core.domain.entities.tools.constants.ErrorMessages
 
 sealed class AddCategoryVMStates {
     class CategoryAlreadyExists(val message: ErrorMessage) : AddCategoryVMStates(), TerminatingState

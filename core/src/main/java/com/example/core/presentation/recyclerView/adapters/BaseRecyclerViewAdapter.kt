@@ -8,7 +8,7 @@ import com.example.core.presentation.recyclerView.diffCalbacks.BaseAdapterDiffCa
 import com.example.core.presentation.recyclerView.interfaces.BaseAdapterDelegate
 import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.core.presentation.recyclerView.interfaces.BaseViewHolder
-import com.example.core.domain.tools.constants.OtherStringConstants.VIEW_TYPE_NOT_FOUND
+import com.example.core.domain.entities.tools.constants.OtherStringConstants.VIEW_TYPE_NOT_FOUND
 
 class BaseRecyclerViewAdapter(
     private var recyclerViewTypes: List<BaseAdapterDelegate<out ViewBinding, out BaseRecyclerViewType>>,

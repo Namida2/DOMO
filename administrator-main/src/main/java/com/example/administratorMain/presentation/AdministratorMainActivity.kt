@@ -13,13 +13,13 @@ import com.example.administratorMain.databinding.ActivityAdministratorBinding
 import com.example.administratorMain.domatn.di.AdminDepsStore
 import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
-import com.example.core.domain.Settings
+import com.example.core.domain.entities.Settings
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.BasePostActivity
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.order.OrdersServiceSub
-import com.example.core.domain.tools.constants.ErrorMessages
-import com.example.core.domain.tools.extensions.createMessageDialog
+import com.example.core.domain.entities.order.OrdersServiceSub
+import com.example.core.domain.entities.tools.constants.ErrorMessages
+import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.featureEmployees.domain.di.DaggerEmployeesAppComponent
 import com.example.featureEmployees.domain.di.EmployeesAppComponent
 import com.example.featureEmployees.domain.di.EmployeesAppComponentDeps
@@ -102,7 +102,7 @@ class AdministratorMainActivity : BasePostActivity() {
                 get() = AdminDepsStore.deps.settings
             override val currentEmployee: Employee?
                 get() = AdminDepsStore.deps.currentEmployee
-            override val ordersService: OrdersService<OrdersServiceSub>
+            override val ordersService: OrdersService
                 get() = AdminDepsStore.deps.ordersService
         }
         settingsAppComponent =

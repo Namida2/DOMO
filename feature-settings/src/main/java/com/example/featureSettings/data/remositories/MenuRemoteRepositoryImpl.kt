@@ -1,12 +1,12 @@
 package com.example.featureSettings.data.remositories
 
-import com.example.core.domain.menu.Category
-import com.example.core.domain.menu.MenuService
-import com.example.core.domain.tools.SimpleTask
-import com.example.core.domain.tools.constants.FirestoreConstants.COLLECTION_DISHES
-import com.example.core.domain.tools.constants.FirestoreReferences.menuCollectionRef
-import com.example.core.domain.tools.extensions.getExceptionMessage
-import com.example.core.domain.tools.extensions.logD
+import com.example.core.domain.entities.menu.Category
+import com.example.core.domain.entities.menu.MenuService
+import com.example.core.domain.entities.tools.SimpleTask
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.COLLECTION_DISHES
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.menuCollectionRef
+import com.example.core.domain.entities.tools.extensions.getExceptionMessage
+import com.example.core.domain.entities.tools.extensions.logD
 import com.example.featureSettings.domain.repositories.MenuRemoteRepository
 import javax.inject.Inject
 

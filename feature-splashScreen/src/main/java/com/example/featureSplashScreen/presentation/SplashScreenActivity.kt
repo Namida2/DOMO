@@ -14,11 +14,11 @@ import com.example.cookMain.domain.di.CookMainDepsStore
 import com.example.cookMain.presentation.CookMainActivity
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.EmployeeAuthCallback
-import com.example.core.domain.tools.constants.EmployeePosts.*
-import com.example.core.domain.tools.constants.ErrorMessages.checkNetworkConnectionMessage
-import com.example.core.domain.tools.extensions.createMessageDialog
-import com.example.core.domain.tools.extensions.isNetworkConnected
-import com.example.core.domain.tools.extensions.logD
+import com.example.core.domain.entities.tools.constants.EmployeePosts.*
+import com.example.core.domain.entities.tools.constants.ErrorMessages.checkNetworkConnectionMessage
+import com.example.core.domain.entities.tools.extensions.createMessageDialog
+import com.example.core.domain.entities.tools.extensions.isNetworkConnected
+import com.example.core.domain.entities.tools.extensions.logD
 import com.example.featureLogIn.R
 import com.example.featureLogIn.domain.di.LogInDepsStore
 import com.example.featureSplashScreen.databinding.ActivitySplashScreenBinding

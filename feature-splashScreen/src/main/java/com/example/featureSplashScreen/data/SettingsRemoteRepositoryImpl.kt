@@ -1,15 +1,14 @@
 package com.example.featureSplashScreen.data
 
-import com.example.core.domain.Settings
-import com.example.core.domain.tools.SimpleTask
-import com.example.core.domain.tools.constants.ErrorMessages.defaultErrorMessage
-import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
-import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_TABLES_COUNT
-import com.example.core.domain.tools.constants.FirestoreReferences.settingsDocumentRef
-import com.example.core.domain.tools.constants.OtherStringConstants.CAN_NOT_FIND_SETTINGS
-import com.example.core.domain.tools.extensions.getExceptionMessage
-import com.example.core.domain.tools.extensions.logD
-import com.example.core.domain.tools.extensions.logE
+import com.example.core.domain.entities.Settings
+import com.example.core.domain.entities.tools.SimpleTask
+import com.example.core.domain.entities.tools.constants.ErrorMessages.defaultErrorMessage
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_TABLES_COUNT
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.settingsDocumentRef
+import com.example.core.domain.entities.tools.constants.OtherStringConstants.CAN_NOT_FIND_SETTINGS
+import com.example.core.domain.entities.tools.extensions.getExceptionMessage
+import com.example.core.domain.entities.tools.extensions.logE
 import com.example.featureSplashScreen.domain.repositories.SettingsRemoteRepository
 import javax.inject.Inject
 

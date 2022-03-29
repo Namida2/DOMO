@@ -1,7 +1,7 @@
 package com.example.featureEmployees.domain.repositories
 
 import com.example.core.domain.entities.Employee
-import com.example.core.domain.tools.SimpleTask
+import com.example.core.domain.entities.tools.SimpleTask
 
 interface EmployeesRepository {
     fun readAllEmployees(task: SimpleTask)

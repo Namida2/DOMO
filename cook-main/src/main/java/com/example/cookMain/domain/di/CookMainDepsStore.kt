@@ -3,7 +3,7 @@ package com.example.cookMain.domain.di
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.EmployeeAuthCallback
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.order.OrdersServiceSub
+import com.example.core.domain.entities.order.OrdersServiceSub
 import com.google.firebase.auth.FirebaseAuth
 
 object CookMainDepsStore {
@@ -14,5 +14,5 @@ object CookMainDepsStore {
 interface CookMainDeps {
     val currentEmployee: Employee?
     val firebaseAuth: FirebaseAuth
-    val ordersService: OrdersService<OrdersServiceSub>
+    val ordersService: OrdersService
 }

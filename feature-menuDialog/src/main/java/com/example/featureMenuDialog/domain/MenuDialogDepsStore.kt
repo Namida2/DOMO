@@ -2,7 +2,7 @@ package com.example.featureMenuDialog.domain
 
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.order.OrdersServiceSub
+import com.example.core.domain.entities.order.OrdersServiceSub
 
 object MenuDialogDepsStore {
     lateinit var deps: MenuDialogDeps
@@ -10,5 +10,5 @@ object MenuDialogDepsStore {
 
 interface MenuDialogDeps {
     val currentEmployee: Employee?
-    val ordersService: OrdersService<OrdersServiceSub>
+    val ordersService: OrdersService
 }

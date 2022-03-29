@@ -5,14 +5,15 @@ import android.content.SharedPreferences
 import com.example.administratorMain.domatn.di.AdminAppComponentDeps
 import com.example.cookMain.domain.di.CookMainDeps
 import com.example.core.data.database.Database
-import com.example.core.domain.Settings
+import com.example.core.domain.entities.Settings
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.di.CoreAppComponentDeps
+import com.example.core.domain.di.modules.ListenersModule
+import com.example.core.domain.listeners.DeletedOrdersListener
 import com.example.featureLogIn.domain.di.LogInDeps
 import com.example.featureSplashScreen.domain.useCases.GetCurrentEmployeeUseCase
 import com.example.featureSplashScreen.domain.useCases.ReadMenuUseCase
 import com.example.featureSplashScreen.domain.di.modules.*
-import com.example.featureSplashScreen.domain.repositories.SettingsRemoteRepository
 import com.example.featureSplashScreen.domain.useCases.ReadOrdersUseCase
 import com.example.featureSplashScreen.domain.useCases.ReadSettingsUseCase
 import com.example.waiterMain.domain.di.ProfileModuleDeps
@@ -25,7 +26,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [UseCasesModule::class, LocalRepositoryModule::class,
-        RemoteRepositoryModule::class, ServicesModule::class, FirebaseModule::class],
+        RemoteRepositoryModule::class, ServicesModule::class, FirebaseModule::class, ListenersModule::class],
 )
 interface SplashScreenAppComponent : WaiterMainDeps,
     CoreAppComponentDeps, CookMainDeps, ProfileModuleDeps, LogInDeps, AdminAppComponentDeps {

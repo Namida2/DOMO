@@ -5,16 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.order.OrderItem
-import com.example.core.domain.order.OrdersServiceSub
-import com.example.core.domain.tools.Event
+import com.example.core.domain.entities.order.OrderItem
+import com.example.core.domain.entities.order.OrdersServiceSub
+import com.example.core.domain.entities.tools.Event
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 typealias DishesExistEvent = Event<List<OrderItem>>
 
 class CurrentOrderDetailViewModel(
-    private val ordersService: OrdersService<OrdersServiceSub>
+    private val ordersService: OrdersService
 ) : ViewModel() {
 
     private val _newOrderItemsEvent = MutableLiveData<DishesExistEvent>()

@@ -2,7 +2,7 @@ package com.example.featureRegistration.data
 
 import android.view.View
 import com.example.featureRegistration.domain.PostItem
-import com.example.core.domain.tools.constants.EmployeePosts
+import com.example.core.domain.entities.tools.constants.EmployeePosts
 import javax.inject.Inject
 
 class PostItemsRepository @Inject constructor(){

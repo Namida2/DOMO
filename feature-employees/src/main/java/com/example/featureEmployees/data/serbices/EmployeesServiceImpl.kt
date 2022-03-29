@@ -13,8 +13,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class EmployeesServiceImpl @Inject constructor(
-    private val newEmployeesListener: NewEmployeesListener
-): EmployeesService {
+    private val newEmployeesListener: NewEmployeesListener,
+) : EmployeesService {
     private var coroutineScope: CoroutineScope = CoroutineScope(Main)
     private var employees = mutableListOf<Employee>()
     override val employeesChanges = MutableSharedFlow<List<Employee>>(replay = 1)
@@ -39,7 +39,7 @@ class EmployeesServiceImpl @Inject constructor(
         listenNewEmployees()
     }
 
-    private fun listenNewEmployees(){
+    private fun listenNewEmployees() {
         coroutineScope.launch {
             newEmployeesListener.newEmployeesFlow.collect { newEmployee ->
                 employees.find {

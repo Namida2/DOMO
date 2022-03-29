@@ -1,8 +1,8 @@
 package com.example.featureProfile.domain
 
-import com.example.core.domain.tools.SimpleTask
-import com.example.core.domain.tools.extensions.getExceptionMessage
-import com.example.core.domain.tools.extensions.logE
+import com.example.core.domain.entities.tools.SimpleTask
+import com.example.core.domain.entities.tools.extensions.getExceptionMessage
+import com.example.core.domain.entities.tools.extensions.logE
 import com.example.featureProfile.domain.di.ProfileDepsStore
 import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject

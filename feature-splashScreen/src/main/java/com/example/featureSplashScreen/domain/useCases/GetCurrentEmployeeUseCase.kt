@@ -1,8 +1,7 @@
 package com.example.featureSplashScreen.domain.useCases
 
-import com.example.core.domain.tools.TaskWithEmployee
-import com.example.core.domain.tools.constants.ErrorMessages.defaultErrorMessage
-import com.example.core.domain.tools.constants.ErrorMessages.employeeDoesNotExists
+import com.example.core.domain.entities.tools.TaskWithEmployee
+import com.example.core.domain.entities.tools.constants.ErrorMessages.employeeDoesNotExists
 import com.example.featureSplashScreen.domain.repositories.UsersRemoteRepository
 import javax.inject.Inject
 

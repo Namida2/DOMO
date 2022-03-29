@@ -5,10 +5,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import com.example.core.domain.menu.Dish
-import com.example.core.domain.tools.constants.ErrorMessages.emptyFieldMessage
-import com.example.core.domain.tools.extensions.createMessageDialog
-import com.example.core.domain.tools.extensions.isEmptyField
+import com.example.core.domain.entities.menu.Dish
+import com.example.core.domain.entities.tools.constants.ErrorMessages.emptyFieldMessage
+import com.example.core.domain.entities.tools.extensions.createMessageDialog
+import com.example.core.domain.entities.tools.extensions.isEmptyField
 import com.example.featureMenuDialog.R
 import com.example.featureMenuDialog.databinding.DialogEditMenuItemBinding
 import com.example.featureMenuDialog.domain.tools.EditMenuDialogModes

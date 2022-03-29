@@ -5,12 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.menu.Dish
-import com.example.core.domain.order.OrderItem
-import com.example.core.domain.order.OrdersServiceSub
-import com.example.core.domain.tools.ErrorMessage
-import com.example.core.domain.tools.enims.AddingDishMods
-import com.example.core.domain.tools.extensions.logD
+import com.example.core.domain.entities.menu.Dish
+import com.example.core.domain.entities.order.OrderItem
+import com.example.core.domain.entities.order.OrdersServiceSub
+import com.example.core.domain.entities.tools.ErrorMessage
+import com.example.core.domain.entities.tools.enims.AddingDishMods
+import com.example.core.domain.entities.tools.extensions.logD
 import com.example.featureMenuDialog.R
 
 sealed class DishDialogVMStates {
@@ -29,7 +29,7 @@ sealed class DishDialogVMStates {
 }
 
 class DishDialogViewModel(
-    private val ordersService: OrdersService<OrdersServiceSub>,
+    private val ordersService: OrdersService,
 ) : ViewModel() {
 
     var orderItem: Dish? = null

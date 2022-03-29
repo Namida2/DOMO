@@ -16,9 +16,9 @@ import com.example.core.data.workers.NewOrdersWorker
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.BasePostActivity
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.order.OrdersServiceSub
-import com.example.core.domain.tools.constants.ErrorMessages
-import com.example.core.domain.tools.extensions.createMessageDialog
+import com.example.core.domain.entities.order.OrdersServiceSub
+import com.example.core.domain.entities.tools.constants.ErrorMessages
+import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
 import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponent
 import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponentDeps
@@ -63,7 +63,7 @@ class CookMainActivity : BasePostActivity() {
         val currentOrdersModuleDeps = object : CurrentOrdersAppComponentDeps {
             override val currentEmployee: Employee?
                 get() = CookMainDepsStore.deps.currentEmployee
-            override val ordersService: OrdersService<OrdersServiceSub>
+            override val ordersService: OrdersService
                 get() = CookMainDepsStore.deps.ordersService
         }
         currentOrdersAppComponents = DaggerCurrentOrdersAppComponent.builder()

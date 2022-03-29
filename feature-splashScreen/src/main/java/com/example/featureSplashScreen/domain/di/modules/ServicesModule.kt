@@ -1,8 +1,7 @@
 package com.example.featureSplashScreen.domain.di.modules
 
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.order.OrdersServiceImpl
-import com.example.core.domain.order.OrdersServiceSub
+import com.example.core.domain.entities.order.OrdersServiceImpl
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton
@@ -11,5 +10,5 @@ import javax.inject.Singleton
 interface ServicesModule {
     @Binds
     @Singleton
-    fun bindOrderService(service: OrdersServiceImpl): OrdersService<OrdersServiceSub>
+    fun bindOrderService(service: OrdersServiceImpl): OrdersService
 }

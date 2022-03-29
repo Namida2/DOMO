@@ -1,10 +1,8 @@
 package com.example.cookCore.domain.useCases
 
 import com.example.cookCore.data.repositories.OrderItemsRemoteRepository
-import com.example.core.domain.menu.MenuService
-import com.example.core.domain.order.OrderItem
-import com.example.core.domain.tools.SimpleTask
-import com.example.core.domain.tools.constants.FirestoreConstants
+import com.example.core.domain.entities.order.OrderItem
+import com.example.core.domain.entities.tools.SimpleTask
 import javax.inject.Inject
 
 class ChangeOrderItemStateUseCaseImpl @Inject constructor(

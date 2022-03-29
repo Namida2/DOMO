@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.featureOrder.presentation.recyclerView.adapters.TablesAdapter
 
-typealias OnTableClickEvent = com.example.core.domain.tools.Event<TablesAdapter.ViewOwner>
+typealias OnTableClickEvent = com.example.core.domain.entities.tools.Event<TablesAdapter.ViewOwner>
 
 sealed class TablesVMStates {
     object ShowingOrderFragment: TablesVMStates()
@@ -21,7 +21,7 @@ class TablesViewModel : ViewModel() {
 
     fun onTableClick(viewOwner: TablesAdapter.ViewOwner) {
         if(state.value == TablesVMStates.ShowingOrderFragment) return
-        _onTableSelected.value = com.example.core.domain.tools.Event(viewOwner)
+        _onTableSelected.value = com.example.core.domain.entities.tools.Event(viewOwner)
         _state.value = TablesVMStates.ShowingOrderFragment
     }
     fun resetState() {

@@ -3,14 +3,13 @@ package com.example.featureSettings.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.core.domain.menu.Category
-import com.example.core.domain.menu.Dish
-import com.example.core.domain.menu.MenuService
-import com.example.core.domain.menu.isTheSameMenu
-import com.example.core.domain.tools.ErrorMessage
-import com.example.core.domain.tools.Event
-import com.example.core.domain.tools.SimpleTask
-import com.example.core.domain.tools.constants.ErrorMessages.defaultErrorMessage
+import com.example.core.domain.entities.menu.Category
+import com.example.core.domain.entities.menu.MenuService
+import com.example.core.domain.entities.menu.isTheSameMenu
+import com.example.core.domain.entities.tools.ErrorMessage
+import com.example.core.domain.entities.tools.Event
+import com.example.core.domain.entities.tools.SimpleTask
+import com.example.core.domain.entities.tools.constants.ErrorMessages.defaultErrorMessage
 import com.example.featureMenuDialog.domain.interfaces.OnDismissListener
 import com.example.featureSettings.domain.useCases.SaveMenuUseCase
 

@@ -1,17 +1,14 @@
 package com.example.featureSplashScreen.data
 
-import com.example.core.domain.menu.MenuService
-import com.example.core.domain.menu.MenuServiceStates
-import com.example.core.domain.menu.MenuServiceSub
-import com.example.core.domain.order.Order
-import com.example.core.domain.order.OrderItem
-import com.example.core.domain.tools.ErrorMessage
-import com.example.core.domain.tools.SimpleTask
-import com.example.core.domain.tools.Task
-import com.example.core.domain.tools.constants.FirestoreConstants
-import com.example.core.domain.tools.constants.FirestoreReferences
-import com.example.core.domain.tools.extensions.getExceptionMessage
-import com.example.core.domain.tools.extensions.logD
+import com.example.core.domain.entities.menu.MenuService
+import com.example.core.domain.entities.menu.MenuServiceStates
+import com.example.core.domain.entities.menu.MenuServiceSub
+import com.example.core.domain.entities.order.Order
+import com.example.core.domain.entities.order.OrderItem
+import com.example.core.domain.entities.tools.Task
+import com.example.core.domain.entities.tools.constants.FirestoreConstants
+import com.example.core.domain.entities.tools.constants.FirestoreReferences
+import com.example.core.domain.entities.tools.extensions.getExceptionMessage
 import com.example.featureSplashScreen.domain.repositories.OrdersRemoteRepository
 import javax.inject.Inject
 

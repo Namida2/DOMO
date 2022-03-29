@@ -12,9 +12,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.core.domain.interfaces.EmployeeAuthCallback
-import com.example.core.domain.tools.constants.OtherStringConstants
-import com.example.core.domain.tools.extensions.createMessageDialog
-import com.example.core.domain.tools.extensions.isNetworkConnected
+import com.example.core.domain.entities.tools.constants.OtherStringConstants
+import com.example.core.domain.entities.tools.extensions.createMessageDialog
+import com.example.core.domain.entities.tools.extensions.isNetworkConnected
 import com.example.featureRegistration.R
 import com.example.featureRegistration.databinding.FragmentRegistrationBinding
 import com.example.featureRegistration.domain.ViewModelFactory
@@ -85,7 +85,7 @@ class RegistrationFragment : Fragment() {
                     )
                 }
             else requireContext().createMessageDialog(
-                com.example.core.domain.tools.ErrorMessage(
+                com.example.core.domain.entities.tools.ErrorMessage(
                     R.string.defaultTitle,
                     R.string.networkConnectionMessage
                 )
@@ -98,7 +98,7 @@ class RegistrationFragment : Fragment() {
             var dialog: DialogFragment? = null
             when (it) {
                 is RegistrationViewModelStates.Validating -> {
-                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.show(
+                    com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog.show(
                         parentFragmentManager,
                         ""
                     )
@@ -108,7 +108,7 @@ class RegistrationFragment : Fragment() {
                 }
                 else -> {
                     if (it is RegistrationViewModelStates.Default) return@observe
-                    com.example.core.domain.tools.dialogs.ProcessAlertDialog.dismiss()
+                    com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog.dismiss()
                     dialog = requireContext().createMessageDialog(it.errorMessage!!)
                 }
             }

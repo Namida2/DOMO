@@ -2,7 +2,7 @@ package com.example.featureEmployees.domain
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.core.domain.tools.constants.OtherStringConstants.UNKNOWN_VIEW_MODEL_CLASS
+import com.example.core.domain.entities.tools.constants.OtherStringConstants.UNKNOWN_VIEW_MODEL_CLASS
 import com.example.featureEmployees.domain.di.EmployeesDepsStore.appComponent
 import com.example.featureEmployees.presentation.dialogs.EmployeeDetailViewModel
 import com.example.featureEmployees.presentation.fragments.EmployeesViewModel

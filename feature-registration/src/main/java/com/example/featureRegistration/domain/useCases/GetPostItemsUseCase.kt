@@ -1,7 +1,7 @@
 package com.example.featureRegistration.domain.useCases
 
 import android.view.View
-import com.example.core.domain.tools.constants.EmployeePosts
+import com.example.core.domain.entities.tools.constants.EmployeePosts
 import com.example.featureRegistration.data.PostItemsRepository
 import com.example.featureRegistration.domain.PostItem
 import javax.inject.Inject

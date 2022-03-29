@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.core.domain.interfaces.Stateful
 import com.example.core.domain.interfaces.TerminatingState
-import com.example.core.domain.menu.Dish
-import com.example.core.domain.menu.MenuService
-import com.example.core.domain.tools.ErrorMessage
-import com.example.core.domain.tools.constants.ErrorMessages.dishAlreadyExists
+import com.example.core.domain.entities.menu.Dish
+import com.example.core.domain.entities.menu.MenuService
+import com.example.core.domain.entities.tools.ErrorMessage
+import com.example.core.domain.entities.tools.constants.ErrorMessages.dishAlreadyExists
 
 sealed class EditMenuItemVMState {
     class ItemAlreadyExists(val message: ErrorMessage) : EditMenuItemVMState(), TerminatingState

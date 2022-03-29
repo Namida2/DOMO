@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.order.OrdersServiceSub
-import com.example.core.domain.tools.dialogs.ClosedQuestionDialog
-import com.example.core.domain.tools.dialogs.ProcessAlertDialog
-import com.example.core.domain.tools.extensions.createMessageDialog
+import com.example.core.domain.entities.order.OrdersServiceSub
+import com.example.core.domain.entities.tools.dialogs.ClosedQuestionDialog
+import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
+import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.featureMenuDialog.domain.MenuDialogDeps
 import com.example.featureMenuDialog.domain.MenuDialogDepsStore
 import com.example.featureMenuDialog.presentation.menuDialog.MenuBottomSheetDialog
@@ -21,7 +21,7 @@ import com.example.featureSettings.databinding.FragmentSettingsBinding
 import com.example.featureSettings.domain.ViewModelFactory
 import com.example.featureSettings.domain.di.SettingsDepsStore
 import com.google.android.material.transition.platform.MaterialSharedAxis
-
+//TODO: Prevent saving menu while there is any order //STOPPED//
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
     private lateinit var closedQuestionDialog: ClosedQuestionDialog<Unit>
@@ -67,7 +67,7 @@ class SettingsFragment : Fragment() {
         MenuDialogDepsStore.deps = object : MenuDialogDeps {
             override val currentEmployee: Employee?
                 get() = SettingsDepsStore.deps.currentEmployee
-            override val ordersService: OrdersService<OrdersServiceSub>
+            override val ordersService: OrdersService
                 get() = SettingsDepsStore.deps.ordersService
 
         }

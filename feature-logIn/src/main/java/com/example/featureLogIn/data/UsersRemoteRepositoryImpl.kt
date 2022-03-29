@@ -1,12 +1,12 @@
 package com.example.featureLogIn.data
 
 import com.example.core.domain.entities.Employee
-import com.example.core.domain.tools.ErrorMessage
-import com.example.core.domain.tools.constants.ErrorMessages.permissionDeniedMessage
-import com.example.core.domain.tools.constants.ErrorMessages.wrongEmailOrPassword
-import com.example.core.domain.tools.TaskWithEmployee
-import com.example.core.domain.tools.extensions.logE
-import com.example.core.domain.tools.extensions.readEmployeeByEmail
+import com.example.core.domain.entities.tools.ErrorMessage
+import com.example.core.domain.entities.tools.constants.ErrorMessages.permissionDeniedMessage
+import com.example.core.domain.entities.tools.constants.ErrorMessages.wrongEmailOrPassword
+import com.example.core.domain.entities.tools.TaskWithEmployee
+import com.example.core.domain.entities.tools.extensions.logE
+import com.example.core.domain.entities.tools.extensions.readEmployeeByEmail
 import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
 

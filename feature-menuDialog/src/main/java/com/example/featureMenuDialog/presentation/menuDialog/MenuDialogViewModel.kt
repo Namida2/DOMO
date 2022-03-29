@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core.domain.menu.CategoryName
-import com.example.core.domain.menu.Dish
-import com.example.core.domain.menu.MenuService
-import com.example.core.domain.tools.DeletedDishInfo
-import com.example.core.domain.tools.Event
+import com.example.core.domain.entities.menu.CategoryName
+import com.example.core.domain.entities.menu.Dish
+import com.example.core.domain.entities.menu.MenuService
+import com.example.core.domain.entities.tools.DeletedDishInfo
+import com.example.core.domain.entities.tools.Event
 import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

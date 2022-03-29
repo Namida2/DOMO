@@ -4,12 +4,11 @@ import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.example.core.R
-import com.example.core.domain.tools.extensions.Animations.prepareHide
-import com.example.core.domain.tools.extensions.Animations.prepareShow
-import com.example.core.domain.tools.extensions.Animations.prepareSlideDown
-import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
+import com.example.core.domain.entities.tools.extensions.Animations.prepareHide
+import com.example.core.domain.entities.tools.extensions.Animations.prepareShow
+import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideDown
+import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideUp
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 abstract class BasePostActivity : AppCompatActivity(), EmployeeAuthCallback, LeaveAccountCallback {

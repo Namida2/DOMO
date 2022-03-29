@@ -1,9 +1,9 @@
 package com.example.featureSplashScreen.data
 
 import com.example.core.domain.entities.Employee
-import com.example.core.domain.tools.ErrorMessage
-import com.example.core.domain.tools.TaskWithEmployee
-import com.example.core.domain.tools.extensions.readEmployeeByEmail
+import com.example.core.domain.entities.tools.ErrorMessage
+import com.example.core.domain.entities.tools.TaskWithEmployee
+import com.example.core.domain.entities.tools.extensions.readEmployeeByEmail
 import com.example.featureSplashScreen.domain.repositories.UsersRemoteRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

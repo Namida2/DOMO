@@ -1,10 +1,10 @@
 package com.example.core.domain.interfaces
 
-import com.example.core.domain.order.Order
-import com.example.core.domain.order.OrderItem
+import com.example.core.domain.entities.order.Order
+import com.example.core.domain.entities.order.OrderItem
 import kotlinx.coroutines.flow.Flow
 
-interface OrdersService<Subscriber> {
+interface OrdersService {
     var currentOrder: Order?
     fun subscribeOnOrdersChanges(): Flow<List<Order>>
     fun subscribeOnCurrentOrderChanges(): Flow<List<OrderItem>>

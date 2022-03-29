@@ -1,8 +1,8 @@
 package com.example.featureSplashScreen.domain.useCases
 
 import android.content.SharedPreferences
-import com.example.core.domain.tools.constants.FirestoreConstants
-import com.example.core.domain.tools.extensions.logD
+import com.example.core.domain.entities.tools.constants.FirestoreConstants
+import com.example.core.domain.entities.tools.extensions.logD
 import com.example.featureSplashScreen.domain.repositories.MenuLocalRepository
 import com.example.featureSplashScreen.domain.repositories.MenuRemoteRepository
 import javax.inject.Inject

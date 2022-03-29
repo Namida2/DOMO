@@ -1,17 +1,17 @@
 package com.example.featureRegistration.data
 
 import com.example.core.domain.entities.Employee
-import com.example.core.domain.tools.TaskWithEmployee
-import com.example.core.domain.tools.constants.ErrorMessages.defaultErrorMessage
-import com.example.core.domain.tools.constants.ErrorMessages.emailAlreadyExistsMessage
-import com.example.core.domain.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
-import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_EMAIL
-import com.example.core.domain.tools.constants.FirestoreReferences.employeesCollectionRef
-import com.example.core.domain.tools.constants.FirestoreReferences.fireStore
-import com.example.core.domain.tools.constants.FirestoreReferences.newEmployeeListenerDocumentRef
-import com.example.core.domain.tools.extensions.getExceptionMessage
-import com.example.core.domain.tools.extensions.logD
-import com.example.core.domain.tools.extensions.logE
+import com.example.core.domain.entities.tools.TaskWithEmployee
+import com.example.core.domain.entities.tools.constants.ErrorMessages.defaultErrorMessage
+import com.example.core.domain.entities.tools.constants.ErrorMessages.emailAlreadyExistsMessage
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_EMAIL
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.employeesCollectionRef
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.fireStore
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.newEmployeeListenerDocumentRef
+import com.example.core.domain.entities.tools.extensions.getExceptionMessage
+import com.example.core.domain.entities.tools.extensions.logD
+import com.example.core.domain.entities.tools.extensions.logE
 import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
 

@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.core.domain.order.Order
+import com.example.core.domain.entities.order.Order
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
 import com.example.core.presentation.recyclerView.itemDecorations.SimpleListItemDecoration
 import com.example.featureCurrentOrders.R
@@ -98,8 +98,10 @@ class CurrentOrdersFragment : Fragment() {
         viewModel.onOrderSelectedEvent.observe(viewLifecycleOwner) {
             val orderInfo = it.getData() ?: return@observe
             if (orderInfo.isCompleted) {
-                completedOrderDialog.order = orderInfo.order
-                completedOrderDialog.show(parentFragmentManager, "")
+                if (!completedOrderDialog.isAdded) {
+                    completedOrderDialog.order = orderInfo.order
+                    completedOrderDialog.show(parentFragmentManager, "")
+                }
             } else showDetail(orderInfo.order.orderId)
         }
     }

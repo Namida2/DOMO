@@ -11,13 +11,13 @@ import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
-import com.example.core.domain.Settings
+import com.example.core.domain.entities.Settings
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.BasePostActivity
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.order.OrdersServiceSub
-import com.example.core.domain.tools.constants.ErrorMessages.permissionDeniedMessage
-import com.example.core.domain.tools.extensions.createMessageDialog
+import com.example.core.domain.entities.order.OrdersServiceSub
+import com.example.core.domain.entities.tools.constants.ErrorMessages.permissionDeniedMessage
+import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
 import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponent
 import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponentDeps
@@ -81,7 +81,7 @@ class WaiterMainActivity : BasePostActivity(),
                 get() = WaiterMainDepsStore.deps.settings
             override val currentEmployee: Employee?
                 get() = WaiterMainDepsStore.deps.currentEmployee
-            override val ordersService: OrdersService<OrdersServiceSub>
+            override val ordersService: OrdersService
                 get() = WaiterMainDepsStore.deps.ordersService
         }
         orderAppComponents =
@@ -94,7 +94,7 @@ class WaiterMainActivity : BasePostActivity(),
         val currentOrdersModuleDeps = object : CurrentOrdersAppComponentDeps {
             override val currentEmployee: Employee?
                 get() = WaiterMainDepsStore.deps.currentEmployee
-            override val ordersService: OrdersService<OrdersServiceSub>
+            override val ordersService: OrdersService
                 get() = WaiterMainDepsStore.deps.ordersService
         }
         currentOrdersAppComponents = DaggerCurrentOrdersAppComponent.builder()

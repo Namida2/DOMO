@@ -1,12 +1,12 @@
 package com.example.featureSplashScreen.data
 
-import com.example.core.domain.menu.Category
-import com.example.core.domain.menu.Dish
-import com.example.core.domain.menu.MenuService
-import com.example.core.domain.tools.constants.FirestoreConstants
-import com.example.core.domain.tools.constants.FirestoreReferences
-import com.example.core.domain.tools.constants.FirestoreReferences.menuCollectionRef
-import com.example.core.domain.tools.extensions.logE
+import com.example.core.domain.entities.menu.Category
+import com.example.core.domain.entities.menu.Dish
+import com.example.core.domain.entities.menu.MenuService
+import com.example.core.domain.entities.tools.constants.FirestoreConstants
+import com.example.core.domain.entities.tools.constants.FirestoreReferences
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.menuCollectionRef
+import com.example.core.domain.entities.tools.extensions.logE
 import com.example.featureSplashScreen.domain.repositories.MenuRemoteRepository
 import javax.inject.Inject
 

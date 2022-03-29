@@ -3,14 +3,14 @@ package com.example.core.domain.useCases
 
 import com.example.core.data.repositorues.OrdersRemoteRepository
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.order.Order
-import com.example.core.domain.order.OrdersServiceSub
-import com.example.core.domain.tools.ErrorMessage
-import com.example.core.domain.tools.TaskWithOrder
+import com.example.core.domain.entities.order.Order
+import com.example.core.domain.entities.order.OrdersServiceSub
+import com.example.core.domain.entities.tools.ErrorMessage
+import com.example.core.domain.entities.tools.TaskWithOrder
 import javax.inject.Inject
 
 class ReadNewOrderUseCaseImpl @Inject constructor(
-    private val ordersService: OrdersService<OrdersServiceSub>,
+    private val ordersService: OrdersService,
     private val ordersRepo: OrdersRemoteRepository
 ) : ReadNewOrderUseCase {
 

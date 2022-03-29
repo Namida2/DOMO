@@ -1,15 +1,15 @@
 package com.example.cookCore.data.repositories
 
-import com.example.core.domain.tools.SimpleTask
-import com.example.core.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
-import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ID
-import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_IS_READY
-import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ITEM_ID
-import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ITEM_INFO
-import com.example.core.domain.tools.constants.FirestoreReferences.fireStore
-import com.example.core.domain.tools.constants.FirestoreReferences.orderItemsStateListenerDocumentRef
-import com.example.core.domain.tools.constants.FirestoreReferences.ordersCollectionRef
-import com.example.core.domain.tools.extensions.getExceptionMessage
+import com.example.core.domain.entities.tools.SimpleTask
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_ORDER_ID
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_IS_READY
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_ORDER_ITEM_ID
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_ORDER_ITEM_INFO
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.fireStore
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.orderItemsStateListenerDocumentRef
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.ordersCollectionRef
+import com.example.core.domain.entities.tools.extensions.getExceptionMessage
 import com.google.firebase.firestore.Transaction
 import javax.inject.Inject
 

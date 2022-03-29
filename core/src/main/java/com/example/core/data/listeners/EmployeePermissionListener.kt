@@ -1,17 +1,17 @@
 package com.example.core.data.listeners
 
-import com.example.core.domain.tools.NewPermission
-import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_EMAIL
-import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_NEW_PERMISSION
-import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_PERMISSION
-import com.example.core.domain.tools.constants.FirestoreReferences.newPermissionListenerDocumentRef
-import com.example.core.domain.tools.extensions.logE
+import com.example.core.domain.entities.tools.NewPermission
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_EMAIL
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_NEW_PERMISSION
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_PERMISSION
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.newPermissionListenerDocumentRef
+import com.example.core.domain.entities.tools.extensions.logE
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 
 object EmployeePermissionListener {
-    private var isFirstData = false
+    private var isFirstData = true
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val permissionChanges = callbackFlow {
@@ -22,8 +22,8 @@ object EmployeePermissionListener {
                     return@addSnapshotListener
                 }
                 value != null && value.exists() && value.data != null -> {
-                    if (!isFirstData) {
-                        isFirstData = true
+                    if (isFirstData) {
+                        isFirstData = false
                         return@addSnapshotListener
                     }
                     val data = value.get(FIELD_NEW_PERMISSION) as Map<*, *>

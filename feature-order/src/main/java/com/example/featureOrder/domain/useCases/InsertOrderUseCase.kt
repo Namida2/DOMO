@@ -1,14 +1,14 @@
 package com.example.featureOrder.domain.useCases
 
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.order.OrdersServiceSub
-import com.example.core.domain.tools.ErrorMessage
-import com.example.core.domain.tools.SimpleTask
+import com.example.core.domain.entities.order.OrdersServiceSub
+import com.example.core.domain.entities.tools.ErrorMessage
+import com.example.core.domain.entities.tools.SimpleTask
 import com.example.featureOrder.data.repositories.OrdersRemoteRepository
 import javax.inject.Inject
 
 class InsertOrderUseCaseImpl @Inject constructor(
-    private val ordersService: OrdersService<OrdersServiceSub>,
+    private val ordersService: OrdersService,
     private val remoteRepository: OrdersRemoteRepository,
 ) : InsertOrderUseCase {
     override fun insertCurrentOrder(task: SimpleTask) {

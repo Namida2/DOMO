@@ -10,11 +10,11 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
-import com.example.core.domain.tools.DeletedDishInfo
-import com.example.core.domain.tools.constants.EmployeePosts.ADMINISTRATOR
-import com.example.core.domain.tools.extensions.Animations.prepareSlideDown
-import com.example.core.domain.tools.extensions.Animations.prepareSlideUp
-import com.example.core.domain.tools.extensions.logD
+import com.example.core.domain.entities.tools.DeletedDishInfo
+import com.example.core.domain.entities.tools.constants.EmployeePosts.ADMINISTRATOR
+import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideDown
+import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideUp
+import com.example.core.domain.entities.tools.extensions.logD
 import com.example.core.presentation.recyclerView.adapterDelegates.DishesAdapterDelegate
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
 import com.example.featureMenuDialog.R
@@ -29,7 +29,6 @@ import com.example.featureMenuDialog.presentation.recyclerView.MenuItemDecoratio
 import com.example.featureMenuDialog.presentation.recyclerView.delegates.CategoriesAdapterDelegate
 import com.example.featureMenuDialog.presentation.recyclerView.delegates.CategoryLargeRecyclerViewType
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.BaseTransientBottomBar.BaseCallback
 import com.google.android.material.snackbar.Snackbar
 

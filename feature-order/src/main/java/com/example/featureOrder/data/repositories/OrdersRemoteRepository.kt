@@ -1,17 +1,17 @@
 package com.example.featureOrder.data.repositories
 
-import com.example.core.domain.order.Order
-import com.example.core.domain.tools.constants.FirestoreReferences.newOrdersListenerDocumentRef
-import com.example.core.domain.tools.constants.FirestoreReferences.ordersCollectionRef
-import com.example.core.domain.tools.SimpleTask
-import com.example.core.domain.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
-import com.example.core.domain.tools.constants.FirestoreConstants.ORDER_ITEM_ID_DELIMITER
-import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
-import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_ID
-import com.example.core.domain.tools.constants.FirestoreConstants.FIELD_ORDER_INFO
-import com.example.core.domain.tools.extensions.getExceptionMessage
-import com.example.core.domain.tools.extensions.logD
-import com.example.core.domain.tools.extensions.logE
+import com.example.core.domain.entities.order.Order
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.newOrdersListenerDocumentRef
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.ordersCollectionRef
+import com.example.core.domain.entities.tools.SimpleTask
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.ORDER_ITEM_ID_DELIMITER
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_ORDER_ID
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_ORDER_INFO
+import com.example.core.domain.entities.tools.extensions.getExceptionMessage
+import com.example.core.domain.entities.tools.extensions.logD
+import com.example.core.domain.entities.tools.extensions.logE
 import com.google.firebase.firestore.*
 import javax.inject.Inject
 
