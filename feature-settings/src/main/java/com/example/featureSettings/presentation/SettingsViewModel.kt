@@ -42,6 +42,7 @@ class SettingsViewModel(
                 _state.value = SettingsVMStates.OnSavingSuccess
             }
             override fun onError(message: ErrorMessage?) {
+                MenuService.setNewMenu(lastSavedMenu)
                 _state.value = SettingsVMStates.OnSavingFailed(message ?: defaultErrorMessage)
             }
         })
@@ -49,6 +50,7 @@ class SettingsViewModel(
 
     fun onCancelNewMenu() {
         MenuService.menu = lastSavedMenu
+        MenuService.setNewMenu(lastSavedMenu)
     }
 
     fun sameMenuBeforeChanges() {

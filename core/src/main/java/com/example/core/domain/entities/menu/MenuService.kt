@@ -167,10 +167,19 @@ object MenuService : BaseObservable<MenuServiceSub> {
             category.copy(dishes = newDishes)
         }.toMutableList()
 
-    fun getDishesCount(): Int =
-        menu.sumOf { it.dishes.size }
+    fun getUniqueId(): Int {
+        var id = menu.sumOf { it.dishes.size }
+        while (
+            menu.map { category ->
+                category.dishes.find { it.id == id } != null
+            }.contains(true)
+        ) { id++ }
+        return id
+    }
 
-
+    fun resetState() {
+        menuState = MenuServiceStates.Default
+    }
 }
 
 infix fun Collection<Category>.isTheSameMenu(other: Collection<Category>): Boolean {

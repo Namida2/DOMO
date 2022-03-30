@@ -16,6 +16,10 @@ object ErrorMessages {
         R.string.defaultTitle,
         R.string.gishAlreadyExistsMessage
     )
+    val ordersCollectionNotEmptyMessage = ErrorMessage(
+        R.string.ordersCollectionNotEmptyTitle,
+        R.string.ordersCollectionNotEmptyMessage
+    )
     val defaultErrorMessage = ErrorMessage(
         R.string.defaultTitle,
         R.string.defaultMessage

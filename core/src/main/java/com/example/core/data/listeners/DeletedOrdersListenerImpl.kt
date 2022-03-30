@@ -10,10 +10,10 @@ import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
 
 class DeletedOrdersListenerImpl @Inject constructor() : DeletedOrdersListener {
-    private var isFirstData = true
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override val deletedOrdersInfo = callbackFlow {
+        var isFirstData = true
         val subscription = deletedOrderListenerDocumentRef.addSnapshotListener { value, error ->
             when {
                 error != null -> {

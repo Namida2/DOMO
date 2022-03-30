@@ -38,7 +38,7 @@ class EditMenuItemViewModel : ViewModel(), Stateful<EditMenuItemVMState> {
         categoryName: String, dishName: String,
         dishCost: String, dishWeight: String
     ): Dish = Dish(
-        MenuService.getDishesCount(), dishName,
+        MenuService.getUniqueId(), dishName,
         categoryName, dishCost, dishWeight
     )
 

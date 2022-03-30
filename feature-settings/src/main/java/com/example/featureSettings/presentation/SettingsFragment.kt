@@ -21,7 +21,8 @@ import com.example.featureSettings.databinding.FragmentSettingsBinding
 import com.example.featureSettings.domain.ViewModelFactory
 import com.example.featureSettings.domain.di.SettingsDepsStore
 import com.google.android.material.transition.platform.MaterialSharedAxis
-//TODO: Prevent saving menu while there is any order //STOPPED//
+
+// TODO: Listen menu version changes //STOPPED//
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
     private lateinit var closedQuestionDialog: ClosedQuestionDialog<Unit>

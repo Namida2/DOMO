@@ -3,8 +3,10 @@ package com.example.featureSettings.data.remositories
 import com.example.core.domain.entities.menu.Category
 import com.example.core.domain.entities.menu.MenuService
 import com.example.core.domain.entities.tools.SimpleTask
+import com.example.core.domain.entities.tools.constants.ErrorMessages.ordersCollectionNotEmptyMessage
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.COLLECTION_DISHES
 import com.example.core.domain.entities.tools.constants.FirestoreReferences.menuCollectionRef
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.ordersCollectionRef
 import com.example.core.domain.entities.tools.extensions.getExceptionMessage
 import com.example.core.domain.entities.tools.extensions.logD
 import com.example.featureSettings.domain.repositories.MenuRemoteRepository
@@ -16,8 +18,21 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
 
     override fun saveNewMenu(task: SimpleTask) {
         currentCopiedMenu = MenuService.copyMenu()
-        deleteOldMenu(task)
-//        insertNewMenu(task)
+        checkOrders(task) {
+            deleteOldMenu(task)
+        }
+    }
+
+    private fun checkOrders(task: SimpleTask, onSuccess: () -> Unit) {
+        ordersCollectionRef.get().addOnSuccessListener {
+            if (it.documents.isNotEmpty()) {
+                task.onError(ordersCollectionNotEmptyMessage)
+                return@addOnSuccessListener
+            }
+            onSuccess()
+        }.addOnFailureListener {
+            task.onError(it.getExceptionMessage())
+        }
     }
 
     private fun deleteOldMenu(task: SimpleTask) {

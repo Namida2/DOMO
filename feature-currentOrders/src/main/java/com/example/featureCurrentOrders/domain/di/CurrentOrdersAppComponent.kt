@@ -1,7 +1,6 @@
 package com.example.featureCurrentOrders.domain.di
 
 import com.example.core.domain.entities.Employee
-import com.example.core.domain.entities.order.OrdersServiceSub
 import com.example.core.domain.interfaces.OrdersService
 import com.example.featureCurrentOrders.domain.di.modules.RemoteRepositoriesModule
 import com.example.featureCurrentOrders.domain.useCases.DeleteOrderUseCase
@@ -19,6 +18,7 @@ interface CurrentOrdersAppComponent {
         fun provideCurrentOrdersDeps(deps: CurrentOrdersAppComponentDeps): Builder
         fun build(): CurrentOrdersAppComponent
     }
+
     fun inject(fragment: CurrentOrdersFragment)
     fun provideDeleteOrderUseCase(): DeleteOrderUseCase
 }

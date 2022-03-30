@@ -17,6 +17,9 @@
     <string name="categoryAlreadyExistsMessage">Категория с таким именем уже существует.</string>
     <string name="gishAlreadyExistsMessage">Блюдо с таким именем уже существует.</string>
 
+    <string name="ordersCollectionNotEmptyTitle">Идет работа с заказами</string>
+    <string name="ordersCollectionNotEmptyMessage">Пожалуйста, подождите, пока работа со всеми заказами будет завершена.</string>
+
     <string name="emptyFieldTitle">Пустоле поле</string>
     <string name="emptyFieldMessage">Пожалуйста, заполниет все поля.</string>
 

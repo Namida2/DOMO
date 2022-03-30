@@ -1,6 +1,7 @@
 package com.example.featureSplashScreen.domain.useCases
 
 import android.content.SharedPreferences
+import com.example.core.domain.entities.menu.MenuService
 import com.example.core.domain.entities.tools.constants.FirestoreConstants
 import com.example.core.domain.entities.tools.extensions.logD
 import com.example.featureSplashScreen.domain.repositories.MenuLocalRepository
@@ -14,6 +15,7 @@ class ReadMenuUseCaseImpl @Inject constructor(
 ) : ReadMenuUseCase {
 
     override fun readMenu() {
+        MenuService.resetState()
         menuRemoteRepository.readMenuVersion { version ->
             if (isItTheSameMenuVersion(version)) {
                 logD("$this: The same restaurant menu.")

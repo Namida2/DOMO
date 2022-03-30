@@ -1,12 +1,13 @@
 package com.example.core.domain.entities.order
 
-import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.ORDER_ITEM_ID_DELIMITER
 import com.example.core.domain.entities.tools.constants.OtherStringConstants.CURRENT_ORDER_NOT_INITIALIZED
 import com.example.core.domain.entities.tools.constants.OtherStringConstants.ORDER_ITEM_NOT_FOUNT
+import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.listeners.DeletedOrdersListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
@@ -14,7 +15,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 typealias OrdersServiceSub = (orders: List<Order>) -> Unit
-typealias CurrentOrderServiceSub = (orderItems: List<OrderItem>) -> Unit
 
 //TODO: Add states to showing the progress bar when the orders is reading
 class OrdersServiceImpl @Inject constructor(
@@ -25,6 +25,7 @@ class OrdersServiceImpl @Inject constructor(
         get() = field ?: throw IllegalStateException(CURRENT_ORDER_NOT_INITIALIZED)
 
     var orders = mutableListOf<Order>()
+    private var deletedOrderJob: Job? = null
     private var ordersChanges = MutableSharedFlow<List<Order>>(replay = 1)
     private var currentOrderChanges = MutableSharedFlow<List<OrderItem>>(replay = 1)
 
@@ -32,20 +33,20 @@ class OrdersServiceImpl @Inject constructor(
     override fun subscribeOnCurrentOrderChanges(): Flow<List<OrderItem>> = currentOrderChanges
 
 
-    init {
-        CoroutineScope(Main).launch {
+    private fun listenDeletedOrderListenerChanges() {
+        deletedOrderJob?.cancel()
+        deletedOrderJob = CoroutineScope(Main).launch {
             deletedOrdersListener.deletedOrdersInfo.collect { deletedOrderId ->
                 orders.find {
                     it.orderId == deletedOrderId
                 }.also {
-                    if(it == null) return@collect
+                    if (it == null) return@collect
                     orders.remove(it)
                     ordersChanges.tryEmit(orders)
                 }
             }
         }
     }
-
 
     override fun addOrderItem(orderItem: OrderItem): Boolean {
         val existingOrderItem = currentOrder!!.orderItems.find {
@@ -120,10 +121,12 @@ class OrdersServiceImpl @Inject constructor(
         ordersChanges.tryEmit(orders)
     }
 
+    //TODO: This should always be called
     override fun addListOfOrders(orders: List<Order>) {
         this.orders.clear()
         this.orders.addAll(orders)
         ordersChanges.tryEmit(orders)
+        listenDeletedOrderListenerChanges()
     }
 
     override fun getOrderById(orderId: Int): Order? =
