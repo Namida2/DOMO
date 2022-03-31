@@ -17,6 +17,9 @@
     <string name="categoryAlreadyExistsMessage">Категория с таким именем уже существует.</string>
     <string name="gishAlreadyExistsMessage">Блюдо с таким именем уже существует.</string>
 
+    <string name="newMenuVersionTitle">Новая версия меню</string>
+    <string name="newMenuVersionMessage">Доступно новое меню, пожалуста, перезапустите приложение.</string>
+
     <string name="ordersCollectionNotEmptyTitle">Идет работа с заказами</string>
     <string name="ordersCollectionNotEmptyMessage">Пожалуйста, подождите, пока работа со всеми заказами будет завершена.</string>
 

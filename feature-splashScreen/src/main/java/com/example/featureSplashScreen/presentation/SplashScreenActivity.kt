@@ -15,10 +15,10 @@ import com.example.cookMain.presentation.CookMainActivity
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.EmployeeAuthCallback
 import com.example.core.domain.entities.tools.constants.EmployeePosts.*
-import com.example.core.domain.entities.tools.constants.ErrorMessages.checkNetworkConnectionMessage
+import com.example.core.domain.entities.tools.constants.Messages.checkNetworkConnectionMessage
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.entities.tools.extensions.isNetworkConnected
-import com.example.core.domain.entities.tools.extensions.logD
+import com.example.core.domain.interfaces.NewMenuVersionCallback
 import com.example.featureLogIn.R
 import com.example.featureLogIn.domain.di.LogInDepsStore
 import com.example.featureSplashScreen.databinding.ActivitySplashScreenBinding
@@ -29,7 +29,7 @@ import com.example.waiterMain.domain.di.WaiterMainDepsStore
 import com.example.waiterMain.presentation.WaiterMainActivity
 
 @SuppressLint("CustomSplashScreen")
-class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback {
+class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback, NewMenuVersionCallback {
 
     private val viewModel by viewModels<SplashScreenViewModel> { ViewModelFactory }
     private lateinit var navController: NavController
@@ -67,14 +67,14 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback {
                         COOK.value -> {
                             CookMainDepsStore.deps = SplashScreenDepsStore.appComponent
                             CookMainDepsStore.employeeAuthCallback = this
+                            CookMainDepsStore.newMenuVersionCallback = this
                             startActivity(Intent(this, CookMainActivity::class.java))
                         }
                         WAITER.value -> {
                             WaiterMainDepsStore.deps = SplashScreenDepsStore.appComponent
-                            val o = WaiterMainDepsStore.deps.settings
-                            logD(o.toString())
                             WaiterMainDepsStore.profileDeps = SplashScreenDepsStore.appComponent
                             WaiterMainDepsStore.employeeAuthCallback = this
+                            WaiterMainDepsStore.newMenuVersionCallback = this
                             startActivity(Intent(this, WaiterMainActivity::class.java))
                         }
                         ADMINISTRATOR.value -> {
@@ -106,9 +106,12 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback {
         setContentView(binding.root)
     }
 
-    override fun onEmployeeLoggedIn(employee: Employee?) {
+    override fun onAuthorisationEvent(employee: Employee?) {
         employee?.let { setNewEmployeeData(it) }
-        startActivity(Intent(this, SplashScreenActivity::class.java))
+    }
+
+    override fun onNewMenu() {
+        finish()
     }
 }
 

@@ -11,10 +11,10 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 
 object EmployeePermissionListener {
-    private var isFirstData = true
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val permissionChanges = callbackFlow {
+        var isFirstData = true
         val subscription = newPermissionListenerDocumentRef.addSnapshotListener { value, error ->
             when {
                 error != null -> {

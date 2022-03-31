@@ -3,7 +3,11 @@ package com.example.core.domain.entities.tools.constants
 import com.example.core.R
 import com.example.core.domain.entities.tools.ErrorMessage
 
-object ErrorMessages {
+object Messages {
+    val newMenuVersionMessage = ErrorMessage(
+        R.string.newMenuVersionTitle,
+        R.string.newMenuVersionMessage
+    )
     val checkNetworkConnectionMessage = ErrorMessage(
         R.string.defaultTitle,
         R.string.networkConnectionMessage

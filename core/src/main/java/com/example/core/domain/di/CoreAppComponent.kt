@@ -1,12 +1,10 @@
 package com.example.core.domain.di
 
 import android.content.Context
-import com.example.core.domain.di.modules.ListenersModule
-import com.example.core.domain.entities.Employee
 import com.example.core.domain.di.modules.RemoteRepositoryModule
 import com.example.core.domain.di.modules.UseCasesModule
+import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.listeners.DeletedOrdersListener
 import com.example.core.domain.useCases.ReadNewOrderUseCase
 import dagger.Component
 

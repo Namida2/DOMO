@@ -10,11 +10,12 @@ import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.example.cookMain.R
 import com.example.cookMain.databinding.ActivityCookMainBinding
+import com.example.cookMain.domain.ViewModelFactory
 import com.example.cookMain.domain.di.CookMainDepsStore
 import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
 import com.example.core.domain.entities.Employee
-import com.example.core.domain.entities.tools.constants.ErrorMessages
+import com.example.core.domain.entities.tools.constants.Messages
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.interfaces.BasePostActivity
 import com.example.core.domain.interfaces.OrdersService
@@ -38,7 +39,7 @@ class CookMainActivity : BasePostActivity() {
     private lateinit var binding: ActivityCookMainBinding
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var navController: NavController
-    private val viewModel by viewModels<CookViewModel>()
+    private val viewModel by viewModels<CookMainViewModel> { ViewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,8 +107,18 @@ class CookMainActivity : BasePostActivity() {
     override fun observeOnNewPermissionEvent() {
         viewModel.newPermissionEvent.observe(this) {
             it.getData().let {
-                createMessageDialog(ErrorMessages.permissionDeniedMessage) {
+                createMessageDialog(Messages.newMenuVersionMessage) {
                     finish()
+                }?.show(supportFragmentManager, "")
+            }
+        }
+    }
+
+    override fun observeMenuVersionEvent() {
+        viewModel.newMenuVersionEvent.observe(this) {
+            it.getData()?.let {
+                createMessageDialog(Messages.newMenuVersionMessage) {
+                    CookMainDepsStore.newMenuVersionCallback.onNewMenu()
                 }?.show(supportFragmentManager, "")
             }
         }
@@ -124,8 +135,8 @@ class CookMainActivity : BasePostActivity() {
         navController.setGraph(R.navigation.navigation_log_in)
     }
 
-    override fun onEmployeeLoggedIn(employee: Employee?) {
-        CookMainDepsStore.employeeAuthCallback.onEmployeeLoggedIn(employee)
+    override fun onAuthorisationEvent(employee: Employee?) {
+        CookMainDepsStore.employeeAuthCallback.onAuthorisationEvent(employee)
     }
 
     override fun makeWorkerRequests() {

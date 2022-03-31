@@ -6,8 +6,10 @@ import com.example.core.domain.entities.menu.MenuService
 import com.example.core.domain.entities.tools.constants.FirestoreConstants
 import com.example.core.domain.entities.tools.constants.FirestoreReferences
 import com.example.core.domain.entities.tools.constants.FirestoreReferences.menuCollectionRef
+import com.example.core.domain.entities.tools.extensions.logD
 import com.example.core.domain.entities.tools.extensions.logE
 import com.example.featureSplashScreen.domain.repositories.MenuRemoteRepository
+import com.google.firebase.firestore.Source
 import javax.inject.Inject
 
 class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
@@ -18,8 +20,8 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
     //TODO: Handle the case when there is no internet connection
     override fun readNewMenu(onComplete: () -> Unit) {
         MenuService.setMenuServiceStateAsLoading()
-        menuCollectionRef.get().addOnSuccessListener {
-            val categoriesLastIndex: Int = it.documents.lastIndex
+        menuCollectionRef.get(Source.SERVER).addOnSuccessListener {
+            val categoriesLastIndex = it.documents.lastIndex
             it.documents.forEachIndexed { index, documentSnapshot ->
                 if (index == categoriesLastIndex)
                     readDishes(documentSnapshot.id, true, onComplete)
@@ -37,19 +39,22 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
         isItLastCategory: Boolean = false,
         onComplete: () -> Unit,
     ) {
-        val dishesCollectionRef =
-            menuCollectionRef.document(category)
-                .collection(FirestoreConstants.COLLECTION_DISHES)
-        dishesCollectionRef.get().addOnSuccessListener {
-            val dishes: ArrayList<Dish> = ArrayList()
-            for (document in it)
-                dishes.add(document.toObject(Dish::class.java))
-            menu.add(Category(category, dishes))
-            if (isItLastCategory) onMenuLoadingFinish(onComplete)
-        }.addOnFailureListener {
-            logE("$this: ${it.message}")
-            onMenuLoadingFinish(onComplete)
-        }
+        logD("readDishes: $category")
+        menuCollectionRef.document(category)
+            .collection(FirestoreConstants.COLLECTION_DISHES).get().addOnSuccessListener {
+                val dishes: ArrayList<Dish> = ArrayList()
+                it.documents.forEach { dish ->
+                    dish.toObject(Dish::class.java)?.let { notNulDish ->
+                        dishes.add(notNulDish)
+                        logD("readDishes: $notNulDish")
+                    }
+                }
+                menu.add(Category(category, dishes))
+                if (isItLastCategory) onMenuLoadingFinish(onComplete)
+            }.addOnFailureListener {
+                logE("$this: ${it.message}")
+                onMenuLoadingFinish(onComplete)
+            }
     }
 
 

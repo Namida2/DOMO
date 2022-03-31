@@ -2,8 +2,8 @@ package com.example.featureRegistration.data
 
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.tools.TaskWithEmployee
-import com.example.core.domain.entities.tools.constants.ErrorMessages.defaultErrorMessage
-import com.example.core.domain.entities.tools.constants.ErrorMessages.emailAlreadyExistsMessage
+import com.example.core.domain.entities.tools.constants.Messages.defaultErrorMessage
+import com.example.core.domain.entities.tools.constants.Messages.emailAlreadyExistsMessage
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_EMAIL
 import com.example.core.domain.entities.tools.constants.FirestoreReferences.employeesCollectionRef

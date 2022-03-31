@@ -6,7 +6,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.example.core.domain.entities.menu.Dish
-import com.example.core.domain.entities.tools.constants.ErrorMessages.emptyFieldMessage
+import com.example.core.domain.entities.tools.constants.Messages.emptyFieldMessage
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.entities.tools.extensions.isEmptyField
 import com.example.featureMenuDialog.R

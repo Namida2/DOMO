@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.core.domain.entities.tools.constants.ErrorMessages.checkNetworkConnectionMessage
+import com.example.core.domain.entities.tools.constants.Messages.checkNetworkConnectionMessage
 import com.example.core.domain.entities.tools.constants.OtherStringConstants.ACTIVITY_IS_NOT_EMPLOYEE_AUTHORIZATION_CALLBACK
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.entities.tools.extensions.isNetworkConnected
@@ -80,7 +80,7 @@ class LogInFragment : Fragment() {
                 }
                 is LogInViewModelStates.Success -> {
                     com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog.dismiss()
-                    employeeAuthCallback.onEmployeeLoggedIn(it.employee)
+                    employeeAuthCallback.onAuthorisationEvent(it.employee)
                 }
                 else -> {
                     if (it is LogInViewModelStates.Default) return@observe

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.SimpleTask
-import com.example.core.domain.entities.tools.constants.ErrorMessages.defaultErrorMessage
+import com.example.core.domain.entities.tools.constants.Messages.defaultErrorMessage
 import com.example.featureEmployees.domain.useCases.DeleteEmployeeUseCase
 import com.example.featureEmployees.domain.useCases.SetPermissionUseCase
 

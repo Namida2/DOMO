@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.TaskWithEmployee
-import com.example.core.domain.entities.tools.constants.ErrorMessages.emptyFieldMessage
-import com.example.core.domain.entities.tools.constants.ErrorMessages.wrongEmailOrPassword
+import com.example.core.domain.entities.tools.constants.Messages.emptyFieldMessage
+import com.example.core.domain.entities.tools.constants.Messages.wrongEmailOrPassword
 import com.example.core.domain.entities.tools.extensions.isEmptyField
 import com.example.featureLogIn.domain.LogInUseCase
 

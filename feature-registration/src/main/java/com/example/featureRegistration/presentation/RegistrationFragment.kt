@@ -104,7 +104,7 @@ class RegistrationFragment : Fragment() {
                     )
                 }
                 is RegistrationViewModelStates.Valid -> {
-                    employeeAuthCallback.onEmployeeLoggedIn(it.employee)
+                    employeeAuthCallback.onAuthorisationEvent(it.employee)
                 }
                 else -> {
                     if (it is RegistrationViewModelStates.Default) return@observe

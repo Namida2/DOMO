@@ -47,5 +47,6 @@ abstract class BasePostActivity : AppCompatActivity(), EmployeeAuthCallback, Lea
             bottomNavigationView.prepareSlideDown(bottomNavigationView.height).start()
     }
 
-    abstract fun observeOnNewPermissionEvent()
+    open fun observeOnNewPermissionEvent() {}
+    open fun observeMenuVersionEvent() {}
 }

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.SimpleTask
-import com.example.core.domain.entities.tools.constants.ErrorMessages.defaultErrorMessage
+import com.example.core.domain.entities.tools.constants.Messages.defaultErrorMessage
 import com.example.core.domain.interfaces.Stateful
 import com.example.core.domain.interfaces.TerminatingState
 import com.example.featureCurrentOrders.domain.useCases.DeleteOrderUseCase

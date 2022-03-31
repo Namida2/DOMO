@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.cookCore.domain.useCases.ChangeOrderItemStateUseCase
 import com.example.core.domain.entities.order.OrderItem
 import com.example.core.domain.entities.tools.ErrorMessage
-import com.example.core.domain.entities.tools.constants.ErrorMessages.defaultErrorMessage
+import com.example.core.domain.entities.tools.constants.Messages.defaultErrorMessage
 import com.example.core.domain.entities.tools.SimpleTask
 
 sealed class CookCurrentOrderDetailVMStates {

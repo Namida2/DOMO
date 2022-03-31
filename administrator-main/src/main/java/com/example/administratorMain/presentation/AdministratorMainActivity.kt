@@ -13,13 +13,10 @@ import com.example.administratorMain.databinding.ActivityAdministratorBinding
 import com.example.administratorMain.domatn.di.AdminDepsStore
 import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
-import com.example.core.domain.entities.Settings
 import com.example.core.domain.entities.Employee
+import com.example.core.domain.entities.Settings
 import com.example.core.domain.interfaces.BasePostActivity
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.entities.order.OrdersServiceSub
-import com.example.core.domain.entities.tools.constants.ErrorMessages
-import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.featureEmployees.domain.di.DaggerEmployeesAppComponent
 import com.example.featureEmployees.domain.di.EmployeesAppComponent
 import com.example.featureEmployees.domain.di.EmployeesAppComponentDeps
@@ -150,16 +147,6 @@ class AdministratorMainActivity : BasePostActivity() {
         WorkManager.getInstance(this).enqueue(newOrderItemsStateRequest)
     }
 
-    override fun observeOnNewPermissionEvent() {
-        viewModel.newPermissionEvent.observe(this) {
-            it.getData().let {
-                createMessageDialog(ErrorMessages.permissionDeniedMessage) {
-                    finish()
-                }?.show(supportFragmentManager, "")
-            }
-        }
-    }
-
     override fun onBackPressed() {
         showNavigationUI(binding.root, binding.appBar, binding.bottomNavigation)
         super.onBackPressed()
@@ -171,7 +158,7 @@ class AdministratorMainActivity : BasePostActivity() {
         navController.setGraph(R.navigation.navigation_log_in)
     }
 
-    override fun onEmployeeLoggedIn(employee: Employee?) {
-        AdminDepsStore.employeeAuthCallback.onEmployeeLoggedIn(employee)
+    override fun onAuthorisationEvent(employee: Employee?) {
+        AdminDepsStore.employeeAuthCallback.onAuthorisationEvent(employee)
     }
 }

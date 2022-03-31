@@ -4,6 +4,7 @@ import com.example.core.data.database.daos.MenuDao
 import com.example.core.domain.entities.menu.Category
 import com.example.core.domain.entities.menu.Dish
 import com.example.core.domain.entities.menu.MenuService
+import com.example.core.domain.entities.tools.extensions.logD
 import com.example.featureSplashScreen.domain.repositories.MenuLocalRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,10 +37,14 @@ class MenuLocalRepositoryImpl @Inject constructor(
     }
 
     override fun insertCurrentMenu() {
+        logD(MenuService.menu.toString())
         val dishes = getAllDishes(MenuService.menu)
+        dishes.toString()
         CoroutineScope(IO).launch {
             menuDao.deleteAll()
             menuDao.insert(dishes)
+            val list = menuDao.readAll()
+            logD(list.toString())
         }
     }
 

@@ -12,6 +12,6 @@ interface MenuDao {
     suspend fun readAll(): List<Dish>
     @Query("DELETE FROM menu")
     suspend fun deleteAll()
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun insert(dishes: List<Dish>)
 }

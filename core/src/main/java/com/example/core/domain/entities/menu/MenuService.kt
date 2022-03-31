@@ -4,6 +4,7 @@ import com.example.core.domain.interfaces.BaseObservable
 import com.example.core.domain.entities.tools.DeletedDishInfo
 import com.example.core.domain.entities.tools.constants.OtherStringConstants.THIS_DISH_ALREADY_ADDED
 import com.example.core.domain.entities.tools.constants.OtherStringConstants.UNKNOWN_DISH_ID
+import com.example.core.domain.entities.tools.extensions.logD
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 typealias MenuServiceSub = (state: MenuServiceStates) -> Unit
@@ -48,6 +49,7 @@ object MenuService : BaseObservable<MenuServiceSub> {
     fun setNewMenu(menu: MutableList<Category>?) {
         if (menu.isNullOrEmpty()) menuState = MenuServiceStates.MenuIsEmpty
         else {
+            logD(menu.toString())
             menu.sort()
             this.menu = menu
             menuState = MenuServiceStates.MenuExists(this)

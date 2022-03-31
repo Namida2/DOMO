@@ -2,7 +2,7 @@ package com.example.core.domain.entities.tools.extensions
 
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.tools.TaskWithEmployee
-import com.example.core.domain.entities.tools.constants.ErrorMessages.wrongEmailOrPassword
+import com.example.core.domain.entities.tools.constants.Messages.wrongEmailOrPassword
 import com.example.core.domain.entities.tools.constants.FirestoreReferences.employeesCollectionRef
 import com.google.firebase.firestore.ktx.toObject
 

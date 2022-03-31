@@ -2,7 +2,7 @@ package com.example.core.data.repositorues
 
 import com.example.core.domain.entities.order.Order
 import com.example.core.domain.entities.order.OrderItem
-import com.example.core.domain.entities.tools.constants.ErrorMessages
+import com.example.core.domain.entities.tools.constants.Messages
 import com.example.core.domain.entities.tools.constants.FirestoreReferences.ordersCollectionRef
 import com.example.core.domain.entities.tools.TaskWithOrder
 import com.example.core.domain.entities.tools.constants.FirestoreConstants
@@ -27,8 +27,8 @@ class OrdersRemoteRepositoryImpl @Inject constructor(): OrdersRemoteRepository {
             }.addOnFailureListener {
                 logE("$this: $it")
                 if (it is FirebaseNetworkException)
-                    task.onError(ErrorMessages.checkNetworkConnectionMessage)
-                else task.onError(ErrorMessages.defaultErrorMessage)
+                    task.onError(Messages.checkNetworkConnectionMessage)
+                else task.onError(Messages.defaultErrorMessage)
             }
     }
 

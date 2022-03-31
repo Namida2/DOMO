@@ -11,31 +11,28 @@ import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
-import com.example.core.domain.entities.Settings
 import com.example.core.domain.entities.Employee
+import com.example.core.domain.entities.Settings
+import com.example.core.domain.entities.tools.constants.Messages.newMenuVersionMessage
+import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.interfaces.BasePostActivity
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.entities.order.OrdersServiceSub
-import com.example.core.domain.entities.tools.constants.ErrorMessages.permissionDeniedMessage
-import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
-import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponent
 import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponentDeps
 import com.example.featureCurrentOrders.domain.di.DaggerCurrentOrdersAppComponent
 import com.example.featureLogIn.domain.di.LogInDeps
 import com.example.featureLogIn.domain.di.LogInDepsStore
 import com.example.featureOrder.domain.di.DaggerOrderAppComponent
-import com.example.featureOrder.domain.di.OrderAppComponent
 import com.example.featureOrder.domain.di.OrderAppComponentDeps
 import com.example.featureOrder.domain.di.OrderDepsStore
 import com.example.featureOrder.presentation.order.OrderFragment
 import com.example.featureOrder.presentation.tables.TablesFragment
 import com.example.featureProfile.domain.di.DaggerProfileAppComponent
-import com.example.featureProfile.domain.di.ProfileAppComponent
 import com.example.featureProfile.domain.di.ProfileAppComponentDeps
 import com.example.featureProfile.domain.di.ProfileDepsStore
 import com.example.waiterMain.R
 import com.example.waiterMain.databinding.ActivityWaiterMainBinding
+import com.example.waiterMain.domain.ViewModelFactory
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
 import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
@@ -44,13 +41,10 @@ class WaiterMainActivity : BasePostActivity(),
     NavController.OnDestinationChangedListener {
 
     private val currentDestination = 0
-    private lateinit var profileAppComponent: ProfileAppComponent
-    private lateinit var orderAppComponents: OrderAppComponent
-    private lateinit var currentOrdersAppComponents: CurrentOrdersAppComponent
     private lateinit var binding: ActivityWaiterMainBinding
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
-    private val viewModel by viewModels<WaiterMainViewModel>()
+    private val viewModel by viewModels<WaiterMainViewModel> { ViewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +60,7 @@ class WaiterMainActivity : BasePostActivity(),
         setOnNavigationItemSelectedListener()
         makeWorkerRequests()
         observeOnNewPermissionEvent()
+        observeMenuVersionEvent()
     }
 
     private fun provideDeps() {
@@ -73,7 +68,6 @@ class WaiterMainActivity : BasePostActivity(),
         provideCurrentOrdersDeps()
         provideProfileDeps()
     }
-
 
     private fun provideOrderDeps() {
         val orderModuleDeps = object : OrderAppComponentDeps {
@@ -84,10 +78,10 @@ class WaiterMainActivity : BasePostActivity(),
             override val ordersService: OrdersService
                 get() = WaiterMainDepsStore.deps.ordersService
         }
-        orderAppComponents =
+        viewModel.orderAppComponents =
             DaggerOrderAppComponent.builder().provideOrderAppComponentDeps(orderModuleDeps).build()
         OrderDepsStore.deps = orderModuleDeps
-        OrderDepsStore.appComponent = orderAppComponents
+        OrderDepsStore.appComponent = viewModel.orderAppComponents
     }
 
     private fun provideCurrentOrdersDeps() {
@@ -97,10 +91,10 @@ class WaiterMainActivity : BasePostActivity(),
             override val ordersService: OrdersService
                 get() = WaiterMainDepsStore.deps.ordersService
         }
-        currentOrdersAppComponents = DaggerCurrentOrdersAppComponent.builder()
+        viewModel.currentOrdersAppComponents = DaggerCurrentOrdersAppComponent.builder()
             .provideCurrentOrdersDeps(currentOrdersModuleDeps).build()
         CurrentOrderDepsStore.deps = currentOrdersModuleDeps
-        CurrentOrderDepsStore.appComponent = currentOrdersAppComponents
+        CurrentOrderDepsStore.appComponent = viewModel.currentOrdersAppComponents
     }
 
     private fun provideProfileDeps() {
@@ -110,10 +104,10 @@ class WaiterMainActivity : BasePostActivity(),
             override val firebaseAuth: FirebaseAuth
                 get() = WaiterMainDepsStore.profileDeps.firebaseAuth
         }
-        profileAppComponent = DaggerProfileAppComponent.builder()
+        viewModel.profileAppComponent = DaggerProfileAppComponent.builder()
             .profileAppComponentDeps(profileModuleDeps).build()
         ProfileDepsStore.deps = profileModuleDeps
-        ProfileDepsStore.appComponent = profileAppComponent
+        ProfileDepsStore.appComponent = viewModel.profileAppComponent
     }
 
     override fun makeWorkerRequests() {
@@ -193,14 +187,24 @@ class WaiterMainActivity : BasePostActivity(),
         navController.setGraph(R.navigation.navigation_log_in)
     }
 
-    override fun onEmployeeLoggedIn(employee: Employee?) {
-        WaiterMainDepsStore.employeeAuthCallback.onEmployeeLoggedIn(employee)
+    override fun onAuthorisationEvent(employee: Employee?) {
+        WaiterMainDepsStore.employeeAuthCallback.onAuthorisationEvent(employee)
     }
 
     override fun observeOnNewPermissionEvent() {
         viewModel.newPermissionEvent.observe(this) {
-            it.getData().let {
-                createMessageDialog(permissionDeniedMessage) {
+            it.getData()?.let {
+                createMessageDialog(newMenuVersionMessage) {
+                    finish()
+                }?.show(supportFragmentManager, "")
+            }
+        }
+    }
+
+    override fun observeMenuVersionEvent() {
+        viewModel.newMenuVersionEvent.observe(this) {
+            it.getData()?.let {
+                createMessageDialog(newMenuVersionMessage) {
                     finish()
                 }?.show(supportFragmentManager, "")
             }

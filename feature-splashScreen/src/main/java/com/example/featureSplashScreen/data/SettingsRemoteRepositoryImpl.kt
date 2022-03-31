@@ -2,7 +2,7 @@ package com.example.featureSplashScreen.data
 
 import com.example.core.domain.entities.Settings
 import com.example.core.domain.entities.tools.SimpleTask
-import com.example.core.domain.entities.tools.constants.ErrorMessages.defaultErrorMessage
+import com.example.core.domain.entities.tools.constants.Messages.defaultErrorMessage
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_TABLES_COUNT
 import com.example.core.domain.entities.tools.constants.FirestoreReferences.settingsDocumentRef

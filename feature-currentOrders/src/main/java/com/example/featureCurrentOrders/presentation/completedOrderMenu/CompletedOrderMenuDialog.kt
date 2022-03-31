@@ -61,7 +61,10 @@ class CompletedOrderMenuDialog(
                     requireContext().createMessageDialog(it.errorMessage)
                         ?.show(parentFragmentManager, "")
                 }
-                is CompletedOrderVMStates.Default -> {}
+                is CompletedOrderVMStates.Default -> {
+                    if(!ProcessAlertDialog.isAdded) return@observe
+                    ProcessAlertDialog.onSuccess()
+                }
             }
         }
     }

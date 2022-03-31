@@ -1,11 +1,12 @@
 package com.example.waiterMain.domain.di
 
-import com.example.core.domain.entities.Settings
-import com.example.core.domain.entities.Employee
+import com.example.core.data.listeners.MenuVersionListenerImpl
 import com.example.core.domain.di.modules.RemoteRepositoryModule
 import com.example.core.domain.di.modules.UseCasesModule
+import com.example.core.domain.entities.Employee
+import com.example.core.domain.entities.Settings
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.entities.order.OrdersServiceSub
+import com.example.core.domain.listeners.MenuVersionListener
 import com.example.core.domain.useCases.ReadNewOrderUseCase
 import dagger.Component
 
@@ -19,8 +20,8 @@ interface WaiterMainAppComponent {
         fun provideWaiterMainDeps(deps: WaiterMainDeps): Builder
         fun build(): WaiterMainAppComponent
     }
-
     fun provideReadNewOrderUseCase(): ReadNewOrderUseCase
+    fun provideMenuVersionListener() = MenuVersionListenerImpl()
 }
 
 interface WaiterMainDeps {

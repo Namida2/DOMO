@@ -9,7 +9,7 @@ import com.example.core.domain.entities.menu.isTheSameMenu
 import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.Event
 import com.example.core.domain.entities.tools.SimpleTask
-import com.example.core.domain.entities.tools.constants.ErrorMessages.defaultErrorMessage
+import com.example.core.domain.entities.tools.constants.Messages.defaultErrorMessage
 import com.example.featureMenuDialog.domain.interfaces.OnDismissListener
 import com.example.featureSettings.domain.useCases.SaveMenuUseCase
 

@@ -8,7 +8,7 @@ import com.example.core.domain.interfaces.TerminatingState
 import com.example.core.domain.entities.menu.Dish
 import com.example.core.domain.entities.menu.MenuService
 import com.example.core.domain.entities.tools.ErrorMessage
-import com.example.core.domain.entities.tools.constants.ErrorMessages.dishAlreadyExists
+import com.example.core.domain.entities.tools.constants.Messages.dishAlreadyExists
 
 sealed class EditMenuItemVMState {
     class ItemAlreadyExists(val message: ErrorMessage) : EditMenuItemVMState(), TerminatingState

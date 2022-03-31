@@ -1,12 +1,14 @@
 package com.example.waiterMain.domain.di
 
 import com.example.core.domain.interfaces.EmployeeAuthCallback
+import com.example.core.domain.interfaces.NewMenuVersionCallback
 import com.google.firebase.auth.FirebaseAuth
 
 object WaiterMainDepsStore {
     lateinit var deps: WaiterMainDeps
     lateinit var profileDeps: ProfileModuleDeps
     lateinit var employeeAuthCallback: EmployeeAuthCallback
+    lateinit var newMenuVersionCallback: NewMenuVersionCallback
     val appComponent: WaiterMainAppComponent by lazy {
         DaggerWaiterMainAppComponent.builder()
             .provideWaiterMainDeps(deps)

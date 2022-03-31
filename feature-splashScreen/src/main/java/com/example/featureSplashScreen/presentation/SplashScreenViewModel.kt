@@ -7,9 +7,9 @@ import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.SimpleTask
 import com.example.core.domain.entities.tools.TaskWithEmployee
-import com.example.core.domain.entities.tools.constants.ErrorMessages.defaultErrorMessage
-import com.example.core.domain.entities.tools.constants.ErrorMessages.employeeDoesNotExists
-import com.example.core.domain.entities.tools.constants.ErrorMessages.permissionDeniedMessage
+import com.example.core.domain.entities.tools.constants.Messages.defaultErrorMessage
+import com.example.core.domain.entities.tools.constants.Messages.employeeDoesNotExists
+import com.example.core.domain.entities.tools.constants.Messages.newMenuVersionMessage
 import com.example.featureSplashScreen.domain.useCases.GetCurrentEmployeeUseCase
 import com.example.featureSplashScreen.domain.useCases.ReadMenuUseCase
 import com.example.featureSplashScreen.domain.useCases.ReadOrdersUseCase
@@ -54,7 +54,7 @@ class SplashScreenViewModel(
                     currentEmployee = result
                     if (isSettingsExists)
                         _state.value = SplashScreenStates.EmployeeAndSettingsExist(result)
-                } else _state.value = SplashScreenStates.OnFailure(permissionDeniedMessage)
+                } else _state.value = SplashScreenStates.OnFailure(newMenuVersionMessage)
             }
             override fun onError(message: ErrorMessage?) {
                 if (message == employeeDoesNotExists)

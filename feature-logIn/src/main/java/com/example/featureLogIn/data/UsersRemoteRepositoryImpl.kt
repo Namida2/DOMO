@@ -2,8 +2,8 @@ package com.example.featureLogIn.data
 
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.tools.ErrorMessage
-import com.example.core.domain.entities.tools.constants.ErrorMessages.permissionDeniedMessage
-import com.example.core.domain.entities.tools.constants.ErrorMessages.wrongEmailOrPassword
+import com.example.core.domain.entities.tools.constants.Messages.newMenuVersionMessage
+import com.example.core.domain.entities.tools.constants.Messages.wrongEmailOrPassword
 import com.example.core.domain.entities.tools.TaskWithEmployee
 import com.example.core.domain.entities.tools.extensions.logE
 import com.example.core.domain.entities.tools.extensions.readEmployeeByEmail
@@ -42,7 +42,7 @@ class UsersRemoteRepositoryImpl @Inject constructor(
             override fun onSuccess(result: Employee) {
                 if (!result.permission) {
                     auth.signOut()
-                    task.onError(permissionDeniedMessage)
+                    task.onError(newMenuVersionMessage)
                 } else task.onSuccess(result)
             }
 
