@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.example.core.domain.entities.menu.CategoryName
+import com.example.core.domain.entities.tools.extensions.precomputeAndSetText
 import com.example.core.presentation.recyclerView.interfaces.BaseAdapterDelegate
 import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.core.presentation.recyclerView.interfaces.BaseViewHolder
@@ -42,6 +43,6 @@ class CategoryViewHolder(
 ) : BaseViewHolder<LayoutCategoryBinding, CategoryName>(binding) {
 
     override fun onBind(item: CategoryName) {
-        binding.categoryName.text = item.name
+        binding.categoryName.precomputeAndSetText(item.name)
     }
 }

@@ -17,12 +17,13 @@ class MenuLocalRepositoryImpl @Inject constructor(
     private val menuDao: MenuDao
 ) : MenuLocalRepository {
 
-    private var menu: ArrayList<Category> = ArrayList()
+    private var menu = mutableListOf<Category>()
 
     override fun readExitingMenu() {
         CoroutineScope(IO).launch {
-            val categories: MutableSet<String> = mutableSetOf()
+            val categories = mutableSetOf<String>()
             val allDishes = menuDao.readAll()
+            logD("readExitingMenu, dishesCount: ${allDishes.size}")
             allDishes.forEach {
                 categories.add(it.categoryName)
             }
@@ -39,12 +40,15 @@ class MenuLocalRepositoryImpl @Inject constructor(
     override fun insertCurrentMenu() {
         logD(MenuService.menu.toString())
         val dishes = getAllDishes(MenuService.menu)
-        dishes.toString()
+        logD("flattenDishesSize: ${dishes.size}")
+        var id = 0
+        dishes.forEach {
+            it.id = ++id
+            logD(it.toString())
+        }
         CoroutineScope(IO).launch {
             menuDao.deleteAll()
             menuDao.insert(dishes)
-            val list = menuDao.readAll()
-            logD(list.toString())
         }
     }
 

@@ -33,6 +33,7 @@ import com.example.featureProfile.domain.di.ProfileDepsStore
 import com.example.waiterMain.R
 import com.example.waiterMain.databinding.ActivityWaiterMainBinding
 import com.example.waiterMain.domain.ViewModelFactory
+import com.example.waiterMain.domain.di.WaiterMainDeps
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
 import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
@@ -205,7 +206,7 @@ class WaiterMainActivity : BasePostActivity(),
         viewModel.newMenuVersionEvent.observe(this) {
             it.getData()?.let {
                 createMessageDialog(newMenuVersionMessage) {
-                    finish()
+                    WaiterMainDepsStore.newMenuVersionCallback.onNewMenu()
                 }?.show(supportFragmentManager, "")
             }
         }

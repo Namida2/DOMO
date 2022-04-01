@@ -15,45 +15,45 @@ import javax.inject.Inject
 class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
 
     private val defaultMenuVersion = -1L
-    private val menu: ArrayList<Category> = ArrayList()
+    private var collectionMenuSize: Int = 0
+    private val menu = mutableListOf<Category>()
 
     //TODO: Handle the case when there is no internet connection
     override fun readNewMenu(onComplete: () -> Unit) {
         MenuService.setMenuServiceStateAsLoading()
         menuCollectionRef.get(Source.SERVER).addOnSuccessListener {
-            val categoriesLastIndex = it.documents.lastIndex
-            it.documents.forEachIndexed { index, documentSnapshot ->
-                if (index == categoriesLastIndex)
-                    readDishes(documentSnapshot.id, true, onComplete)
-                else
-                    readDishes(documentSnapshot.id, onComplete = onComplete)
+            collectionMenuSize = it.documents.size
+            logD("documentsCount: ${it.documents.size}")
+            it.documents.forEach { documentSnapshot ->
+                readDishes(documentSnapshot.id, onComplete)
             }
         }.addOnFailureListener {
             logE("$this: ${it.message}")
-            onMenuLoadingFinish(onComplete)
         }
     }
 
     private fun readDishes(
         category: String,
-        isItLastCategory: Boolean = false,
         onComplete: () -> Unit,
     ) {
         logD("readDishes: $category")
         menuCollectionRef.document(category)
-            .collection(FirestoreConstants.COLLECTION_DISHES).get().addOnSuccessListener {
-                val dishes: ArrayList<Dish> = ArrayList()
+            .collection(FirestoreConstants.COLLECTION_DISHES).get(Source.SERVER).addOnSuccessListener {
+                val dishes = mutableListOf<Dish>()
+                logD("$category: ${it.documents.size}")
                 it.documents.forEach { dish ->
                     dish.toObject(Dish::class.java)?.let { notNulDish ->
                         dishes.add(notNulDish)
-                        logD("readDishes: $notNulDish")
                     }
                 }
                 menu.add(Category(category, dishes))
-                if (isItLastCategory) onMenuLoadingFinish(onComplete)
+                if (menu.size == collectionMenuSize) {
+                    logD("isItLastCategory: $collectionMenuSize")
+                    logD("menuCollectionSize: ${menu.size}")
+                    onMenuLoadingFinish(onComplete)
+                }
             }.addOnFailureListener {
                 logE("$this: ${it.message}")
-                onMenuLoadingFinish(onComplete)
             }
     }
 

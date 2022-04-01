@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.example.core.R
 import com.example.core.databinding.LayoutDishBinding
 import com.example.core.domain.entities.menu.Dish
+import com.example.core.domain.entities.tools.extensions.precomputeAndSetText
 import com.example.core.presentation.recyclerView.interfaces.BaseAdapterDelegate
 import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.core.presentation.recyclerView.interfaces.BaseViewHolder
@@ -48,10 +49,10 @@ class DishViewHolder(
 
     override fun onBind(item: Dish) {
         with(binding) {
-            dishName.text = item.name
-            dishConst.text = item.cost
-            dishWeight.text = item.weight
             root.tag = item
+            dishName.precomputeAndSetText(item.name)
+            dishConst.precomputeAndSetText(item.cost)
+            dishWeight.precomputeAndSetText(item.weight)
         }
     }
 }

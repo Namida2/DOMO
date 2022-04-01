@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.core.domain.entities.tools.extensions.precomputeAndSetText
 
 
 class TablesAdapter(
@@ -23,7 +24,7 @@ class TablesAdapter(
     }
 
     override fun onBindViewHolder(holder: TableViewHolder, position: Int) {
-        holder.binding.tableNumber.text = position.toString()
+        holder.binding.tableNumber.precomputeAndSetText(position.toString())
         holder.binding.tableContainer.tag = position
         holder.binding.root.transitionName = position.toString()
     }

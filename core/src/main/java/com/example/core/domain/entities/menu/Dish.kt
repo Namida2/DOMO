@@ -6,7 +6,7 @@ import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewTyp
 
 @Entity(tableName = "menu")
 data class Dish(
-    @PrimaryKey val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) var id: Int = 0,
     var name: String = "",
     val categoryName: String = "",
     val cost: String = "",

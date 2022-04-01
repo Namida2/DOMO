@@ -15,13 +15,24 @@ import com.example.core.domain.entities.tools.extensions.getExceptionMessage
 import com.example.core.domain.entities.tools.extensions.logD
 import com.example.featureSettings.domain.repositories.MenuRemoteRepository
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
 
-    private lateinit var currentCopiedMenu: MutableList<Category>
+    private var currentCopiedMenu: MutableList<Category> = mutableListOf()
+    private var initialSize = 0
+    private var remoteCollectionSize by Delegates.notNull<Int>()
+    private var deletedCategoriesCount = 0
+    private var insertedCategoriesCount = 0
 
     override fun saveNewMenu(task: SimpleTask) {
-        currentCopiedMenu = MenuService.copyMenu()
+        initialSize = 0
+        deletedCategoriesCount = 0
+        insertedCategoriesCount = 0
+        currentCopiedMenu =  MenuService.copyMenu()
+        initialSize = currentCopiedMenu.size
+        logD("insertedCategoriesCount: $insertedCategoriesCount")
+        logD("initialSize: $initialSize")
         checkOrders(task) {
             deleteOldMenu(task)
         }
@@ -41,12 +52,10 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
 
     private fun deleteOldMenu(task: SimpleTask) {
         menuCollectionRef.get().addOnSuccessListener {
-            val lastIndex = it.documents.lastIndex
-            if (lastIndex == -1) insertNewMenu(task)
-            logD("lastIndexOfDocument in $lastIndex")
-            it.documents.forEachIndexed { index, category ->
-                if (index == lastIndex) deleteAllDishes(category.id, task, true)
-                else deleteAllDishes(category.id, task)
+            remoteCollectionSize = it.documents.size
+            if (remoteCollectionSize == 0) insertNewMenu(task)
+            it.documents.forEach { category ->
+                deleteAllDishes(category.id, task)
             }
         }.addOnFailureListener {
             task.onError(it.getExceptionMessage())
@@ -56,20 +65,26 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
     private fun deleteAllDishes(
         categoryName: String,
         task: SimpleTask,
-        isLastCategory: Boolean = false
     ) {
         menuCollectionRef.document(categoryName).collection(COLLECTION_DISHES).get()
             .addOnSuccessListener {
                 logD(categoryName)
                 val lastIndex = it.documents.lastIndex
-                if (lastIndex == -1) onCategoryDeleted(categoryName, task)
-                logD("lastIndexOfDish in $lastIndex")
+                if (lastIndex == -1) {
+                    ++deletedCategoriesCount
+                    onCategoryDeleted(categoryName, task)
+                    if (deletedCategoriesCount == remoteCollectionSize)
+                        insertNewMenu(task)
+                }
                 it.documents.forEachIndexed { index, dish ->
                     menuCollectionRef.document(categoryName).collection(COLLECTION_DISHES)
                         .document(dish.id).delete().addOnSuccessListener {
-                            logD("delete ${dish.id}")
-                            if (index == lastIndex) onCategoryDeleted(categoryName, task)
-                            if (index == lastIndex && isLastCategory)
+                            logD("deleted: $dish")
+                            if (index == lastIndex) {
+                                ++deletedCategoriesCount
+                                onCategoryDeleted(categoryName, task)
+                            }
+                            if (index == lastIndex && deletedCategoriesCount == remoteCollectionSize)
                                 insertNewMenu(task)
                         }.addOnFailureListener { exception ->
                             task.onError(exception.getExceptionMessage())
@@ -80,53 +95,55 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
             }
     }
 
-    //TODO: Delete empty orders in the end(?) //STOPPED//
     private fun onCategoryDeleted(categoryName: String, task: SimpleTask) {
         val category = currentCopiedMenu.find {
-            it.name == categoryName
+            it.name == categoryName // FIXME: Гёдза == Гёдза  
         } ?: menuCollectionRef.document(categoryName).delete().also { return }
-        currentCopiedMenu.remove(category)
-        insertDishes(category as Category, task, currentCopiedMenu.isEmpty())
+        currentCopiedMenu.remove(category as Category)
+        insertDishes(category, task)
     }
 
     private fun insertNewMenu(task: SimpleTask) {
         val lastIndexOfCategory = currentCopiedMenu.lastIndex
-        logD("menu: $MenuService")
-        if (lastIndexOfCategory == -1)  return
-        currentCopiedMenu.forEachIndexed { index, category ->
-            if (lastIndexOfCategory == index) insertDishes(category, task, true)
-            else insertDishes(category, task)
+        logD("menuSize in insertNewMenu: ${currentCopiedMenu.size}")
+        if (lastIndexOfCategory == -1) return
+        currentCopiedMenu.forEach {category ->
+            insertDishes(category, task)
         }
     }
 
     private fun insertDishes(
         category: Category,
         task: SimpleTask,
-        isLastDocument: Boolean = false
     ) {
         logD("lastIndexOfDish in ${category.name}")
-        category.dishes.forEachIndexed { index, dish ->
-            val lastIndexOfDish = category.dishes.lastIndex
-            menuCollectionRef.document(category.name)
-                .set(mapOf(category.name to category.dishes.size))
-                .addOnSuccessListener {
+        menuCollectionRef.document(category.name)
+            .set(mapOf(category.name to category.dishes.size))
+            .addOnSuccessListener {
+                val lastIndex = category.dishes.lastIndex
+                category.dishes.forEachIndexed { index, dish ->
                     menuCollectionRef.document(category.name).collection(COLLECTION_DISHES)
                         .document(dish.name).set(dish).addOnSuccessListener {
                             logD("set ${dish.name}")
-                            if (lastIndexOfDish == index && isLastDocument) {
+                            logD("insertedCategoriesCount $insertedCategoriesCount")
+                            if (lastIndex == index) ++insertedCategoriesCount
+                            if (lastIndex == index && insertedCategoriesCount == initialSize) {
                                 logD("insertDishes::onSuccess")
                                 setNewMenuVersion(task)
                             }
                         }.addOnFailureListener { exception ->
                             task.onError(exception.getExceptionMessage())
                         }
-                }.addOnFailureListener {
-                    task.onError(it.getExceptionMessage())
                 }
-        }
+            }.addOnFailureListener {
+                task.onError(it.getExceptionMessage())
+            }
     }
 
+    private var enteredCount = 0
     private fun setNewMenuVersion(task: SimpleTask) {
+        ++enteredCount
+        logD("enteredCount: $enteredCount")
         deleteOrdersCollection(task) {
             fireStore.runTransaction {
                 logD("____setNewMenuVersion____")
@@ -142,11 +159,12 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
         ordersCollectionRef.get().addOnSuccessListenerWithDefaultFailureHandler(task) {
             val lastIndex = it.result.documents.lastIndex
             logD("deleteOrdersCollection: $lastIndex")
-            if(lastIndex == -1) onComplete()
+            if (lastIndex == -1) onComplete()
             it.result.forEachIndexed { index, orderId ->
-                ordersCollectionRef.document(orderId.id).delete().addOnSuccessListenerWithDefaultFailureHandler(task) {
-                    if(index == lastIndex) onComplete()
-                }
+                ordersCollectionRef.document(orderId.id).delete()
+                    .addOnSuccessListenerWithDefaultFailureHandler(task) {
+                        if (index == lastIndex) onComplete()
+                    }
             }
         }
     }

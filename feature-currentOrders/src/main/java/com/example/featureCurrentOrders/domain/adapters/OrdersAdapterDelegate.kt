@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.example.core.domain.entities.menu.MenuService
 import com.example.core.domain.entities.order.Order
+import com.example.core.domain.entities.tools.extensions.precomputeAndSetText
 import com.example.core.presentation.recyclerView.interfaces.BaseAdapterDelegate
 import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.core.presentation.recyclerView.interfaces.BaseViewHolder
@@ -56,17 +57,17 @@ class OrdersViewHolder(
         var allReady = true
         binding.largeOrderContainer.tag = item
         binding.orderContainerCardView.tag = item
-        binding.orderId.text = item.orderId.toString()
+        binding.orderId.precomputeAndSetText(item.orderId.toString())
         val count = item.orderItems.size.coerceAtMost(averageOrderItemsCount)
         item.orderItems.take(count).forEach {
             val name = MenuService.getDishById(it.dishId).name
             preview += when {
                 name.length > maxDishNameLength -> name.substring(0, maxDishNameLength) + tooLongNamePreviewDelimiter
-                else ->  name + namePreviewDelimiter
+                else -> name + namePreviewDelimiter
             }
             if(!it.isReady) allReady = false
         }
-        binding.preview.text = preview
+        binding.preview.precomputeAndSetText(preview)
         if(allReady) binding.completeTextView.visibility = View.VISIBLE
         else binding.completeTextView.visibility = View.GONE
     }

@@ -1,17 +1,25 @@
 package com.example.core.data.database.daos
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
+import androidx.room.OnConflictStrategy.REPLACE
 import com.example.core.domain.entities.menu.Dish
 
 @Dao
-interface MenuDao {
+abstract class MenuDao {
     @Query("SELECT * FROM menu")
-    suspend fun readAll(): List<Dish>
+    abstract suspend fun readAll(): List<Dish>
     @Query("DELETE FROM menu")
-    suspend fun deleteAll()
+    abstract suspend fun deleteAll()
     @Insert
-    suspend fun insert(dishes: List<Dish>)
+    abstract suspend fun insert(dishes: List<Dish>): List<Long>
+
+    @Transaction
+    open suspend fun insertWithDeleteAldMenu(dishes: List<Dish>) {
+        deleteAll()
+        var id = 0
+        dishes.forEach {
+            it.id = ++id
+        }
+        insert(dishes)
+    }
 }

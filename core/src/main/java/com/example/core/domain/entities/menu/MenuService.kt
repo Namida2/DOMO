@@ -1,10 +1,10 @@
 package com.example.core.domain.entities.menu
 
-import com.example.core.domain.interfaces.BaseObservable
 import com.example.core.domain.entities.tools.DeletedDishInfo
 import com.example.core.domain.entities.tools.constants.OtherStringConstants.THIS_DISH_ALREADY_ADDED
 import com.example.core.domain.entities.tools.constants.OtherStringConstants.UNKNOWN_DISH_ID
 import com.example.core.domain.entities.tools.extensions.logD
+import com.example.core.domain.interfaces.BaseObservable
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 typealias MenuServiceSub = (state: MenuServiceStates) -> Unit
@@ -49,13 +49,17 @@ object MenuService : BaseObservable<MenuServiceSub> {
     fun setNewMenu(menu: MutableList<Category>?) {
         if (menu.isNullOrEmpty()) menuState = MenuServiceStates.MenuIsEmpty
         else {
-            logD(menu.toString())
+            menu.forEach {
+                it.dishes.forEach { dish ->
+                    logD(dish.toString())
+                }
+            }
             menu.sort()
             this.menu = menu
             menuState = MenuServiceStates.MenuExists(this)
+            notifyChanges()
+            menuChanges.tryEmit(MenuService.menu)
         }
-        notifyChanges()
-        menuChanges.tryEmit(MenuService.menu)
     }
 
     fun setMenuServiceStateAsLoading() {
@@ -159,6 +163,7 @@ object MenuService : BaseObservable<MenuServiceSub> {
             it.invoke(menuState)
         }
     }
+
     fun copyMenu(): MutableList<Category> =
         menu.map { category ->
             val newDishes = mutableListOf<Dish>().also {
@@ -175,7 +180,9 @@ object MenuService : BaseObservable<MenuServiceSub> {
             menu.map { category ->
                 category.dishes.find { it.id == id } != null
             }.contains(true)
-        ) { id++ }
+        ) {
+            id++
+        }
         return id
     }
 

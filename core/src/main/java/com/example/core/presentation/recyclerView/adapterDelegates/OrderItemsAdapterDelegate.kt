@@ -8,10 +8,11 @@ import com.example.core.R
 import com.example.core.databinding.LayoutOrderItemBinding
 import com.example.core.domain.entities.menu.MenuService
 import com.example.core.domain.entities.order.OrderItem
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
+import com.example.core.domain.entities.tools.extensions.precomputeAndSetText
 import com.example.core.presentation.recyclerView.interfaces.BaseAdapterDelegate
 import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.core.presentation.recyclerView.interfaces.BaseViewHolder
-import com.example.core.domain.entities.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
 import javax.inject.Inject
 
 class OrderItemsAdapterDelegate @Inject constructor(
@@ -35,6 +36,7 @@ class OrderItemsAdapterDelegate @Inject constructor(
     private val diffCallback = object : DiffUtil.ItemCallback<OrderItem>() {
         override fun areItemsTheSame(oldItem: OrderItem, newItem: OrderItem): Boolean =
             oldItem == newItem
+
         override fun areContentsTheSame(oldItem: OrderItem, newItem: OrderItem): Boolean =
             oldItem == newItem
     }
@@ -52,16 +54,15 @@ class OrderItemViewHolder(
 
     override fun onBind(item: OrderItem) {
         val dish = MenuService.getDishById(item.dishId)
-//        val orderItemId = dish.id.toString() + ORDER_ITEM_ID_DELIMITER + item.commentary
         with(binding) {
             orderLargeContainer.tag = item
             orderSmallContainer.tag = item
-            categoryName.text = dish.categoryName
-            dishName.text = dish.name
-            dishCost.text = dish.cost
-            dishWeight.text = dish.weight
-            dishCount.text = item.count.toString()
-            commentary.text = item.commentary
+            categoryName.precomputeAndSetText(dish.categoryName)
+            dishName.precomputeAndSetText(dish.name)
+            dishCost.precomputeAndSetText(dish.cost)
+            dishWeight.precomputeAndSetText(dish.weight)
+            dishCount.precomputeAndSetText(item.count.toString())
+            commentary.precomputeAndSetText(item.commentary)
             setConditionalData(item)
         }
     }

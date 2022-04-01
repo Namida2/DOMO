@@ -108,10 +108,11 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback, NewMenuV
 
     override fun onAuthorisationEvent(employee: Employee?) {
         employee?.let { setNewEmployeeData(it) }
+        startActivity(Intent(this, SplashScreenActivity::class.java))
     }
 
     override fun onNewMenu() {
-        finish()
+        startActivity(Intent(this, SplashScreenActivity::class.java))
     }
 }
 

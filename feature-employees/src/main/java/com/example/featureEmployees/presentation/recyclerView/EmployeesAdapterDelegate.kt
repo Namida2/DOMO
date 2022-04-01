@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.example.core.domain.entities.Employee
+import com.example.core.domain.entities.tools.extensions.precomputeAndSetText
 import com.example.core.presentation.recyclerView.interfaces.BaseAdapterDelegate
 import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.core.presentation.recyclerView.interfaces.BaseViewHolder
@@ -41,7 +42,7 @@ class EmployeesAdapterDelegate(
     override fun getDiffCallback(): DiffUtil.ItemCallback<Employee> = diffCallback
 
     override fun onClick(v: View?) {
-        v?.tag?.let {onEmployeeSelected.invoke(it as Employee)}
+        v?.tag?.let { onEmployeeSelected.invoke(it as Employee) }
     }
 }
 
@@ -53,10 +54,10 @@ class EmployeesViewHolder(
         with(binding) {
             largeCard.tag = item
             innerCard.tag = item
-            employeeName.text = item.name
-            employeeEmail.text = item.email
-            employeePost.text = item.post
-            if(item.permission) permission.visibility = View.VISIBLE
+            employeeName.precomputeAndSetText(item.name)
+            employeeEmail.precomputeAndSetText(item.email)
+            employeePost.precomputeAndSetText(item.post)
+            if (item.permission) permission.visibility = View.VISIBLE
             else permission.visibility = View.GONE
         }
     }
