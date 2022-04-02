@@ -4,10 +4,12 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import com.example.core.R
 import com.example.core.databinding.DialogProcessBinding
 import com.example.core.domain.entities.tools.extensions.Animations.prepareHide
 import com.example.core.domain.entities.tools.extensions.Animations.prepareShow
+import com.example.core.domain.entities.tools.extensions.logD
 import com.example.core.domain.entities.tools.extensions.logE
 import kotlinx.coroutines.CoroutineExceptionHandler
 

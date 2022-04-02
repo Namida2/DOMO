@@ -61,7 +61,7 @@ class EditMenuItemDialog(
                             val menuItemName = menuItemName.text.toString()
                             val dishCost = dishCost.text.toString()
                             val dishWeight = dishWeight.text.toString()
-                            if(isEmptyField(menuItemName, dishCost, dishWeight)) {
+                            if (isEmptyField(menuItemName, dishCost, dishWeight)) {
                                 requireContext().createMessageDialog(
                                     emptyFieldMessage
                                 )?.show(parentFragmentManager, "")
@@ -72,9 +72,14 @@ class EditMenuItemDialog(
                             )
                         }
                     }
-                    //Add this part //STOPPED//
                     EditMenuDialogModes.EDIT_DISH -> {
-//                        viewModel.addDish()
+                        dish = dish!!.copy(
+                            name = binding.menuItemName.text.toString(),
+                            cost = binding.dishCost.text.toString(),
+                            weight = binding.dishWeight.text.toString()
+                        )
+                        viewModel.confirmDishChanges(dish!!)
+
                     }
                 }
             }

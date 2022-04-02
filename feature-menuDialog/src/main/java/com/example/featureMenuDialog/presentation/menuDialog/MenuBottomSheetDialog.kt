@@ -22,6 +22,7 @@ import com.example.featureMenuDialog.databinding.DialogMenuBinding
 import com.example.featureMenuDialog.domain.MenuDialogDepsStore.deps
 import com.example.featureMenuDialog.domain.interfaces.OnDismissListener
 import com.example.featureMenuDialog.domain.tools.EditMenuDialogModes
+import com.example.featureMenuDialog.presentation.addCategoryDialog.AddCategoryDialog
 import com.example.featureMenuDialog.presentation.dishDialog.DishAlertDialog
 import com.example.featureMenuDialog.presentation.editMenuItemDialog.EditMenuItemDialog
 import com.example.featureMenuDialog.presentation.recyclerView.ItemTouchCallback
@@ -105,7 +106,7 @@ class MenuBottomSheetDialog(
                     .attachToRecyclerView(menuRecyclerView)
                 //TODO: Add adding a new category //STOPPED//
                 createNewCategoryFba.setOnClickListener {
-
+                    AddCategoryDialog().show(parentFragmentManager, "")
                 }
             } else {
                 fabMenu.visibility = View.GONE
@@ -116,8 +117,14 @@ class MenuBottomSheetDialog(
 
     private fun observeDishEvent() {
         viewModel.onDishSelected.observe(viewLifecycleOwner) {
-            val dish = it.getData()
-            if (dishDialog.isAdded || dish == null) return@observe
+            val dish = it.getData() ?: return@observe
+            if (isAdmin) {
+                EditMenuItemDialog(
+                    EditMenuDialogModes.EDIT_DISH, dish
+                ).show(parentFragmentManager, "")
+                return@observe
+            }
+            if (dishDialog.isAdded) return@observe
             dishDialog.dish = dish
             dishDialog.show(parentFragmentManager, "")
         }
@@ -138,7 +145,7 @@ class MenuBottomSheetDialog(
                 viewModel.addDish(deletedDishInfo)
             }.setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.black))
             .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            .addCallback(object: BaseCallback<Snackbar>() {
+            .addCallback(object : BaseCallback<Snackbar>() {
                 override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                     showFabMenu()
                 }

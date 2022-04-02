@@ -10,11 +10,10 @@ import com.example.featureProfile.domain.LeaveAccountUseCase
 
 sealed class ProfileViewModelStates {
     object Default : ProfileViewModelStates()
-    object LogOutWasSuccessful : ProfileViewModelStates(), TerminatedViewModelState
+    object LogOutWasSuccessful : ProfileViewModelStates()
     object TryingToLogOut : ProfileViewModelStates()
     class LogOutFailed(val errorMessage: ErrorMessage) : ProfileViewModelStates()
 }
-interface TerminatedViewModelState
 
 class ProfileViewModel(
     private val leaveAccountUseCase: LeaveAccountUseCase

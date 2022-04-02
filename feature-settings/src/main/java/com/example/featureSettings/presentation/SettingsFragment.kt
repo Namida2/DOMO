@@ -22,6 +22,7 @@ import com.example.featureSettings.domain.ViewModelFactory
 import com.example.featureSettings.domain.di.SettingsDepsStore
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
+// TODO: Save the menu by default //STOPPED// 
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
     private lateinit var closedQuestionDialog: ClosedQuestionDialog<Unit>
@@ -92,7 +93,10 @@ class SettingsFragment : Fragment() {
                 }
                 is SettingsVMStates.OnSavingSuccess ->
                     ProcessAlertDialog.onSuccess()
-                is SettingsVMStates.Default -> {}
+                is SettingsVMStates.Default -> {
+                    if(ProcessAlertDialog.isAdded)
+                        ProcessAlertDialog.dismiss()
+                }
             }
         }
 

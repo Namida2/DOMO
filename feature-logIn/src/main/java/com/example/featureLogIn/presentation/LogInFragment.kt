@@ -13,11 +13,12 @@ import com.example.core.domain.entities.tools.constants.OtherStringConstants.ACT
 import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.entities.tools.extensions.isNetworkConnected
+import com.example.core.domain.entities.tools.extensions.showIfNotAdded
+import com.example.core.domain.interfaces.EmployeeAuthCallback
 import com.example.featureLogIn.R
 import com.example.featureLogIn.databinding.FragmentLogInBinding
 import com.example.featureLogIn.domain.ViewModelFactory
 import com.example.featureLogIn.domain.di.LogInDepsStore
-import com.example.core.domain.interfaces.EmployeeAuthCallback
 import com.example.featureRegistration.domain.di.RegistrationAppComponentDeps
 import com.example.featureRegistration.domain.di.RegistrationDepsStore
 import com.google.firebase.auth.FirebaseAuth
@@ -74,10 +75,7 @@ class LogInFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is LogInViewModelStates.Validating -> {
-                    com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog.show(
-                        parentFragmentManager,
-                        ""
-                    )
+                    ProcessAlertDialog.showIfNotAdded(parentFragmentManager, "")
                 }
                 is LogInViewModelStates.Success -> {
                     ProcessAlertDialog.dismiss()

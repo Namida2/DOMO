@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import com.example.core.domain.entities.order.Order
 import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
+import com.example.core.domain.entities.tools.extensions.showIfNotAdded
 import com.example.featureCurrentOrders.databinding.DialogCompletedOrderBinding
 import com.example.featureCurrentOrders.domain.ViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -51,7 +52,7 @@ class CompletedOrderMenuDialog(
                     completedOrderDialogCallback.showDetail(order)
                 }
                 is CompletedOrderVMStates.DeletingOrder -> {
-                    ProcessAlertDialog.show(parentFragmentManager, "")
+                    ProcessAlertDialog.showIfNotAdded(parentFragmentManager, "")
                 }
                 is CompletedOrderVMStates.OrderDeleted -> {
                     ProcessAlertDialog.onSuccess()
@@ -62,7 +63,7 @@ class CompletedOrderMenuDialog(
                         ?.show(parentFragmentManager, "")
                 }
                 is CompletedOrderVMStates.Default -> {
-                    if(!ProcessAlertDialog.isAdded) return@observe
+                    if (!ProcessAlertDialog.isAdded) return@observe
                     ProcessAlertDialog.onSuccess()
                 }
             }

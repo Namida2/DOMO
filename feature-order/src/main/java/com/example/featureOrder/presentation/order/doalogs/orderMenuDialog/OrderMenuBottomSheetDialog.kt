@@ -10,9 +10,10 @@ import com.example.core.domain.entities.tools.constants.Messages.checkNetworkCon
 import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.entities.tools.extensions.isNetworkConnected
+import com.example.core.domain.entities.tools.extensions.showIfNotAdded
+import com.example.featureMenuDialog.domain.interfaces.OnDismissListener
 import com.example.featureOrder.databinding.DialogOrderMenuBinding
 import com.example.featureOrder.domain.ViewModelFactory
-import com.example.featureMenuDialog.domain.interfaces.OnDismissListener
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class OrderMenuBottomSheetDialog(
@@ -52,7 +53,7 @@ class OrderMenuBottomSheetDialog(
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is OrderMenuDialogVMStates.InsertingCurrentOrder -> {
-                    ProcessAlertDialog.show(childFragmentManager, "")
+                    ProcessAlertDialog.showIfNotAdded(childFragmentManager, "")
                 }
                 is OrderMenuDialogVMStates.InsertingWasSuccessful -> {
                     ProcessAlertDialog.onSuccess()
@@ -62,7 +63,10 @@ class OrderMenuBottomSheetDialog(
                     requireContext().createMessageDialog(it.errorMessage)
                         ?.show(parentFragmentManager, "")
                 }
-                is OrderMenuDialogVMStates.Default -> {}
+                is OrderMenuDialogVMStates.Default -> {
+                    if (ProcessAlertDialog.isAdded)
+                        ProcessAlertDialog.dismiss()
+                }
             }
         }
     }

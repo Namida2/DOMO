@@ -13,35 +13,45 @@ import com.example.featureSplashScreen.domain.repositories.OrdersRemoteRepositor
 import javax.inject.Inject
 
 typealias TaskWithOrders = Task<List<Order>, Unit>
-class OrdersRemoteRepositoryImpl @Inject constructor(): OrdersRemoteRepository {
+
+class OrdersRemoteRepositoryImpl @Inject constructor() : OrdersRemoteRepository {
 
     private lateinit var task: TaskWithOrders
+    private var collectionOrdersSize = 0
+    private var readOrdersCount = 0
     private val subscriber: MenuServiceSub = object : MenuServiceSub {
         override fun invoke(state: MenuServiceStates) {
             when (state) {
                 is MenuServiceStates.MenuExists -> {
                     readOrdersInfo()
                     MenuService.unSubscribe(this)
-                } else -> {}
+                }
+                else -> {}
             }
         }
     }
 
     override fun readOrders(task: TaskWithOrders) {
         this.task = task
+        readOrdersCount = 0
         MenuService.subscribe(subscriber)
     }
 
     private fun readOrdersInfo() {
         FirestoreReferences.ordersCollectionRef.get().addOnSuccessListener {
             val listOrders = arrayListOf<Order>()
-            val lastIndex = it.documents.lastIndex
-            it.documents.forEachIndexed { index, docSnapshot ->
+            collectionOrdersSize = it.documents.size
+            if(collectionOrdersSize == 0) {
+                task.onSuccess(listOrders)
+                return@addOnSuccessListener
+            }
+            it.documents.forEach { docSnapshot ->
                 val tableId = docSnapshot.id.toInt()
-                val guestsCount = docSnapshot.getLong(FirestoreConstants.FIELD_GUESTS_COUNT) ?: 0
-                val order = Order(tableId, guestsCount.toInt())
+                val guestsCount =
+                    docSnapshot.getLong(FirestoreConstants.FIELD_GUESTS_COUNT)?.toInt() ?: 0
+                val order = Order(tableId, guestsCount)
                 listOrders.add(order)
-                readOrderItems(docSnapshot.id, order, index == lastIndex, listOrders)
+                readOrderItems(docSnapshot.id, order, listOrders)
             }
         }.addOnFailureListener {
             task.onError(it.getExceptionMessage())
@@ -51,11 +61,12 @@ class OrdersRemoteRepositoryImpl @Inject constructor(): OrdersRemoteRepository {
     private fun readOrderItems(
         tableId: String,
         order: Order,
-        isLastDocument: Boolean,
         listOrders: List<Order>
     ) {
-        FirestoreReferences.ordersCollectionRef.document(tableId).collection(FirestoreConstants.COLLECTION_ORDER_ITEMS).get()
+        FirestoreReferences.ordersCollectionRef.document(tableId)
+            .collection(FirestoreConstants.COLLECTION_ORDER_ITEMS).get()
             .addOnSuccessListener {
+                ++readOrdersCount
                 val orderItems = mutableListOf<OrderItem>()
                 it.documents.forEach { document ->
                     document.toObject(OrderItem::class.java)?.let { it1 ->
@@ -63,7 +74,7 @@ class OrdersRemoteRepositoryImpl @Inject constructor(): OrdersRemoteRepository {
                     }
                 }
                 order.orderItems = orderItems
-                if (isLastDocument) {
+                if (collectionOrdersSize == readOrdersCount) {
                     task.onSuccess(listOrders)
                 }
             }.addOnFailureListener {

@@ -16,10 +16,6 @@ abstract class MenuDao {
     @Transaction
     open suspend fun insertWithDeleteAldMenu(dishes: List<Dish>) {
         deleteAll()
-        var id = 0
-        dishes.forEach {
-            it.id = ++id
-        }
         insert(dishes)
     }
 }

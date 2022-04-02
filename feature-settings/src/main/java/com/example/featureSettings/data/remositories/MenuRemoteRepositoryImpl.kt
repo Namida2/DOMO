@@ -18,7 +18,6 @@ import javax.inject.Inject
 import kotlin.properties.Delegates
 
 class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
-
     private var currentCopiedMenu: MutableList<Category> = mutableListOf()
     private var initialSize = 0
     private var remoteCollectionSize by Delegates.notNull<Int>()
@@ -26,16 +25,29 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
     private var insertedCategoriesCount = 0
 
     override fun saveNewMenu(task: SimpleTask) {
-        initialSize = 0
-        deletedCategoriesCount = 0
-        insertedCategoriesCount = 0
-        currentCopiedMenu =  MenuService.copyMenu()
-        initialSize = currentCopiedMenu.size
+        prepareForUpdating()
         logD("insertedCategoriesCount: $insertedCategoriesCount")
         logD("initialSize: $initialSize")
         checkOrders(task) {
             deleteOldMenu(task)
         }
+    }
+
+    private fun prepareForUpdating() {
+        var id = 0
+        initialSize = 0
+        deletedCategoriesCount = 0
+        insertedCategoriesCount = 0
+        currentCopiedMenu = MenuService.copyMenu()
+        val iterator = currentCopiedMenu.iterator()
+        while (iterator.hasNext()) {
+            val next = iterator.next()
+            if (next.dishes.isEmpty()) iterator.remove()
+            next.dishes.forEach { dish ->
+                dish.id = id++
+            }
+        }
+        initialSize = currentCopiedMenu.size
     }
 
     private fun checkOrders(task: SimpleTask, onSuccess: () -> Unit) {
@@ -107,7 +119,7 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
         val lastIndexOfCategory = currentCopiedMenu.lastIndex
         logD("menuSize in insertNewMenu: ${currentCopiedMenu.size}")
         if (lastIndexOfCategory == -1) return
-        currentCopiedMenu.forEach {category ->
+        currentCopiedMenu.forEach { category ->
             insertDishes(category, task)
         }
     }
@@ -140,10 +152,7 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
             }
     }
 
-    private var enteredCount = 0
     private fun setNewMenuVersion(task: SimpleTask) {
-        ++enteredCount
-        logD("enteredCount: $enteredCount")
         deleteOrdersCollection(task) {
             fireStore.runTransaction {
                 logD("____setNewMenuVersion____")

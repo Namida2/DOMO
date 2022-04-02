@@ -125,7 +125,7 @@ object MenuService : BaseObservable<MenuServiceSub> {
         }.also { category ->
             if (category == null) return false
             category.dishes.find {
-                it.name == dish.name
+                it.name == dish.name // FIXME: Not allow to add when only dish count was changed
             }.also { existingDish ->
                 if (existingDish != null) return false
                 category.dishes.add(dish)
@@ -141,9 +141,30 @@ object MenuService : BaseObservable<MenuServiceSub> {
             it.name == categoryName
         }.also { category ->
             if (category != null) return false
-            menu.add(Category(categoryName, mutableListOf()))
+            menu.add(Category(categoryName, mutableListOf())).also { menu.sort() }
             menuChanges.tryEmit(menu)
             return true
+        }
+    }
+
+    fun confirmDishChanges(dish: Dish): Boolean {
+        menu.indexOfFirst {
+            it.name == dish.categoryName
+        }.also { categoryIndex ->
+            if (categoryIndex == -1) return false
+            menu[categoryIndex].dishes.indexOfFirst {
+                it.id == dish.id
+            }.also { existingDishIndex ->
+                if (existingDishIndex == -1) return false
+                menu[categoryIndex].dishes.find {
+                    it.name == dish.name
+                }.also { dishWithSameName ->
+                    if(dishWithSameName != null) return false
+                    menu[categoryIndex].dishes[existingDishIndex] = dish
+                    menuChanges.tryEmit(menu)
+                    return true
+                }
+            }
         }
     }
 

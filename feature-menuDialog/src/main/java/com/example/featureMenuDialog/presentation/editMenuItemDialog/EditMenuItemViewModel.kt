@@ -3,12 +3,12 @@ package com.example.featureMenuDialog.presentation.editMenuItemDialog
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.core.domain.interfaces.Stateful
-import com.example.core.domain.interfaces.TerminatingState
 import com.example.core.domain.entities.menu.Dish
 import com.example.core.domain.entities.menu.MenuService
 import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.constants.Messages.dishAlreadyExists
+import com.example.core.domain.interfaces.Stateful
+import com.example.core.domain.interfaces.TerminatingState
 
 sealed class EditMenuItemVMState {
     class ItemAlreadyExists(val message: ErrorMessage) : EditMenuItemVMState(), TerminatingState
@@ -25,22 +25,17 @@ class EditMenuItemViewModel : ViewModel(), Stateful<EditMenuItemVMState> {
         categoryName: String, dishName: String,
         dishCost: String, dishWeight: String
     ) {
-        val dish = createDish(categoryName, dishName, dishCost, dishWeight)
+        val dish = Dish(MenuService.getUniqueId(), dishName, categoryName, dishCost, dishWeight)
         if (MenuService.addDish(dish)) setNewState(EditMenuItemVMState.ItemAdded)
         else setNewState(EditMenuItemVMState.ItemAlreadyExists(dishAlreadyExists))
     }
 
     fun confirmDishChanges(dish: Dish) {
-
+        if (MenuService.confirmDishChanges(dish)) setNewState(EditMenuItemVMState.ItemAdded)
+        else setNewState(EditMenuItemVMState.ItemAlreadyExists(dishAlreadyExists))
     }
 
-    private fun createDish(
-        categoryName: String, dishName: String,
-        dishCost: String, dishWeight: String
-    ): Dish = Dish(
-        MenuService.getUniqueId(), dishName,
-        categoryName, dishCost, dishWeight
-    )
+
 
     override fun setNewState(state: EditMenuItemVMState) {
         _state.value = state

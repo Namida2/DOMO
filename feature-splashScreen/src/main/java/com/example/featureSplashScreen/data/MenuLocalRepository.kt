@@ -41,14 +41,8 @@ class MenuLocalRepositoryImpl @Inject constructor(
         logD(MenuService.menu.toString())
         val dishes = getAllDishes(MenuService.menu)
         logD("flattenDishesSize: ${dishes.size}")
-        var id = 0
-        dishes.forEach {
-            it.id = ++id
-            logD(it.toString())
-        }
         CoroutineScope(IO).launch {
-            menuDao.deleteAll()
-            menuDao.insert(dishes)
+            menuDao.insertWithDeleteAldMenu(dishes)
         }
     }
 

@@ -61,9 +61,9 @@ class ProfileFragment: Fragment() {
     private fun initBinding() {
         val currentEmployee = ProfileDepsStore.deps.currentEmployee
         with(binding) {
-//            layoutProfile.employeeName.text = currentEmployee?.name
-//            layoutProfile.employeeEmail.text = currentEmployee?.email
-//            layoutProfile.employeePost.text = currentEmployee?.post
+            layoutProfile.employeeName.text = currentEmployee?.name
+            layoutProfile.employeeEmail.text = currentEmployee?.email
+            layoutProfile.employeePost.text = currentEmployee?.post
             leaveAccountButton.setOnClickListener {
                 if (requireContext().isNetworkConnected()) {
                     closedQuestionDialog.show(parentFragmentManager, "")
@@ -87,7 +87,10 @@ class ProfileFragment: Fragment() {
                     ProcessAlertDialog.dismiss()
                     leaveAccountCallback.onLeaveAccount()
                 }
-                is ProfileViewModelStates.Default -> {}
+                is ProfileViewModelStates.Default -> {
+                    if(ProcessAlertDialog.isAdded)
+                        ProcessAlertDialog.dismiss()
+                }
             }
         }
     }

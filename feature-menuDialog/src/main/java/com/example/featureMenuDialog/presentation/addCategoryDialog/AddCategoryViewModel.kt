@@ -23,11 +23,11 @@ class AddCategoryViewModel : ViewModel(), Stateful<AddCategoryVMStates> {
     fun addCategory(categoryName: String) {
         if (MenuService.addCategory(categoryName))
             setNewState(AddCategoryVMStates.CategoryAdded)
-        else setNewState(AddCategoryVMStates.CategoryAlreadyExists(Messages.dishAlreadyExists))
+        else setNewState(AddCategoryVMStates.CategoryAlreadyExists(Messages.categoryAlreadyExists))
     }
 
     override fun setNewState(state: AddCategoryVMStates) {
-        _state.value = AddCategoryVMStates.Default
+        _state.value = state
         if (state !is TerminatingState) return
         _state.value = AddCategoryVMStates.Default
     }

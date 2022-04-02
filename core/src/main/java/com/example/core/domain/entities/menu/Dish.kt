@@ -9,8 +9,8 @@ data class Dish(
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
     var name: String = "",
     val categoryName: String = "",
-    val cost: String = "",
-    val weight: String = "",
+    var cost: String = "",
+    var weight: String = "",
 ) : BaseRecyclerViewType, Comparable<Dish> {
     override fun compareTo(other: Dish): Int = id - other.id
 }
