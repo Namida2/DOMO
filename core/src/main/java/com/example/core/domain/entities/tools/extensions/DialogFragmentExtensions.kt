@@ -7,3 +7,7 @@ fun DialogFragment.showIfNotAdded(fragmentManager: FragmentManager, tag: String)
     if(!this.isAdded) this.show(fragmentManager, tag)
     else logD("$this: already added.")
 }
+
+fun DialogFragment.dismissIfAdded() {
+    if(this.isAdded) this.dismiss()
+}

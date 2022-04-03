@@ -12,6 +12,7 @@ import com.example.core.domain.entities.tools.constants.Messages.checkNetworkCon
 import com.example.core.domain.entities.tools.constants.OtherStringConstants.ACTIVITY_IS_NOT_EMPLOYEE_AUTHORIZATION_CALLBACK
 import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
+import com.example.core.domain.entities.tools.extensions.dismissIfAdded
 import com.example.core.domain.entities.tools.extensions.isNetworkConnected
 import com.example.core.domain.entities.tools.extensions.showIfNotAdded
 import com.example.core.domain.interfaces.EmployeeAuthCallback
@@ -78,12 +79,12 @@ class LogInFragment : Fragment() {
                     ProcessAlertDialog.showIfNotAdded(parentFragmentManager, "")
                 }
                 is LogInViewModelStates.Success -> {
-                    ProcessAlertDialog.dismiss()
+                    ProcessAlertDialog.dismissIfAdded()
                     employeeAuthCallback.onAuthorisationEvent(it.employee)
                 }
                 else -> {
                     if (it is LogInViewModelStates.Default) return@observe
-                    ProcessAlertDialog.dismiss()
+                    ProcessAlertDialog.dismissIfAdded()
                     if (it.errorMessage == null) return@observe
                     requireContext().createMessageDialog(it.errorMessage!!)
                         ?.show(parentFragmentManager, "")

@@ -14,13 +14,14 @@ import com.example.core.domain.entities.tools.extensions.addOnSuccessListenerWit
 import com.example.core.domain.entities.tools.extensions.getExceptionMessage
 import com.example.core.domain.entities.tools.extensions.logD
 import com.example.featureSettings.domain.repositories.MenuRemoteRepository
+import com.google.firebase.firestore.Source
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
 class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
     private var currentCopiedMenu: MutableList<Category> = mutableListOf()
     private var initialSize = 0
-    private var remoteCollectionSize by Delegates.notNull<Int>()
+    private var remoteCollectionSize = 0
     private var deletedCategoriesCount = 0
     private var insertedCategoriesCount = 0
 
@@ -38,6 +39,7 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
         initialSize = 0
         deletedCategoriesCount = 0
         insertedCategoriesCount = 0
+        remoteCollectionSize = 0
         currentCopiedMenu = MenuService.copyMenu()
         val iterator = currentCopiedMenu.iterator()
         while (iterator.hasNext()) {
@@ -51,7 +53,7 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
     }
 
     private fun checkOrders(task: SimpleTask, onSuccess: () -> Unit) {
-        ordersCollectionRef.get().addOnSuccessListener {
+        ordersCollectionRef.get(Source.SERVER).addOnSuccessListener {
             if (it.documents.isNotEmpty()) {
                 task.onError(ordersCollectionNotEmptyMessage)
                 return@addOnSuccessListener
@@ -63,7 +65,7 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
     }
 
     private fun deleteOldMenu(task: SimpleTask) {
-        menuCollectionRef.get().addOnSuccessListener {
+        menuCollectionRef.get(Source.SERVER).addOnSuccessListener {
             remoteCollectionSize = it.documents.size
             if (remoteCollectionSize == 0) insertNewMenu(task)
             it.documents.forEach { category ->
@@ -165,7 +167,7 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
     }
 
     private fun deleteOrdersCollection(task: SimpleTask, onComplete: () -> Unit) {
-        ordersCollectionRef.get().addOnSuccessListenerWithDefaultFailureHandler(task) {
+        ordersCollectionRef.get(Source.SERVER).addOnSuccessListenerWithDefaultFailureHandler(task) {
             val lastIndex = it.result.documents.lastIndex
             logD("deleteOrdersCollection: $lastIndex")
             if (lastIndex == -1) onComplete()

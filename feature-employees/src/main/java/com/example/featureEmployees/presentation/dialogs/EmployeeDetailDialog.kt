@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
+import com.example.core.domain.entities.tools.extensions.dismissIfAdded
 import com.example.core.domain.entities.tools.extensions.showIfNotAdded
 import com.example.featureEmployees.R
 import com.example.featureEmployees.databinding.DialogEmployeeDetailBinding
@@ -50,7 +51,7 @@ class EmployeeDetailDialog : DialogFragment() {
                 is EmployeeDetailVMStates.InProcess ->
                     ProcessAlertDialog.showIfNotAdded(parentFragmentManager, "")
                 is EmployeeDetailVMStates.OnFailure -> {
-                    ProcessAlertDialog.dismiss()
+                    ProcessAlertDialog.dismissIfAdded()
                     requireContext().createMessageDialog(it.errorMessage)
                         ?.show(parentFragmentManager, "")
                     viewModel.resetViewModelSate()
@@ -61,8 +62,7 @@ class EmployeeDetailDialog : DialogFragment() {
                     viewModel.resetViewModelSate()
                 }
                 is EmployeeDetailVMStates.Default -> {
-                    if (ProcessAlertDialog.isAdded)
-                        ProcessAlertDialog.dismiss()
+                    ProcessAlertDialog.dismissIfAdded()
                 }
             }
         }

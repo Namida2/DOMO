@@ -13,6 +13,7 @@ import com.example.core.domain.entities.tools.constants.OtherStringConstants.ACT
 import com.example.core.domain.entities.tools.dialogs.ClosedQuestionDialog
 import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
+import com.example.core.domain.entities.tools.extensions.dismissIfAdded
 import com.example.core.domain.entities.tools.extensions.isNetworkConnected
 import com.example.featureProfile.R
 import com.example.featureProfile.databinding.FragmentProfileBinding
@@ -79,17 +80,16 @@ class ProfileFragment: Fragment() {
                 is ProfileViewModelStates.TryingToLogOut ->
                     ProcessAlertDialog.show(parentFragmentManager, "")
                 is ProfileViewModelStates.LogOutFailed -> {
-                    ProcessAlertDialog.dismiss()
+                    ProcessAlertDialog.dismissIfAdded()
                     requireContext().createMessageDialog(it.errorMessage)
                         ?.show(parentFragmentManager, "")
                 }
                 is ProfileViewModelStates.LogOutWasSuccessful -> {
-                    ProcessAlertDialog.dismiss()
+                    ProcessAlertDialog.dismissIfAdded()
                     leaveAccountCallback.onLeaveAccount()
                 }
                 is ProfileViewModelStates.Default -> {
-                    if(ProcessAlertDialog.isAdded)
-                        ProcessAlertDialog.dismiss()
+                    ProcessAlertDialog.dismissIfAdded()
                 }
             }
         }

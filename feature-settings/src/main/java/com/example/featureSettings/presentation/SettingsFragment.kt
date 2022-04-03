@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.entities.order.OrdersServiceSub
 import com.example.core.domain.entities.tools.dialogs.ClosedQuestionDialog
 import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
+import com.example.core.domain.entities.tools.extensions.dismissIfAdded
 import com.example.featureMenuDialog.domain.MenuDialogDeps
 import com.example.featureMenuDialog.domain.MenuDialogDepsStore
 import com.example.featureMenuDialog.presentation.menuDialog.MenuBottomSheetDialog
@@ -23,6 +23,7 @@ import com.example.featureSettings.domain.di.SettingsDepsStore
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
 // TODO: Save the menu by default //STOPPED// 
+// TODO: Work with menu in foreground service
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
     private lateinit var closedQuestionDialog: ClosedQuestionDialog<Unit>
@@ -87,15 +88,14 @@ class SettingsFragment : Fragment() {
                 is SettingsVMStates.SavingMenu ->
                     ProcessAlertDialog.show(parentFragmentManager, "")
                 is SettingsVMStates.OnSavingFailed -> {
-                    ProcessAlertDialog.dismiss()
+                    ProcessAlertDialog.dismissIfAdded()
                     requireContext().createMessageDialog(it.message)
                         ?.show(parentFragmentManager, "")
                 }
                 is SettingsVMStates.OnSavingSuccess ->
                     ProcessAlertDialog.onSuccess()
                 is SettingsVMStates.Default -> {
-                    if(ProcessAlertDialog.isAdded)
-                        ProcessAlertDialog.dismiss()
+                    ProcessAlertDialog.dismissIfAdded()
                 }
             }
         }

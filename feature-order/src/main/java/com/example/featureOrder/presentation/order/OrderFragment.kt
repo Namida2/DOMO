@@ -14,7 +14,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.core.domain.entities.Employee
-import com.example.core.domain.entities.tools.enims.AddingDishMods
+import com.example.core.domain.entities.tools.enums.AddingDishMods
 import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideUp
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.presentation.recyclerView.adapterDelegates.OrderItemsAdapterDelegate

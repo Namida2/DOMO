@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import com.example.core.domain.entities.tools.constants.Messages.checkNetworkConnectionMessage
 import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
+import com.example.core.domain.entities.tools.extensions.dismissIfAdded
 import com.example.core.domain.entities.tools.extensions.isNetworkConnected
 import com.example.core.domain.entities.tools.extensions.showIfNotAdded
 import com.example.featureMenuDialog.domain.interfaces.OnDismissListener
@@ -59,13 +60,12 @@ class OrderMenuBottomSheetDialog(
                     ProcessAlertDialog.onSuccess()
                 }
                 is OrderMenuDialogVMStates.InsertingWasFailure -> {
-                    ProcessAlertDialog.dismiss()
+                    ProcessAlertDialog.dismissIfAdded()
                     requireContext().createMessageDialog(it.errorMessage)
                         ?.show(parentFragmentManager, "")
                 }
                 is OrderMenuDialogVMStates.Default -> {
-                    if (ProcessAlertDialog.isAdded)
-                        ProcessAlertDialog.dismiss()
+                    ProcessAlertDialog.dismissIfAdded()
                 }
             }
         }

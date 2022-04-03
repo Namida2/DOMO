@@ -22,7 +22,6 @@ object FirestoreConstants {
     const val DOCUMENT_DELETED_ORDER_LISTENER = "deletedOrderListener"
     //Fields
     const val FIELD_MENU_VERSION = "menuVersion"
-    const val FIELD_MENU_IS_CHANGING = "menuVersion"
     const val FIELD_GUESTS_COUNT = "guestsCount"
     const val FIELD_TABLES_COUNT = "tablesCount"
     const val FIELD_ORDER_ID = "orderId"

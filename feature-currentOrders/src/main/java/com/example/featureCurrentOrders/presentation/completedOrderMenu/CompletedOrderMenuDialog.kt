@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import com.example.core.domain.entities.order.Order
 import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
+import com.example.core.domain.entities.tools.extensions.dismissIfAdded
 import com.example.core.domain.entities.tools.extensions.showIfNotAdded
 import com.example.featureCurrentOrders.databinding.DialogCompletedOrderBinding
 import com.example.featureCurrentOrders.domain.ViewModelFactory
@@ -63,8 +64,7 @@ class CompletedOrderMenuDialog(
                         ?.show(parentFragmentManager, "")
                 }
                 is CompletedOrderVMStates.Default -> {
-                    if (!ProcessAlertDialog.isAdded) return@observe
-                    ProcessAlertDialog.onSuccess()
+                    ProcessAlertDialog.dismissIfAdded()
                 }
             }
         }

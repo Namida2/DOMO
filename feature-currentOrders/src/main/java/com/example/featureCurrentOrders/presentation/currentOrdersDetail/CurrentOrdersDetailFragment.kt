@@ -17,6 +17,7 @@ import com.example.core.domain.entities.tools.constants.EmployeePosts.COOK
 import com.example.core.domain.entities.tools.dialogs.ClosedQuestionDialog
 import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
+import com.example.core.domain.entities.tools.extensions.dismissIfAdded
 import com.example.core.presentation.recyclerView.adapterDelegates.OrderItemsAdapterDelegate
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
 import com.example.core.presentation.recyclerView.itemDecorations.SimpleListItemDecoration
@@ -75,7 +76,7 @@ class CurrentOrdersDetailFragment : Fragment() {
                     ProcessAlertDialog.show(parentFragmentManager, "")
                 }
                 is CookCurrentOrderDetailVMStates.OnUpdatingFailure -> {
-                    ProcessAlertDialog.dismiss()
+                    ProcessAlertDialog.dismissIfAdded()
                     requireContext().createMessageDialog(it.errorMessage)
                         ?.show(parentFragmentManager, "")
                 }

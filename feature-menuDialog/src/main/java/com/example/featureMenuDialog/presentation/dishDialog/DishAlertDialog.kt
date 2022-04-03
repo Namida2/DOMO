@@ -7,7 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.example.core.domain.entities.menu.Dish
-import com.example.core.domain.entities.tools.enims.AddingDishMods
+import com.example.core.domain.entities.tools.enums.AddingDishMods
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.featureMenuDialog.R
 import com.example.featureMenuDialog.databinding.DialogDishBinding

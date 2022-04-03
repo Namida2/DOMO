@@ -7,9 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.entities.menu.Dish
 import com.example.core.domain.entities.order.OrderItem
-import com.example.core.domain.entities.order.OrdersServiceSub
 import com.example.core.domain.entities.tools.ErrorMessage
-import com.example.core.domain.entities.tools.enims.AddingDishMods
+import com.example.core.domain.entities.tools.enums.AddingDishMods
 import com.example.core.domain.entities.tools.extensions.logD
 import com.example.featureMenuDialog.R
 
