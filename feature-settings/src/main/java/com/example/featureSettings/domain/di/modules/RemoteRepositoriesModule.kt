@@ -6,7 +6,10 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-interface RepositoriesModule {
+interface RemoteRepositoriesModule {
     @Binds
     fun provideMenuRemoteRepository(repository: MenuRemoteRepositoryImpl): MenuRemoteRepository
+
+    @Binds
+    fun bindMenuRemoteRepository(repository: com.example.core.data.repositorues.MenuRemoteRepositoryImpl): com.example.core.domain.repositories.MenuRemoteRepository
 }

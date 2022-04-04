@@ -8,20 +8,20 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.work.*
-import androidx.work.WorkRequest.MIN_BACKOFF_MILLIS
+import androidx.work.PeriodicWorkRequest.MIN_PERIODIC_FLEX_MILLIS
 import com.example.core.domain.di.CoreDepsStore
-import com.example.core.domain.notofications.NotificationsTools.createNotification
-import com.example.core.domain.notofications.NotificationsTools.createNotificationChannel
 import com.example.core.domain.entities.order.Order
 import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.Event
-import com.example.core.domain.entities.tools.constants.FirestoreReferences.newOrdersListenerDocumentRef
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_ORDER_ID
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_ORDER_INFO
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.newOrdersListenerDocumentRef
 import com.example.core.domain.entities.tools.constants.OtherStringConstants.NULL_ORDER_INFO_MESSAGE
 import com.example.core.domain.entities.tools.extensions.logD
 import com.example.core.domain.entities.tools.extensions.logE
+import com.example.core.domain.notofications.NotificationsTools.createNotification
+import com.example.core.domain.notofications.NotificationsTools.createNotificationChannel
 import com.example.core.domain.useCases.ReadNewOrderUseCase
 import com.google.firebase.firestore.ListenerRegistration
 import java.util.concurrent.TimeUnit
@@ -48,6 +48,7 @@ class NewOrdersWorker(
         if (ordersListener != null) return Result.retry()
         notificationManager = createNotificationChannel(context)
         ordersListener = newOrdersListenerDocumentRef.addSnapshotListener { snapshot, error ->
+            Toast.makeText(context, "I'm here", Toast.LENGTH_LONG).show()
             when {
                 error != null -> {
                     logE("$this: $error")
@@ -62,7 +63,6 @@ class NewOrdersWorker(
                 }
                 else -> logD("$this: $NULL_ORDER_INFO_MESSAGE")
             }
-
         }
         return Result.retry()
     }
@@ -174,7 +174,7 @@ class Restarter : BroadcastReceiver() {
         logD("Service tried to stop")
         Toast.makeText(context, "Restarter", Toast.LENGTH_LONG).show()
         val uploadWorkRequest: WorkRequest =
-            PeriodicWorkRequestBuilder<NewOrdersWorker>(MIN_BACKOFF_MILLIS, TimeUnit.MINUTES)
+            PeriodicWorkRequestBuilder<NewOrdersWorker>(MIN_PERIODIC_FLEX_MILLIS, TimeUnit.MINUTES)
                 .build()
         WorkManager.getInstance(context)
             .enqueue(uploadWorkRequest)

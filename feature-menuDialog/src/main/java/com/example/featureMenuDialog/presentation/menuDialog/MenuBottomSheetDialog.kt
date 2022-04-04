@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
 import com.example.core.domain.entities.tools.DeletedDishInfo
 import com.example.core.domain.entities.tools.constants.EmployeePosts.ADMINISTRATOR
 import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideDown
@@ -48,8 +50,13 @@ class MenuBottomSheetDialog(
     private lateinit var menuAdapter: BaseRecyclerViewAdapter
     private lateinit var itemTouchCallback: ItemTouchCallback
 
+    private lateinit var smoothScroller: RecyclerView.SmoothScroller
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        smoothScroller = object : LinearSmoothScroller(requireContext()) {
+            override fun getVerticalSnapPreference(): Int = SNAP_TO_START
+        }
         if (deps.currentEmployee?.post == ADMINISTRATOR.value) isAdmin = true
         smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
         largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
@@ -105,14 +112,21 @@ class MenuBottomSheetDialog(
                 ItemTouchHelper(itemTouchCallback)
                     .attachToRecyclerView(menuRecyclerView)
                 //TODO: Add adding a new category //STOPPED//
+                goToTopFba.setOnClickListener { goToTop() }
                 createNewCategoryFba.setOnClickListener {
                     AddCategoryDialog().show(parentFragmentManager, "")
                 }
             } else {
                 fabMenu.visibility = View.GONE
                 fba.visibility = View.VISIBLE
+                fba.setOnClickListener { goToTop() }
             }
         }
+    }
+
+    private fun goToTop() {
+        smoothScroller.targetPosition = 0
+        binding.menuRecyclerView.layoutManager?.startSmoothScroll(smoothScroller)
     }
 
     private fun observeDishEvent() {

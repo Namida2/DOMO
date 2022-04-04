@@ -1,5 +1,6 @@
 package com.example.waiterMain.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.navigation.NavController
@@ -123,9 +124,16 @@ class WaiterMainActivity : BasePostActivity(),
                 TimeUnit.MINUTES
             ).build()
         //TODO: Workers not start after leaving account
-        WorkManager.getInstance(this).enqueue(newOrdersWorkRequest)
-        WorkManager.getInstance(this).enqueue(newOrderItemsStateRequest)
+        WorkManager.getInstance(this).also {
+            it.enqueue(newOrdersWorkRequest)
+            it.enqueue(newOrderItemsStateRequest)
+        }
         observeOrdersWorkerEvents()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        makeWorkerRequests()
     }
 
     override fun onDestinationChanged(

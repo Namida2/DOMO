@@ -5,6 +5,7 @@ object FirestoreConstants {
     //Collections
     const val COLLECTION_DATA = "data"
     const val COLLECTION_MENU = "menu"
+    const val COLLECTION_DEFAULT_MENU = "menuTest"
     const val COLLECTION_ORDERS= "orders"
     const val COLLECTION_DISHES = "dishes"
     const val COLLECTION_EMPLOYEES = "employees"

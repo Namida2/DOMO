@@ -59,10 +59,19 @@ class SettingsFragment : Fragment() {
     }
 
     private fun initBinding() {
-        binding.editMenuCard.setOnClickListener {
-            viewModel.sameMenuBeforeChanges()
-            MenuBottomSheetDialog(viewModel).show(parentFragmentManager, "")
+        with(binding) {
+            editMenuCard.setOnClickListener {
+                viewModel.saveMenuBeforeChanges()
+                MenuBottomSheetDialog(viewModel).show(parentFragmentManager, "")
+            }
+            loadDefaultMenuCard.setOnClickListener {
+                viewModel.readDefaultMeu()
+            }
+            saveCurrentMenuAsDefaultButton.setOnClickListener {
+
+            }
         }
+
     }
 
     private fun provideMenuDialogDeps() {
@@ -85,14 +94,14 @@ class SettingsFragment : Fragment() {
     private fun observeViewModelStates() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
-                is SettingsVMStates.SavingMenu ->
+                is SettingsVMStates.InProcess ->
                     ProcessAlertDialog.show(parentFragmentManager, "")
-                is SettingsVMStates.OnSavingFailed -> {
+                is SettingsVMStates.OnFailure -> {
                     ProcessAlertDialog.dismissIfAdded()
                     requireContext().createMessageDialog(it.message)
                         ?.show(parentFragmentManager, "")
                 }
-                is SettingsVMStates.OnSavingSuccess ->
+                is SettingsVMStates.OnSuccess ->
                     ProcessAlertDialog.onSuccess()
                 is SettingsVMStates.Default -> {
                     ProcessAlertDialog.dismissIfAdded()

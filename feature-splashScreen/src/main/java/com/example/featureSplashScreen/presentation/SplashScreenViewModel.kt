@@ -7,11 +7,13 @@ import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.SimpleTask
 import com.example.core.domain.entities.tools.TaskWithEmployee
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.actualMenuCollectionRef
+import com.example.core.domain.entities.tools.constants.FirestoreReferences.defaultMenuCollectionRef
 import com.example.core.domain.entities.tools.constants.Messages.defaultErrorMessage
 import com.example.core.domain.entities.tools.constants.Messages.employeeDoesNotExists
 import com.example.core.domain.entities.tools.constants.Messages.newMenuVersionMessage
 import com.example.featureSplashScreen.domain.useCases.GetCurrentEmployeeUseCase
-import com.example.featureSplashScreen.domain.useCases.ReadMenuUseCase
+import com.example.core.domain.useCases.ReadMenuUseCase
 import com.example.featureSplashScreen.domain.useCases.ReadOrdersUseCase
 import com.example.featureSplashScreen.domain.useCases.ReadSettingsUseCase
 
@@ -42,7 +44,10 @@ class SplashScreenViewModel(
     val state: LiveData<SplashScreenStates> = _state
 
     init {
-        readMenuUseCase.readMenu()
+        readMenuUseCase.readMenu(actualMenuCollectionRef, false, object : SimpleTask{
+            override fun onSuccess(result: Unit) {}
+            override fun onError(message: ErrorMessage?) {}
+        })
         readOrdersUseCase.readOrders()
     }
 

@@ -10,7 +10,7 @@ abstract class MenuDao {
     abstract suspend fun readAll(): List<Dish>
     @Query("DELETE FROM menu")
     abstract suspend fun deleteAll()
-    @Insert
+    @Insert(onConflict = REPLACE)
     abstract suspend fun insert(dishes: List<Dish>): List<Long>
 
     @Transaction

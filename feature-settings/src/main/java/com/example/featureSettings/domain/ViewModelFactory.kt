@@ -11,7 +11,8 @@ object ViewModelFactory: ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val viewModel = when(modelClass) {
             SettingsViewModel::class.java -> SettingsViewModel(
-                appComponent.provideSaveMenuUseCase()
+                appComponent.provideSaveMenuUseCase(),
+                appComponent.provideReadMenuUseCase()
             )
             else -> throw IllegalArgumentException(UNKNOWN_VIEW_MODEL_CLASS)
         }

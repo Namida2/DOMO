@@ -44,6 +44,11 @@ dependencies {
     implementation (Dagger.dagger)
     kapt (Dagger.compiler)
 
+    implementation (Room.roomRuntime)
+    annotationProcessor (Room.compiler)
+    implementation (Room.roomKtx)
+    kapt (Room.compiler)
+
     implementation platform (Firebase.firebaseBom)
     implementation (Firebase.firebaseAuth)
     implementation (Firebase.firebaseFirestore)

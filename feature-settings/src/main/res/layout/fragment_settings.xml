@@ -203,7 +203,7 @@
             android:layout_marginBottom="32dp"
             android:clickable="true"
             android:focusable="true"
-            android:id="@+id/saveAsDefaultMenuButton"
+            android:id="@+id/save_current_menu_as_default_button"
             app:cardCornerRadius="24dp"
             app:cardElevation="8dp">
 

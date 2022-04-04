@@ -1,5 +1,6 @@
 package com.example.administratorMain.presentation
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.navigation.NavController
@@ -11,6 +12,7 @@ import androidx.work.WorkRequest
 import com.example.administratorMain.R
 import com.example.administratorMain.databinding.ActivityAdministratorBinding
 import com.example.administratorMain.domatn.di.AdminDepsStore
+import com.example.core.data.database.Database
 import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
 import com.example.core.domain.entities.Employee
@@ -97,6 +99,10 @@ class AdministratorMainActivity : BasePostActivity() {
         val settingsModuleDeps = object : SettingsAppComponentDeps {
             override val settings: Settings
                 get() = AdminDepsStore.deps.settings
+            override val database: Database
+                get() = AdminDepsStore.deps.database
+            override val sharedPreferences: SharedPreferences
+                get() = AdminDepsStore.deps.sharedPreferences
             override val currentEmployee: Employee?
                 get() = AdminDepsStore.deps.currentEmployee
             override val ordersService: OrdersService

@@ -9,10 +9,9 @@ import com.example.core.domain.entities.Settings
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.di.CoreAppComponentDeps
 import com.example.core.domain.di.modules.ListenersModule
-import com.example.core.domain.listeners.DeletedOrdersListener
 import com.example.featureLogIn.domain.di.LogInDeps
 import com.example.featureSplashScreen.domain.useCases.GetCurrentEmployeeUseCase
-import com.example.featureSplashScreen.domain.useCases.ReadMenuUseCase
+import com.example.core.domain.useCases.ReadMenuUseCase
 import com.example.featureSplashScreen.domain.di.modules.*
 import com.example.featureSplashScreen.domain.useCases.ReadOrdersUseCase
 import com.example.featureSplashScreen.domain.useCases.ReadSettingsUseCase

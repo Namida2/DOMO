@@ -1,4 +1,4 @@
-package com.example.featureSplashScreen.domain.repositories
+package com.example.core.domain.repositories
 
 interface MenuLocalRepository {
     fun readExitingMenu()

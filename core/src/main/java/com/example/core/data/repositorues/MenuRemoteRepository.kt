@@ -1,14 +1,16 @@
-package com.example.featureSplashScreen.data
+package com.example.core.data.repositorues
 
 import com.example.core.domain.entities.menu.Category
 import com.example.core.domain.entities.menu.Dish
 import com.example.core.domain.entities.menu.MenuService
+import com.example.core.domain.entities.tools.SimpleTask
 import com.example.core.domain.entities.tools.constants.FirestoreConstants
 import com.example.core.domain.entities.tools.constants.FirestoreReferences
-import com.example.core.domain.entities.tools.constants.FirestoreReferences.menuCollectionRef
+import com.example.core.domain.entities.tools.extensions.getExceptionMessage
 import com.example.core.domain.entities.tools.extensions.logD
 import com.example.core.domain.entities.tools.extensions.logE
-import com.example.featureSplashScreen.domain.repositories.MenuRemoteRepository
+import com.example.core.domain.repositories.MenuRemoteRepository
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.Source
 import javax.inject.Inject
 
@@ -16,29 +18,31 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
 
     private val defaultMenuVersion = -1L
     private var collectionMenuSize: Int = 0
-    private val menu = mutableListOf<Category>()
+    private var menu = mutableListOf<Category>()
 
-    //TODO: Handle the case when there is no internet connection
-    override fun readNewMenu(onComplete: () -> Unit) {
+    override fun readNewMenu(menuCollectionRef: CollectionReference, task: SimpleTask) {
+        menu = mutableListOf()
         MenuService.setMenuServiceStateAsLoading()
         menuCollectionRef.get(Source.SERVER).addOnSuccessListener {
             collectionMenuSize = it.documents.size
             logD("documentsCount: ${it.documents.size}")
             it.documents.forEach { documentSnapshot ->
-                readDishes(documentSnapshot.id, onComplete)
+                readDishes(menuCollectionRef, documentSnapshot.id, task)
             }
         }.addOnFailureListener {
-            logE("$this: ${it.message}")
+            task.onError(it.getExceptionMessage())
         }
     }
 
     private fun readDishes(
+        menuCollectionRef: CollectionReference,
         category: String,
-        onComplete: () -> Unit,
+        task: SimpleTask
     ) {
         logD("readDishes: $category")
         menuCollectionRef.document(category)
-            .collection(FirestoreConstants.COLLECTION_DISHES).get(Source.SERVER).addOnSuccessListener {
+            .collection(FirestoreConstants.COLLECTION_DISHES).get(Source.SERVER)
+            .addOnSuccessListener {
                 val dishes = mutableListOf<Dish>()
                 logD("$category: ${it.documents.size}")
                 it.documents.forEach { dish ->
@@ -50,17 +54,16 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
                 if (menu.size == collectionMenuSize) {
                     logD("isItLastCategory: $collectionMenuSize")
                     logD("menuCollectionSize: ${menu.size}")
-                    onMenuLoadingFinish(onComplete)
+                    onMenuLoadingFinish(task)
                 }
             }.addOnFailureListener {
-                logE("$this: ${it.message}")
+                task.onError(it.getExceptionMessage())
             }
     }
 
-
-    private fun onMenuLoadingFinish(onComplete: () -> Unit) {
+    private fun onMenuLoadingFinish(task: SimpleTask) {
         MenuService.setNewMenu(menu)
-        onComplete()
+        task.onSuccess(Unit)
     }
 
     override fun readMenuVersion(onComplete: (version: Long) -> Unit) {
