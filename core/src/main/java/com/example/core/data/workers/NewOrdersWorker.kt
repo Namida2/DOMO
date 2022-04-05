@@ -30,25 +30,24 @@ typealias ErrorMessageEvent = Event<ErrorMessage>
 
 class NewOrdersWorker(
     private val context: Context, params: WorkerParameters
-) : CoroutineWorker(context, params) {
+) : Worker(context, params) {
 
-    var isFirstNotification = true
     private var id = 0
     private var notificationManager: NotificationManager? = null
     private var readNewOrderUseCase: ReadNewOrderUseCase =
         CoreDepsStore.appComponent.provideReadNewOrderUseCase()
 
     companion object {
+        private var isFirstNotification = true
         var ordersListener: ListenerRegistration? = null
         private val _event: MutableLiveData<ErrorMessageEvent> = MutableLiveData()
         val event: LiveData<ErrorMessageEvent> = _event
     }
 
-    override suspend fun doWork(): Result {
+    override fun doWork(): Result {
         if (ordersListener != null) return Result.retry()
         notificationManager = createNotificationChannel(context)
         ordersListener = newOrdersListenerDocumentRef.addSnapshotListener { snapshot, error ->
-            Toast.makeText(context, "I'm here", Toast.LENGTH_LONG).show()
             when {
                 error != null -> {
                     logE("$this: $error")

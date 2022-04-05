@@ -7,7 +7,7 @@ import com.example.core.R
 import com.example.core.domain.entities.tools.extensions.Animations.prepareHide
 import com.example.core.domain.entities.tools.extensions.Animations.prepareShow
 import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideDown
-import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideUp
+import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideUpFromBottom
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -27,7 +27,7 @@ abstract class BasePostActivity : AppCompatActivity(), EmployeeAuthCallback, Lea
                 startDelay = resources.getInteger(R.integer.navigationUIStartDelay).toLong()
             ).start()
         if (!bottomNavigationView.getLocalVisibleRect(scrollBounds))
-            bottomNavigationView.prepareSlideUp(
+            bottomNavigationView.prepareSlideUpFromBottom(
                 bottomNavigationView.height,
                 startDelay = resources.getInteger(R.integer.navigationUIStartDelay).toLong()
             ).start()

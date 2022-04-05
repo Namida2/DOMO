@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.core.domain.entities.tools.DeletedDishInfo
 import com.example.core.domain.entities.tools.constants.EmployeePosts.ADMINISTRATOR
 import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideDown
-import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideUp
+import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideUpFromBottom
 import com.example.core.domain.entities.tools.extensions.logD
 import com.example.core.presentation.recyclerView.adapterDelegates.DishesAdapterDelegate
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
@@ -35,7 +35,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.BaseTransientBottomBar.BaseCallback
 import com.google.android.material.snackbar.Snackbar
 
-//TODO: Remove the edit views for waiter
 class MenuBottomSheetDialog(
     private val onDismissListener: OnDismissListener?,
 ) : BottomSheetDialogFragment() {
@@ -111,7 +110,6 @@ class MenuBottomSheetDialog(
             if (isAdmin) {
                 ItemTouchHelper(itemTouchCallback)
                     .attachToRecyclerView(menuRecyclerView)
-                //TODO: Add adding a new category //STOPPED//
                 goToTopFba.setOnClickListener { goToTop() }
                 createNewCategoryFba.setOnClickListener {
                     AddCategoryDialog().show(parentFragmentManager, "")
@@ -177,7 +175,7 @@ class MenuBottomSheetDialog(
         val scrollBounds = Rect()
         binding.rootView.getHitRect(scrollBounds)
         if (!binding.fabMenu.getLocalVisibleRect(scrollBounds))
-            binding.fabMenu.prepareSlideUp(binding.fabMenu.height).start()
+            binding.fabMenu.prepareSlideUpFromBottom(binding.fabMenu.height).start()
     }
 
     private fun onAddDishButtonClick(categoryName: String) {

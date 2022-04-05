@@ -6,10 +6,8 @@ import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
+import androidx.work.*
 import androidx.work.PeriodicWorkRequest.MIN_PERIODIC_FLEX_MILLIS
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.WorkRequest
 import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
 import com.example.core.domain.entities.Employee
@@ -113,20 +111,20 @@ class WaiterMainActivity : BasePostActivity(),
     }
 
     override fun makeWorkerRequests() {
-        val newOrdersWorkRequest: WorkRequest =
+        val newOrdersWorkRequest: PeriodicWorkRequest =
             PeriodicWorkRequestBuilder<NewOrdersWorker>(
                 MIN_PERIODIC_FLEX_MILLIS,
                 TimeUnit.MINUTES
             ).build()
-        val newOrderItemsStateRequest: WorkRequest =
+        val newOrderItemsStateRequest: PeriodicWorkRequest =
             PeriodicWorkRequestBuilder<NewOrdersItemStatusWorker>(
                 MIN_PERIODIC_FLEX_MILLIS,
                 TimeUnit.MINUTES
             ).build()
         //TODO: Workers not start after leaving account
         WorkManager.getInstance(this).also {
-            it.enqueue(newOrdersWorkRequest)
-            it.enqueue(newOrderItemsStateRequest)
+            it.enqueueUniquePeriodicWork( "aaa", ExistingPeriodicWorkPolicy.REPLACE, newOrdersWorkRequest)
+            it.enqueueUniquePeriodicWork( "bbb", ExistingPeriodicWorkPolicy.REPLACE, newOrderItemsStateRequest)
         }
         observeOrdersWorkerEvents()
     }

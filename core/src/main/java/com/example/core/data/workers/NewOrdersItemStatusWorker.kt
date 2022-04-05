@@ -3,6 +3,7 @@ package com.example.core.data.workers
 import android.app.NotificationManager
 import android.content.Context
 import androidx.work.CoroutineWorker
+import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.core.domain.di.CoreDepsStore
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_IS_READY
@@ -19,7 +20,7 @@ import com.google.firebase.firestore.ListenerRegistration
 
 class NewOrdersItemStatusWorker(
     private val context: Context, params: WorkerParameters
-) : CoroutineWorker(context, params) {
+) : Worker(context, params) {
 
     var isFirstNotification = true
     private var id = 1
@@ -30,7 +31,7 @@ class NewOrdersItemStatusWorker(
         var newOrderItemsStateListener: ListenerRegistration? = null
     }
 
-    override suspend fun doWork(): Result {
+    override fun doWork(): Result {
         if (newOrderItemsStateListener != null) return Result.retry()
         notificationManager = NotificationsTools.createNotificationChannel(context)
         newOrderItemsStateListener =

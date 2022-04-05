@@ -21,7 +21,6 @@ import com.google.android.material.transition.platform.MaterialElevationScale
 import com.google.android.material.transition.platform.MaterialSharedAxis
 import kotlin.properties.Delegates
 
-//TODO: Start implementing this module
 class TablesFragment : Fragment() {
 
     companion object {

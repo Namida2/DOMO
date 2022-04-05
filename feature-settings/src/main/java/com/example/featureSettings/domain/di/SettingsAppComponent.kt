@@ -10,12 +10,14 @@ import com.example.core.domain.useCases.ReadMenuUseCase
 import com.example.featureSettings.domain.di.modules.LocalRepositoriesModule
 import com.example.featureSettings.domain.di.modules.RemoteRepositoriesModule
 import com.example.featureSettings.domain.useCases.SaveMenuUseCase
+import com.example.featureSettings.domain.useCases.SaveSettingsUseCase
 import dagger.Component
 
 @Component(dependencies = [SettingsAppComponentDeps::class], modules = [RemoteRepositoriesModule::class, LocalRepositoriesModule::class])
 interface SettingsAppComponent : SettingsAppComponentDeps {
     fun provideSaveMenuUseCase(): SaveMenuUseCase
     fun provideReadMenuUseCase(): ReadMenuUseCase
+    fun provideSaveSettingsUseCase(): SaveSettingsUseCase
 }
 
 interface SettingsAppComponentDeps {

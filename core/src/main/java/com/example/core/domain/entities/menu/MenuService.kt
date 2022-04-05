@@ -49,11 +49,7 @@ object MenuService : BaseObservable<MenuServiceSub> {
     fun setNewMenu(menu: MutableList<Category>?) {
         if (menu.isNullOrEmpty()) menuState = MenuServiceStates.MenuIsEmpty
         else {
-            menu.forEach {
-                it.dishes.forEach { dish ->
-                    logD(dish.toString())
-                }
-            }
+            menu.forEach { it.dishes.sort() }
             menu.sort()
             this.menu = menu
             menuState = MenuServiceStates.MenuExists(this)
@@ -159,7 +155,7 @@ object MenuService : BaseObservable<MenuServiceSub> {
                 menu[categoryIndex].dishes.find {
                     it.name == dish.name
                 }.also { dishWithSameName ->
-                    if(dishWithSameName != null) return false
+                    if (dishWithSameName != null) return false
                     menu[categoryIndex].dishes[existingDishIndex] = dish
                     menuChanges.tryEmit(menu)
                     return true

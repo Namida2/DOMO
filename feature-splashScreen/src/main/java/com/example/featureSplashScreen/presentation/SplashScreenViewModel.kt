@@ -8,12 +8,11 @@ import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.SimpleTask
 import com.example.core.domain.entities.tools.TaskWithEmployee
 import com.example.core.domain.entities.tools.constants.FirestoreReferences.actualMenuCollectionRef
-import com.example.core.domain.entities.tools.constants.FirestoreReferences.defaultMenuCollectionRef
 import com.example.core.domain.entities.tools.constants.Messages.defaultErrorMessage
 import com.example.core.domain.entities.tools.constants.Messages.employeeDoesNotExists
-import com.example.core.domain.entities.tools.constants.Messages.newMenuVersionMessage
-import com.example.featureSplashScreen.domain.useCases.GetCurrentEmployeeUseCase
+import com.example.core.domain.entities.tools.constants.Messages.permissionDeniedMessage
 import com.example.core.domain.useCases.ReadMenuUseCase
+import com.example.featureSplashScreen.domain.useCases.GetCurrentEmployeeUseCase
 import com.example.featureSplashScreen.domain.useCases.ReadOrdersUseCase
 import com.example.featureSplashScreen.domain.useCases.ReadSettingsUseCase
 
@@ -44,7 +43,7 @@ class SplashScreenViewModel(
     val state: LiveData<SplashScreenStates> = _state
 
     init {
-        readMenuUseCase.readMenu(actualMenuCollectionRef, false, object : SimpleTask{
+        readMenuUseCase.readMenu(actualMenuCollectionRef, false, object : SimpleTask {
             override fun onSuccess(result: Unit) {}
             override fun onError(message: ErrorMessage?) {}
         })
@@ -59,8 +58,9 @@ class SplashScreenViewModel(
                     currentEmployee = result
                     if (isSettingsExists)
                         _state.value = SplashScreenStates.EmployeeAndSettingsExist(result)
-                } else _state.value = SplashScreenStates.OnFailure(newMenuVersionMessage)
+                } else _state.value = SplashScreenStates.OnFailure(permissionDeniedMessage)
             }
+
             override fun onError(message: ErrorMessage?) {
                 if (message == employeeDoesNotExists)
                     _state.value = SplashScreenStates.EmployeeDoesNotExists
@@ -78,8 +78,9 @@ class SplashScreenViewModel(
                     _state.value =
                         SplashScreenStates.EmployeeAndSettingsExist(currentEmployee!!)
             }
+
             override fun onError(message: ErrorMessage?) {
-                if(currentEmployee == null) return
+                if (currentEmployee == null) return
                 _state.value = SplashScreenStates.OnFailure(message ?: defaultErrorMessage)
             }
         })

@@ -8,7 +8,9 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import com.example.core.domain.entities.tools.constants.Messages
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
+import com.example.core.domain.entities.tools.extensions.isEmptyField
 import com.example.featureMenuDialog.R
 import com.example.featureMenuDialog.databinding.DialogEditMenuItemBinding
 
@@ -52,6 +54,12 @@ class AddCategoryDialog: DialogFragment() {
                 dishCost.visibility = View.GONE
                 dishWeight.visibility = View.GONE
                 confirmButton.setOnClickListener {
+                    if (isEmptyField(menuItemName.text.toString())) {
+                        requireContext().createMessageDialog(
+                            Messages.emptyFieldMessage
+                        )?.show(parentFragmentManager, "")
+                        return@setOnClickListener
+                    }
                     viewModel.addCategory(menuItemName.text.toString())
                 }
             }

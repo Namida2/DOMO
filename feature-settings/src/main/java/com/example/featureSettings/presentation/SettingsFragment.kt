@@ -5,14 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.core.domain.entities.Employee
-import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.entities.tools.dialogs.ClosedQuestionDialog
 import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
+import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideDownFomTop
+import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideUp
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.entities.tools.extensions.dismissIfAdded
+import com.example.core.domain.interfaces.OrdersService
 import com.example.featureMenuDialog.domain.MenuDialogDeps
 import com.example.featureMenuDialog.domain.MenuDialogDepsStore
 import com.example.featureMenuDialog.presentation.menuDialog.MenuBottomSheetDialog
@@ -20,11 +23,12 @@ import com.example.featureSettings.R
 import com.example.featureSettings.databinding.FragmentSettingsBinding
 import com.example.featureSettings.domain.ViewModelFactory
 import com.example.featureSettings.domain.di.SettingsDepsStore
+import com.example.featureSettings.domain.di.SettingsDepsStore.deps
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
-// TODO: Save the menu by default //STOPPED// 
-// TODO: Work with menu in foreground service
+// TODO: Work with menu in foreground service //STOPPED//
 class SettingsFragment : Fragment() {
+
     private lateinit var binding: FragmentSettingsBinding
     private lateinit var closedQuestionDialog: ClosedQuestionDialog<Unit>
     private val viewModel by viewModels<SettingsViewModel> { ViewModelFactory }
@@ -44,7 +48,8 @@ class SettingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSettingsBinding.inflate(layoutInflater, container, false)
+        binding = FragmentSettingsBinding
+            .inflate(layoutInflater, container, false).also { it.viewModel = viewModel }
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
             duration = resources.getInteger(R.integer.transitionAnimationDuration).toLong()
         }
@@ -55,23 +60,45 @@ class SettingsFragment : Fragment() {
         provideMenuDialogDeps()
         observeOnMenuDialogDismissEvent()
         observeViewModelStates()
+        observeOnSettingChangedEvent()
         return binding.root
     }
 
     private fun initBinding() {
         with(binding) {
             editMenuCard.setOnClickListener {
-                viewModel.saveMenuBeforeChanges()
-                MenuBottomSheetDialog(viewModel).show(parentFragmentManager, "")
+                this@SettingsFragment.viewModel.saveMenuBeforeChanges()
+                MenuBottomSheetDialog(this@SettingsFragment.viewModel).show(
+                    parentFragmentManager,
+                    ""
+                )
             }
-            loadDefaultMenuCard.setOnClickListener {
-                viewModel.readDefaultMeu()
+            maxTablesCount.setText(deps.settings.tablesCount.toString())
+            maxGuestsCount.setText(deps.settings.guestsCount.toString())
+            maxTablesCount.addTextChangedListener {
+                this@SettingsFragment.viewModel.onMaxTablesCountChanged(
+                    it.toString()
+                )
             }
-            saveCurrentMenuAsDefaultButton.setOnClickListener {
-
+            maxGuestsCount.addTextChangedListener {
+                this@SettingsFragment.viewModel.onMaxGuestCountChanged(
+                    it.toString()
+                )
             }
         }
+    }
 
+    private fun observeOnSettingChangedEvent() {
+        viewModel.onSettingChangedEvent.observe(viewLifecycleOwner) {
+            val button = binding.saveSettingsButton
+            if (it.getData() ?: return@observe) {
+                if (button.visibility == View.VISIBLE) return@observe
+                button.visibility = View.VISIBLE
+                button.prepareSlideDownFomTop(button.height).start()
+            } else button.prepareSlideUp(button.height) {
+                button.visibility = View.GONE
+            }.start()
+        }
     }
 
     private fun provideMenuDialogDeps() {
@@ -80,7 +107,6 @@ class SettingsFragment : Fragment() {
                 get() = SettingsDepsStore.deps.currentEmployee
             override val ordersService: OrdersService
                 get() = SettingsDepsStore.deps.ordersService
-
         }
     }
 

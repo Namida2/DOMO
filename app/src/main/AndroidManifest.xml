@@ -19,8 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.domo.views.activities.AuthorizationActivity"/>
-        <activity android:name=".views.activities.WaiterMainActivity"/>
         <activity android:name="com.example.featureLogIn.presentation.AuthorizationActivity"/>
 
     </application>

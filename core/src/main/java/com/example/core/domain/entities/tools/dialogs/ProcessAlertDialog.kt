@@ -8,7 +8,6 @@ import com.example.core.R
 import com.example.core.databinding.DialogProcessBinding
 import com.example.core.domain.entities.tools.extensions.Animations.prepareHide
 import com.example.core.domain.entities.tools.extensions.Animations.prepareShow
-import com.example.core.domain.entities.tools.extensions.dismissIfAdded
 import com.example.core.domain.entities.tools.extensions.logE
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope

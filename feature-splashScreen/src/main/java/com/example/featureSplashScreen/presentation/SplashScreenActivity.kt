@@ -61,7 +61,6 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback, NewMenuV
                     prepareLogInScreen()
                 }
                 is SplashScreenStates.EmployeeAndSettingsExist -> {
-                    //TODO: Modify the SplashScreenAppComponent //STOPPED//
                     setNewEmployeeData(state.employee)
                     when (state.employee.post) {
                         COOK.value -> {

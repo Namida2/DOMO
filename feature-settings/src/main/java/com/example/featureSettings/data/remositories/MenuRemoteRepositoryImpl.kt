@@ -14,6 +14,7 @@ import com.example.core.domain.entities.tools.extensions.addOnSuccessListenerWit
 import com.example.core.domain.entities.tools.extensions.getExceptionMessage
 import com.example.core.domain.entities.tools.extensions.logD
 import com.example.featureSettings.domain.repositories.MenuRemoteRepository
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.Source
 import javax.inject.Inject
 
@@ -23,20 +24,16 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
     private var remoteCollectionSize = 0
     private var deletedCategoriesCount = 0
     private var insertedCategoriesCount = 0
+    private var targetMenuCollection: CollectionReference = actualMenuCollectionRef
 
-    private var collectionMenuSize = 0
-
-    override fun saveNewMenu(task: SimpleTask) {
+    override fun saveNewMenu(targetMenuCollection: CollectionReference, task: SimpleTask) {
+        this.targetMenuCollection = targetMenuCollection
         prepareForUpdating()
         logD("insertedCategoriesCount: $insertedCategoriesCount")
         logD("initialSize: $initialSize")
-        checkOrders(task) {
-            deleteOldMenu(task)
-        }
-    }
-
-    override fun saveCurrentMenuAsDefault(task: SimpleTask) {
-        TODO("Not yet implemented")
+        if (targetMenuCollection == actualMenuCollectionRef)
+            checkOrders(task) { deleteOldMenu(task) }
+        else deleteOldMenu(task)
     }
 
     private fun prepareForUpdating() {
@@ -70,7 +67,7 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
     }
 
     private fun deleteOldMenu(task: SimpleTask) {
-        actualMenuCollectionRef.get(Source.SERVER).addOnSuccessListener {
+        targetMenuCollection.get(Source.SERVER).addOnSuccessListener {
             remoteCollectionSize = it.documents.size
             if (remoteCollectionSize == 0) insertNewMenu(task)
             it.documents.forEach { category ->
@@ -85,7 +82,7 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
         categoryName: String,
         task: SimpleTask,
     ) {
-        actualMenuCollectionRef.document(categoryName).collection(COLLECTION_DISHES).get()
+        targetMenuCollection.document(categoryName).collection(COLLECTION_DISHES).get()
             .addOnSuccessListener {
                 logD(categoryName)
                 val lastIndex = it.documents.lastIndex
@@ -96,7 +93,7 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
                         insertNewMenu(task)
                 }
                 it.documents.forEachIndexed { index, dish ->
-                    actualMenuCollectionRef.document(categoryName).collection(COLLECTION_DISHES)
+                    targetMenuCollection.document(categoryName).collection(COLLECTION_DISHES)
                         .document(dish.id).delete().addOnSuccessListener {
                             logD("deleted: $dish")
                             if (index == lastIndex) {
@@ -116,8 +113,8 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
 
     private fun onCategoryDeleted(categoryName: String, task: SimpleTask) {
         val category = currentCopiedMenu.find {
-            it.name == categoryName // FIXME: Гёдза == Гёдза  
-        } ?: actualMenuCollectionRef.document(categoryName).delete().also { return }
+            it.name == categoryName
+        } ?: targetMenuCollection.document(categoryName).delete().also { return }
         currentCopiedMenu.remove(category as Category)
         insertDishes(category, task)
     }
@@ -136,12 +133,12 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
         task: SimpleTask,
     ) {
         logD("lastIndexOfDish in ${category.name}")
-        actualMenuCollectionRef.document(category.name)
+        targetMenuCollection.document(category.name)
             .set(mapOf(category.name to category.dishes.size))
             .addOnSuccessListener {
                 val lastIndex = category.dishes.lastIndex
                 category.dishes.forEachIndexed { index, dish ->
-                    actualMenuCollectionRef.document(category.name).collection(COLLECTION_DISHES)
+                    targetMenuCollection.document(category.name).collection(COLLECTION_DISHES)
                         .document(dish.name).set(dish).addOnSuccessListener {
                             logD("set ${dish.name}")
                             logD("insertedCategoriesCount $insertedCategoriesCount")
@@ -160,6 +157,10 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
     }
 
     private fun setNewMenuVersion(task: SimpleTask) {
+        if (targetMenuCollection != actualMenuCollectionRef) {
+            task.onSuccess(Unit)
+            return
+        }
         deleteOrdersCollection(task) {
             fireStore.runTransaction {
                 logD("____setNewMenuVersion____")

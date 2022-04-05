@@ -34,7 +34,7 @@ class ProfileFragment: Fragment() {
         closedQuestionDialog = ClosedQuestionDialog(
             ProfileDepsStore.deps.currentEmployee?.name,
             resources.getString(R.string.leaveAccountMessage)
-        ) { //TODO: leaveThisAccount //STOPPED//
+        ) {
             viewModel.leaveThisAccount()
         }
         leaveAccountCallback = (context as? LeaveAccountCallback)

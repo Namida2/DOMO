@@ -14,9 +14,7 @@ class ItemTouchCallback(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
-    ): Boolean {
-        TODO("Not yet implemented")
-    }
+    ): Boolean = false
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         onItemDelete(viewHolder.absoluteAdapterPosition - 1)
@@ -25,9 +23,8 @@ class ItemTouchCallback(
     override fun getSwipeDirs(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
-    ): Int =
-        if (viewHolder.itemViewType == R.layout.layout_dish)
-            super.getSwipeDirs(recyclerView, viewHolder)
-        else ItemTouchHelper.ACTION_STATE_IDLE
+    ): Int = if (viewHolder.itemViewType == R.layout.layout_dish)
+        super.getSwipeDirs(recyclerView, viewHolder)
+    else ItemTouchHelper.ACTION_STATE_IDLE
 
 }

@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.tools.enums.AddingDishMods
-import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideUp
+import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideUpFromBottom
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.presentation.recyclerView.adapterDelegates.OrderItemsAdapterDelegate
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
@@ -39,6 +39,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.properties.Delegates
 
+// TODO:  Remove order item from list //TODO//
 class OrderFragment : Fragment() {
 
     private var orderId = 0
@@ -151,7 +152,7 @@ class OrderFragment : Fragment() {
             CoroutineScope(Main).launch {
                 delay(150)
                 with(binding) {
-                    bottomAppBar.prepareSlideUp(bottomAppBar.height).apply {
+                    bottomAppBar.prepareSlideUpFromBottom(bottomAppBar.height).apply {
                         doOnEnd { menuFba.show() }
                     }.start()
                     bottomAppBar.alpha = 1f
