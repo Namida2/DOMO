@@ -8,22 +8,15 @@ import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.entities.menu.Dish
 import com.example.core.domain.entities.order.OrderItem
 import com.example.core.domain.entities.tools.ErrorMessage
+import com.example.core.domain.entities.tools.constants.Messages.dishAlreadyAddedMessage
 import com.example.core.domain.entities.tools.enums.AddingDishMods
 import com.example.core.domain.entities.tools.extensions.logD
-import com.example.featureMenuDialog.R
 
 sealed class DishDialogVMStates {
-    open var errorMessage: ErrorMessage? = null
-
-    object DishAlreadyAdded : DishDialogVMStates() {
-        override var errorMessage: ErrorMessage? =
-            ErrorMessage(
-                R.string.dishAlreadyAddedTitle,
-                R.string.dishAlreadyAddedMessage
-            )
-    }
-
-    object DishSuccessfulAdded : DishDialogVMStates()
+    class OnFailure(
+        val errorMessage: ErrorMessage = dishAlreadyAddedMessage
+    ): DishDialogVMStates()
+    object OnSuccess : DishDialogVMStates()
     object Default : DishDialogVMStates()
 }
 
@@ -31,7 +24,7 @@ class DishDialogViewModel(
     private val ordersService: OrdersService,
 ) : ViewModel() {
 
-    var orderItem: Dish? = null
+    var dish: Dish? = null
     var addingDishMode: AddingDishMods? = null
     var aldCommentary: String? = null
     private var _state = MutableLiveData<DishDialogVMStates>(DishDialogVMStates.Default)
@@ -40,28 +33,34 @@ class DishDialogViewModel(
 
     fun onAddButtonClick(view: View, dishesCount: String, commentary: String) {
         view.isActivated = false
-        var result = false
-        when (addingDishMode) {
+        val result: Boolean = when (addingDishMode) {
             AddingDishMods.INSERTING -> {
-                result = ordersService.addOrderItem(
-                    OrderItem(orderItem!!.id, dishesCount.toInt(), commentary),
+                ordersService.addOrderItem(
+                    OrderItem(dish!!.id, dishesCount.toInt(), commentary),
                 )
             }
             AddingDishMods.UPDATING -> {
-                result = ordersService.updateOrderItem(
-                    OrderItem(orderItem!!.id, dishesCount.toInt(), commentary),
+                ordersService.updateOrderItem(
+                    OrderItem(dish!!.id, dishesCount.toInt(), commentary),
                     aldCommentary!!
                 )
             }
-            else -> {
-                logD("$this: addingDishMode is null")
-            }
+            else -> { logD("$this: addingDishMode is null"); false}
         }
-        if (!result) {
-            _state.value = DishDialogVMStates.DishAlreadyAdded
-            view.isActivated = true
-        } else _state.value = DishDialogVMStates.DishSuccessfulAdded
+        if (result) {
+            _state.value = DishDialogVMStates.OnSuccess
+        } else  _state.value = DishDialogVMStates.OnFailure()
         _state.value = DishDialogVMStates.Default
-        logD(ordersService.currentOrder.toString())
+        view.isActivated = true
+    }
+
+    fun onRemoveButtonClick(view: View, commentary: String) {
+        view.isActivated = false
+        val result = ordersService.deleteFromCurrentOrder(dish!!, commentary)
+        if (result)
+            _state.value = DishDialogVMStates.OnSuccess
+        else _state.value = DishDialogVMStates.OnFailure()
+        _state.value = DishDialogVMStates.Default
+        view.isActivated = true
     }
 }

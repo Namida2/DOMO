@@ -36,7 +36,7 @@
         android:layout_height="wrap_content">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/goToTopFba"
+            android:id="@+id/goToTopFab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="@color/black"
@@ -47,7 +47,7 @@
             app:rippleColor="@color/white" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/createNewCategoryFba"
+            android:id="@+id/createNewCategoryFab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="@color/black"
@@ -56,6 +56,17 @@
             app:fab_size="mini"
             app:fab_icon="@drawable/ic_add_small"
             app:fab_title="Add new category"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/saveMenuFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/black"
+            app:rippleColor="@color/white"
+            app:fab_colorPressed="@color/black"
+            app:fab_size="mini"
+            app:fab_icon="@drawable/ic_upload_white"
+            app:fab_title="Save this menu"/>
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

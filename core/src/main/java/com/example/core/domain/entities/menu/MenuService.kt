@@ -3,7 +3,6 @@ package com.example.core.domain.entities.menu
 import com.example.core.domain.entities.tools.DeletedDishInfo
 import com.example.core.domain.entities.tools.constants.OtherStringConstants.THIS_DISH_ALREADY_ADDED
 import com.example.core.domain.entities.tools.constants.OtherStringConstants.UNKNOWN_DISH_ID
-import com.example.core.domain.entities.tools.extensions.logD
 import com.example.core.domain.interfaces.BaseObservable
 import kotlinx.coroutines.flow.MutableSharedFlow
 
@@ -27,12 +26,18 @@ object MenuService : BaseObservable<MenuServiceSub> {
     private var subscribers: MutableSet<MenuServiceSub> = mutableSetOf()
     val menuChanges = MutableSharedFlow<List<Category>>(replay = 1)
 
-    fun getAllCategories(): CategoriesNameHolder =
-        CategoriesNameHolder(
-            menu.map { it.name }.map {
-                CategoryName(it)
+    fun getAllCategories(wiveTypesBefore: Int): CategoriesNameHolder {
+        var nextCategoryPosition = wiveTypesBefore
+        val listItems = menu.map { category ->
+            listOf(
+                CategoryName(category.name, nextCategoryPosition)
+            ).also {
+                nextCategoryPosition += category.dishes.size + 1
             }
-        )
+        }.flatten()
+        return CategoriesNameHolder(listItems)
+    }
+
 
     fun getDishById(dishId: Int): Dish {
         var dish: Dish? = null

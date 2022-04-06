@@ -4,10 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.entities.order.Order
-import com.example.core.domain.entities.order.OrdersServiceSub
 import com.example.core.domain.entities.tools.Event
+import com.example.core.domain.interfaces.OrdersService
 import com.example.featureCurrentOrders.domain.OrderInfo
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

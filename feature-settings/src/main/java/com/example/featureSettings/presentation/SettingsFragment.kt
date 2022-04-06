@@ -68,10 +68,10 @@ class SettingsFragment : Fragment() {
         with(binding) {
             editMenuCard.setOnClickListener {
                 this@SettingsFragment.viewModel.saveMenuBeforeChanges()
-                MenuBottomSheetDialog(this@SettingsFragment.viewModel).show(
-                    parentFragmentManager,
-                    ""
-                )
+                MenuBottomSheetDialog(
+                    this@SettingsFragment.viewModel,
+                    this@SettingsFragment.viewModel::saveNewMenuFromMenuBottomSheetDialog
+                ).show(parentFragmentManager, "")
             }
             maxTablesCount.setText(deps.settings.tablesCount.toString())
             maxGuestsCount.setText(deps.settings.guestsCount.toString())
@@ -104,9 +104,9 @@ class SettingsFragment : Fragment() {
     private fun provideMenuDialogDeps() {
         MenuDialogDepsStore.deps = object : MenuDialogDeps {
             override val currentEmployee: Employee?
-                get() = SettingsDepsStore.deps.currentEmployee
+                get() = deps.currentEmployee
             override val ordersService: OrdersService
-                get() = SettingsDepsStore.deps.ordersService
+                get() = deps.ordersService
         }
     }
 

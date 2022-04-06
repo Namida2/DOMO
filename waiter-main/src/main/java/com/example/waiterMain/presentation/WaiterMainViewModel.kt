@@ -6,6 +6,7 @@ import com.example.core.domain.listeners.MenuVersionListener
 import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponent
 import com.example.featureOrder.domain.di.OrderAppComponent
 import com.example.featureProfile.domain.di.ProfileAppComponent
+import com.example.waiterMain.domain.di.WaiterMainDepsStore
 
 class WaiterMainViewModel(
     menuVersionListener: MenuVersionListener
@@ -16,5 +17,10 @@ class WaiterMainViewModel(
     init {
         listenPermissionChanges(viewModelScope)
         listenMenuVersionChanges(viewModelScope)
+    }
+
+    override fun onCleared() {
+        WaiterMainDepsStore.onCleared()
+        super.onCleared()
     }
 }

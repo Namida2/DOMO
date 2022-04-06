@@ -1,13 +1,15 @@
 package com.example.waiterMain.presentation
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
-import androidx.work.*
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequest.MIN_PERIODIC_FLEX_MILLIS
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
 import com.example.core.domain.entities.Employee
@@ -32,8 +34,9 @@ import com.example.featureProfile.domain.di.ProfileDepsStore
 import com.example.waiterMain.R
 import com.example.waiterMain.databinding.ActivityWaiterMainBinding
 import com.example.waiterMain.domain.ViewModelFactory
-import com.example.waiterMain.domain.di.WaiterMainDeps
 import com.example.waiterMain.domain.di.WaiterMainDepsStore
+import com.example.waiterMain.domain.di.WaiterMainDepsStore.deps
+import com.example.waiterMain.domain.di.WaiterMainDepsStore.profileDeps
 import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
 
@@ -72,11 +75,11 @@ class WaiterMainActivity : BasePostActivity(),
     private fun provideOrderDeps() {
         val orderModuleDeps = object : OrderAppComponentDeps {
             override val settings: Settings
-                get() = WaiterMainDepsStore.deps.settings
+                get() = deps!!.settings
             override val currentEmployee: Employee?
-                get() = WaiterMainDepsStore.deps.currentEmployee
+                get() = deps!!.currentEmployee
             override val ordersService: OrdersService
-                get() = WaiterMainDepsStore.deps.ordersService
+                get() = deps!!.ordersService
         }
         viewModel.orderAppComponents =
             DaggerOrderAppComponent.builder().provideOrderAppComponentDeps(orderModuleDeps).build()
@@ -87,9 +90,9 @@ class WaiterMainActivity : BasePostActivity(),
     private fun provideCurrentOrdersDeps() {
         val currentOrdersModuleDeps = object : CurrentOrdersAppComponentDeps {
             override val currentEmployee: Employee?
-                get() = WaiterMainDepsStore.deps.currentEmployee
+                get() = deps!!.currentEmployee
             override val ordersService: OrdersService
-                get() = WaiterMainDepsStore.deps.ordersService
+                get() = deps!!.ordersService
         }
         viewModel.currentOrdersAppComponents = DaggerCurrentOrdersAppComponent.builder()
             .provideCurrentOrdersDeps(currentOrdersModuleDeps).build()
@@ -100,9 +103,9 @@ class WaiterMainActivity : BasePostActivity(),
     private fun provideProfileDeps() {
         val profileModuleDeps = object : ProfileAppComponentDeps {
             override val currentEmployee: Employee?
-                get() = WaiterMainDepsStore.deps.currentEmployee
+                get() = deps!!.currentEmployee
             override val firebaseAuth: FirebaseAuth
-                get() = WaiterMainDepsStore.profileDeps.firebaseAuth
+                get() = profileDeps!!.firebaseAuth
         }
         viewModel.profileAppComponent = DaggerProfileAppComponent.builder()
             .profileAppComponentDeps(profileModuleDeps).build()
@@ -123,10 +126,17 @@ class WaiterMainActivity : BasePostActivity(),
             ).build()
         //TODO: Workers not start after leaving account
         WorkManager.getInstance(this).also {
-            it.enqueueUniquePeriodicWork( "aaa", ExistingPeriodicWorkPolicy.REPLACE, newOrdersWorkRequest)
-            it.enqueueUniquePeriodicWork( "bbb", ExistingPeriodicWorkPolicy.REPLACE, newOrderItemsStateRequest)
+            it.enqueueUniquePeriodicWork(
+                "aaa",
+                ExistingPeriodicWorkPolicy.REPLACE,
+                newOrdersWorkRequest
+            )
+            it.enqueueUniquePeriodicWork(
+                "bbb",
+                ExistingPeriodicWorkPolicy.REPLACE,
+                newOrderItemsStateRequest
+            )
         }
-        observeOrdersWorkerEvents()
     }
 
     override fun onDestroy() {
@@ -195,7 +205,7 @@ class WaiterMainActivity : BasePostActivity(),
     }
 
     override fun onAuthorisationEvent(employee: Employee?) {
-        WaiterMainDepsStore.employeeAuthCallback.onAuthorisationEvent(employee)
+        WaiterMainDepsStore.employeeAuthCallback!!.onAuthorisationEvent(employee)
     }
 
     override fun observeOnNewPermissionEvent() {
@@ -212,17 +222,11 @@ class WaiterMainActivity : BasePostActivity(),
         viewModel.newMenuVersionEvent.observe(this) {
             it.getData()?.let {
                 createMessageDialog(newMenuVersionMessage) {
-                    WaiterMainDepsStore.newMenuVersionCallback.onNewMenu()
+                    WaiterMainDepsStore.newMenuVersionCallback!!.onNewMenu()
                 }?.show(supportFragmentManager, "")
             }
         }
     }
 
-    private fun observeOrdersWorkerEvents() {
-        NewOrdersWorker.event.observe(this) {
-            val data = it.getData() ?: return@observe
-            createMessageDialog(data)?.show(supportFragmentManager, "")
-        }
-    }
 }
 

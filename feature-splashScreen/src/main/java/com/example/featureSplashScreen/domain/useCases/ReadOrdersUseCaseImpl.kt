@@ -1,10 +1,9 @@
 package com.example.featureSplashScreen.domain.useCases
 
-import com.example.core.domain.interfaces.OrdersService
 import com.example.core.domain.entities.order.Order
-import com.example.core.domain.entities.order.OrdersServiceSub
 import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.extensions.logE
+import com.example.core.domain.interfaces.OrdersService
 import com.example.featureSplashScreen.data.TaskWithOrders
 import com.example.featureSplashScreen.domain.repositories.OrdersRemoteRepository
 import javax.inject.Inject
@@ -18,6 +17,7 @@ class ReadOrdersUseCaseImpl @Inject constructor(
             override fun onSuccess(result: List<Order>) {
                 ordersService.addListOfOrders(result)
             }
+
             override fun onError(message: ErrorMessage?) {
                 logE("$this: $message")
             }

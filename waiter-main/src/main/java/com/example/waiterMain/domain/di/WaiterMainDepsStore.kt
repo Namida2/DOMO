@@ -1,19 +1,28 @@
 package com.example.waiterMain.domain.di
 
+import com.example.core.domain.interfaces.BaseDepsStore
 import com.example.core.domain.interfaces.EmployeeAuthCallback
 import com.example.core.domain.interfaces.NewMenuVersionCallback
 import com.google.firebase.auth.FirebaseAuth
 
-object WaiterMainDepsStore {
-    lateinit var deps: WaiterMainDeps
-    lateinit var profileDeps: ProfileModuleDeps
-    lateinit var employeeAuthCallback: EmployeeAuthCallback
-    lateinit var newMenuVersionCallback: NewMenuVersionCallback
-    val appComponent: WaiterMainAppComponent by lazy {
-        DaggerWaiterMainAppComponent.builder()
-            .provideWaiterMainDeps(deps)
-            .build()
+object WaiterMainDepsStore : BaseDepsStore {
+    var deps: WaiterMainDeps? = null
+    var profileDeps: ProfileModuleDeps? = null
+    var employeeAuthCallback: EmployeeAuthCallback? = null
+    var newMenuVersionCallback: NewMenuVersionCallback? = null
+    var appComponent: WaiterMainAppComponent? = null
+        get() = if (field == null) {
+            field = DaggerWaiterMainAppComponent.builder().provideWaiterMainDeps(deps!!).build(); field
+        } else field
+
+    override fun onCleared() {
+        deps = null
+        profileDeps = null
+        employeeAuthCallback = null
+        newMenuVersionCallback = null
+        appComponent = null
     }
+
 }
 
 interface ProfileModuleDeps {

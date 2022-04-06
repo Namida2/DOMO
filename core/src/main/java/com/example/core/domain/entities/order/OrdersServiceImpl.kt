@@ -1,5 +1,6 @@
 package com.example.core.domain.entities.order
 
+import com.example.core.domain.entities.menu.Dish
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.ORDER_ITEM_ID_DELIMITER
 import com.example.core.domain.entities.tools.constants.OtherStringConstants.CURRENT_ORDER_NOT_INITIALIZED
 import com.example.core.domain.entities.tools.constants.OtherStringConstants.ORDER_ITEM_NOT_FOUNT
@@ -13,8 +14,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-typealias OrdersServiceSub = (orders: List<Order>) -> Unit
 
 //TODO: Add states to showing the progress bar when the orders is reading
 class OrdersServiceImpl @Inject constructor(
@@ -61,14 +60,17 @@ class OrdersServiceImpl @Inject constructor(
     }
 
     override fun updateOrderItem(orderItem: OrderItem, aldCommentary: String): Boolean {
+        var anotherExistingOrderItem: OrderItem? = null
         val aldOrderItemId = orderItem.dishId.toString() + ORDER_ITEM_ID_DELIMITER + aldCommentary
         currentOrder!!.orderItems.find {
             it.getOrderIemId() == aldOrderItemId
         } ?: throw IllegalArgumentException(ORDER_ITEM_NOT_FOUNT)
-        val anotherExistingOrderItem = currentOrder!!.orderItems.find {
-            it.getOrderIemId() == orderItem.getOrderIemId()
+        if(orderItem.commentary != aldCommentary) {
+            anotherExistingOrderItem = currentOrder!!.orderItems.find {
+                it.getOrderIemId() == orderItem.getOrderIemId()
+            }
+            if (anotherExistingOrderItem != null) return false
         }
-        if (anotherExistingOrderItem != null) return false
 
         currentOrder!!.orderItems = currentOrder!!.orderItems.map {
             if (it.getOrderIemId() == aldOrderItemId) orderItem
@@ -78,7 +80,7 @@ class OrdersServiceImpl @Inject constructor(
         return true
     }
 
-    override fun removeOrder(order: Order) {
+    override fun deleteOrder(order: Order) {
         orders.remove(order)
     }
 
@@ -108,6 +110,15 @@ class OrdersServiceImpl @Inject constructor(
 
     override fun getCurrentOrderItems(): Set<OrderItem> =
         currentOrder?.orderItems?.toSet()!!
+
+    override fun deleteFromCurrentOrder(dish: Dish, commentary: String): Boolean {
+        val orderItem = currentOrder!!.orderItems.find {
+            it.dishId == dish.id && it.commentary == commentary
+        } ?: return false
+        currentOrder!!.orderItems.remove(orderItem)
+        currentOrderChanges.tryEmit(currentOrder!!.orderItems)
+        return true
+    }
 
     override fun addOrder(newOrder: Order) {
         orders.forEachIndexed { index, order ->

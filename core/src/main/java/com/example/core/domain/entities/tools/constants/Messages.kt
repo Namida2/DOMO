@@ -4,6 +4,11 @@ import com.example.core.R
 import com.example.core.domain.entities.tools.ErrorMessage
 
 object Messages {
+    var dishAlreadyAddedMessage: ErrorMessage =
+        ErrorMessage(
+            R.string.dishAlreadyAddedTitle,
+            R.string.dishAlreadyAddedMessage
+        )
     val newMenuVersionMessage = ErrorMessage(
         R.string.newMenuVersionTitle,
         R.string.newMenuVersionMessage

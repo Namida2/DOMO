@@ -37,12 +37,14 @@ import com.google.android.material.snackbar.Snackbar
 
 class MenuBottomSheetDialog(
     private val onDismissListener: OnDismissListener?,
+    private val onSaveMenuButtonClick: () -> Unit = {}
 ) : BottomSheetDialogFragment() {
 
     private var smallMargin: Int? = null
     private var largeMargin: Int? = null
 
     private var isAdmin = false
+    private val startPosition = 0
     private lateinit var binding: DialogMenuBinding
     private val viewModel by viewModels<MenuDialogViewModel>()
     private var dishDialog = DishAlertDialog()
@@ -61,7 +63,7 @@ class MenuBottomSheetDialog(
         largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
         menuAdapter = BaseRecyclerViewAdapter(
             listOf(
-                CategoriesAdapterDelegate(),
+                CategoriesAdapterDelegate(::goToPosition),
                 CategoryLargeRecyclerViewType(isAdmin, ::onAddDishButtonClick),
                 DishesAdapterDelegate(viewModel::onDishClick)
             )
@@ -110,20 +112,21 @@ class MenuBottomSheetDialog(
             if (isAdmin) {
                 ItemTouchHelper(itemTouchCallback)
                     .attachToRecyclerView(menuRecyclerView)
-                goToTopFba.setOnClickListener { goToTop() }
-                createNewCategoryFba.setOnClickListener {
+                goToTopFab.setOnClickListener { goToPosition(startPosition) }
+                createNewCategoryFab.setOnClickListener {
                     AddCategoryDialog().show(parentFragmentManager, "")
                 }
+                saveMenuFab.setOnClickListener { onSaveMenuButtonClick() }
             } else {
                 fabMenu.visibility = View.GONE
                 fba.visibility = View.VISIBLE
-                fba.setOnClickListener { goToTop() }
+                fba.setOnClickListener { goToPosition(startPosition) }
             }
         }
     }
 
-    private fun goToTop() {
-        smoothScroller.targetPosition = 0
+    private fun goToPosition(position: Int) {
+        smoothScroller.targetPosition = position
         binding.menuRecyclerView.layoutManager?.startSmoothScroll(smoothScroller)
     }
 
@@ -184,5 +187,4 @@ class MenuBottomSheetDialog(
             categoryName
         ).show(parentFragmentManager, "")
     }
-
 }

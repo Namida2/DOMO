@@ -12,6 +12,7 @@ import androidx.work.WorkRequest
 import com.example.administratorMain.R
 import com.example.administratorMain.databinding.ActivityAdministratorBinding
 import com.example.administratorMain.domatn.di.AdminDepsStore
+import com.example.administratorMain.domatn.di.AdminDepsStore.deps
 import com.example.core.data.database.Database
 import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
@@ -37,10 +38,6 @@ import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
 
 class AdministratorMainActivity : BasePostActivity() {
-
-    private lateinit var employeesAppComponent: EmployeesAppComponent
-    private lateinit var profileAppComponent: ProfileAppComponent
-    private lateinit var settingsAppComponent: SettingsAppComponent
 
     private lateinit var binding: ActivityAdministratorBinding
     private lateinit var navHostFragment: NavHostFragment
@@ -74,45 +71,45 @@ class AdministratorMainActivity : BasePostActivity() {
     private fun provideEmployeeAppComponent() {
         val employeesModuleDeps = object : EmployeesAppComponentDeps {
             override val currentEmployee: Employee?
-                get() = AdminDepsStore.deps.currentEmployee
+                get() = deps!!.currentEmployee
         }
-        employeesAppComponent = DaggerEmployeesAppComponent.builder()
+        viewModel.employeesAppComponent = DaggerEmployeesAppComponent.builder()
             .employeesAppComponentDeps(employeesModuleDeps).build()
         EmployeesDepsStore.deps = employeesModuleDeps
-        EmployeesDepsStore.appComponent = employeesAppComponent
+        EmployeesDepsStore.appComponent = viewModel.employeesAppComponent
     }
 
     private fun provideProfileDeps() {
         val profileModuleDeps = object : ProfileAppComponentDeps {
             override val currentEmployee: Employee?
-                get() = AdminDepsStore.deps.currentEmployee
+                get() = deps!!.currentEmployee
             override val firebaseAuth: FirebaseAuth
-                get() = AdminDepsStore.deps.firestoreAuth
+                get() = deps!!.firestoreAuth
         }
-        profileAppComponent = DaggerProfileAppComponent.builder()
+        viewModel.profileAppComponent = DaggerProfileAppComponent.builder()
             .profileAppComponentDeps(profileModuleDeps).build()
         ProfileDepsStore.deps = profileModuleDeps
-        ProfileDepsStore.appComponent = profileAppComponent
+        ProfileDepsStore.appComponent = viewModel.profileAppComponent
     }
 
     private fun provideSettingsDeps() {
         val settingsModuleDeps = object : SettingsAppComponentDeps {
             override val settings: Settings
-                get() = AdminDepsStore.deps.settings
+                get() = deps!!.settings
             override val database: Database
-                get() = AdminDepsStore.deps.database
+                get() = deps!!.database
             override val sharedPreferences: SharedPreferences
-                get() = AdminDepsStore.deps.sharedPreferences
+                get() = deps!!.sharedPreferences
             override val currentEmployee: Employee?
-                get() = AdminDepsStore.deps.currentEmployee
+                get() = deps!!.currentEmployee
             override val ordersService: OrdersService
-                get() = AdminDepsStore.deps.ordersService
+                get() = deps!!.ordersService
         }
-        settingsAppComponent =
+        viewModel.settingsAppComponent =
             DaggerSettingsAppComponent.builder()
                 .settingsAppComponentDeps(settingsModuleDeps).build()
         SettingsDepsStore.deps = settingsModuleDeps
-        SettingsDepsStore.appComponent = settingsAppComponent
+        SettingsDepsStore.appComponent = viewModel.settingsAppComponent
     }
 
     override fun setOnNavigationItemSelectedListener() {
@@ -160,11 +157,11 @@ class AdministratorMainActivity : BasePostActivity() {
 
     override fun onLeaveAccount() {
         hideNavigationUI(binding.root, binding.appBar, binding.bottomNavigation)
-        LogInDepsStore.deps = AdminDepsStore.deps as LogInDeps
+        LogInDepsStore.deps = deps as LogInDeps
         navController.setGraph(R.navigation.navigation_log_in)
     }
 
     override fun onAuthorisationEvent(employee: Employee?) {
-        AdminDepsStore.employeeAuthCallback.onAuthorisationEvent(employee)
+        AdminDepsStore.employeeAuthCallback!!.onAuthorisationEvent(employee)
     }
 }

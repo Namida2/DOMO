@@ -3,6 +3,7 @@ package com.example.featureMenuDialog.presentation.dishDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -26,7 +27,7 @@ class DishAlertDialog(
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        viewModel.orderItem = dish
+        viewModel.dish = dish
         viewModel.addingDishMode = mode
         viewModel.aldCommentary = aldCommentary
     }
@@ -34,19 +35,8 @@ class DishAlertDialog(
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireContext(), R.style.alertDialogStyle)
         initBinding()
-        builder.setView(binding!!.root)
-        viewModel.state.observe(this) {
-            when (it) {
-                is DishDialogVMStates.DishAlreadyAdded -> {
-                    requireContext().createMessageDialog(it.errorMessage!!)
-                        ?.show(parentFragmentManager, "")
-                }
-                is DishDialogVMStates.DishSuccessfulAdded -> {
-                    this.dismiss()
-                }
-                DishDialogVMStates.Default -> {} //Default state
-            }
-        }
+        builder.setView(binding.root)
+        observeViewModelStates()
         return builder.create()
     }
 
@@ -55,9 +45,27 @@ class DishAlertDialog(
         this.aldCommentary = commentary
     }
 
+    private fun observeViewModelStates() {
+        viewModel.state.observe(this) {
+            when (it) {
+                is DishDialogVMStates.OnFailure -> {
+                    requireContext().createMessageDialog(it.errorMessage)
+                        ?.show(parentFragmentManager, "")
+                }
+                is DishDialogVMStates.OnSuccess -> {
+                    this.dismiss()
+                }
+                DishDialogVMStates.Default -> {}
+            }
+        }
+    }
+
     private fun initBinding() {
         binding = DialogDishBinding.inflate(layoutInflater)
-        binding?.viewModel = viewModel
+        binding.viewModel = viewModel
+        if(mode == AddingDishMods.INSERTING)
+            binding.deleteButton.visibility = View.GONE
+        else  binding.deleteButton.visibility = View.VISIBLE
         initView(binding)
     }
 

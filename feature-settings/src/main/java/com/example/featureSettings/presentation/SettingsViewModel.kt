@@ -103,6 +103,12 @@ class SettingsViewModel(
         readMenuUseCase.readMenu(defaultMenuCollectionRef, true, simpleTask)
     }
 
+    fun saveNewMenuFromMenuBottomSheetDialog() {
+        _state.value = SettingsVMStates.InProcess
+        lastSavedMenu = MenuService.copyMenu()
+        saveMenuUseCase.saveNewMenu(actualMenuCollectionRef, taskForSavingMenu)
+    }
+
     fun onSaveSettingButtonClick(maxTablesCount: String, maxGuestsCount: String) {
         if(isEmptyField(maxTablesCount, maxGuestsCount)) return
         _state.value = SettingsVMStates.InProcess

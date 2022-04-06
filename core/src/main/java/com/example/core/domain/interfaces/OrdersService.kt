@@ -1,5 +1,6 @@
 package com.example.core.domain.interfaces
 
+import com.example.core.domain.entities.menu.Dish
 import com.example.core.domain.entities.order.Order
 import com.example.core.domain.entities.order.OrderItem
 import kotlinx.coroutines.flow.Flow
@@ -11,11 +12,12 @@ interface OrdersService {
 
     fun addOrderItem(orderItem: OrderItem): Boolean
     fun updateOrderItem(orderItem: OrderItem, aldCommentary: String): Boolean
-    fun removeOrder(order: Order)
+    fun deleteOrder(order: Order)
     fun confirmCurrentOrder()
     fun initCurrentOrder(tableId: Int, guestCount: Int)
     fun changeGuestsCount(newCount: Int)
     fun getCurrentOrderItems(): Set<OrderItem>
+    fun deleteFromCurrentOrder(dish: Dish, commentary: String): Boolean
 
     fun addOrder(newOrder: Order)
     fun addListOfOrders(orders: List<Order>)

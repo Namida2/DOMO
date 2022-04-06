@@ -12,8 +12,9 @@ import com.example.core.presentation.recyclerView.interfaces.BaseViewHolder
 import com.example.featureMenuDialog.R
 import com.example.featureMenuDialog.databinding.LayoutCategoriesContainerBinding
 
-//TODO: Add layouts
-class CategoriesAdapterDelegate :
+class CategoriesAdapterDelegate (
+    private val onCategoryClick: (position: Int) -> Unit
+) :
     BaseAdapterDelegate<LayoutCategoriesContainerBinding, CategoriesNameHolder> {
 
     override fun getViewHolder(
@@ -21,7 +22,8 @@ class CategoriesAdapterDelegate :
         parent: ViewGroup,
     ): BaseViewHolder<LayoutCategoriesContainerBinding, CategoriesNameHolder> =
         CategoriesMenuViewHolder(
-            LayoutCategoriesContainerBinding.inflate(inflater, parent, false)
+            LayoutCategoriesContainerBinding.inflate(inflater, parent, false),
+            onCategoryClick
         )
 
     override fun getLayoutId(): Int = R.layout.layout_categories_container
@@ -47,11 +49,14 @@ class CategoriesAdapterDelegate :
 
 class CategoriesMenuViewHolder(
     override val binding: LayoutCategoriesContainerBinding,
+    onCategoryClick: (position: Int) -> Unit
 ) : BaseViewHolder<LayoutCategoriesContainerBinding, CategoriesNameHolder>(binding) {
+
+    private val startPosition = 0
 
     private var itemsAdapter = BaseRecyclerViewAdapter(
         listOf(
-            CategoryRecyclerViewType()
+            CategoryRecyclerViewType(onCategoryClick)
         )
     )
 
@@ -64,6 +69,7 @@ class CategoriesMenuViewHolder(
     }
 
     override fun onBind(item: CategoriesNameHolder) {
+        binding.containerRecyclerView.scrollToPosition(startPosition)
         itemsAdapter.submitList(item.categories)
     }
 }

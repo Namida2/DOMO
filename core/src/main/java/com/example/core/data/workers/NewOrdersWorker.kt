@@ -40,8 +40,6 @@ class NewOrdersWorker(
     companion object {
         private var isFirstNotification = true
         var ordersListener: ListenerRegistration? = null
-        private val _event: MutableLiveData<ErrorMessageEvent> = MutableLiveData()
-        val event: LiveData<ErrorMessageEvent> = _event
     }
 
     override fun doWork(): Result {
@@ -51,7 +49,7 @@ class NewOrdersWorker(
             when {
                 error != null -> {
                     logE("$this: $error")
-                    ordersListener?.remove()
+//                    ordersListener?.remove()
                     ordersListener = null
                     return@addSnapshotListener
                 }
@@ -72,9 +70,7 @@ class NewOrdersWorker(
         val guestCount = (orderInfo[FIELD_GUESTS_COUNT] as? Long)?.toInt() ?: return
         readNewOrderUseCase.readNewOrder(
             Order(tableId, guestCount)
-        ) {
-            _event.value = ErrorMessageEvent(it)
-        }
+        )
 //        if (WaiterMainDepsStore.currentEmployee!!.post == COOK)
         notificationManager?.notify(
             id++, createNotification(context, data.toString())
@@ -105,7 +101,7 @@ class NewOrdersWorker(
 ////        startForeground(id++, createNotification(this, "NewOrdersService"))
 //    }
 //
-//    //TODO: Don't show the notification when it receive the fist notification
+//
 //    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 //        Toast.makeText(this, "onStartCommand", Toast.LENGTH_SHORT).show()
 //        isRunning = true

@@ -1,9 +1,8 @@
 package com.example.featureOrder.domain.di
 
-import com.example.core.domain.entities.Settings
 import com.example.core.domain.entities.Employee
+import com.example.core.domain.entities.Settings
 import com.example.core.domain.interfaces.OrdersService
-import com.example.core.domain.entities.order.OrdersServiceSub
 import com.example.featureOrder.domain.di.modules.FirebaseModule
 import com.example.featureOrder.domain.di.modules.RemoteRepositoriesModule
 import com.example.featureOrder.domain.di.modules.ServicesModule

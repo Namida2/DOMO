@@ -22,6 +22,7 @@ sealed class MenuDialogStates {
 
 class MenuDialogViewModel : ViewModel() {
 
+    private val wiveTypesBefore = 1
     private var recyclerViewItems: List<BaseRecyclerViewType>? = null
     private var _state: MutableLiveData<MenuDialogStates> = MutableLiveData()
     val state: LiveData<MenuDialogStates> = _state
@@ -55,10 +56,13 @@ class MenuDialogViewModel : ViewModel() {
     }
 
     private fun getRecyclerViewItems(): List<BaseRecyclerViewType> =
-        listOf(MenuService.getAllCategories()) +
-                MenuService.menu.map {
-                    listOf(CategoryName(it.name)) + it.dishes
+        listOf(MenuService.getAllCategories(wiveTypesBefore)) +
+                MenuService.menu.map { category ->
+                    listOf(
+                        CategoryName(category.name)
+                    ) + category.dishes
                 }.flatten().also {
                     recyclerViewItems = it
                 }
+
 }

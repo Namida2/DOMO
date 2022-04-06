@@ -136,7 +136,5 @@ class CurrentOrdersDetailFragment : Fragment() {
         isDishCompletedDialog.show(parentFragmentManager, "")
     }
 
-    private fun onDishClickByWaiter(orderItemId: OrderItem) {
-
-    }
+    private fun onDishClickByWaiter(orderItemId: OrderItem) {}
 }

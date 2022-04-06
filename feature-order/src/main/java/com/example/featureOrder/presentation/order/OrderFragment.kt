@@ -39,7 +39,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.properties.Delegates
 
-// TODO:  Remove order item from list //TODO//
 class OrderFragment : Fragment() {
 
     private var orderId = 0
@@ -174,7 +173,10 @@ class OrderFragment : Fragment() {
 
     private fun observeCurrentOrderChangesEvent() {
         viewModel.currentOrderChangedEvent.observe(viewLifecycleOwner) {
-            it.getData()?.let { adapter?.submitList(it) }
+            it.getData()?.let { newList ->
+                adapter?.submitList(newList)
+                binding.bottomAppBar.performShow()
+            }
         }
     }
 

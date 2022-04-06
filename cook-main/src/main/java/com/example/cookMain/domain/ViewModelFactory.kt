@@ -11,7 +11,7 @@ object ViewModelFactory: ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val viewModel = when(modelClass) {
             CookMainViewModel::class.java -> CookMainViewModel (
-                appComponent.provideMenVersionListener()
+                appComponent!!.provideMenVersionListener()
                     )
             else -> throw IllegalArgumentException(UNKNOWN_VIEW_MODEL_CLASS)
         }

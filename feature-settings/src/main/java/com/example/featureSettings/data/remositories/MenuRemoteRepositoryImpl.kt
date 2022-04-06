@@ -37,7 +37,7 @@ class MenuRemoteRepositoryImpl @Inject constructor() : MenuRemoteRepository {
     }
 
     private fun prepareForUpdating() {
-        var id = 0
+        var id = 1
         initialSize = 0
         deletedCategoriesCount = 0
         insertedCategoriesCount = 0

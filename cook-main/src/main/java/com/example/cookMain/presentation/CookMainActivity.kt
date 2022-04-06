@@ -12,6 +12,7 @@ import com.example.cookMain.R
 import com.example.cookMain.databinding.ActivityCookMainBinding
 import com.example.cookMain.domain.ViewModelFactory
 import com.example.cookMain.domain.di.CookMainDepsStore
+import com.example.cookMain.domain.di.CookMainDepsStore.deps
 import com.example.core.data.workers.NewOrdersItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
 import com.example.core.domain.entities.Employee
@@ -34,8 +35,10 @@ import java.util.concurrent.TimeUnit
 
 class CookMainActivity : BasePostActivity() {
 
+    // TODO: Move this to viewModel //STOPPED// 
     private lateinit var currentOrdersAppComponents: CurrentOrdersAppComponent
     private lateinit var profileAppComponent: ProfileAppComponent
+    
     private lateinit var binding: ActivityCookMainBinding
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var navController: NavController
@@ -62,9 +65,9 @@ class CookMainActivity : BasePostActivity() {
     private fun provideCurrentOrdersDeps() {
         val currentOrdersModuleDeps = object : CurrentOrdersAppComponentDeps {
             override val currentEmployee: Employee?
-                get() = CookMainDepsStore.deps.currentEmployee
+                get() = deps!!.currentEmployee
             override val ordersService: OrdersService
-                get() = CookMainDepsStore.deps.ordersService
+                get() = deps!!.ordersService
         }
         currentOrdersAppComponents = DaggerCurrentOrdersAppComponent.builder()
             .provideCurrentOrdersDeps(currentOrdersModuleDeps).build()
@@ -75,9 +78,9 @@ class CookMainActivity : BasePostActivity() {
     private fun provideProfileDeps() {
         val profileModuleDeps = object : ProfileAppComponentDeps {
             override val currentEmployee: Employee?
-                get() = CookMainDepsStore.deps.currentEmployee
+                get() = deps!!.currentEmployee
             override val firebaseAuth: FirebaseAuth
-                get() = CookMainDepsStore.deps.firebaseAuth
+                get() = deps!!.firebaseAuth
         }
         profileAppComponent = DaggerProfileAppComponent.builder()
             .profileAppComponentDeps(profileModuleDeps).build()
@@ -118,7 +121,7 @@ class CookMainActivity : BasePostActivity() {
         viewModel.newMenuVersionEvent.observe(this) {
             it.getData()?.let {
                 createMessageDialog(Messages.newMenuVersionMessage) {
-                    CookMainDepsStore.newMenuVersionCallback.onNewMenu()
+                    CookMainDepsStore.newMenuVersionCallback!!.onNewMenu()
                 }?.show(supportFragmentManager, "")
             }
         }
@@ -131,12 +134,12 @@ class CookMainActivity : BasePostActivity() {
 
     override fun onLeaveAccount() {
         hideNavigationUI(binding.root, binding.appBar, binding.bottomNavigation)
-        LogInDepsStore.deps = CookMainDepsStore.deps as LogInDeps
+        LogInDepsStore.deps = deps as LogInDeps
         navController.setGraph(R.navigation.navigation_log_in)
     }
 
     override fun onAuthorisationEvent(employee: Employee?) {
-        CookMainDepsStore.employeeAuthCallback.onAuthorisationEvent(employee)
+        CookMainDepsStore.employeeAuthCallback!!.onAuthorisationEvent(employee)
     }
 
     override fun makeWorkerRequests() {

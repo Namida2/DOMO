@@ -14,11 +14,6 @@ data class OrderItem(
     fun getOrderIemId() =
         dishId.toString() + ORDER_ITEM_ID_DELIMITER + commentary
 
-    override fun equals(other: Any?): Boolean =
-        if (other !is OrderItem) false
-        else dishId == other.dishId && commentary == other.commentary && isReady == other.isReady
-
-    override fun hashCode(): Int = "$dishId: $commentary".hashCode()
 }
 
 
