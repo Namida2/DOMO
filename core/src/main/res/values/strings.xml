@@ -2,8 +2,12 @@
     <string name="app_name">DOMO</string>
     <string name="tables">Столики</string>
     <string name="orders">Заказы</string>
+    <string name="order">Заказ %1$d</string>
+    <string name="currentOrders">Текущие заказы</string>
     <string name="profile">Профиль</string>
+    <string name="employees">Работники</string>
     <string name="messenger">Мессенджер</string>
+    <string name="settings">Настройки</string>
 
     <!--Tools-->
     <string name="networkConnectionMessage">Пожалуйста, проверьте свое интернет-соединение.</string>

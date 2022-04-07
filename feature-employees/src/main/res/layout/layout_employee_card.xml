@@ -5,7 +5,6 @@
     android:id="@+id/largeCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
     android:clickable="true"
     android:focusable="true"
     app:cardBackgroundColor="@color/black"
@@ -18,7 +17,6 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/innerCard"
-            android:layout_margin="-10dp"
             android:clickable="true"
             android:focusable="true"
             android:layout_width="match_parent"

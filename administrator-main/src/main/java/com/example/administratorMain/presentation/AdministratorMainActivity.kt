@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
@@ -14,31 +15,30 @@ import com.example.administratorMain.databinding.ActivityAdministratorBinding
 import com.example.administratorMain.domatn.di.AdminDepsStore
 import com.example.administratorMain.domatn.di.AdminDepsStore.deps
 import com.example.core.data.database.Database
-import com.example.core.data.workers.NewOrdersItemStatusWorker
+import com.example.core.data.workers.NewOrderItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.Settings
 import com.example.core.domain.interfaces.BasePostActivity
 import com.example.core.domain.interfaces.OrdersService
 import com.example.featureEmployees.domain.di.DaggerEmployeesAppComponent
-import com.example.featureEmployees.domain.di.EmployeesAppComponent
 import com.example.featureEmployees.domain.di.EmployeesAppComponentDeps
 import com.example.featureEmployees.domain.di.EmployeesDepsStore
 import com.example.featureLogIn.domain.di.LogInDeps
 import com.example.featureLogIn.domain.di.LogInDepsStore
 import com.example.featureProfile.domain.di.DaggerProfileAppComponent
-import com.example.featureProfile.domain.di.ProfileAppComponent
 import com.example.featureProfile.domain.di.ProfileAppComponentDeps
 import com.example.featureProfile.domain.di.ProfileDepsStore
+import com.example.featureRegistration.presentation.RegistrationFragment
 import com.example.featureSettings.domain.di.DaggerSettingsAppComponent
-import com.example.featureSettings.domain.di.SettingsAppComponent
 import com.example.featureSettings.domain.di.SettingsAppComponentDeps
 import com.example.featureSettings.domain.di.SettingsDepsStore
 import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
 
-class AdministratorMainActivity : BasePostActivity() {
+class AdministratorMainActivity : BasePostActivity(), NavController.OnDestinationChangedListener {
 
+    private val currentDestination = 0
     private lateinit var binding: ActivityAdministratorBinding
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var navController: NavController
@@ -52,14 +52,24 @@ class AdministratorMainActivity : BasePostActivity() {
     }
 
     private fun initialise() {
-        binding = ActivityAdministratorBinding.inflate(layoutInflater)
+        initBinding()
         navHostFragment =
             supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
-        navController = navHostFragment.navController
+        navController = navHostFragment.navController.apply {
+            addOnDestinationChangedListener(this@AdministratorMainActivity)
+        }
         showNavigationUI(binding.root, binding.appBar, binding.bottomNavigation)
         makeWorkerRequests()
         setOnNavigationItemSelectedListener()
         setContentView(binding.root)
+    }
+
+    private fun initBinding() {
+        binding = ActivityAdministratorBinding.inflate(layoutInflater).also {
+            it.toolbar.setNavigationOnClickListener {
+                onBackPressed()
+            }
+        }
     }
 
     private fun provideDeps() {
@@ -112,9 +122,30 @@ class AdministratorMainActivity : BasePostActivity() {
         SettingsDepsStore.appComponent = viewModel.settingsAppComponent
     }
 
+    override fun onDestinationChanged(
+        controller: NavController,
+        destination: NavDestination,
+        arguments: Bundle?,
+    ) {
+        when (destination.id) {
+            R.id.employeesFragment -> {
+                binding.title.text = resources.getString(R.string.employees)
+            }
+            R.id.settingsFragment -> {
+                binding.title.text = resources.getString(R.string.settings)
+            }
+            R.id.profileFragment -> {
+                binding.title.text = resources.getString(R.string.profile)
+            }
+        }
+        binding.bottomNavigation.selectedItemId = destination.id
+        showNavigationUI(binding.root, binding.appBar, binding.bottomNavigation)
+    }
+
     override fun setOnNavigationItemSelectedListener() {
         binding.bottomNavigation.setOnItemSelectedListener {
-            val currentFragment = navHostFragment.parentFragmentManager.fragments[0]
+            if(navController.currentDestination?.id == it.itemId)
+                return@setOnItemSelectedListener true
             when (it.itemId) {
                 R.id.employeesFragment -> {
                     navController.navigate(R.id.employeesFragment)
@@ -128,9 +159,7 @@ class AdministratorMainActivity : BasePostActivity() {
                     navController.navigate(R.id.profileFragment)
                     true
                 }
-                else -> {
-                    false
-                }
+                else -> { false }
             }
         }
     }
@@ -142,7 +171,7 @@ class AdministratorMainActivity : BasePostActivity() {
                 TimeUnit.MINUTES
             ).build()
         val newOrderItemsStateRequest: WorkRequest =
-            PeriodicWorkRequestBuilder<NewOrdersItemStatusWorker>(
+            PeriodicWorkRequestBuilder<NewOrderItemStatusWorker>(
                 PeriodicWorkRequest.MIN_PERIODIC_FLEX_MILLIS,
                 TimeUnit.MINUTES
             ).build()
@@ -151,6 +180,10 @@ class AdministratorMainActivity : BasePostActivity() {
     }
 
     override fun onBackPressed() {
+        if (navHostFragment.childFragmentManager.fragments[currentDestination] is RegistrationFragment) {
+            super.onBackPressed()
+            return
+        }
         showNavigationUI(binding.root, binding.appBar, binding.bottomNavigation)
         super.onBackPressed()
     }
@@ -162,6 +195,7 @@ class AdministratorMainActivity : BasePostActivity() {
     }
 
     override fun onAuthorisationEvent(employee: Employee?) {
-        AdminDepsStore.employeeAuthCallback!!.onAuthorisationEvent(employee)
+        AdminDepsStore.employeeAuthCallback?.onAuthorisationEvent(employee)
+        viewModelStore.clear()
     }
 }

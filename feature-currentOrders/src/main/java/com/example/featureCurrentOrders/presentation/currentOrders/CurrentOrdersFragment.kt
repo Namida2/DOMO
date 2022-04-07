@@ -11,12 +11,16 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.domain.entities.order.Order
+import com.example.core.domain.entities.tools.constants.EmployeePosts
+import com.example.core.domain.entities.tools.extensions.showIfNotAdded
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
 import com.example.core.presentation.recyclerView.itemDecorations.SimpleListItemDecoration
 import com.example.featureCurrentOrders.R
 import com.example.featureCurrentOrders.databinding.FragmentCurrentOrdersBinding
 import com.example.featureCurrentOrders.domain.ViewModelFactory
 import com.example.featureCurrentOrders.domain.adapters.OrdersAdapterDelegate
+import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore.deps
+import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore.onShowOrderDetailCallback
 import com.example.featureCurrentOrders.presentation.completedOrderMenu.CompletedOrderDialogCallback
 import com.example.featureCurrentOrders.presentation.completedOrderMenu.CompletedOrderMenuDialog
 import com.google.android.material.transition.platform.MaterialSharedAxis
@@ -97,16 +101,17 @@ class CurrentOrdersFragment : Fragment() {
     private fun observeOnOrderSelectedEvent() {
         viewModel.onOrderSelectedEvent.observe(viewLifecycleOwner) {
             val orderInfo = it.getData() ?: return@observe
-            if (orderInfo.isCompleted) {
+            if (orderInfo.isCompleted && deps.currentEmployee?.post == EmployeePosts.WAITER.value) {
                 if (!completedOrderDialog.isAdded) {
                     completedOrderDialog.order = orderInfo.order
-                    completedOrderDialog.show(parentFragmentManager, "")
+                    completedOrderDialog.showIfNotAdded(parentFragmentManager, "")
                 }
             } else showDetail(orderInfo.order.orderId)
         }
     }
 
     private fun showDetail(orderId: Int) {
+        onShowOrderDetailCallback.onShowDetail(orderId)
         val destination = CurrentOrdersFragmentDirections
             .actionCurrentOrdersFragmentToCurrentOrdersDetailFragment(orderId)
         findNavController().navigate(destination)

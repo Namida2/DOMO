@@ -8,19 +8,24 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.example.core.domain.entities.Employee
+import com.example.core.domain.entities.tools.extensions.showIfNotAdded
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
+import com.example.core.presentation.recyclerView.itemDecorations.SimpleListItemDecoration
 import com.example.featureEmployees.R
 import com.example.featureEmployees.databinding.FragmentEmployeesBinding
 import com.example.featureEmployees.domain.ViewModelFactory
 import com.example.featureEmployees.presentation.dialogs.EmployeeDetailDialog
 import com.example.featureEmployees.presentation.recyclerView.EmployeesAdapterDelegate
 import com.google.android.material.transition.platform.MaterialSharedAxis
+import kotlin.properties.Delegates
 
-//TODO: Store appComponents in Activities
-//TODO: Save new Settings //STOPPED//
 class EmployeesFragment: Fragment() {
 
+    private var smallMargin by Delegates.notNull<Int>()
+    private var largeMargin by Delegates.notNull<Int>()
+    private var topMargin by Delegates.notNull<Int>()
     private lateinit var binding: FragmentEmployeesBinding
     private val viewModel by viewModels<EmployeesViewModel> { ViewModelFactory }
     private val employeeDetailDialog: EmployeeDetailDialog = EmployeeDetailDialog()
@@ -32,6 +37,9 @@ class EmployeesFragment: Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
+        largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
+        topMargin = resources.getDimensionPixelSize(R.dimen.top_tables_margin)
         viewModel.readEmployees()
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
             duration = resources.getInteger(R.integer.transitionAnimationDuration).toLong()
@@ -58,27 +66,19 @@ class EmployeesFragment: Fragment() {
             employeesRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             employeesRecyclerView.adapter = adapter
+            employeesRecyclerView.addItemDecoration(SimpleListItemDecoration(
+                topMargin, largeMargin, smallMargin
+            ))
         }
     }
 
     private fun observeViewModelStates() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
-                is EmployeesVMStates.ReadingData -> {
-
-                }
-                is EmployeesVMStates.ReadingFailed -> {
-
-                }
-                is EmployeesVMStates.EmptyEmployeesList -> {
-
-                }
-                is EmployeesVMStates.ReadingWasSuccessful -> {
-
-                }
-                is EmployeesVMStates.Default -> {
-
-                }
+                is EmployeesVMStates.ReadingData -> {}
+                is EmployeesVMStates.ReadingFailed -> {}
+                is EmployeesVMStates.ReadingWasSuccessful -> {}
+                is EmployeesVMStates.Default -> {}
             }
         }
     }
@@ -91,6 +91,6 @@ class EmployeesFragment: Fragment() {
 
     private fun onEmployeeSelected(employee: Employee) {
         employeeDetailDialog.employee = employee
-        employeeDetailDialog.show(parentFragmentManager, "")
+        employeeDetailDialog.showIfNotAdded(parentFragmentManager, "")
     }
 }

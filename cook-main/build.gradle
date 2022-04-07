@@ -51,6 +51,7 @@ dependencies {
     implementation (Navigation.navigationFeaturesSupport)
 
     implementation (Dagger.dagger)
+    implementation project(path: ':feature-registration')
     kapt (Dagger.compiler)
 
     implementation (Fragment.fragmentKtx)

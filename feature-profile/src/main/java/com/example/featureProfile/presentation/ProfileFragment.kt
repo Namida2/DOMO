@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.core.data.workers.NewOrderItemStatusWorker
+import com.example.core.data.workers.NewOrdersWorker
 import com.example.core.domain.entities.tools.constants.Messages.checkNetworkConnectionMessage
 import com.example.core.domain.entities.tools.constants.OtherStringConstants.ACTIVITY_IS_NOT_LEAVE_ACCOUNT_CALLBACK
 import com.example.core.domain.entities.tools.dialogs.ClosedQuestionDialog
@@ -15,14 +17,15 @@ import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.entities.tools.extensions.dismissIfAdded
 import com.example.core.domain.entities.tools.extensions.isNetworkConnected
+import com.example.core.domain.entities.tools.extensions.showIfNotAdded
+import com.example.core.domain.interfaces.LeaveAccountCallback
 import com.example.featureProfile.R
 import com.example.featureProfile.databinding.FragmentProfileBinding
 import com.example.featureProfile.domain.ViewModelFactory
 import com.example.featureProfile.domain.di.ProfileDepsStore
-import com.example.core.domain.interfaces.LeaveAccountCallback
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
-class ProfileFragment: Fragment() {
+class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
     private lateinit var leaveAccountCallback: LeaveAccountCallback
@@ -61,24 +64,39 @@ class ProfileFragment: Fragment() {
 
     private fun initBinding() {
         val currentEmployee = ProfileDepsStore.deps.currentEmployee
+        val switchState =
+            NewOrdersWorker.needToShowNotifications || NewOrderItemStatusWorker.needToShowNotifications
         with(binding) {
             layoutProfile.employeeName.text = currentEmployee?.name
             layoutProfile.employeeEmail.text = currentEmployee?.email
             layoutProfile.employeePost.text = currentEmployee?.post
             leaveAccountButton.setOnClickListener {
-                if (requireContext().isNetworkConnected()) {
-                    closedQuestionDialog.show(parentFragmentManager, "")
-                } else requireContext().createMessageDialog(checkNetworkConnectionMessage)
-                    ?.show(parentFragmentManager, "")
+                onLeaveAccount()
+            }
+            notificationsSwitch.isChecked = switchState
+            notificationsSwitch.setOnCheckedChangeListener { _, isChecked ->
+                onSwitchStateChanged(isChecked)
             }
         }
+    }
+
+    private fun onSwitchStateChanged(isChecked: Boolean) {
+        NewOrdersWorker.needToShowNotifications = isChecked
+        NewOrderItemStatusWorker.needToShowNotifications = isChecked
+    }
+
+    private fun onLeaveAccount() {
+        if (requireContext().isNetworkConnected()) {
+            closedQuestionDialog.showIfNotAdded(parentFragmentManager, "")
+        } else requireContext().createMessageDialog(checkNetworkConnectionMessage)
+            ?.show(parentFragmentManager, "")
     }
 
     private fun observeViewModelStates() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is ProfileViewModelStates.TryingToLogOut ->
-                    ProcessAlertDialog.show(parentFragmentManager, "")
+                    ProcessAlertDialog.showIfNotAdded(parentFragmentManager, "")
                 is ProfileViewModelStates.LogOutFailed -> {
                     ProcessAlertDialog.dismissIfAdded()
                     requireContext().createMessageDialog(it.errorMessage)

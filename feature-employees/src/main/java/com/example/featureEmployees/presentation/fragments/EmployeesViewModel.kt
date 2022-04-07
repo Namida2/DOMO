@@ -20,7 +20,6 @@ typealias NewEmployeesEvent = Event<List<Employee>>
 sealed class EmployeesVMStates {
     object Default : EmployeesVMStates()
     object ReadingData : EmployeesVMStates()
-    object EmptyEmployeesList : EmployeesVMStates()
     object ReadingWasSuccessful : EmployeesVMStates()
     class ReadingFailed(val errorMessage: ErrorMessage) : EmployeesVMStates()
 }

@@ -1,19 +1,22 @@
 package com.example.cookMain.presentation
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequest.MIN_PERIODIC_FLEX_MILLIS
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import androidx.work.WorkRequest
 import com.example.cookMain.R
 import com.example.cookMain.databinding.ActivityCookMainBinding
 import com.example.cookMain.domain.ViewModelFactory
 import com.example.cookMain.domain.di.CookMainDepsStore
 import com.example.cookMain.domain.di.CookMainDepsStore.deps
-import com.example.core.data.workers.NewOrdersItemStatusWorker
+import com.example.core.data.workers.NewOrderItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.tools.constants.Messages
@@ -24,21 +27,20 @@ import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
 import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponent
 import com.example.featureCurrentOrders.domain.di.CurrentOrdersAppComponentDeps
 import com.example.featureCurrentOrders.domain.di.DaggerCurrentOrdersAppComponent
+import com.example.featureCurrentOrders.domain.interfaces.OnShowOrderDetailCallback
 import com.example.featureLogIn.domain.di.LogInDeps
 import com.example.featureLogIn.domain.di.LogInDepsStore
 import com.example.featureProfile.domain.di.DaggerProfileAppComponent
 import com.example.featureProfile.domain.di.ProfileAppComponent
 import com.example.featureProfile.domain.di.ProfileAppComponentDeps
 import com.example.featureProfile.domain.di.ProfileDepsStore
+import com.example.featureRegistration.presentation.RegistrationFragment
 import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
 
-class CookMainActivity : BasePostActivity() {
+class CookMainActivity : BasePostActivity(), NavController.OnDestinationChangedListener, OnShowOrderDetailCallback {
 
-    // TODO: Move this to viewModel //STOPPED// 
-    private lateinit var currentOrdersAppComponents: CurrentOrdersAppComponent
-    private lateinit var profileAppComponent: ProfileAppComponent
-    
+    private val currentDestination = 0
     private lateinit var binding: ActivityCookMainBinding
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var navController: NavController
@@ -47,14 +49,24 @@ class CookMainActivity : BasePostActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         provideDeps()
-        binding = ActivityCookMainBinding.inflate(layoutInflater)
+        initBinding()
         setContentView(binding.root)
         navHostFragment =
             supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
-        navController = navHostFragment.navController
+        navController = navHostFragment.navController.apply {
+            addOnDestinationChangedListener(this@CookMainActivity)
+        }
         showNavigationUI(binding.root, binding.appBar, binding.bottomNavigation)
         makeWorkerRequests()
         setOnNavigationItemSelectedListener()
+    }
+
+    private fun initBinding() {
+        binding = ActivityCookMainBinding.inflate(layoutInflater).also {
+            it.toolbar.setNavigationOnClickListener {
+                onBackPressed()
+            }
+        }
     }
 
     private fun provideDeps() {
@@ -69,10 +81,11 @@ class CookMainActivity : BasePostActivity() {
             override val ordersService: OrdersService
                 get() = deps!!.ordersService
         }
-        currentOrdersAppComponents = DaggerCurrentOrdersAppComponent.builder()
+        viewModel.currentOrdersAppComponents = DaggerCurrentOrdersAppComponent.builder()
             .provideCurrentOrdersDeps(currentOrdersModuleDeps).build()
         CurrentOrderDepsStore.deps = currentOrdersModuleDeps
-        CurrentOrderDepsStore.appComponent = currentOrdersAppComponents
+        CurrentOrderDepsStore.appComponent = viewModel.currentOrdersAppComponents
+        CurrentOrderDepsStore.onShowOrderDetailCallback = this
     }
 
     private fun provideProfileDeps() {
@@ -82,15 +95,33 @@ class CookMainActivity : BasePostActivity() {
             override val firebaseAuth: FirebaseAuth
                 get() = deps!!.firebaseAuth
         }
-        profileAppComponent = DaggerProfileAppComponent.builder()
+        viewModel.profileAppComponent = DaggerProfileAppComponent.builder()
             .profileAppComponentDeps(profileModuleDeps).build()
         ProfileDepsStore.deps = profileModuleDeps
-        ProfileDepsStore.appComponent = profileAppComponent
+        ProfileDepsStore.appComponent = viewModel.profileAppComponent
+    }
+
+    override fun onDestinationChanged(
+        controller: NavController,
+        destination: NavDestination,
+        arguments: Bundle?,
+    ) {
+        when (destination.id) {
+            R.id.currentOrdersFragment -> {
+                binding.title.text = resources.getString(R.string.currentOrders)
+            }
+            R.id.profileFragment -> {
+                binding.title.text = resources.getString(R.string.profile)
+            }
+        }
+        binding.bottomNavigation.selectedItemId = destination.id
+        showNavigationUI(binding.root, binding.appBar, binding.bottomNavigation)
     }
 
     override fun setOnNavigationItemSelectedListener() {
         binding.bottomNavigation.setOnItemSelectedListener {
-            val currentFragment = navHostFragment.parentFragmentManager.fragments[0]
+            if (navController.currentDestination?.id == it.itemId)
+                return@setOnItemSelectedListener true
             when (it.itemId) {
                 R.id.currentOrdersFragment -> {
                     navController.navigate(R.id.navigation_current_orders)
@@ -100,9 +131,7 @@ class CookMainActivity : BasePostActivity() {
                     navController.navigate(R.id.profileFragment)
                     true
                 }
-                else -> {
-                    false
-                }
+                else -> { false }
             }
         }
     }
@@ -121,13 +150,18 @@ class CookMainActivity : BasePostActivity() {
         viewModel.newMenuVersionEvent.observe(this) {
             it.getData()?.let {
                 createMessageDialog(Messages.newMenuVersionMessage) {
-                    CookMainDepsStore.newMenuVersionCallback!!.onNewMenu()
+                    CookMainDepsStore.newMenuVersionCallback?.onNewMenu()
+                    viewModelStore.clear()
                 }?.show(supportFragmentManager, "")
             }
         }
     }
 
     override fun onBackPressed() {
+        if (navHostFragment.childFragmentManager.fragments[currentDestination] is RegistrationFragment) {
+            super.onBackPressed()
+            return
+        }
         showNavigationUI(binding.root, binding.appBar, binding.bottomNavigation)
         super.onBackPressed()
     }
@@ -139,21 +173,46 @@ class CookMainActivity : BasePostActivity() {
     }
 
     override fun onAuthorisationEvent(employee: Employee?) {
-        CookMainDepsStore.employeeAuthCallback!!.onAuthorisationEvent(employee)
+        CookMainDepsStore.employeeAuthCallback?.onAuthorisationEvent(employee)
+        viewModelStore.clear()
     }
 
     override fun makeWorkerRequests() {
-        val newOrdersWorkRequest: WorkRequest =
+        val newOrdersWorkRequest: PeriodicWorkRequest =
             PeriodicWorkRequestBuilder<NewOrdersWorker>(
                 MIN_PERIODIC_FLEX_MILLIS,
                 TimeUnit.MINUTES
             ).build()
-        val newOrderItemsStateRequest: WorkRequest =
-            PeriodicWorkRequestBuilder<NewOrdersItemStatusWorker>(
+        val newOrderItemsStateRequest: PeriodicWorkRequest =
+            PeriodicWorkRequestBuilder<NewOrderItemStatusWorker>(
                 MIN_PERIODIC_FLEX_MILLIS,
                 TimeUnit.MINUTES
             ).build()
-        WorkManager.getInstance(this).enqueue(newOrdersWorkRequest)
-        WorkManager.getInstance(this).enqueue(newOrderItemsStateRequest)
+        WorkManager.getInstance(this).also {
+            it.enqueueUniquePeriodicWork(
+                NewOrdersWorker.NEW_ORDERS_WORKER_TAG,
+                ExistingPeriodicWorkPolicy.REPLACE,
+                newOrdersWorkRequest
+            )
+            it.enqueueUniquePeriodicWork(
+                NewOrderItemStatusWorker.NEW_ORDER_ITEM_STATUS_WORKER_TAG,
+                ExistingPeriodicWorkPolicy.REPLACE,
+                newOrderItemsStateRequest
+            )
+        }
     }
+
+    override fun onDestroy() {
+        if (!NewOrdersWorker.needToShowNotifications || !NewOrderItemStatusWorker.needToShowNotifications)
+            WorkManager.getInstance(this).also {
+                it.cancelAllWork()
+            }
+        else makeWorkerRequests()
+        super.onDestroy()
+    }
+
+    override fun onShowDetail(orderId: Int) {
+        binding.title.text = resources.getString(R.string.order, orderId)
+    }
+
 }

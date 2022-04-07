@@ -67,19 +67,25 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback, NewMenuV
                             CookMainDepsStore.deps = SplashScreenDepsStore.appComponent
                             CookMainDepsStore.employeeAuthCallback = this
                             CookMainDepsStore.newMenuVersionCallback = this
-                            startActivity(Intent(this, CookMainActivity::class.java))
+                            startActivity(Intent(this, CookMainActivity::class.java).also {
+                                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            })
                         }
                         WAITER.value -> {
                             WaiterMainDepsStore.deps = SplashScreenDepsStore.appComponent
                             WaiterMainDepsStore.profileDeps = SplashScreenDepsStore.appComponent
                             WaiterMainDepsStore.employeeAuthCallback = this
                             WaiterMainDepsStore.newMenuVersionCallback = this
-                            startActivity(Intent(this, WaiterMainActivity::class.java))
+                            startActivity(Intent(this, WaiterMainActivity::class.java).also {
+                                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            })
                         }
                         ADMINISTRATOR.value -> {
                             AdminDepsStore.deps = SplashScreenDepsStore.appComponent
                             AdminDepsStore.employeeAuthCallback = this
-                            startActivity(Intent(this, AdministratorMainActivity::class.java))
+                            startActivity(Intent(this, AdministratorMainActivity::class.java).also {
+                                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            })
                         }
                     }
                 }
@@ -107,11 +113,15 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback, NewMenuV
 
     override fun onAuthorisationEvent(employee: Employee?) {
         employee?.let { setNewEmployeeData(it) }
-        startActivity(Intent(this, SplashScreenActivity::class.java))
+        startActivity(Intent(this, SplashScreenActivity::class.java).also {
+            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        })
     }
 
     override fun onNewMenu() {
-        startActivity(Intent(this, SplashScreenActivity::class.java))
+        startActivity(Intent(this, SplashScreenActivity::class.java).also {
+            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        })
     }
 }
 

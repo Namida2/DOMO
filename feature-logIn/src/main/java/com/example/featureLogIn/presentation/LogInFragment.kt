@@ -69,7 +69,8 @@ class LogInFragment : Fragment() {
             override val firebaseAuth: FirebaseAuth
                 get() = LogInDepsStore.deps.firebaseAuth
         }
-        findNavController().navigate(R.id.action_logInFragment_to_registrationFragment)
+        if(findNavController().currentDestination?.id == R.id.logInFragment)
+            findNavController().navigate(R.id.action_logInFragment_to_registrationFragment)
     }
 
     private fun observeViewModelStates() {

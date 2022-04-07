@@ -31,9 +31,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/montserrat_semi_bold"
-                    android:text="Registration"
+                    android:text="Регитсрация"
                     android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.AppBarLayout>
 

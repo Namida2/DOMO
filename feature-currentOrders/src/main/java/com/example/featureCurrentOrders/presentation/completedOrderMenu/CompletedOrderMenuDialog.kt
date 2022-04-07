@@ -57,6 +57,7 @@ class CompletedOrderMenuDialog(
                 }
                 is CompletedOrderVMStates.OrderDeleted -> {
                     ProcessAlertDialog.onSuccess()
+                    dismiss()
                 }
                 is CompletedOrderVMStates.OnOrderDeletingFailure -> {
                     ProcessAlertDialog.dismiss()

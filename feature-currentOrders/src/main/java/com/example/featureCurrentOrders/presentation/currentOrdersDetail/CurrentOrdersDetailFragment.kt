@@ -18,6 +18,7 @@ import com.example.core.domain.entities.tools.dialogs.ClosedQuestionDialog
 import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.entities.tools.extensions.dismissIfAdded
+import com.example.core.domain.entities.tools.extensions.showIfNotAdded
 import com.example.core.presentation.recyclerView.adapterDelegates.OrderItemsAdapterDelegate
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
 import com.example.core.presentation.recyclerView.itemDecorations.SimpleListItemDecoration
@@ -73,7 +74,7 @@ class CurrentOrdersDetailFragment : Fragment() {
         cookViewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is CookCurrentOrderDetailVMStates.UpdatingData -> {
-                    ProcessAlertDialog.show(parentFragmentManager, "")
+                    ProcessAlertDialog.showIfNotAdded(parentFragmentManager, "")
                 }
                 is CookCurrentOrderDetailVMStates.OnUpdatingFailure -> {
                     ProcessAlertDialog.dismissIfAdded()
@@ -83,9 +84,10 @@ class CurrentOrdersDetailFragment : Fragment() {
                 is CookCurrentOrderDetailVMStates.OnUpdatingSuccess -> {
                     ProcessAlertDialog.onSuccess()
                 }
-                is CookCurrentOrderDetailVMStates.Default -> {}
+                is CookCurrentOrderDetailVMStates.Default -> {
+                    ProcessAlertDialog.dismissIfAdded()
+                }
             }
-
         }
     }
 
@@ -133,7 +135,7 @@ class CurrentOrdersDetailFragment : Fragment() {
     private fun onDishClickByCook(orderItem: OrderItem) {
         if (isDishCompletedDialog.isAdded) return
         isDishCompletedDialog.arg = orderItem
-        isDishCompletedDialog.show(parentFragmentManager, "")
+        isDishCompletedDialog.showIfNotAdded(parentFragmentManager, "")
     }
 
     private fun onDishClickByWaiter(orderItemId: OrderItem) {}

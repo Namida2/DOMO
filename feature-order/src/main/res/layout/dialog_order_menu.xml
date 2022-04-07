@@ -38,23 +38,9 @@
         android:drawableTint="@color/white"
         android:gravity="left|center"
         android:paddingStart="24dp"
+        android:layout_marginBottom="24dp"
         android:text="Сменить количество гостей"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@+id/line" />
 
-    <Button
-        android:id="@+id/goToNewTableButton"
-        style="@style/buttonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="32dp"
-        android:drawableEnd="@drawable/ic_arrow_right"
-        android:drawableTint="@color/white"
-        android:gravity="left|center"
-        android:paddingStart="24dp"
-        android:text="Перенести на другой столик"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@+id/line"
-        tools:layout_editor_absoluteX="16dp" />
 </LinearLayout>

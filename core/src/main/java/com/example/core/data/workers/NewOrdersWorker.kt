@@ -5,8 +5,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.work.*
 import androidx.work.PeriodicWorkRequest.MIN_PERIODIC_FLEX_MILLIS
 import com.example.core.domain.di.CoreDepsStore
@@ -38,19 +36,23 @@ class NewOrdersWorker(
         CoreDepsStore.appComponent.provideReadNewOrderUseCase()
 
     companion object {
+        const val NEW_ORDERS_WORKER_TAG = "NEW_ORDERS_WORKER_TAG"
+        var needToShowNotifications = true
         private var isFirstNotification = true
         var ordersListener: ListenerRegistration? = null
     }
 
     override fun doWork(): Result {
+        if (isStopped) return Result.success()
         if (ordersListener != null) return Result.retry()
         notificationManager = createNotificationChannel(context)
         ordersListener = newOrdersListenerDocumentRef.addSnapshotListener { snapshot, error ->
             when {
                 error != null -> {
                     logE("$this: $error")
-//                    ordersListener?.remove()
+                    ordersListener?.remove()
                     ordersListener = null
+                    isFirstNotification = true
                     return@addSnapshotListener
                 }
                 snapshot != null && snapshot.exists() && snapshot.data != null -> {
@@ -72,9 +74,10 @@ class NewOrdersWorker(
             Order(tableId, guestCount)
         )
 //        if (WaiterMainDepsStore.currentEmployee!!.post == COOK)
-        notificationManager?.notify(
-            id++, createNotification(context, data.toString())
-        )
+        if (needToShowNotifications)
+            notificationManager?.notify(
+                id++, createNotification(context, data.toString())
+            )
     }
 }
 

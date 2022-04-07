@@ -15,6 +15,7 @@ import com.example.core.domain.entities.tools.extensions.Animations.prepareSlide
 import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideUp
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.entities.tools.extensions.dismissIfAdded
+import com.example.core.domain.entities.tools.extensions.showIfNotAdded
 import com.example.core.domain.interfaces.OrdersService
 import com.example.featureMenuDialog.domain.MenuDialogDeps
 import com.example.featureMenuDialog.domain.MenuDialogDepsStore
@@ -26,7 +27,7 @@ import com.example.featureSettings.domain.di.SettingsDepsStore
 import com.example.featureSettings.domain.di.SettingsDepsStore.deps
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
-// TODO: Work with menu in foreground service //STOPPED//
+// TODO: Work with menu in foreground service and debug //STOPPED//
 class SettingsFragment : Fragment() {
 
     private lateinit var binding: FragmentSettingsBinding
@@ -71,7 +72,7 @@ class SettingsFragment : Fragment() {
                 MenuBottomSheetDialog(
                     this@SettingsFragment.viewModel,
                     this@SettingsFragment.viewModel::saveNewMenuFromMenuBottomSheetDialog
-                ).show(parentFragmentManager, "")
+                ).showIfNotAdded(parentFragmentManager, "")
             }
             maxTablesCount.setText(deps.settings.tablesCount.toString())
             maxGuestsCount.setText(deps.settings.guestsCount.toString())
@@ -113,7 +114,7 @@ class SettingsFragment : Fragment() {
     private fun observeOnMenuDialogDismissEvent() {
         viewModel.onMenuDialogDismissEvent.observe(viewLifecycleOwner) {
             it.getData() ?: return@observe
-            closedQuestionDialog.show(parentFragmentManager, "")
+            closedQuestionDialog.showIfNotAdded(parentFragmentManager, "")
         }
     }
 
@@ -121,7 +122,7 @@ class SettingsFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is SettingsVMStates.InProcess ->
-                    ProcessAlertDialog.show(parentFragmentManager, "")
+                    ProcessAlertDialog.showIfNotAdded(parentFragmentManager, "")
                 is SettingsVMStates.OnFailure -> {
                     ProcessAlertDialog.dismissIfAdded()
                     requireContext().createMessageDialog(it.message)

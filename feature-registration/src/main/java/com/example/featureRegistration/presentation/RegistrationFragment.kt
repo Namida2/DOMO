@@ -58,20 +58,12 @@ class RegistrationFragment : Fragment() {
 
     private fun initBindings(inflater: LayoutInflater) {
         binding = FragmentRegistrationBinding.inflate(inflater)
-
         with(binding.postsRecyclerView) {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-            adapter = viewModel.getPostItems().let {
-                PostItemsAdapter(it) { post ->
-                    viewModel.selectedPost = post
-                }
+            adapter = PostItemsAdapter(viewModel.getPostItems()) { post ->
+                viewModel.selectedPost = post
             }
-            addItemDecoration(
-                PostItemDecoration(
-                    smallMargin!!,
-                    largeMargin!!
-                )
-            )
+            addItemDecoration(PostItemDecoration(smallMargin!!, largeMargin!!))
         }
         binding.registrationButton.setOnClickListener {
             if (requireContext().isNetworkConnected())
@@ -90,6 +82,9 @@ class RegistrationFragment : Fragment() {
                     R.string.networkConnectionMessage
                 )
             )?.show(parentFragmentManager, "")
+        }
+        binding.toolbar.setOnClickListener {
+            requireActivity().onBackPressed()
         }
     }
 

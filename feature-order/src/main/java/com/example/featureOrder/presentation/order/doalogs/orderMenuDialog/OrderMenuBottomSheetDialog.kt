@@ -19,6 +19,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class OrderMenuBottomSheetDialog(
     private val onDismissListener: OnDismissListener,
+    private val onChangeGuestCount: () -> Unit
 ) : BottomSheetDialogFragment() {
 
     private var binding: DialogOrderMenuBinding? = null
@@ -46,6 +47,10 @@ class OrderMenuBottomSheetDialog(
                 if (requireContext().isNetworkConnected()) {
                     viewModel.onConfirmOrderButtonClick(acceptOrderButton)
                 } else requireContext().createMessageDialog(checkNetworkConnectionMessage)
+            }
+            changeGuestCountButton.setOnClickListener {
+                onChangeGuestCount.invoke()
+                dismiss()
             }
         }
     }

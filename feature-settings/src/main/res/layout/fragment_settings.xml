@@ -25,7 +25,7 @@
                 android:layout_marginTop="68dp"
                 android:layout_marginEnd="8dp"
                 app:cardCornerRadius="24dp"
-                app:cardElevation="8dp">
+                app:cardElevation="4dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -128,7 +128,7 @@
                 android:focusable="true"
                 android:id="@+id/editMenuCard"
                 app:cardCornerRadius="24dp"
-                app:cardElevation="8dp">
+                app:cardElevation="4dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -175,7 +175,7 @@
                 android:focusable="true"
                 android:id="@+id/loadDefaultMenuCard"
                 app:cardCornerRadius="24dp"
-                app:cardElevation="8dp">
+                app:cardElevation="4dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -225,7 +225,7 @@
                 android:onClick="@{view ->  viewModel.saveCurrentMeuAsDefault()}"
                 android:id="@+id/save_current_menu_as_default_button"
                 app:cardCornerRadius="24dp"
-                app:cardElevation="8dp">
+                app:cardElevation="4dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

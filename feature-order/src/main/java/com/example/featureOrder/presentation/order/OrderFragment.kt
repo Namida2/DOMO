@@ -64,7 +64,7 @@ class OrderFragment : Fragment() {
         largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
         topMargin = resources.getDimensionPixelSize(R.dimen.top_tables_margin)
         //TODO: Add a delegate for viewModels
-        //TODO: Subscribe on orders changes
+        //TODO: Subscribe on order status changes
         adapter = BaseRecyclerViewAdapter(
             listOf(
                 OrderItemsAdapterDelegate(
@@ -94,7 +94,9 @@ class OrderFragment : Fragment() {
     }
 
     private fun initDialogs() {
-        orderMenuDialog = OrderMenuBottomSheetDialog(viewModel)
+        orderMenuDialog = OrderMenuBottomSheetDialog(viewModel) {
+            guestCountDialog?.show(parentFragmentManager, "")
+        }
         guestCountDialog = GuestsCountBottomSheetDialog {
             binding.guestsCount.text = it.toString()
             viewModel.changeGuestsCount(it)
@@ -130,17 +132,10 @@ class OrderFragment : Fragment() {
             adapter?.submitList(currentOrder.orderItems.toList())
 
             orderRecyclerView.addItemDecoration(
-                SimpleListItemDecoration(
-                    topMargin,
-                    largeMargin,
-                    smallMargin
-                )
+                SimpleListItemDecoration(topMargin, largeMargin, smallMargin)
             )
             orderRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            orderRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
-            })
         }
     }
 
@@ -198,7 +193,7 @@ class OrderFragment : Fragment() {
                     )
                     dishDialog.show(parentFragmentManager, "")
                 }
-                else -> {} //DefaultState
+                OrderViewModelStates.Default -> {}
             }
         }
     }
