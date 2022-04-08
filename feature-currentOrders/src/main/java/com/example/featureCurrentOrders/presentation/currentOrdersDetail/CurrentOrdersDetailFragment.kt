@@ -30,6 +30,7 @@ import com.google.android.material.transition.platform.MaterialSharedAxis
 import kotlin.properties.Delegates
 
 // TODO: Listen internet connection changes //STOPPED//
+// TODO: Test if two administrators set new menu with different size 
 class CurrentOrdersDetailFragment : Fragment() {
     private var smallMargin by Delegates.notNull<Int>()
     private var largeMargin by Delegates.notNull<Int>()
