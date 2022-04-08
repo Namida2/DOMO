@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.core.domain.entities.menu.CategoryName
 import com.example.core.domain.entities.menu.Dish
 import com.example.core.domain.entities.menu.MenuService
-import com.example.core.domain.entities.tools.DeletedDishInfo
+import com.example.core.domain.entities.tools.dto.DeletedDishInfo
 import com.example.core.domain.entities.tools.Event
 import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 import kotlinx.coroutines.flow.collect

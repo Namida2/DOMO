@@ -1,13 +1,18 @@
 <resources>
-    <string name="app_name">DOMO</string>
+    <string name="appName">DOMO</string>
     <string name="tables">Столики</string>
     <string name="orders">Заказы</string>
     <string name="order">Заказ %1$d</string>
+    <string name="table">Столик %1$d</string>
     <string name="currentOrders">Текущие заказы</string>
     <string name="profile">Профиль</string>
     <string name="employees">Работники</string>
     <string name="messenger">Мессенджер</string>
     <string name="settings">Настройки</string>
+    <string name="workWithMenu">Идет работа с меню</string>
+    <string name="newOrderTitle">Новый заказ</string>
+    <string name="dishIsReady">Блюдо готово:\u0020</string>
+    <string name="success">Успешно!</string>
 
     <!--Tools-->
     <string name="networkConnectionMessage">Пожалуйста, проверьте свое интернет-соединение.</string>
@@ -44,6 +49,9 @@
 
     <string name="tooShortPasswordTitle">Пароль слишком короткий</string>
     <string name="tooShortPasswordMessage">Пароль должен состоять из 6 и больше стмволов.</string>
+
+    <string name="dishNotFoundTitle">Блюдо не найдено</string>
+    <string name="dishNotFoundMessage">Блюдо с таким именем и комментарием не найдено.</string>
 
     <string name="permissionDeniedTitle">Нет прав</string>
     <string name="permissionDeniedMessage">Владльцу данной почты пока запрещено работать с приложением. Обатитесь к администратору.</string>

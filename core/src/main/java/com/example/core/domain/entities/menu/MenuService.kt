@@ -1,6 +1,6 @@
 package com.example.core.domain.entities.menu
 
-import com.example.core.domain.entities.tools.DeletedDishInfo
+import com.example.core.domain.entities.tools.dto.DeletedDishInfo
 import com.example.core.domain.entities.tools.constants.OtherStringConstants.THIS_DISH_ALREADY_ADDED
 import com.example.core.domain.entities.tools.constants.OtherStringConstants.UNKNOWN_DISH_ID
 import com.example.core.domain.interfaces.BaseObservable

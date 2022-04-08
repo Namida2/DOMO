@@ -1,6 +1,5 @@
 package com.example.featureSettings.presentation
 
-import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,12 +21,11 @@ import com.example.core.domain.interfaces.Stateful
 import com.example.core.domain.interfaces.TerminatingState
 import com.example.core.domain.useCases.ReadMenuUseCase
 import com.example.featureMenuDialog.domain.interfaces.OnDismissListener
-import com.example.featureSettings.domain.useCases.SaveMenuUseCase
+import com.example.featureSettings.domain.dto.SaveMenuData
 import com.example.featureSettings.domain.useCases.SaveSettingsUseCase
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-//TODO: Save current menu as default menu //STOPPED//
 sealed class SettingsVMStates {
     object Default : SettingsVMStates()
     object InProcess : SettingsVMStates()
@@ -37,7 +35,6 @@ sealed class SettingsVMStates {
 
 class SettingsViewModel(
     private val setting: Settings,
-    private val saveMenuUseCase: SaveMenuUseCase,
     private val readMenuUseCase: ReadMenuUseCase,
     private val saveSettingsUseCase: SaveSettingsUseCase,
 ) : ViewModel(), OnDismissListener, Stateful<SettingsVMStates> {
@@ -50,10 +47,14 @@ class SettingsViewModel(
     private val _onSettingChangedEvent = MutableLiveData<Event<Boolean>>()
     val onSettingChangedEvent: LiveData<Event<Boolean>> = _onSettingChangedEvent
 
+    private val _onSaveMenuEvent = MutableLiveData<Event<SaveMenuData>>()
+    val onSaveMenuEvent: LiveData<Event<SaveMenuData>> = _onSaveMenuEvent
+
     private val taskForSavingMenu = object : SimpleTask {
         override fun onSuccess(result: Unit) {
             setNewState(SettingsVMStates.OnSuccess)
         }
+
         override fun onError(message: ErrorMessage?) {
             MenuService.setNewMenu(lastSavedMenu)
             setNewState(SettingsVMStates.OnFailure(message ?: defaultErrorMessage))
@@ -63,6 +64,7 @@ class SettingsViewModel(
         override fun onSuccess(result: Unit) {
             setNewState(SettingsVMStates.OnSuccess)
         }
+
         override fun onError(message: ErrorMessage?) {
             setNewState(SettingsVMStates.OnFailure(message ?: defaultErrorMessage))
         }
@@ -71,8 +73,8 @@ class SettingsViewModel(
     init {
         viewModelScope.launch {
             networkConnectionChanges.collect { isConnected ->
-                if(isConnected) return@collect
-                if(state.value == SettingsVMStates.InProcess)
+                if (isConnected) return@collect
+                if (state.value == SettingsVMStates.InProcess)
                     MenuService.setNewMenu(lastSavedMenu)
                 setNewState(SettingsVMStates.OnFailure(checkNetworkConnectionMessage))
             }
@@ -86,7 +88,9 @@ class SettingsViewModel(
 
     fun onAcceptNewMenu() {
         _state.value = SettingsVMStates.InProcess
-        saveMenuUseCase.saveNewMenu(actualMenuCollectionRef, taskForSavingMenu)
+        _onSaveMenuEvent.value = Event(
+            SaveMenuData(actualMenuCollectionRef, taskForSavingMenu)
+        )
     }
 
     fun onCancelNewMenu() {
@@ -106,48 +110,49 @@ class SettingsViewModel(
     fun saveNewMenuFromMenuBottomSheetDialog() {
         _state.value = SettingsVMStates.InProcess
         lastSavedMenu = MenuService.copyMenu()
-        saveMenuUseCase.saveNewMenu(actualMenuCollectionRef, taskForSavingMenu)
+        _onSaveMenuEvent.value = Event(
+            SaveMenuData(actualMenuCollectionRef, taskForSavingMenu)
+        )
     }
 
     fun onSaveSettingButtonClick(maxTablesCount: String, maxGuestsCount: String) {
-        if(isEmptyField(maxTablesCount, maxGuestsCount)) return
+        if (isEmptyField(maxTablesCount, maxGuestsCount)) return
         _state.value = SettingsVMStates.InProcess
-        saveSettingsUseCase.saveNewSettings(maxTablesCount.toInt(), maxGuestsCount.toInt(), object : SimpleTask {
-            override fun onSuccess(result: Unit) {
-                onMaxTablesCountChanged(setting.tablesCount.toString())
-                onMaxGuestCountChanged(setting.guestsCount.toString())
-                setNewState(SettingsVMStates.OnSuccess)
-            }
-            override fun onError(message: ErrorMessage?) {
-                setNewState(SettingsVMStates.OnFailure(message ?: defaultErrorMessage))
-            }
-        })
+        saveSettingsUseCase.saveNewSettings(
+            maxTablesCount.toInt(),
+            maxGuestsCount.toInt(),
+            object : SimpleTask {
+                override fun onSuccess(result: Unit) {
+                    onSettingsChanged(setting.tablesCount.toString(), setting.guestsCount.toString())
+                    setNewState(SettingsVMStates.OnSuccess)
+                }
+
+                override fun onError(message: ErrorMessage?) {
+                    setNewState(SettingsVMStates.OnFailure(message ?: defaultErrorMessage))
+                }
+            })
     }
 
     fun saveCurrentMeuAsDefault() {
         _state.value = SettingsVMStates.InProcess
-        saveMenuUseCase.saveNewMenu(defaultMenuCollectionRef, taskForSavingMenu)
-    }
-    
-    fun onMaxTablesCountChanged(text: String) {
-        if(isEmptyField(text)) return
-        val newTablesCount = text.toInt()
-        if(setting.tablesCount == newTablesCount)
-            _onSettingChangedEvent.value = Event(false)
-        else  _onSettingChangedEvent.value = Event(true)
+        _onSaveMenuEvent.value = Event(
+            SaveMenuData(defaultMenuCollectionRef, taskForSavingMenu)
+        )
     }
 
-    fun onMaxGuestCountChanged(text: String) {
-        if(isEmptyField(text)) return
-        val newGuestCount = text.toInt()
-        if(setting.guestsCount == newGuestCount)
+    fun onSettingsChanged(maxTablesCount: String, naxGuestsCount: String) {
+        if (isEmptyField(maxTablesCount)) return
+        val newTablesCount = maxTablesCount.toInt()
+        val newGuestCount = naxGuestsCount.toInt()
+        if (setting.tablesCount == newTablesCount && setting.guestsCount == newGuestCount )
             _onSettingChangedEvent.value = Event(false)
-        else  _onSettingChangedEvent.value = Event(true)
+        else _onSettingChangedEvent.value = Event(true)
     }
+
 
     override fun setNewState(state: SettingsVMStates) {
         _state.value = state
-        if(state is TerminatingState)
+        if (state is TerminatingState)
             _state.value = SettingsVMStates.Default
     }
 

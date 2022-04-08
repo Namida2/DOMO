@@ -21,7 +21,6 @@ class OrdersServiceImpl @Inject constructor(
 ) : OrdersService {
 
     override var currentOrder: Order? = null
-        get() = field ?: throw IllegalStateException(CURRENT_ORDER_NOT_INITIALIZED)
 
     var orders = mutableListOf<Order>()
     private var deletedOrderJob: Job? = null
@@ -65,7 +64,7 @@ class OrdersServiceImpl @Inject constructor(
         currentOrder!!.orderItems.find {
             it.getOrderIemId() == aldOrderItemId
         } ?: throw IllegalArgumentException(ORDER_ITEM_NOT_FOUNT)
-        if(orderItem.commentary != aldCommentary) {
+        if (orderItem.commentary != aldCommentary) {
             anotherExistingOrderItem = currentOrder!!.orderItems.find {
                 it.getOrderIemId() == orderItem.getOrderIemId()
             }
@@ -121,6 +120,10 @@ class OrdersServiceImpl @Inject constructor(
     }
 
     override fun addOrder(newOrder: Order) {
+        if (currentOrder?.orderId == newOrder.orderId) {
+            currentOrder = newOrder
+            currentOrder?.orderItems?.let { currentOrderChanges.tryEmit(it) }
+        }
         orders.forEachIndexed { index, order ->
             if (order.orderId == newOrder.orderId) {
                 orders[index] = newOrder
@@ -146,24 +149,43 @@ class OrdersServiceImpl @Inject constructor(
         }
 
     override fun changeOrderItemStatus(orderId: Int, orderItemId: String, isReady: Boolean) {
-        var newOrder: Order? = null
-        orders.find {
+        orders.indexOfFirst {
             it.orderId == orderId
         }.also {
-            newOrder = it?.copy(
-                orderItems = it.orderItems.map { orderItem ->
-                    if (orderItem.getOrderIemId() == orderItemId)
-                        orderItem.copy(isReady = isReady)
-                    else orderItem
-                }.toMutableList()
+            if(it == -1) return@also
+            orders[it] = orders[it].copy(
+                orderItems = copyOrderItemsWithNewOrderItemStatus(
+                    orders[it].orderItems,
+                    orderItemId,
+                    isReady
+                )
             )
+            changeOrderItemStatusInCurrentOrder(orderId, orderItemId, isReady)
+            ordersChanges.tryEmit(orders)
         }
-        orders.forEachIndexed { index, order ->
-            if (order.orderId == orderId) {
-                orders[index] = newOrder!!
-            }
-        }
-        ordersChanges.tryEmit(orders)
     }
+
+    private fun changeOrderItemStatusInCurrentOrder(orderId: Int, orderItemId: String, isReady: Boolean) {
+        if(currentOrder?.orderId == orderId) {
+            currentOrder = currentOrder?.copy(
+                orderItems = copyOrderItemsWithNewOrderItemStatus(
+                    currentOrder!!.orderItems,
+                    orderItemId,
+                    isReady
+                )
+            )
+            currentOrderChanges.tryEmit(currentOrder!!.orderItems)
+        }
+    }
+
+    private fun copyOrderItemsWithNewOrderItemStatus(
+        orderItems: List<OrderItem>,
+        orderItemId: String,
+        isReady: Boolean
+    ): MutableList<OrderItem> = orderItems.map { orderItem ->
+        if (orderItem.getOrderIemId() == orderItemId)
+            orderItem.copy(isReady = isReady)
+        else orderItem
+    }.toMutableList()
 }
 

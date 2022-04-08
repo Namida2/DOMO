@@ -13,7 +13,6 @@ object ViewModelFactory: ViewModelProvider.Factory {
         val viewModel = when(modelClass) {
             SettingsViewModel::class.java -> SettingsViewModel(
                 SettingsDepsStore.deps.settings,
-                appComponent.provideSaveMenuUseCase(),
                 appComponent.provideReadMenuUseCase(),
                 appComponent.provideSaveSettingsUseCase(),
             )

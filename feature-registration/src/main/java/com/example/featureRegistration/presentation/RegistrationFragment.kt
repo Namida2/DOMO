@@ -1,6 +1,9 @@
 package com.example.featureRegistration.presentation
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +14,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.core.domain.interfaces.EmployeeAuthCallback
 import com.example.core.domain.entities.tools.constants.OtherStringConstants
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.entities.tools.extensions.isNetworkConnected
+import com.example.core.domain.interfaces.EmployeeAuthCallback
 import com.example.featureRegistration.R
 import com.example.featureRegistration.databinding.FragmentRegistrationBinding
 import com.example.featureRegistration.domain.ViewModelFactory
@@ -60,7 +63,7 @@ class RegistrationFragment : Fragment() {
         binding = FragmentRegistrationBinding.inflate(inflater)
         with(binding.postsRecyclerView) {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-            adapter = PostItemsAdapter(viewModel.getPostItems()) { post ->
+            adapter = PostItemsAdapter(getPostImagesList(),viewModel.getPostItems()) { post ->
                 viewModel.selectedPost = post
             }
             addItemDecoration(PostItemDecoration(smallMargin!!, largeMargin!!))
@@ -110,4 +113,10 @@ class RegistrationFragment : Fragment() {
             dialog?.show(parentFragmentManager, "")
         }
     }
+
+    private fun getPostImagesList(): List<BitmapDrawable> = listOf(
+        BitmapDrawable(resources, BitmapFactory.decodeResource(resources, R.drawable.im_cook)),
+        BitmapDrawable(resources, BitmapFactory.decodeResource(resources, R.drawable.im_waiter)),
+        BitmapDrawable(resources, BitmapFactory.decodeResource(resources, R.drawable.im_administrator)),
+    )
 }

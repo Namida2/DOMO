@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FeatureEmployees</string>
+    <string name="appName">FeatureEmployees</string>
 
     <string name="permissionYes">"Yes</string>
     <string name="permissionNo">"No</string>

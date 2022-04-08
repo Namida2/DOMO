@@ -120,9 +120,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/montserrat_semi_bold"
-                    android:text="Post:"
+                    android:text="Должность:"
                     android:textColor="@color/black"
-                    android:textSize="24sp" />
+                    android:textSize="16sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/postsRecyclerView"

@@ -1,8 +1,12 @@
 package com.example.featureRegistration.domain.recyclerView
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.core.domain.entities.tools.constants.EmployeePosts
@@ -10,10 +14,14 @@ import com.example.featureRegistration.databinding.LayoutPostItemBinding
 import com.example.featureRegistration.domain.PostItem
 
 class PostItemsAdapter(
+    private val images: List<BitmapDrawable>,
     var postItemsList: MutableList<PostItem>,
-    var setSelectedPost: (post: String) -> Unit
+    private var setSelectedPost: (post: String) -> Unit
 ) : RecyclerView.Adapter<PostItemsAdapter.ViewHolder>(), View.OnClickListener {
 
+    private val cookImagePosition = 0
+    private val waiterImagePosition = 1
+    private val administratorImagePosition = 2
     private var lastSelectedPost: String = EmployeePosts.COOK.value
 
     class ViewHolder(
@@ -25,14 +33,27 @@ class PostItemsAdapter(
         return ViewHolder(
             LayoutPostItemBinding.inflate(inflater, parent, false)
         ).also {
-            it.binding.postContainer.setOnClickListener(this)
+            it.binding.root.setOnClickListener(this)
         }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.selectedView.visibility = postItemsList[position].visibility
-        holder.binding.postNameTextView.text = postItemsList[position].postName
-        holder.binding.root.tag = postItemsList[position].postName
+        with(holder.binding) {
+            selectedView.visibility = postItemsList[position].visibility
+            postNameTextView.text = postItemsList[position].postName
+            root.tag = postItemsList[position].postName
+            when (postItemsList[position].postName) {
+                EmployeePosts.COOK.value -> {
+                    postContainer.background = images[cookImagePosition]
+                }
+                EmployeePosts.WAITER.value -> {
+                    postContainer.background = images[waiterImagePosition]
+                }
+                EmployeePosts.ADMINISTRATOR.value -> {
+                    postContainer.background = images[administratorImagePosition]
+                }
+            }
+        }
     }
 
     override fun getItemCount(): Int = postItemsList.size

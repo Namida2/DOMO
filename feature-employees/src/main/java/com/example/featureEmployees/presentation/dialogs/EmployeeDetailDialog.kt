@@ -70,7 +70,7 @@ class EmployeeDetailDialog : DialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        dialog?.window?.setGravity(Gravity.TOP)
+//        dialog?.window?.setGravity(Gravity.TOP)
         val params = dialog?.window?.attributes
         params?.width = WindowManager.LayoutParams.MATCH_PARENT
         dialog?.window?.attributes = params

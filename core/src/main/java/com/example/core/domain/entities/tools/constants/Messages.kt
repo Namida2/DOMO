@@ -4,6 +4,11 @@ import com.example.core.R
 import com.example.core.domain.entities.tools.ErrorMessage
 
 object Messages {
+    var dishNotFoundMessage: ErrorMessage =
+        ErrorMessage(
+            R.string.dishNotFoundTitle,
+            R.string.dishNotFoundMessage
+        )
     var dishAlreadyAddedMessage: ErrorMessage =
         ErrorMessage(
             R.string.dishAlreadyAddedTitle,

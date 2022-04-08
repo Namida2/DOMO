@@ -113,6 +113,7 @@ class CookMainActivity : BasePostActivity(), NavController.OnDestinationChangedL
             R.id.profileFragment -> {
                 binding.title.text = resources.getString(R.string.profile)
             }
+            R.id.registrationFragment -> return
         }
         binding.bottomNavigation.selectedItemId = destination.id
         showNavigationUI(binding.root, binding.appBar, binding.bottomNavigation)

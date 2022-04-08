@@ -93,6 +93,7 @@
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/ic_add_small.xml" value="0.258" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/ic_arrow_left.xml" value="0.211" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/ic_arrow_left_black.xml" value="0.211" />
+        <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/ic_arrow_left_white.xml" value="0.258" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/ic_avatar_0.xml" value="0.315" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/ic_download.xml" value="0.368" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/ic_employees.xml" value="0.253" />
@@ -109,7 +110,7 @@
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/dialog_process.xml" value="0.5" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/layout_dish.xml" value="0.24479166666666666" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/layout_order_item.xml" value="0.25" />
-        <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/layout_profile.xml" value="0.49606299212598426" />
+        <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/layout_profile.xml" value="0.22" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-authorisation/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-authorisation/src/main/res/drawable/bg_top_card.xml" value="0.2586805555555556" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-authorisation/src/main/res/drawable/ic_launcher_background.xml" value="0.2586805555555556" />
@@ -155,6 +156,7 @@
         <entry key="..\:/Projects/Graduate/DOMO/feature-profile/src/main/res/layout/fragment_frofile.xml" value="0.25" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-profile/src/main/res/layout/fragment_profile.xml" value="0.32215447154471544" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-registration/src/main/res/layout/fragment_registration.xml" value="0.1717896174863388" />
+        <entry key="..\:/Projects/Graduate/DOMO/feature-registration/src/main/res/layout/layout_post_item.xml" value="0.24479166666666666" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-settings/src/main/res/drawable/ic_download.xml" value="0.368" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-settings/src/main/res/layout/fragment_settings.xml" value="0.33" />
         <entry key="..\:/Projects/Graduate/DOMO/feature-splashScreen/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.258" />

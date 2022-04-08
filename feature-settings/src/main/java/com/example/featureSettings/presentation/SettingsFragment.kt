@@ -1,6 +1,8 @@
 package com.example.featureSettings.presentation
 
 import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,14 +23,14 @@ import com.example.featureMenuDialog.domain.MenuDialogDeps
 import com.example.featureMenuDialog.domain.MenuDialogDepsStore
 import com.example.featureMenuDialog.presentation.menuDialog.MenuBottomSheetDialog
 import com.example.featureSettings.R
+import com.example.featureSettings.data.services.WorkWithMenuService
 import com.example.featureSettings.databinding.FragmentSettingsBinding
 import com.example.featureSettings.domain.ViewModelFactory
-import com.example.featureSettings.domain.di.SettingsDepsStore
+import com.example.featureSettings.domain.di.SettingsDepsStore.appComponent
 import com.example.featureSettings.domain.di.SettingsDepsStore.deps
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
-// TODO: Work with menu in foreground service and debug //STOPPED//
-class SettingsFragment : Fragment() {
+class SettingsFragment: Fragment() {
 
     private lateinit var binding: FragmentSettingsBinding
     private lateinit var closedQuestionDialog: ClosedQuestionDialog<Unit>
@@ -42,6 +44,7 @@ class SettingsFragment : Fragment() {
             { viewModel.onCancelNewMenu() },
             { viewModel.onAcceptNewMenu() }
         )
+        WorkWithMenuService.saveMenuUseCase = appComponent.provideSaveMenuUseCase()
     }
 
     override fun onCreateView(
@@ -62,6 +65,7 @@ class SettingsFragment : Fragment() {
         observeOnMenuDialogDismissEvent()
         observeViewModelStates()
         observeOnSettingChangedEvent()
+        observeOnSaveMenuEvent()
         return binding.root
     }
 
@@ -77,12 +81,14 @@ class SettingsFragment : Fragment() {
             maxTablesCount.setText(deps.settings.tablesCount.toString())
             maxGuestsCount.setText(deps.settings.guestsCount.toString())
             maxTablesCount.addTextChangedListener {
-                this@SettingsFragment.viewModel.onMaxTablesCountChanged(
-                    it.toString()
+                this@SettingsFragment.viewModel.onSettingsChanged(
+                    it.toString(),
+                    binding.maxGuestsCount.text.toString()
                 )
             }
             maxGuestsCount.addTextChangedListener {
-                this@SettingsFragment.viewModel.onMaxGuestCountChanged(
+                this@SettingsFragment.viewModel.onSettingsChanged(
+                    binding.maxGuestsCount.text.toString(),
                     it.toString()
                 )
             }
@@ -121,8 +127,9 @@ class SettingsFragment : Fragment() {
     private fun observeViewModelStates() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
-                is SettingsVMStates.InProcess ->
+                is SettingsVMStates.InProcess -> {
                     ProcessAlertDialog.showIfNotAdded(parentFragmentManager, "")
+                }
                 is SettingsVMStates.OnFailure -> {
                     ProcessAlertDialog.dismissIfAdded()
                     requireContext().createMessageDialog(it.message)
@@ -135,6 +142,17 @@ class SettingsFragment : Fragment() {
                 }
             }
         }
+    }
 
+    private fun observeOnSaveMenuEvent() {
+        viewModel.onSaveMenuEvent.observe(viewLifecycleOwner) {
+            val saveMenuData = it.getData() ?: return@observe
+            WorkWithMenuService.targetCollectionRef = saveMenuData.targetCollectionRef
+            WorkWithMenuService.simpleTask = saveMenuData.simpleTask
+            val intent = Intent(requireContext(), WorkWithMenuService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                requireContext().startForegroundService(intent)
+            else requireContext().startService(intent)
+        }
     }
 }

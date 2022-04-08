@@ -29,6 +29,7 @@ import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
 import com.google.android.material.transition.platform.MaterialSharedAxis
 import kotlin.properties.Delegates
 
+// TODO: Listen internet connection changes //STOPPED//
 class CurrentOrdersDetailFragment : Fragment() {
     private var smallMargin by Delegates.notNull<Int>()
     private var largeMargin by Delegates.notNull<Int>()

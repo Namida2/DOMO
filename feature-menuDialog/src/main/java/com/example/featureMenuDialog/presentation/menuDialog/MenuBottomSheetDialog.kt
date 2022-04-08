@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
-import com.example.core.domain.entities.tools.DeletedDishInfo
+import com.example.core.domain.entities.tools.dto.DeletedDishInfo
 import com.example.core.domain.entities.tools.constants.EmployeePosts.ADMINISTRATOR
 import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideDown
 import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideUpFromBottom

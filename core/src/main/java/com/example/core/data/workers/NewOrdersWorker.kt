@@ -7,10 +7,9 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.work.*
 import androidx.work.PeriodicWorkRequest.MIN_PERIODIC_FLEX_MILLIS
+import com.example.core.R
 import com.example.core.domain.di.CoreDepsStore
 import com.example.core.domain.entities.order.Order
-import com.example.core.domain.entities.tools.ErrorMessage
-import com.example.core.domain.entities.tools.Event
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_GUESTS_COUNT
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_ORDER_ID
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_ORDER_INFO
@@ -23,8 +22,6 @@ import com.example.core.domain.notofications.NotificationsTools.createNotificati
 import com.example.core.domain.useCases.ReadNewOrderUseCase
 import com.google.firebase.firestore.ListenerRegistration
 import java.util.concurrent.TimeUnit
-
-typealias ErrorMessageEvent = Event<ErrorMessage>
 
 class NewOrdersWorker(
     private val context: Context, params: WorkerParameters
@@ -68,16 +65,21 @@ class NewOrdersWorker(
 
     private fun onNewOrder(data: MutableMap<String, Any>) {
         val orderInfo = data[FIELD_ORDER_INFO] as Map<*, *>
-        val tableId = (orderInfo[FIELD_ORDER_ID] as? Long)?.toInt() ?: return
+        val orderId = (orderInfo[FIELD_ORDER_ID] as? Long)?.toInt() ?: return
         val guestCount = (orderInfo[FIELD_GUESTS_COUNT] as? Long)?.toInt() ?: return
         readNewOrderUseCase.readNewOrder(
-            Order(tableId, guestCount)
+            Order(orderId, guestCount)
         )
 //        if (WaiterMainDepsStore.currentEmployee!!.post == COOK)
-        if (needToShowNotifications)
+        if (needToShowNotifications) {
             notificationManager?.notify(
-                id++, createNotification(context, data.toString())
+                id++, createNotification(
+                    context,
+                    context.resources.getString(R.string.newOrderTitle),
+                    context.resources.getString(R.string.table, orderId)
+                )
             )
+        }
     }
 }
 

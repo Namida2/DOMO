@@ -51,7 +51,6 @@ class OrderItemsRemoteRepositoryImpl @Inject constructor() : OrderItemsRemoteRep
         }
     }
 
-
     private fun updateOrderItemsStateListener(
         orderId: Int,
         orderItemId: String,

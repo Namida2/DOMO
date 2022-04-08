@@ -46,7 +46,11 @@ class OrderMenuBottomSheetDialog(
             acceptOrderButton.setOnClickListener {
                 if (requireContext().isNetworkConnected()) {
                     viewModel.onConfirmOrderButtonClick(acceptOrderButton)
-                } else requireContext().createMessageDialog(checkNetworkConnectionMessage)
+                } else {
+                    requireContext().createMessageDialog(checkNetworkConnectionMessage)
+                        ?.show(parentFragmentManager, "")
+                    dismiss()
+                }
             }
             changeGuestCountButton.setOnClickListener {
                 onChangeGuestCount.invoke()

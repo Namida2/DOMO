@@ -14,6 +14,7 @@ class CookMainViewModel(
     lateinit var profileAppComponent: ProfileAppComponent
     init {
         listenPermissionChanges(viewModelScope)
+        listenMenuVersionChanges(viewModelScope)
     }
     override fun onCleared() {
         CookMainDepsStore.onCleared()

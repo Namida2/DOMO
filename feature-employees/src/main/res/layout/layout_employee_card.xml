@@ -28,23 +28,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <androidx.constraintlayout.utils.widget.ImageFilterView
-                    android:id="@+id/imageFilterView"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_avatar_0"
-                    app:layout_constraintBottom_toBottomOf="@id/employeePost"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/employeeName"
-                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
+                    android:textAlignment="center"
                     android:id="@+id/employeeName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/montserrat_semi_bold"
@@ -52,15 +42,15 @@
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.206"
-                    app:layout_constraintStart_toEndOf="@+id/imageFilterView"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/employeeEmail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/montserrat_regular"
                     android:text="jane.horner@yandex.ru"

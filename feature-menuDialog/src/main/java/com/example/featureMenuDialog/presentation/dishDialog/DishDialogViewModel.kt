@@ -9,6 +9,7 @@ import com.example.core.domain.entities.menu.Dish
 import com.example.core.domain.entities.order.OrderItem
 import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.constants.Messages.dishAlreadyAddedMessage
+import com.example.core.domain.entities.tools.constants.Messages.dishNotFoundMessage
 import com.example.core.domain.entities.tools.enums.AddingDishMods
 import com.example.core.domain.entities.tools.extensions.logD
 
@@ -20,6 +21,7 @@ sealed class DishDialogVMStates {
     object Default : DishDialogVMStates()
 }
 
+// TODO: Prevent deleting an ready order items
 class DishDialogViewModel(
     private val ordersService: OrdersService,
 ) : ViewModel() {
@@ -59,7 +61,7 @@ class DishDialogViewModel(
         val result = ordersService.deleteFromCurrentOrder(dish!!, commentary)
         if (result)
             _state.value = DishDialogVMStates.OnSuccess
-        else _state.value = DishDialogVMStates.OnFailure()
+        else _state.value = DishDialogVMStates.OnFailure(errorMessage = dishNotFoundMessage)
         _state.value = DishDialogVMStates.Default
         view.isActivated = true
     }

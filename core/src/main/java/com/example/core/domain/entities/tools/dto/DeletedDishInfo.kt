@@ -1,4 +1,4 @@
-package com.example.core.domain.entities.tools
+package com.example.core.domain.entities.tools.dto
 
 import com.example.core.domain.entities.menu.Dish
 
