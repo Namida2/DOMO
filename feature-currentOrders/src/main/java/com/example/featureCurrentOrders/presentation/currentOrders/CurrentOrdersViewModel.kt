@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.entities.order.Order
 import com.example.core.domain.entities.tools.Event
+import com.example.core.domain.entities.tools.NetworkConnectionListener
 import com.example.core.domain.interfaces.OrdersService
 import com.example.featureCurrentOrders.domain.OrderInfo
 import kotlinx.coroutines.flow.collect
@@ -20,7 +21,6 @@ class CurrentOrdersViewModel(
 
     private val _newOrdersEvent: MutableLiveData<NewOrdersEvent> = MutableLiveData()
     val newOrdersEvent: LiveData<NewOrdersEvent> = _newOrdersEvent
-
     private val _onOrderSelectedEvent: MutableLiveData<OnOrderSelectedEvent> = MutableLiveData()
     val onOrderSelectedEvent: LiveData<OnOrderSelectedEvent> = _onOrderSelectedEvent
 

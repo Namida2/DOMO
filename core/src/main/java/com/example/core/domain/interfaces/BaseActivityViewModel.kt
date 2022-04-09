@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 abstract class BaseActivityViewModel(
-    private val menuVersionListener: MenuVersionListener
+    private val menuVersionListener: MenuVersionListener?
 ) : ViewModel() {
     private val _newPermissionEvent = MutableLiveData<Event<Unit>>()
     open val newPermissionEvent: LiveData<Event<Unit>> = _newPermissionEvent
@@ -29,7 +29,7 @@ abstract class BaseActivityViewModel(
 
     protected fun listenMenuVersionChanges(scope: CoroutineScope) {
         scope.launch {
-            menuVersionListener.menuVersionChanges.collect {
+            menuVersionListener?.menuVersionChanges?.collect {
                 _newMenuVersionEvent.value = Event(it)
             }
         }

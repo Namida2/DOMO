@@ -45,7 +45,7 @@ class OrderMenuBottomSheetDialog(
         with(binding!!) {
             acceptOrderButton.setOnClickListener {
                 if (requireContext().isNetworkConnected()) {
-                    viewModel.onConfirmOrderButtonClick(acceptOrderButton)
+                    viewModel.onConfirmOrderButtonClick()
                 } else {
                     requireContext().createMessageDialog(checkNetworkConnectionMessage)
                         ?.show(parentFragmentManager, "")
@@ -69,9 +69,9 @@ class OrderMenuBottomSheetDialog(
                     ProcessAlertDialog.onSuccess()
                 }
                 is OrderMenuDialogVMStates.InsertingWasFailure -> {
-                    ProcessAlertDialog.dismissIfAdded()
-                    requireContext().createMessageDialog(it.errorMessage)
-                        ?.show(parentFragmentManager, "")
+                    requireContext().createMessageDialog(it.errorMessage) {
+                        ProcessAlertDialog.dismissIfAdded()
+                    }?.show(parentFragmentManager, "")
                 }
                 is OrderMenuDialogVMStates.Default -> {
                     ProcessAlertDialog.dismissIfAdded()

@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class OrderItemsRemoteRepositoryImpl @Inject constructor() : OrderItemsRemoteRepository {
 
-    override fun setOrderItemAsReady(
+    override fun changeOrderItemStatus(
         orderId: Int,
         orderItemId: String,
         isReady: Boolean,
@@ -70,5 +70,5 @@ class OrderItemsRemoteRepositoryImpl @Inject constructor() : OrderItemsRemoteRep
 }
 
 interface OrderItemsRemoteRepository {
-    fun setOrderItemAsReady(orderId: Int, orderItemId: String, isReady: Boolean, task: SimpleTask)
+    fun changeOrderItemStatus(orderId: Int, orderItemId: String, isReady: Boolean, task: SimpleTask)
 }

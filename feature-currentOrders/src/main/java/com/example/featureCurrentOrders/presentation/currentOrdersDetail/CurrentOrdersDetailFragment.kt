@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cookCore.presentation.CookCurrentOrderDetailVMStates
 import com.example.cookCore.presentation.CookCurrentOrderDetailViewModel
 import com.example.core.domain.entities.order.OrderItem
+import com.example.core.domain.entities.tools.NetworkConnectionListener
 import com.example.core.domain.entities.tools.constants.EmployeePosts.COOK
+import com.example.core.domain.entities.tools.constants.Messages.checkNetworkConnectionMessage
 import com.example.core.domain.entities.tools.dialogs.ClosedQuestionDialog
 import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
@@ -29,12 +31,9 @@ import com.example.featureCurrentOrders.domain.di.CurrentOrderDepsStore
 import com.google.android.material.transition.platform.MaterialSharedAxis
 import kotlin.properties.Delegates
 
-// TODO: Listen internet connection changes //STOPPED//
-// TODO: Test if two administrators set new menu with different size 
 class CurrentOrdersDetailFragment : Fragment() {
     private var smallMargin by Delegates.notNull<Int>()
     private var largeMargin by Delegates.notNull<Int>()
-    private var topMargin by Delegates.notNull<Int>()
     private val args: CurrentOrdersDetailFragmentArgs by navArgs()
     private lateinit var binding: FragmentCurrentOrdersDetailBinding
     private val viewModel by viewModels<CurrentOrderDetailViewModel> { ViewModelFactory }
@@ -49,8 +48,7 @@ class CurrentOrdersDetailFragment : Fragment() {
         super.onAttach(context)
         viewModel.orderId = args.orderId
         smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
-        largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
-        topMargin = resources.getDimensionPixelSize(R.dimen.top_tables_margin)
+        largeMargin = resources.getDimensionPixelSize(R.dimen.top_tables_margin)
     }
 
     override fun onCreateView(
@@ -103,7 +101,10 @@ class CurrentOrdersDetailFragment : Fragment() {
         if (CurrentOrderDepsStore.deps.currentEmployee?.post != COOK.value) return
         isCook = true
         isDishCompletedDialog = ClosedQuestionDialog { orderItemId ->
-            cookViewModel.setOrderItemAsReady(args.orderId, orderItemId!!)
+            if(NetworkConnectionListener.isNetworkConnected())
+                cookViewModel.changeOrderItemStatus(args.orderId, orderItemId!!)
+            else requireContext().createMessageDialog(checkNetworkConnectionMessage)
+                ?.show(parentFragmentManager, "")
         }
     }
 
@@ -116,7 +117,7 @@ class CurrentOrdersDetailFragment : Fragment() {
             )
             dishesRecyclerView.adapter = adapter
             dishesRecyclerView.addItemDecoration(
-                SimpleListItemDecoration(topMargin, largeMargin, smallMargin)
+                SimpleListItemDecoration(largeMargin, smallMargin, largeMargin)
             )
         }
     }

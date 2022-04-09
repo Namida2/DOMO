@@ -6,54 +6,48 @@ import androidx.lifecycle.ViewModel
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.TaskWithEmployee
+import com.example.core.domain.entities.tools.constants.Messages.defaultErrorMessage
 import com.example.core.domain.entities.tools.constants.Messages.emptyFieldMessage
-import com.example.core.domain.entities.tools.constants.Messages.wrongEmailOrPassword
 import com.example.core.domain.entities.tools.extensions.isEmptyField
+import com.example.core.domain.interfaces.Stateful
+import com.example.core.domain.interfaces.TerminatingState
 import com.example.featureLogIn.domain.LogInUseCase
+import kotlinx.coroutines.flow.StateFlow
 
-sealed class LogInViewModelStates {
-    open var errorMessage: ErrorMessage? = null
-
-    object EmptyField : LogInViewModelStates() {
-        override var errorMessage: ErrorMessage? = emptyFieldMessage
-    }
-
-    object Validating : LogInViewModelStates()
-    object WrongEmailOrPassword : LogInViewModelStates() {
-        override var errorMessage: ErrorMessage? =
-            wrongEmailOrPassword
-    }
-
-    class Success(val employee: Employee) : LogInViewModelStates()
-    object Default : LogInViewModelStates()
+sealed class LogInVMStates {
+    object Validating : LogInVMStates()
+    class OnFailure(val errorMessage: ErrorMessage): LogInVMStates(), TerminatingState
+    class Success(val employee: Employee) : LogInVMStates(), TerminatingState
+    object Default : LogInVMStates()
 }
 
 class LogInViewModel(
     private val logInUseCaseImpl: LogInUseCase,
-) : ViewModel() {
+) : ViewModel(), Stateful<LogInVMStates>{
 
-    private var _state = MutableLiveData<LogInViewModelStates>(LogInViewModelStates.Default)
-    val state: LiveData<LogInViewModelStates> = _state
+    private var _state = MutableLiveData<LogInVMStates>()
+    val state: LiveData<LogInVMStates> = _state
 
     fun logIn(email: String, password: String) {
-        _state.value = LogInViewModelStates.Validating
+        setNewState(LogInVMStates.Validating)
         if (isEmptyField(email, password)) {
-            _state.value = LogInViewModelStates.EmptyField; return
+            setNewState(LogInVMStates.OnFailure(emptyFieldMessage))
+            return
         }
         logInUseCaseImpl.logIn(email, password, object : TaskWithEmployee {
             override fun onSuccess(result: Employee) {
-                _state.value = LogInViewModelStates.Success(result)
+                setNewState(LogInVMStates.Success(result))
             }
             override fun onError(message: ErrorMessage?) {
-                _state.value = LogInViewModelStates.WrongEmailOrPassword.apply {
-                        errorMessage = message
-                    }
+                setNewState(LogInVMStates.OnFailure(message ?: defaultErrorMessage))
             }
         })
     }
 
-    fun resetState() {
-        _state.value = LogInViewModelStates.Default
+    override fun setNewState(state: LogInVMStates) {
+        _state.value = state
+        if(state is TerminatingState)
+            _state.value = LogInVMStates.Default
     }
 
 }

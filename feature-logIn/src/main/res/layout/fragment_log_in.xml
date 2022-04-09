@@ -90,6 +90,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:text="Войти"
+                    android:minHeight="52dp"
                     android:textAllCaps="false" />
 
                 <Button
@@ -98,6 +99,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="36dp"
+                    android:minHeight="52dp"
                     android:text="У меня еще нет аккаунта" />
             </LinearLayout>
         </LinearLayout>

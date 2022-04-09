@@ -3,10 +3,15 @@ package com.example.featureProfile.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.core.domain.entities.tools.ErrorMessage
+import com.example.core.domain.entities.tools.Event
+import com.example.core.domain.entities.tools.NetworkConnectionListener
 import com.example.core.domain.entities.tools.constants.Messages.defaultErrorMessage
 import com.example.core.domain.entities.tools.SimpleTask
 import com.example.featureProfile.domain.LeaveAccountUseCase
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 sealed class ProfileViewModelStates {
     object Default : ProfileViewModelStates()

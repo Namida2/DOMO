@@ -13,12 +13,13 @@ import com.example.administratorMain.presentation.AdministratorMainActivity
 import com.example.cookMain.domain.di.CookMainDepsStore
 import com.example.cookMain.presentation.CookMainActivity
 import com.example.core.domain.entities.Employee
-import com.example.core.domain.interfaces.EmployeeAuthCallback
 import com.example.core.domain.entities.tools.constants.EmployeePosts.*
 import com.example.core.domain.entities.tools.constants.Messages.checkNetworkConnectionMessage
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.entities.tools.extensions.isNetworkConnected
+import com.example.core.domain.interfaces.EmployeeAuthCallback
 import com.example.core.domain.interfaces.NewMenuVersionCallback
+import com.example.core.domain.interfaces.OnNetworkConnectionLostCallback
 import com.example.featureLogIn.R
 import com.example.featureLogIn.domain.di.LogInDepsStore
 import com.example.featureSplashScreen.databinding.ActivitySplashScreenBinding
@@ -29,7 +30,8 @@ import com.example.waiterMain.domain.di.WaiterMainDepsStore
 import com.example.waiterMain.presentation.WaiterMainActivity
 
 @SuppressLint("CustomSplashScreen")
-class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback, NewMenuVersionCallback {
+class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback, NewMenuVersionCallback,
+    OnNetworkConnectionLostCallback {
 
     private val viewModel by viewModels<SplashScreenViewModel> { ViewModelFactory }
     private lateinit var navController: NavController
@@ -67,8 +69,10 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback, NewMenuV
                             CookMainDepsStore.deps = SplashScreenDepsStore.appComponent
                             CookMainDepsStore.employeeAuthCallback = this
                             CookMainDepsStore.newMenuVersionCallback = this
+                            CookMainDepsStore.onNetworkConnectionLostCallback = this
                             startActivity(Intent(this, CookMainActivity::class.java).also {
-                                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                it.flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             })
                         }
                         WAITER.value -> {
@@ -76,15 +80,19 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback, NewMenuV
                             WaiterMainDepsStore.profileDeps = SplashScreenDepsStore.appComponent
                             WaiterMainDepsStore.employeeAuthCallback = this
                             WaiterMainDepsStore.newMenuVersionCallback = this
+                            WaiterMainDepsStore.onNetworkConnectionLostCallback = this
                             startActivity(Intent(this, WaiterMainActivity::class.java).also {
-                                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                it.flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             })
                         }
                         ADMINISTRATOR.value -> {
                             AdminDepsStore.deps = SplashScreenDepsStore.appComponent
                             AdminDepsStore.employeeAuthCallback = this
+                            AdminDepsStore.onNetworkConnectionLostCallback = this
                             startActivity(Intent(this, AdministratorMainActivity::class.java).also {
-                                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                it.flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             })
                         }
                     }
@@ -119,6 +127,12 @@ class SplashScreenActivity : AppCompatActivity(), EmployeeAuthCallback, NewMenuV
     }
 
     override fun onNewMenu() {
+        startActivity(Intent(this, SplashScreenActivity::class.java).also {
+            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        })
+    }
+
+    override fun onConnectionLost() {
         startActivity(Intent(this, SplashScreenActivity::class.java).also {
             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         })

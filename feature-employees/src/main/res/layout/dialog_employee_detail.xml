@@ -32,8 +32,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_regular"
-                android:minHeight="24dp"
-                android:text="Allow to work"
+                android:minHeight="42dp"
+                android:text="Спенить разрешение"
                 android:textAllCaps="false"
                 android:textColor="@color/blue" />
 
@@ -48,8 +48,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_regular"
-                android:minHeight="24dp"
-                android:text="Remove this employee"
+                android:minHeight="42dp"
+                android:text="Удалить работника"
                 android:textAllCaps="false"
                 android:textColor="@color/red" />
 

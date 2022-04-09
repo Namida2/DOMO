@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.core.domain.entities.tools.ErrorMessage
+import com.example.core.domain.entities.tools.NetworkConnectionListener
 import com.example.core.domain.entities.tools.SimpleTask
+import com.example.core.domain.entities.tools.constants.Messages.checkNetworkConnectionMessage
 import com.example.core.domain.entities.tools.constants.Messages.defaultErrorMessage
 import com.example.core.domain.interfaces.Stateful
 import com.example.core.domain.interfaces.TerminatingState
@@ -16,7 +18,7 @@ sealed class CompletedOrderVMStates {
     object ShowDetail : CompletedOrderVMStates(), TerminatingState
     object DeletingOrder : CompletedOrderVMStates()
     object OrderDeleted : CompletedOrderVMStates(), TerminatingState
-    class OnOrderDeletingFailure(
+    class OnFailure(
         val errorMessage: ErrorMessage
     ) : CompletedOrderVMStates(), TerminatingState
 }
@@ -35,6 +37,10 @@ class CompletedOrderViewModel(
     }
 
     fun onDeleteOrderButtonClick() {
+        if (!NetworkConnectionListener.isNetworkConnected()) {
+            setNewState(CompletedOrderVMStates.OnFailure(checkNetworkConnectionMessage))
+            return
+        }
         setNewState(CompletedOrderVMStates.DeletingOrder)
         deleteOrderUseCase.deleteOrder(orderId, this)
     }
@@ -44,7 +50,7 @@ class CompletedOrderViewModel(
     }
 
     override fun onError(message: ErrorMessage?) {
-        setNewState(CompletedOrderVMStates.OnOrderDeletingFailure(message ?: defaultErrorMessage))
+        setNewState(CompletedOrderVMStates.OnFailure(message ?: defaultErrorMessage))
     }
 
     override fun setNewState(state: CompletedOrderVMStates) {

@@ -6,7 +6,6 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-//TODO: Remove this module and provide the deps from the main module
 @Module
 class FirebaseModule {
     @Provides

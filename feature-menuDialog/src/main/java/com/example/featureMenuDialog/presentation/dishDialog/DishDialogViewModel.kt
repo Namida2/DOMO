@@ -21,7 +21,6 @@ sealed class DishDialogVMStates {
     object Default : DishDialogVMStates()
 }
 
-// TODO: Prevent deleting an ready order items
 class DishDialogViewModel(
     private val ordersService: OrdersService,
 ) : ViewModel() {

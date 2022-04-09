@@ -19,6 +19,9 @@ import com.example.core.data.workers.NewOrderItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.Settings
+import com.example.core.domain.entities.tools.constants.Messages
+import com.example.core.domain.entities.tools.constants.Messages.permissionDeniedMessage
+import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.interfaces.BasePostActivity
 import com.example.core.domain.interfaces.OrdersService
 import com.example.featureEmployees.domain.di.DaggerEmployeesAppComponent
@@ -61,6 +64,7 @@ class AdministratorMainActivity : BasePostActivity(), NavController.OnDestinatio
         showNavigationUI(binding.root, binding.appBar, binding.bottomNavigation)
         makeWorkerRequests()
         setOnNavigationItemSelectedListener()
+        observeOnNewPermissionEvent()
         setContentView(binding.root)
     }
 
@@ -137,10 +141,8 @@ class AdministratorMainActivity : BasePostActivity(), NavController.OnDestinatio
             R.id.profileFragment -> {
                 binding.title.text = resources.getString(R.string.profile)
             }
-            R.id.registrationFragment -> return
         }
         binding.bottomNavigation.selectedItemId = destination.id
-        showNavigationUI(binding.root, binding.appBar, binding.bottomNavigation)
     }
 
     override fun setOnNavigationItemSelectedListener() {
@@ -178,6 +180,16 @@ class AdministratorMainActivity : BasePostActivity(), NavController.OnDestinatio
             ).build()
         WorkManager.getInstance(this).enqueue(newOrdersWorkRequest)
         WorkManager.getInstance(this).enqueue(newOrderItemsStateRequest)
+    }
+
+    override fun observeOnNewPermissionEvent() {
+        viewModel.newPermissionEvent.observe(this) {
+            it.getData()?.let {
+                createMessageDialog(permissionDeniedMessage) {
+                    finish()
+                }?.show(supportFragmentManager, "")
+            }
+        }
     }
 
     override fun onBackPressed() {

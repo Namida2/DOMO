@@ -83,8 +83,6 @@ class NewOrdersWorker(
     }
 }
 
-
-//TODO: Start a foreground service (maybe)
 //class NewOrdersService : Service() {
 //
 //    private var id = 1

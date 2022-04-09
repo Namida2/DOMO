@@ -21,7 +21,6 @@ import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
-//TODO: Add scopes for appComponents
 @Singleton
 @Component(
     modules = [UseCasesModule::class, LocalRepositoryModule::class,

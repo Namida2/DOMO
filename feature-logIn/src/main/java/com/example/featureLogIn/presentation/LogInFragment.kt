@@ -42,7 +42,6 @@ class LogInFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel.resetState()
         binding = FragmentLogInBinding.inflate(layoutInflater)
         setListeners()
         return binding.root
@@ -76,19 +75,20 @@ class LogInFragment : Fragment() {
     private fun observeViewModelStates() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
-                is LogInViewModelStates.Validating -> {
+                is LogInVMStates.Validating -> {
                     ProcessAlertDialog.showIfNotAdded(parentFragmentManager, "")
                 }
-                is LogInViewModelStates.Success -> {
+                is LogInVMStates.Success -> {
                     ProcessAlertDialog.dismissIfAdded()
                     employeeAuthCallback.onAuthorisationEvent(it.employee)
                 }
-                else -> {
-                    if (it is LogInViewModelStates.Default) return@observe
+                is LogInVMStates.OnFailure -> {
+                    requireContext().createMessageDialog(it.errorMessage) {
+                        ProcessAlertDialog.dismissIfAdded()
+                    }?.show(parentFragmentManager, "")
+                }
+                is LogInVMStates.Default -> {
                     ProcessAlertDialog.dismissIfAdded()
-                    if (it.errorMessage == null) return@observe
-                    requireContext().createMessageDialog(it.errorMessage!!)
-                        ?.show(parentFragmentManager, "")
                 }
             }
         }

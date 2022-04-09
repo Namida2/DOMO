@@ -18,7 +18,6 @@ sealed class MenuServiceStates {
     object Default : MenuServiceStates()
 }
 
-//TODO: Create an interface for MenuService to domain layer
 object MenuService : BaseObservable<MenuServiceSub> {
 
     var menu: MutableList<Category> = mutableListOf()
@@ -126,7 +125,7 @@ object MenuService : BaseObservable<MenuServiceSub> {
         }.also { category ->
             if (category == null) return false
             category.dishes.find {
-                it.name == dish.name // FIXME: Not allow to add when only dish count was changed
+                it.name == dish.name
             }.also { existingDish ->
                 if (existingDish != null) return false
                 category.dishes.add(dish)

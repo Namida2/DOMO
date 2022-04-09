@@ -1,7 +1,6 @@
 package com.example.featureRegistration.presentation
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
@@ -9,14 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.core.domain.entities.tools.constants.OtherStringConstants
+import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
+import com.example.core.domain.entities.tools.extensions.dismissIfAdded
 import com.example.core.domain.entities.tools.extensions.isNetworkConnected
+import com.example.core.domain.entities.tools.extensions.showIfNotAdded
 import com.example.core.domain.interfaces.EmployeeAuthCallback
 import com.example.featureRegistration.R
 import com.example.featureRegistration.databinding.FragmentRegistrationBinding
@@ -38,7 +39,6 @@ class RegistrationFragment : Fragment() {
             (context as? EmployeeAuthCallback) ?: throw IllegalArgumentException(
                 OtherStringConstants.ACTIVITY_IS_NOT_EMPLOYEE_AUTHORIZATION_CALLBACK
             )
-        viewModel.resetState()
         smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
         largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
         initBindings(layoutInflater)
@@ -93,24 +93,22 @@ class RegistrationFragment : Fragment() {
 
     private fun observeViewModelState() {
         viewModel.state.observe(viewLifecycleOwner) {
-            var dialog: DialogFragment? = null
             when (it) {
-                is RegistrationViewModelStates.Validating -> {
-                    com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog.show(
-                        parentFragmentManager,
-                        ""
-                    )
+                is RegistrationVMStates.Validating -> {
+                    ProcessAlertDialog.showIfNotAdded(parentFragmentManager, "")
                 }
-                is RegistrationViewModelStates.Valid -> {
+                is RegistrationVMStates.Valid -> {
                     employeeAuthCallback.onAuthorisationEvent(it.employee)
                 }
-                else -> {
-                    if (it is RegistrationViewModelStates.Default) return@observe
-                    com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog.dismiss()
-                    dialog = requireContext().createMessageDialog(it.errorMessage!!)
+                is RegistrationVMStates.OnFailure -> {
+                    requireContext().createMessageDialog(it.errorMessage){
+                        ProcessAlertDialog.dismissIfAdded()
+                    }?.show(parentFragmentManager, "")
+                }
+                is RegistrationVMStates.Default -> {
+                    ProcessAlertDialog.dismissIfAdded()
                 }
             }
-            dialog?.show(parentFragmentManager, "")
         }
     }
 

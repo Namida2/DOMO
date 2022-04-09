@@ -15,7 +15,6 @@ import com.example.featureCurrentOrders.databinding.DialogCompletedOrderBinding
 import com.example.featureCurrentOrders.domain.ViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-//TODO: Cool thing
 abstract class CompletedOrderDialogCallback {
     abstract fun showDetail(order: Order)
     open fun onOrderDeleted() {}
@@ -59,10 +58,10 @@ class CompletedOrderMenuDialog(
                     ProcessAlertDialog.onSuccess()
                     dismiss()
                 }
-                is CompletedOrderVMStates.OnOrderDeletingFailure -> {
-                    ProcessAlertDialog.dismiss()
-                    requireContext().createMessageDialog(it.errorMessage)
-                        ?.show(parentFragmentManager, "")
+                is CompletedOrderVMStates.OnFailure -> {
+                    requireContext().createMessageDialog(it.errorMessage) {
+                        ProcessAlertDialog.dismissIfAdded()
+                    }?.show(parentFragmentManager, "")
                 }
                 is CompletedOrderVMStates.Default -> {
                     ProcessAlertDialog.dismissIfAdded()

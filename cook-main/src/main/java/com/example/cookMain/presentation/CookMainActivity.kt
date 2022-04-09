@@ -20,6 +20,7 @@ import com.example.core.data.workers.NewOrderItemStatusWorker
 import com.example.core.data.workers.NewOrdersWorker
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.tools.constants.Messages
+import com.example.core.domain.entities.tools.constants.Messages.permissionDeniedMessage
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.interfaces.BasePostActivity
 import com.example.core.domain.interfaces.OrdersService
@@ -113,10 +114,8 @@ class CookMainActivity : BasePostActivity(), NavController.OnDestinationChangedL
             R.id.profileFragment -> {
                 binding.title.text = resources.getString(R.string.profile)
             }
-            R.id.registrationFragment -> return
         }
         binding.bottomNavigation.selectedItemId = destination.id
-        showNavigationUI(binding.root, binding.appBar, binding.bottomNavigation)
     }
 
     override fun setOnNavigationItemSelectedListener() {
@@ -140,7 +139,7 @@ class CookMainActivity : BasePostActivity(), NavController.OnDestinationChangedL
     override fun observeOnNewPermissionEvent() {
         viewModel.newPermissionEvent.observe(this) {
             it.getData().let {
-                createMessageDialog(Messages.newMenuVersionMessage) {
+                createMessageDialog(permissionDeniedMessage) {
                     finish()
                 }?.show(supportFragmentManager, "")
             }

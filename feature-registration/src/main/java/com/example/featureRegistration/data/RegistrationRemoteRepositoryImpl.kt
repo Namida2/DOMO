@@ -2,6 +2,7 @@ package com.example.featureRegistration.data
 
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.tools.TaskWithEmployee
+import com.example.core.domain.entities.tools.constants.EmployeePosts
 import com.example.core.domain.entities.tools.constants.Messages.defaultErrorMessage
 import com.example.core.domain.entities.tools.constants.Messages.emailAlreadyExistsMessage
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
@@ -56,7 +57,7 @@ class RegistrationRemoteRepositoryImpl @Inject constructor(
                 addEmployeeToCollection(employee, task)
             }.addOnFailureListener {
                 logE("${this}: $it")
-                task.onError(defaultErrorMessage)
+                task.onError(it.getExceptionMessage())
             }
     }
 

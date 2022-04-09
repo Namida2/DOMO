@@ -41,10 +41,6 @@ class EmployeesViewModel(
                 _newEmployeesEvent.value = Event(it.toList())
             }
         }
-    }
-
-    fun readEmployees() {
-        _state.value = EmployeesVMStates.ReadingData
         readEmployeesUseCase.readEmployees(object : SimpleTask {
             override fun onSuccess(result: Unit) {
                 _state.value = EmployeesVMStates.ReadingWasSuccessful

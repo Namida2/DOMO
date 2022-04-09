@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-//TODO: Add states to showing the progress bar when the orders is reading
 class OrdersServiceImpl @Inject constructor(
     private val deletedOrdersListener: DeletedOrdersListener
 ) : OrdersService {
@@ -135,7 +134,7 @@ class OrdersServiceImpl @Inject constructor(
         ordersChanges.tryEmit(orders)
     }
 
-    //TODO: This should always be called
+    //This should always be called
     override fun addListOfOrders(orders: List<Order>) {
         this.orders.clear()
         this.orders.addAll(orders)

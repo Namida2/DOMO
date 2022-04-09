@@ -8,106 +8,69 @@ import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.TaskWithEmployee
 import com.example.core.domain.entities.tools.constants.EmployeePosts
 import com.example.core.domain.entities.tools.constants.Messages.defaultErrorMessage
-import com.example.core.domain.entities.tools.constants.Messages.emailAlreadyExistsMessage
 import com.example.core.domain.entities.tools.constants.Messages.emptyFieldMessage
 import com.example.core.domain.entities.tools.constants.Messages.tooShortPasswordMessage
 import com.example.core.domain.entities.tools.constants.Messages.wrongEmailOrPassword
 import com.example.core.domain.entities.tools.constants.Messages.wrongPasswordConfirmationMessage
 import com.example.core.domain.entities.tools.extensions.isEmptyField
 import com.example.core.domain.entities.tools.extensions.isValidEmail
-import com.example.featureRegistration.domain.useCases.GetPostItemsUseCase
-import com.example.featureRegistration.R
+import com.example.core.domain.interfaces.Stateful
+import com.example.core.domain.interfaces.TerminatingState
 import com.example.featureRegistration.domain.PostItem
+import com.example.featureRegistration.domain.useCases.GetPostItemsUseCase
 import com.example.featureRegistration.domain.useCases.RegistrationUseCase
 
-sealed class RegistrationViewModelStates {
-    open var errorMessage: ErrorMessage? = null
-
-    object Default : RegistrationViewModelStates()
-    object Validating : RegistrationViewModelStates()
-    object InvalidEmail : RegistrationViewModelStates() {
-        override var errorMessage: ErrorMessage? =
-            wrongEmailOrPassword
-    }
-
-    object EmptyField : RegistrationViewModelStates() {
-        override var errorMessage: ErrorMessage? = emptyFieldMessage
-    }
-
-    object ShortPassword : RegistrationViewModelStates() {
-        override var errorMessage: ErrorMessage? =
-            tooShortPasswordMessage
-    }
-
-    object WrongPasswordConfirmation : RegistrationViewModelStates() {
-        override var errorMessage: ErrorMessage? =
-            wrongPasswordConfirmationMessage
-    }
-
-    object EmailAlreadyExists : RegistrationViewModelStates() {
-        override var errorMessage: ErrorMessage? =
-            emailAlreadyExistsMessage
-    }
-
-    object DefaultError : RegistrationViewModelStates() {
-        override var errorMessage: ErrorMessage? = defaultErrorMessage
-    }
-
-    class Valid(val employee: Employee) : RegistrationViewModelStates()
+sealed class RegistrationVMStates {
+    object Default : RegistrationVMStates()
+    object Validating : RegistrationVMStates()
+    class OnFailure(val errorMessage: ErrorMessage) : RegistrationVMStates(), TerminatingState
+    class Valid(val employee: Employee) : RegistrationVMStates(), TerminatingState
 }
 
 class RegistrationViewModel(
     private val getPostItemsUseCase: GetPostItemsUseCase,
     private val registrationUseCase: RegistrationUseCase,
-) : ViewModel() {
+) : ViewModel(), Stateful<RegistrationVMStates> {
 
     var selectedPost: String = EmployeePosts.COOK.value
     private val minPasswordLength = 6
-    private var _state =
-        MutableLiveData<RegistrationViewModelStates>(RegistrationViewModelStates.Default)
-    val state: LiveData<RegistrationViewModelStates> = _state
+    private var _state = MutableLiveData<RegistrationVMStates>()
+    val state: LiveData<RegistrationVMStates> = _state
 
     fun validation(name: String, email: String, password: String, confirmPassword: String) {
-        _state.value = RegistrationViewModelStates.Validating
+        setNewState(RegistrationVMStates.Validating)
         when {
             isEmptyField(name, email, password, confirmPassword) -> {
-                _state.value = RegistrationViewModelStates.EmptyField; return
+                setNewState(RegistrationVMStates.OnFailure(emptyFieldMessage)); return
             }
             !email.isValidEmail() -> {
-                _state.value = RegistrationViewModelStates.InvalidEmail; return
+                setNewState(RegistrationVMStates.OnFailure(wrongEmailOrPassword)); return
             }
             password.length < minPasswordLength -> {
-                _state.value = RegistrationViewModelStates.ShortPassword; return
+                setNewState(RegistrationVMStates.OnFailure(tooShortPasswordMessage)); return
             }
             password != confirmPassword -> {
-                _state.value = RegistrationViewModelStates.WrongPasswordConfirmation; return
+                setNewState(RegistrationVMStates.OnFailure(wrongPasswordConfirmationMessage)); return
             }
         }
 
         val employee = Employee(email, name, selectedPost, password)
-        registrationUseCase.registration(
-            employee,
-            object : TaskWithEmployee {
-                override fun onSuccess(result: Employee) {
-                    _state.value = RegistrationViewModelStates.Valid(employee)
-                }
-                override fun onError(message: ErrorMessage?) {
-                    when (message!!.titleId) {
-                        R.string.emailAlreadyExitsTitle -> {
-                            _state.value = RegistrationViewModelStates.EmailAlreadyExists
-                        }
-                        R.string.defaultTitle -> {
-                            _state.value = RegistrationViewModelStates.DefaultError
-                        }
-                    }
-                }
+        registrationUseCase.registration(employee, object : TaskWithEmployee {
+            override fun onSuccess(result: Employee) {
+                setNewState(RegistrationVMStates.Valid(employee)); return
             }
+            override fun onError(message: ErrorMessage?) {
+                setNewState(RegistrationVMStates.OnFailure(message ?: defaultErrorMessage)); return
+            }
+        }
         )
     }
 
-    fun resetState() {
-        _state.value = RegistrationViewModelStates.Default
-    }
-
     fun getPostItems(): MutableList<PostItem> = getPostItemsUseCase.getPostItems()
+
+    override fun setNewState(state: RegistrationVMStates) {
+        _state.value = state
+        if (state is TerminatingState)
+            _state.value = RegistrationVMStates.Default
+    }
 }

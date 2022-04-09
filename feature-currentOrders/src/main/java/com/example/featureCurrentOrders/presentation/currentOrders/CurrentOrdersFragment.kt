@@ -30,7 +30,6 @@ class CurrentOrdersFragment : Fragment() {
 
     private var smallMargin by Delegates.notNull<Int>()
     private var largeMargin by Delegates.notNull<Int>()
-    private var topMargin by Delegates.notNull<Int>()
     private lateinit var binding: FragmentCurrentOrdersBinding
     private val viewModel by viewModels<CurrentOrdersViewModel> { ViewModelFactory }
     private lateinit var adapter: BaseRecyclerViewAdapter
@@ -39,8 +38,7 @@ class CurrentOrdersFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
-        largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
-        topMargin = resources.getDimensionPixelSize(R.dimen.top_tables_margin)
+        largeMargin = resources.getDimensionPixelSize(R.dimen.top_tables_margin)
         completedOrderDialog = CompletedOrderMenuDialog(object : CompletedOrderDialogCallback() {
             override fun showDetail(order: Order) {
                 showDetail(order.orderId)
@@ -81,16 +79,11 @@ class CurrentOrdersFragment : Fragment() {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             currentOrdersRecyclerView.adapter = adapter
             currentOrdersRecyclerView.addItemDecoration(
-                SimpleListItemDecoration(
-                    topMargin,
-                    largeMargin,
-                    smallMargin
-                )
+                SimpleListItemDecoration(largeMargin, smallMargin, smallMargin)
             )
         }
     }
 
-    //TODO: Accept the same order //STOPPED//
     private fun observeNewOrdersEvent() {
         viewModel.newOrdersEvent.observe(viewLifecycleOwner) {
             val ordersList = it.getData() ?: return@observe
@@ -102,10 +95,8 @@ class CurrentOrdersFragment : Fragment() {
         viewModel.onOrderSelectedEvent.observe(viewLifecycleOwner) {
             val orderInfo = it.getData() ?: return@observe
             if (orderInfo.isCompleted && deps.currentEmployee?.post == EmployeePosts.WAITER.value) {
-                if (!completedOrderDialog.isAdded) {
-                    completedOrderDialog.order = orderInfo.order
-                    completedOrderDialog.showIfNotAdded(parentFragmentManager, "")
-                }
+                completedOrderDialog.order = orderInfo.order
+                completedOrderDialog.showIfNotAdded(parentFragmentManager, "")
             } else showDetail(orderInfo.order.orderId)
         }
     }

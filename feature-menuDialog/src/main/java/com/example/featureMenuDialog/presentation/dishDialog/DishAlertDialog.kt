@@ -8,8 +8,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.example.core.domain.entities.menu.Dish
+import com.example.core.domain.entities.order.OrderItem
 import com.example.core.domain.entities.tools.enums.AddingDishMods
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
+import com.example.core.domain.interfaces.OrdersService
 import com.example.featureMenuDialog.R
 import com.example.featureMenuDialog.databinding.DialogDishBinding
 import com.example.featureMenuDialog.domain.ViewModelFactory
@@ -19,6 +21,7 @@ class DishAlertDialog(
 ) : DialogFragment() {
 
     var dish: Dish? = null
+    var orderItem: OrderItem? = null
     private var count: Int = 1
     private var aldCommentary: String = ""
 
@@ -63,9 +66,9 @@ class DishAlertDialog(
     private fun initBinding() {
         binding = DialogDishBinding.inflate(layoutInflater)
         binding.viewModel = viewModel
-        if(mode == AddingDishMods.INSERTING)
+        if(mode == AddingDishMods.INSERTING || orderItem?.isReady == true)
             binding.deleteButton.visibility = View.GONE
-        else  binding.deleteButton.visibility = View.VISIBLE
+        else binding.deleteButton.visibility = View.VISIBLE
         initView(binding)
     }
 

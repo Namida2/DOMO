@@ -43,6 +43,11 @@ dependencies {
     implementation (Firebase.firebaseFirestore)
     implementation (Firebase.firebaseAnalytics)
 
+    implementation (Coroutines.coroutinesCore)
+    implementation (ArchComponents.viewModel)
+    implementation (ArchComponents.liveData)
+    kapt(ArchComponents.lifecycleCompiler)
+
     implementation (AndroidX.core)
     implementation (AndroidX.appcompat)
     implementation (Material.material)

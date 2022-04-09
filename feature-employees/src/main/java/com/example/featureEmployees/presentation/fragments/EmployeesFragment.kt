@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.SimpleItemAnimator
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.tools.extensions.showIfNotAdded
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
@@ -21,11 +20,11 @@ import com.example.featureEmployees.presentation.recyclerView.EmployeesAdapterDe
 import com.google.android.material.transition.platform.MaterialSharedAxis
 import kotlin.properties.Delegates
 
+// TODO: Password for administrator //STOPPED//
+// TODO: Reread menu when unknown dish id in get dish by id in MenuService
 class EmployeesFragment: Fragment() {
-
     private var smallMargin by Delegates.notNull<Int>()
     private var largeMargin by Delegates.notNull<Int>()
-    private var topMargin by Delegates.notNull<Int>()
     private lateinit var binding: FragmentEmployeesBinding
     private val viewModel by viewModels<EmployeesViewModel> { ViewModelFactory }
     private val employeeDetailDialog: EmployeeDetailDialog = EmployeeDetailDialog()
@@ -38,9 +37,7 @@ class EmployeesFragment: Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
-        largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
-        topMargin = resources.getDimensionPixelSize(R.dimen.top_tables_margin)
-        viewModel.readEmployees()
+        largeMargin = resources.getDimensionPixelSize(R.dimen.top_tables_margin)
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
             duration = resources.getInteger(R.integer.transitionAnimationDuration).toLong()
         }
@@ -66,9 +63,9 @@ class EmployeesFragment: Fragment() {
             employeesRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             employeesRecyclerView.adapter = adapter
-            employeesRecyclerView.addItemDecoration(SimpleListItemDecoration(
-                topMargin, largeMargin, smallMargin
-            ))
+            employeesRecyclerView.addItemDecoration(
+                SimpleListItemDecoration(largeMargin, smallMargin, smallMargin)
+            )
         }
     }
 

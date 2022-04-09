@@ -35,6 +35,9 @@
     <string name="emptyFieldTitle">Пустоле поле</string>
     <string name="emptyFieldMessage">Пожалуйста, заполниет все поля.</string>
 
+    <string name="emptyOrderTitle">Пустой заказ</string>
+    <string name="emptyOrderMessage">Пожалуйста, добавьет блюда в заказ, прежде чем отправить его накухню.</string>
+
     <string name="wrongPasswordConfirmationTitle">Неверное подтвержение пароля</string>
     <string name="wrongPasswordConfirmationMessage">Пароль в первом и во втором поле должны совпадать.</string>
 

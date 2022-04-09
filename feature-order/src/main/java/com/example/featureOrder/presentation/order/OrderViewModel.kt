@@ -9,6 +9,7 @@ import com.example.core.domain.entities.menu.MenuService
 import com.example.core.domain.entities.order.Order
 import com.example.core.domain.entities.order.OrderItem
 import com.example.core.domain.entities.tools.Event
+import com.example.core.domain.entities.tools.NetworkConnectionListener
 import com.example.core.domain.interfaces.OrdersService
 import com.example.featureMenuDialog.domain.interfaces.OnDismissListener
 import kotlinx.coroutines.flow.collect
@@ -49,7 +50,7 @@ class OrderViewModel(
     }
 
     fun onFbaClick() {
-        // TODO: Do nothing if the state equal ShowingMenuDialog
+        if(state.value == OrderViewModelStates.ShowingMenuDialog) return
         _state.value = OrderViewModelStates.ShowingMenuDialog
     }
 

@@ -13,7 +13,6 @@ import com.example.core.presentation.recyclerView.interfaces.BaseViewHolder
 import com.example.featureCurrentOrders.R
 import com.example.featureCurrentOrders.databinding.LayoutOrderCardBinding
 
-//TODO: Implement this part //STOPPED//
 class OrdersAdapterDelegate(
     private val onOrderSelected: (order: Order) -> Unit
 ) : BaseAdapterDelegate<LayoutOrderCardBinding, Order>, View.OnClickListener {
@@ -57,6 +56,7 @@ class OrdersViewHolder(
         var allReady = true
         binding.largeOrderContainer.tag = item
         binding.orderContainerCardView.tag = item
+        binding.guestsCount.text = item.guestsCount.toString()
         binding.orderId.precomputeAndSetText(item.orderId.toString())
         val count = item.orderItems.size.coerceAtMost(averageOrderItemsCount)
         item.orderItems.take(count).forEach {

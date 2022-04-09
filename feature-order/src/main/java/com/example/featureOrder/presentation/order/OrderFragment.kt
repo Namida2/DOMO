@@ -12,10 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.tools.enums.AddingDishMods
 import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideUpFromBottom
+import com.example.core.domain.entities.tools.extensions.showIfNotAdded
 import com.example.core.domain.interfaces.OrdersService
 import com.example.core.presentation.recyclerView.adapterDelegates.OrderItemsAdapterDelegate
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
@@ -39,7 +39,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.properties.Delegates
 
-// TODO: Prevent accepting an empty order //STOPPED//
 class OrderFragment : Fragment() {
 
     private var orderId = 0
@@ -47,13 +46,13 @@ class OrderFragment : Fragment() {
     private val guestCountShowingDelay = 400L
     private var smallMargin by Delegates.notNull<Int>()
     private var largeMargin by Delegates.notNull<Int>()
-    private var topMargin by Delegates.notNull<Int>()
 
     private var guestCountDialog: GuestsCountBottomSheetDialog? = null
     private var orderMenuDialog: OrderMenuBottomSheetDialog? = null
     private var dishDialog = DishAlertDialog(AddingDishMods.UPDATING)
 
     private lateinit var binding: FragmentOrderBinding
+    private lateinit var itemDecoration: SimpleListItemDecoration
     private val viewModel by viewModels<OrderViewModel> { ViewModelFactory }
     private val args: OrderFragmentArgs by navArgs()
 
@@ -62,10 +61,9 @@ class OrderFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
-        largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
-        topMargin = resources.getDimensionPixelSize(R.dimen.top_tables_margin)
+        largeMargin = resources.getDimensionPixelSize(R.dimen.top_tables_margin)
+        itemDecoration = SimpleListItemDecoration(largeMargin, smallMargin, smallMargin)
         //TODO: Add a delegate for viewModels
-        //TODO: Subscribe on order status changes
         adapter = BaseRecyclerViewAdapter(
             listOf(
                 OrderItemsAdapterDelegate(
@@ -82,7 +80,6 @@ class OrderFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         sharedElementEnterTransition = MaterialContainerTransform().apply {
-//            drawingViewId = R.id.nav_host_fragment
             duration = resources.getInteger(R.integer.transitionAnimationDuration).toLong()
         }
         initBinding()
@@ -92,6 +89,34 @@ class OrderFragment : Fragment() {
         postponeEnterTransition()
         observeViewModelStates()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.doOnPreDraw {
+            startPostponedEnterTransition()
+            CoroutineScope(Main).launch {
+                delay(150)
+                with(binding) {
+                    bottomAppBar.prepareSlideUpFromBottom(bottomAppBar.height).apply {
+                        doOnEnd { menuFba.show() }
+                    }.start()
+                    bottomAppBar.alpha = 1f
+                    menuFba.alpha = 1f
+                }
+            }
+            showGuestCountDialog()
+        }
+    }
+
+    private fun initBinding() {
+        binding = FragmentOrderBinding.inflate(layoutInflater)
+        binding.viewModel = viewModel
+        orderId = args.orderId
+        with(binding) {
+            tableNumber.text = orderId.toString()
+            intiOrderData()
+        }
     }
 
     private fun initDialogs() {
@@ -113,48 +138,16 @@ class OrderFragment : Fragment() {
         }
     }
 
-    private fun initBinding() {
-        binding = FragmentOrderBinding.inflate(layoutInflater)
-        binding.viewModel = viewModel
-        orderId = args.orderId
-        with(binding) {
-            tableNumber.text = orderId.toString()
-            intiOrderData()
-        }
-    }
-
     private fun intiOrderData() {
         with(binding) {
             orderRecyclerView.adapter = adapter
             this@OrderFragment.viewModel.initCurrentOrder(orderId, defaultGuestsCount)
-
             val currentOrder = this@OrderFragment.viewModel.getCurrentOrder()
             binding.guestsCount.text = currentOrder.guestsCount.toString()
+            binding.orderRecyclerView.addItemDecoration(itemDecoration)
             adapter?.submitList(currentOrder.orderItems.toList())
-
-            orderRecyclerView.addItemDecoration(
-                SimpleListItemDecoration(topMargin, largeMargin, smallMargin)
-            )
             orderRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        view.doOnPreDraw {
-            startPostponedEnterTransition()
-            CoroutineScope(Main).launch {
-                delay(150)
-                with(binding) {
-                    bottomAppBar.prepareSlideUpFromBottom(bottomAppBar.height).apply {
-                        doOnEnd { menuFba.show() }
-                    }.start()
-                    bottomAppBar.alpha = 1f
-                    menuFba.alpha = 1f
-                }
-            }
-            showGuestCountDialog()
         }
     }
 
@@ -183,11 +176,11 @@ class OrderFragment : Fragment() {
                     MenuBottomSheetDialog(viewModel).show(parentFragmentManager, "")
                 }
                 is OrderViewModelStates.ShowingOrderMenuDialog -> {
-                    if (!orderMenuDialog?.isAdded!!)
-                        orderMenuDialog?.show(parentFragmentManager, "")
+                    orderMenuDialog?.showIfNotAdded(parentFragmentManager, "")
                 }
                 is OrderViewModelStates.ShowingDishMenuDialog -> {
                     dishDialog.dish = it.dish
+                    dishDialog.orderItem = it.orderItem
                     dishDialog.setOrderItemData(
                         it.orderItem.count,
                         it.orderItem.commentary

@@ -4,16 +4,18 @@ import com.example.core.R
 import com.example.core.domain.entities.tools.ErrorMessage
 
 object Messages {
-    var dishNotFoundMessage: ErrorMessage =
-        ErrorMessage(
-            R.string.dishNotFoundTitle,
-            R.string.dishNotFoundMessage
-        )
-    var dishAlreadyAddedMessage: ErrorMessage =
-        ErrorMessage(
-            R.string.dishAlreadyAddedTitle,
-            R.string.dishAlreadyAddedMessage
-        )
+    var emptyOrderMessage = ErrorMessage(
+        R.string.emptyOrderTitle,
+        R.string.emptyOrderMessage
+    )
+    var dishNotFoundMessage = ErrorMessage(
+        R.string.dishNotFoundTitle,
+        R.string.dishNotFoundMessage
+    )
+    var dishAlreadyAddedMessage = ErrorMessage(
+        R.string.dishAlreadyAddedTitle,
+        R.string.dishAlreadyAddedMessage
+    )
     val newMenuVersionMessage = ErrorMessage(
         R.string.newMenuVersionTitle,
         R.string.newMenuVersionMessage
@@ -60,12 +62,12 @@ object Messages {
         R.string.tooShortPasswordMessage
     )
 
-    val emailAlreadyExistsMessage: ErrorMessage? = ErrorMessage(
+    val emailAlreadyExistsMessage: ErrorMessage = ErrorMessage(
         R.string.emailAlreadyExitsTitle,
         R.string.emailAlreadyExistsMessage
     )
 
-    val wrongPasswordConfirmationMessage: ErrorMessage? = ErrorMessage(
+    val wrongPasswordConfirmationMessage: ErrorMessage = ErrorMessage(
         R.string.wrongPasswordConfirmationTitle,
         R.string.wrongPasswordConfirmationMessage
     )
