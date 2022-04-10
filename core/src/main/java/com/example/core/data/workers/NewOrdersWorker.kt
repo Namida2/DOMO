@@ -64,12 +64,14 @@ class NewOrdersWorker(
     }
 
     private fun onNewOrder(data: MutableMap<String, Any>) {
-        val orderInfo = data[FIELD_ORDER_INFO] as Map<*, *>
+        val orderInfo = data[FIELD_ORDER_INFO] as Map<*, *> ?: return
         val orderId = (orderInfo[FIELD_ORDER_ID] as? Long)?.toInt() ?: return
         val guestCount = (orderInfo[FIELD_GUESTS_COUNT] as? Long)?.toInt() ?: return
-        readNewOrderUseCase.readNewOrder(
-            Order(orderId, guestCount)
-        )
+        try {
+            readNewOrderUseCase.readNewOrder(
+                Order(orderId, guestCount)
+            )
+        } catch (e: Exception) {}
 //        if (WaiterMainDepsStore.currentEmployee!!.post == COOK)
         if (needToShowNotifications) {
             notificationManager?.notify(
