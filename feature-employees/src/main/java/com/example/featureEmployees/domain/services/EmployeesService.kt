@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 interface EmployeesService {
     val employeesChanges: MutableSharedFlow<List<Employee>>
     fun setNewEmployeesList(employees: MutableList<Employee>)
-    fun listenChanges()
+    fun listenPermissionChanges()
     fun removeEmployee(employee: Employee)
     fun cancel()
 }

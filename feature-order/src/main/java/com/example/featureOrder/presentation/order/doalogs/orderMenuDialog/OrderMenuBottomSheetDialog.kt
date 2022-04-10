@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.core.domain.entities.tools.constants.Messages.checkNetworkConnectionMessage
-import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
+import com.example.core.presentation.ProcessAleartDialog.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.entities.tools.extensions.dismissIfAdded
 import com.example.core.domain.entities.tools.extensions.isNetworkConnected

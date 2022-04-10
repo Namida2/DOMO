@@ -115,6 +115,7 @@ class OrderFragment : Fragment() {
         orderId = args.orderId
         with(binding) {
             tableNumber.text = orderId.toString()
+            toolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
             intiOrderData()
         }
     }

@@ -10,18 +10,20 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.core.domain.entities.tools.constants.Messages.checkNetworkConnectionMessage
 import com.example.core.domain.entities.tools.constants.OtherStringConstants.ACTIVITY_IS_NOT_EMPLOYEE_AUTHORIZATION_CALLBACK
-import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
+import com.example.core.presentation.ProcessAleartDialog.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.entities.tools.extensions.dismissIfAdded
 import com.example.core.domain.entities.tools.extensions.isNetworkConnected
 import com.example.core.domain.entities.tools.extensions.showIfNotAdded
 import com.example.core.domain.interfaces.EmployeeAuthCallback
+import com.example.core.presentation.adminPasswordDialog.AdminPasswordDialog
 import com.example.featureLogIn.R
 import com.example.featureLogIn.databinding.FragmentLogInBinding
 import com.example.featureLogIn.domain.ViewModelFactory
 import com.example.featureLogIn.domain.di.LogInDepsStore
 import com.example.featureRegistration.domain.di.RegistrationAppComponentDeps
 import com.example.featureRegistration.domain.di.RegistrationDepsStore
+import com.example.featureRegistration.presentation.RegistrationVMStates
 import com.google.firebase.auth.FirebaseAuth
 
 class LogInFragment : Fragment() {
@@ -87,6 +89,12 @@ class LogInFragment : Fragment() {
                         ProcessAlertDialog.dismissIfAdded()
                     }?.show(parentFragmentManager, "")
                 }
+                is LogInVMStates.RequestPassword ->{
+                    ProcessAlertDialog.dismissIfAdded()
+                    AdminPasswordDialog(it.correctPassword, viewModel)
+                        .show(parentFragmentManager, "")
+                }
+
                 is LogInVMStates.Default -> {
                     ProcessAlertDialog.dismissIfAdded()
                 }

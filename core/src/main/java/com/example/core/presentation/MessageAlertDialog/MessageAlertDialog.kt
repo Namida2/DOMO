@@ -1,4 +1,4 @@
-package com.example.core.domain.entities.tools.dialogs
+package com.example.core.presentation.MessageAlertDialog
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -23,9 +23,10 @@ class MessageAlertDialog(
     private val action: (() -> Unit)? = null,
 ) : DialogFragment() {
 
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
-        logE("$this: coroutineContext: $coroutineContext, throwable: ${throwable.message}")
-    }
+    private val coroutineExceptionHandler =
+        CoroutineExceptionHandler { coroutineContext, throwable ->
+            logE("$this: coroutineContext: $coroutineContext, throwable: ${throwable.message}")
+        }
 
     companion object {
         val isExist: AtomicBoolean = AtomicBoolean(false)
@@ -67,8 +68,8 @@ class MessageAlertDialog(
     }
 
     override fun onDetach() {
-        isExist.set(false)
         super.onDetach()
+        isExist.set(false)
     }
 }
 

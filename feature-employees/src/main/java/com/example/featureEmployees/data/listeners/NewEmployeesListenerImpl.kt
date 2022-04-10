@@ -16,10 +16,10 @@ import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
 
 class NewEmployeesListenerImpl @Inject constructor() : NewEmployeesListener {
-    private var isFirstData = false
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override val newEmployeesFlow: Flow<Employee> = callbackFlow {
+        var isFirstData = false
         val subscription = newEmployeeListenerDocumentRef.addSnapshotListener { value, error ->
             when {
                 error != null -> {

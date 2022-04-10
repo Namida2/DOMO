@@ -11,7 +11,7 @@
     <string name="settings">Настройки</string>
     <string name="workWithMenu">Идет работа с меню</string>
     <string name="newOrderTitle">Новый заказ</string>
-    <string name="dishIsReady">Блюдо готово:\u0020</string>
+    <string name="dishIsReady">Новый статус:\u0020</string>
     <string name="success">Успешно!</string>
 
     <!--Tools-->
@@ -52,6 +52,11 @@
 
     <string name="tooShortPasswordTitle">Пароль слишком короткий</string>
     <string name="tooShortPasswordMessage">Пароль должен состоять из 6 и больше стмволов.</string>
+
+    <string name="wrongAdminEmailTitle">Неверный пароль</string>
+    <string name="wrongAdminEmailMessage">Пароли не совпадают, пожалуйста, попробуйте еще раз.</string>
+
+    <string name="employeeMaybeDeletedByAnotherAdminMessage">Что-то пошло не так. Возможно, данный аботник был удален другим администратором.</string>
 
     <string name="dishNotFoundTitle">Блюдо не найдено</string>
     <string name="dishNotFoundMessage">Блюдо с таким именем и комментарием не найдено.</string>

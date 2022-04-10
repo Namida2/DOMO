@@ -11,6 +11,7 @@ import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.constants.Messages.dishAlreadyAddedMessage
 import com.example.core.domain.entities.tools.constants.Messages.dishNotFoundMessage
 import com.example.core.domain.entities.tools.enums.AddingDishMods
+import com.example.core.domain.entities.tools.extensions.isEmptyField
 import com.example.core.domain.entities.tools.extensions.logD
 
 sealed class DishDialogVMStates {
@@ -29,20 +30,27 @@ class DishDialogViewModel(
     var addingDishMode: AddingDishMods? = null
     var aldCommentary: String? = null
     private var _state = MutableLiveData<DishDialogVMStates>(DishDialogVMStates.Default)
+    private var minDishesCount = 1
 
     val state: LiveData<DishDialogVMStates> = _state
 
     fun onAddButtonClick(view: View, dishesCount: String, commentary: String) {
         view.isActivated = false
+        var dishesCountInt = minDishesCount
+        if(!isEmptyField(dishesCount)) {
+            dishesCountInt = dishesCount.toIntOrNull().run {
+                if(this == 0 || this == null) minDishesCount else this
+            }
+        }
         val result: Boolean = when (addingDishMode) {
             AddingDishMods.INSERTING -> {
                 ordersService.addOrderItem(
-                    OrderItem(dish!!.id, dishesCount.toInt(), commentary),
+                    OrderItem(dish!!.id, dishesCountInt, commentary),
                 )
             }
             AddingDishMods.UPDATING -> {
                 ordersService.updateOrderItem(
-                    OrderItem(dish!!.id, dishesCount.toInt(), commentary),
+                    OrderItem(dish!!.id, dishesCountInt, commentary),
                     aldCommentary!!
                 )
             }

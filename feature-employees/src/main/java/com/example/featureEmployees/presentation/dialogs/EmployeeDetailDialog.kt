@@ -3,12 +3,11 @@ package com.example.featureEmployees.presentation.dialogs
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.view.Gravity
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.example.core.domain.entities.Employee
-import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
+import com.example.core.presentation.ProcessAleartDialog.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.entities.tools.extensions.dismissIfAdded
 import com.example.core.domain.entities.tools.extensions.showIfNotAdded
@@ -51,15 +50,13 @@ class EmployeeDetailDialog : DialogFragment() {
                 is EmployeeDetailVMStates.InProcess ->
                     ProcessAlertDialog.showIfNotAdded(parentFragmentManager, "")
                 is EmployeeDetailVMStates.OnFailure -> {
-                    ProcessAlertDialog.dismissIfAdded()
-                    requireContext().createMessageDialog(it.errorMessage)
-                        ?.show(parentFragmentManager, "")
-                    viewModel.resetViewModelSate()
+                    requireContext().createMessageDialog(it.errorMessage) {
+                        ProcessAlertDialog.dismissIfAdded()
+                    }?.show(parentFragmentManager, "")
                 }
                 is EmployeeDetailVMStates.OnSuccess -> {
                     ProcessAlertDialog.onSuccess()
                     this.dismiss()
-                    viewModel.resetViewModelSate()
                 }
                 is EmployeeDetailVMStates.Default -> {
                     ProcessAlertDialog.dismissIfAdded()

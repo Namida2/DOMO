@@ -53,6 +53,11 @@ object FirestoreReferences {
             .document(FirestoreConstants.DOCUMENT_DOMO)
             .collection(FirestoreConstants.COLLECTION_LISTENERS)
             .document(FirestoreConstants.DOCUMENT_NEW_EMPLOYEE_LISTENER)
+    val adminPasswordDocumentRef =
+        fireStore.collection(FirestoreConstants.COLLECTION_RESTAURANTS)
+            .document(FirestoreConstants.DOCUMENT_DOMO)
+            .collection(FirestoreConstants.COLLECTION_DATA)
+            .document(FirestoreConstants.DOCUMENT_ADMIN_PASSWORD)
     val deletedOrderListenerDocumentRef =
         fireStore.collection(FirestoreConstants.COLLECTION_RESTAURANTS)
             .document(FirestoreConstants.DOCUMENT_DOMO)

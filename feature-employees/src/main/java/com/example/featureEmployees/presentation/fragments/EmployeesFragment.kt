@@ -22,6 +22,8 @@ import kotlin.properties.Delegates
 
 // TODO: Password for administrator //STOPPED//
 // TODO: Reread menu when unknown dish id in get dish by id in MenuService
+// TODO: Add input layout instead of editText 
+// TODO: Move code to onViewCreated 
 class EmployeesFragment: Fragment() {
     private var smallMargin by Delegates.notNull<Int>()
     private var largeMargin by Delegates.notNull<Int>()

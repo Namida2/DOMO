@@ -16,6 +16,7 @@ object FirestoreConstants {
     const val DOCUMENT_DOMO = "domo"
     const val DOCUMENT_MENU = "menu"
     const val DOCUMENT_SETTINGS = "settings"
+    const val DOCUMENT_ADMIN_PASSWORD = "adminPassword"
     const val DOCUMENT_NEW_ORDERS_LISTENER = "newOrdersListener"
     const val DOCUMENT_ORDER_ITEMS_STATE_LISTENER = "orderItemStateListener"
     const val DOCUMENT_PERMISSION_LISTENER = "permissionListener"
@@ -32,6 +33,7 @@ object FirestoreConstants {
     const val FIELD_IS_READY= "ready"
     const val FIELD_PERMISSION= "permission"
     const val FIELD_EMAIL = "email"
+    const val FIELD_PASSWORD = "password"
     const val FIELD_NEW_PERMISSION= "newPermission"
     //Tools
     const val ORDER_ITEM_ID_DELIMITER = "_"

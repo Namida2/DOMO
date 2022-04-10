@@ -13,19 +13,21 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.core.domain.entities.tools.constants.OtherStringConstants
-import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
+import com.example.core.presentation.ProcessAleartDialog.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.entities.tools.extensions.dismissIfAdded
 import com.example.core.domain.entities.tools.extensions.isNetworkConnected
 import com.example.core.domain.entities.tools.extensions.showIfNotAdded
 import com.example.core.domain.interfaces.EmployeeAuthCallback
+import com.example.core.presentation.adminPasswordDialog.AdminPasswordDialog
+import com.example.core.presentation.adminPasswordDialog.AdminPasswordDialogCallbacks
 import com.example.featureRegistration.R
 import com.example.featureRegistration.databinding.FragmentRegistrationBinding
 import com.example.featureRegistration.domain.ViewModelFactory
 import com.example.featureRegistration.domain.recyclerView.PostItemDecoration
 import com.example.featureRegistration.domain.recyclerView.PostItemsAdapter
 
-class RegistrationFragment : Fragment() {
+class RegistrationFragment : Fragment(){
 
     private var smallMargin: Int? = null
     private var largeMargin: Int? = null
@@ -104,6 +106,11 @@ class RegistrationFragment : Fragment() {
                     requireContext().createMessageDialog(it.errorMessage){
                         ProcessAlertDialog.dismissIfAdded()
                     }?.show(parentFragmentManager, "")
+                }
+                is RegistrationVMStates.RequestPassword -> {
+                    ProcessAlertDialog.dismissIfAdded()
+                    AdminPasswordDialog(it.correctPassword, viewModel)
+                        .show(parentFragmentManager, "")
                 }
                 is RegistrationVMStates.Default -> {
                     ProcessAlertDialog.dismissIfAdded()

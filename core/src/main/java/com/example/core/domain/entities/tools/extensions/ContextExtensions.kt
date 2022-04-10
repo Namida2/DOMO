@@ -6,7 +6,7 @@ import android.net.NetworkCapabilities
 import android.util.Log
 import androidx.fragment.app.DialogFragment
 import com.example.core.domain.entities.tools.ErrorMessage
-import com.example.core.domain.entities.tools.dialogs.MessageAlertDialog
+import com.example.core.presentation.MessageAlertDialog.MessageAlertDialog
 
 fun Context.createMessageDialog(message: ErrorMessage, action: () -> Unit = {}): DialogFragment? =
     MessageAlertDialog.getNewInstance<Unit>(

@@ -11,8 +11,8 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.core.domain.entities.Employee
-import com.example.core.domain.entities.tools.dialogs.ClosedQuestionDialog
-import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
+import com.example.core.presentation.closedQuestionDialog.ClosedQuestionDialog
+import com.example.core.presentation.ProcessAleartDialog.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideDownFomTop
 import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideUp
 import com.example.core.domain.entities.tools.extensions.createMessageDialog

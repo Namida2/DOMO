@@ -5,31 +5,24 @@ import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.TaskWithEmployee
 import com.example.core.domain.entities.tools.constants.EmployeePosts
 import com.example.featureRegistration.data.RegistrationRemoteRepository
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestoreSettings
 import javax.inject.Inject
 
 class RegistrationUseCaseImpl @Inject constructor(
     private val remoteRepository: RegistrationRemoteRepository,
-//    private val employeeDao: EmployeeDao
 ) : RegistrationUseCase {
 
-    override fun registration(
-        employee: Employee,
-        task: TaskWithEmployee
-    ) {
-        if (employee.post == EmployeePosts.ADMINISTRATOR.value)
-            employee.permission = true
-        remoteRepository.registration(employee, object : TaskWithEmployee {
-            override fun onSuccess(result: Employee) {
-                task.onSuccess(employee)
-            }
+    override fun registration(employee: Employee, task: TaskWithEmployee) {
+        remoteRepository.registration(employee, task)
+    }
 
-            override fun onError(message: ErrorMessage?) {
-                task.onError(message)
-            }
-        })
+    override fun logInAsAdministrator(employee: Employee, task: TaskWithEmployee) {
+        remoteRepository.logInAsAdministrator(employee, task)
     }
 }
 
 interface RegistrationUseCase {
     fun registration(employee: Employee, task: TaskWithEmployee)
+    fun logInAsAdministrator(employee: Employee, task: TaskWithEmployee)
 }

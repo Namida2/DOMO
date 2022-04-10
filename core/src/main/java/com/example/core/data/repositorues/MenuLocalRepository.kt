@@ -37,7 +37,7 @@ class MenuLocalRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun insertCurrentMenu() {
+    override fun insertCurrentMenu(onComplete: () -> Unit) {
         logD(MenuService.menu.toString())
         val dishes = getAllDishes(MenuService.menu)
         logD("flattenDishesSize: ${dishes.size}")

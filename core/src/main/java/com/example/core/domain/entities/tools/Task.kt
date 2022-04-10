@@ -6,6 +6,7 @@ import com.example.core.domain.entities.order.Order
 typealias TaskWithEmployee = Task<Employee, Unit>
 typealias TaskWithOrder = Task<Order, Unit>
 typealias SimpleTask = Task<Unit, Unit>
+typealias TaskWithPassword = Task<String, Unit>
 
 interface Task<A, R> {
     fun onSuccess(result: A): R

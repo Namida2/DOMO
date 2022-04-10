@@ -38,10 +38,11 @@ class ReadMenuUseCase @Inject constructor(
         menuRemoteRepository.readNewMenu(menuCollectionRef, object : SimpleTask {
             override fun onSuccess(result: Unit) {
                 if (!getFromServer) {
-                    sharedPreferences.edit().putLong(
-                        FirestoreConstants.FIELD_MENU_VERSION, menuVersion!!
-                    ).apply()
-                    menuLocalRepository.insertCurrentMenu()
+                    menuLocalRepository.insertCurrentMenu {
+                        sharedPreferences.edit().putLong(
+                            FirestoreConstants.FIELD_MENU_VERSION, menuVersion!!
+                        ).apply()
+                    }
                 }
                 task.onSuccess(Unit)
             }

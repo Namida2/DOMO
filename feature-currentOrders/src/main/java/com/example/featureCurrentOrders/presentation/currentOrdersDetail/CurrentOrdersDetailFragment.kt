@@ -16,8 +16,8 @@ import com.example.core.domain.entities.order.OrderItem
 import com.example.core.domain.entities.tools.NetworkConnectionListener
 import com.example.core.domain.entities.tools.constants.EmployeePosts.COOK
 import com.example.core.domain.entities.tools.constants.Messages.checkNetworkConnectionMessage
-import com.example.core.domain.entities.tools.dialogs.ClosedQuestionDialog
-import com.example.core.domain.entities.tools.dialogs.ProcessAlertDialog
+import com.example.core.presentation.closedQuestionDialog.ClosedQuestionDialog
+import com.example.core.presentation.ProcessAleartDialog.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.entities.tools.extensions.dismissIfAdded
 import com.example.core.domain.entities.tools.extensions.showIfNotAdded

@@ -9,6 +9,8 @@ import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD
 import com.example.core.domain.entities.tools.constants.FirestoreReferences.employeesCollectionRef
 import com.example.core.domain.entities.tools.constants.FirestoreReferences.fireStore
 import com.example.core.domain.entities.tools.constants.FirestoreReferences.newPermissionListenerDocumentRef
+import com.example.core.domain.entities.tools.constants.Messages.defaultErrorMessage
+import com.example.core.domain.entities.tools.constants.Messages.employeeMaybeDeletedByAnotherAdminMessage
 import com.example.core.domain.entities.tools.extensions.getExceptionMessage
 import com.example.featureEmployees.domain.repositories.EmployeesRepository
 import com.example.featureEmployees.domain.services.EmployeesService
@@ -57,7 +59,10 @@ class EmployeesRepositoryImpl @Inject constructor(
             }.addOnSuccessListener {
                 task.onSuccess(Unit)
             }.addOnFailureListener {
-                task.onError(it.getExceptionMessage())
+                val message = it.getExceptionMessage()
+                if(message == defaultErrorMessage)
+                    task.onError(employeeMaybeDeletedByAnotherAdminMessage)
+                else task.onError(message)
             }
         }
     }

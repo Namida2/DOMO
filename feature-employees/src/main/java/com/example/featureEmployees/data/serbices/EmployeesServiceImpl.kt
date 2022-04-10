@@ -31,7 +31,7 @@ class EmployeesServiceImpl @Inject constructor(
         employeesChanges.tryEmit(employees)
     }
 
-    override fun listenChanges() {
+    override fun listenPermissionChanges() {
         coroutineScope.launch {
             EmployeePermissionListener.permissionChanges.collect { newPermission ->
                 employees.indexOfFirst { employee ->

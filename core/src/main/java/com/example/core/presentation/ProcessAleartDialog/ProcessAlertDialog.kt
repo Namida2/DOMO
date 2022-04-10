@@ -1,4 +1,4 @@
-package com.example.core.domain.entities.tools.dialogs
+package com.example.core.presentation.ProcessAleartDialog
 
 import android.app.AlertDialog
 import android.app.Dialog

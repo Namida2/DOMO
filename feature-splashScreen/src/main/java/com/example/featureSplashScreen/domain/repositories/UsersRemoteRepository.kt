@@ -10,7 +10,6 @@ interface UsersRemoteRepository {
         currentUser: FirebaseUser,
         task: TaskWithEmployee
     )
-
     fun saveNewEmployeeData(
         newEmployee: Employee,
         task: TaskWithEmployee

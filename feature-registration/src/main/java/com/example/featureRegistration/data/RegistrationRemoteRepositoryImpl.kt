@@ -3,6 +3,7 @@ package com.example.featureRegistration.data
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.tools.TaskWithEmployee
 import com.example.core.domain.entities.tools.constants.EmployeePosts
+import com.example.core.domain.entities.tools.constants.FirestoreConstants
 import com.example.core.domain.entities.tools.constants.Messages.defaultErrorMessage
 import com.example.core.domain.entities.tools.constants.Messages.emailAlreadyExistsMessage
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
@@ -10,6 +11,8 @@ import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD
 import com.example.core.domain.entities.tools.constants.FirestoreReferences.employeesCollectionRef
 import com.example.core.domain.entities.tools.constants.FirestoreReferences.fireStore
 import com.example.core.domain.entities.tools.constants.FirestoreReferences.newEmployeeListenerDocumentRef
+import com.example.core.domain.entities.tools.constants.Messages
+import com.example.core.domain.entities.tools.extensions.addOnSuccessListenerWithDefaultFailureHandler
 import com.example.core.domain.entities.tools.extensions.getExceptionMessage
 import com.example.core.domain.entities.tools.extensions.logD
 import com.example.core.domain.entities.tools.extensions.logE
@@ -21,6 +24,8 @@ interface RegistrationRemoteRepository {
         employee: Employee,
         task: TaskWithEmployee,
     )
+    fun logInAsAdministrator(employee: Employee,
+                             task: TaskWithEmployee,)
 }
 
 class RegistrationRemoteRepositoryImpl @Inject constructor(
@@ -46,6 +51,23 @@ class RegistrationRemoteRepositoryImpl @Inject constructor(
                     task.onError(it.exception?.getExceptionMessage())
                 }
             }
+    }
+
+    override fun logInAsAdministrator(employee: Employee, task: TaskWithEmployee) {
+        auth.signInWithEmailAndPassword(employee.email, employee.password).addOnCompleteListener {
+            if (it.isSuccessful) {
+                setPermissionForAdministrator(employee, task)
+            } else {
+                logE("$this: ${it.exception}")
+                task.onError(Messages.wrongEmailOrPassword)
+            }
+        }
+    }
+
+    private fun setPermissionForAdministrator(employee: Employee, task: TaskWithEmployee) {
+        employeesCollectionRef.document(employee.email).update(
+            FirestoreConstants.FIELD_PERMISSION, true
+        ).addOnSuccessListenerWithDefaultFailureHandler(task) { task.onSuccess(employee) }
     }
 
     private fun createNewEmployee(

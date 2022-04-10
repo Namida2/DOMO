@@ -9,7 +9,6 @@ import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.constants.Messages.defaultErrorMessage
 import com.example.core.domain.entities.tools.Event
 import com.example.core.domain.entities.tools.SimpleTask
-import com.example.core.domain.entities.tools.extensions.logD
 import com.example.featureEmployees.domain.services.EmployeesService
 import com.example.featureEmployees.domain.useCases.ReadEmployeesUseCase
 import kotlinx.coroutines.flow.collect
@@ -25,7 +24,7 @@ sealed class EmployeesVMStates {
 }
 
 class EmployeesViewModel(
-    private val readEmployeesUseCase: ReadEmployeesUseCase,
+    readEmployeesUseCase: ReadEmployeesUseCase,
     private val employeesService: EmployeesService,
 ) : ViewModel() {
 
@@ -35,7 +34,7 @@ class EmployeesViewModel(
     val newEmployeesEvent: LiveData<NewEmployeesEvent> = _newEmployeesEvent
 
     init {
-        employeesService.listenChanges()
+        employeesService.listenPermissionChanges()
         viewModelScope.launch {
             employeesService.employeesChanges.collect {
                 _newEmployeesEvent.value = Event(it.toList())
@@ -53,7 +52,6 @@ class EmployeesViewModel(
 
     override fun onCleared() {
         employeesService.cancel()
-        logD("EmployeesViewModel: onCleared()")
         super.onCleared()
     }
 }

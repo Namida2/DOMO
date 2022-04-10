@@ -4,6 +4,14 @@ import com.example.core.R
 import com.example.core.domain.entities.tools.ErrorMessage
 
 object Messages {
+    var employeeMaybeDeletedByAnotherAdminMessage = ErrorMessage(
+        R.string.defaultTitle,
+        R.string.employeeMaybeDeletedByAnotherAdminMessage
+    )
+    var wrongAdminPasswordMessage = ErrorMessage(
+        R.string.wrongAdminEmailTitle,
+        R.string.wrongAdminEmailMessage
+    )
     var emptyOrderMessage = ErrorMessage(
         R.string.emptyOrderTitle,
         R.string.emptyOrderMessage

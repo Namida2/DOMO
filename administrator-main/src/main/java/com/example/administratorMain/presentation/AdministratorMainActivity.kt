@@ -6,10 +6,7 @@ import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
-import androidx.work.PeriodicWorkRequest
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.WorkRequest
+import androidx.work.*
 import com.example.administratorMain.R
 import com.example.administratorMain.databinding.ActivityAdministratorBinding
 import com.example.administratorMain.domatn.di.AdminDepsStore
@@ -168,18 +165,28 @@ class AdministratorMainActivity : BasePostActivity(), NavController.OnDestinatio
     }
 
     override fun makeWorkerRequests() {
-        val newOrdersWorkRequest: WorkRequest =
+        val newOrdersWorkRequest: PeriodicWorkRequest =
             PeriodicWorkRequestBuilder<NewOrdersWorker>(
                 PeriodicWorkRequest.MIN_PERIODIC_FLEX_MILLIS,
                 TimeUnit.MINUTES
             ).build()
-        val newOrderItemsStateRequest: WorkRequest =
+        val newOrderItemsStateRequest: PeriodicWorkRequest =
             PeriodicWorkRequestBuilder<NewOrderItemStatusWorker>(
                 PeriodicWorkRequest.MIN_PERIODIC_FLEX_MILLIS,
                 TimeUnit.MINUTES
             ).build()
-        WorkManager.getInstance(this).enqueue(newOrdersWorkRequest)
-        WorkManager.getInstance(this).enqueue(newOrderItemsStateRequest)
+        WorkManager.getInstance(this).also {
+            it.enqueueUniquePeriodicWork(
+                NewOrdersWorker.NEW_ORDERS_WORKER_TAG,
+                ExistingPeriodicWorkPolicy.REPLACE,
+                newOrdersWorkRequest
+            )
+            it.enqueueUniquePeriodicWork(
+                NewOrderItemStatusWorker.NEW_ORDER_ITEM_STATUS_WORKER_TAG,
+                ExistingPeriodicWorkPolicy.REPLACE,
+                newOrderItemsStateRequest
+            )
+        }
     }
 
     override fun observeOnNewPermissionEvent() {
@@ -210,5 +217,14 @@ class AdministratorMainActivity : BasePostActivity(), NavController.OnDestinatio
     override fun onAuthorisationEvent(employee: Employee?) {
         AdminDepsStore.employeeAuthCallback?.onAuthorisationEvent(employee)
         viewModelStore.clear()
+    }
+
+    override fun onDestroy() {
+        if (!NewOrdersWorker.needToShowNotifications || !NewOrderItemStatusWorker.needToShowNotifications)
+            WorkManager.getInstance(this).also {
+                it.cancelAllWork()
+            }
+        else makeWorkerRequests()
+        super.onDestroy()
     }
 }

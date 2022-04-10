@@ -17,6 +17,7 @@ import com.example.core.domain.entities.tools.constants.EmployeePosts.ADMINISTRA
 import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideDown
 import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideUpFromBottom
 import com.example.core.domain.entities.tools.extensions.logD
+import com.example.core.domain.entities.tools.extensions.showIfNotAdded
 import com.example.core.presentation.recyclerView.adapterDelegates.DishesAdapterDelegate
 import com.example.core.presentation.recyclerView.adapters.BaseRecyclerViewAdapter
 import com.example.featureMenuDialog.R
@@ -136,12 +137,12 @@ class MenuBottomSheetDialog(
             if (isAdmin) {
                 EditMenuItemDialog(
                     EditMenuDialogModes.EDIT_DISH, dish
-                ).show(parentFragmentManager, "")
+                ).showIfNotAdded(parentFragmentManager, "")
                 return@observe
             }
             if (dishDialog.isAdded) return@observe
             dishDialog.dish = dish
-            dishDialog.show(parentFragmentManager, "")
+            dishDialog.showIfNotAdded(parentFragmentManager, "")
         }
     }
 
@@ -185,6 +186,6 @@ class MenuBottomSheetDialog(
         EditMenuItemDialog(
             EditMenuDialogModes.ADD_DISH,
             categoryName
-        ).show(parentFragmentManager, "")
+        ).showIfNotAdded(parentFragmentManager, "")
     }
 }

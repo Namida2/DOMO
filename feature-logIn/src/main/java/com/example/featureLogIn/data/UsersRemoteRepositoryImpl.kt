@@ -5,6 +5,10 @@ import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.constants.Messages.newMenuVersionMessage
 import com.example.core.domain.entities.tools.constants.Messages.wrongEmailOrPassword
 import com.example.core.domain.entities.tools.TaskWithEmployee
+import com.example.core.domain.entities.tools.constants.FirestoreConstants
+import com.example.core.domain.entities.tools.constants.FirestoreReferences
+import com.example.core.domain.entities.tools.constants.Messages
+import com.example.core.domain.entities.tools.extensions.addOnSuccessListenerWithDefaultFailureHandler
 import com.example.core.domain.entities.tools.extensions.logE
 import com.example.core.domain.entities.tools.extensions.readEmployeeByEmail
 import com.google.firebase.auth.FirebaseAuth
@@ -12,6 +16,7 @@ import javax.inject.Inject
 
 interface UsersRemoteRepository {
     fun logIn(email: String, password: String, task: TaskWithEmployee)
+    fun logInAsAdministrator(employee: Employee, task: TaskWithEmployee)
 }
 
 class UsersRemoteRepositoryImpl @Inject constructor(
@@ -51,5 +56,21 @@ class UsersRemoteRepositoryImpl @Inject constructor(
                 task.onError(message)
             }
         })
+    }
+
+    override fun logInAsAdministrator(employee: Employee, task: TaskWithEmployee) {
+        auth.signInWithEmailAndPassword(employee.email, employee.password).addOnCompleteListener {
+            if (it.isSuccessful) {
+                setPermissionForAdministrator(employee, task)
+            } else {
+                logE("$this: ${it.exception}")
+                task.onError(Messages.wrongEmailOrPassword)
+            }
+        }
+    }
+    private fun setPermissionForAdministrator(employee: Employee, task: TaskWithEmployee) {
+        FirestoreReferences.employeesCollectionRef.document(employee.email).update(
+            FirestoreConstants.FIELD_PERMISSION, true
+        ).addOnSuccessListenerWithDefaultFailureHandler(task) { task.onSuccess(employee) }
     }
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.TaskWithEmployee
+import com.example.core.domain.entities.tools.TaskWithPassword
 import com.example.core.domain.entities.tools.constants.EmployeePosts
 import com.example.core.domain.entities.tools.constants.Messages.defaultErrorMessage
 import com.example.core.domain.entities.tools.constants.Messages.emptyFieldMessage
@@ -16,6 +17,9 @@ import com.example.core.domain.entities.tools.extensions.isEmptyField
 import com.example.core.domain.entities.tools.extensions.isValidEmail
 import com.example.core.domain.interfaces.Stateful
 import com.example.core.domain.interfaces.TerminatingState
+import com.example.core.domain.useCases.LeaveAccountUseCase
+import com.example.core.domain.useCases.ReadAdminPasswordUseCase
+import com.example.core.presentation.adminPasswordDialog.AdminPasswordDialogCallbacks
 import com.example.featureRegistration.domain.PostItem
 import com.example.featureRegistration.domain.useCases.GetPostItemsUseCase
 import com.example.featureRegistration.domain.useCases.RegistrationUseCase
@@ -23,6 +27,7 @@ import com.example.featureRegistration.domain.useCases.RegistrationUseCase
 sealed class RegistrationVMStates {
     object Default : RegistrationVMStates()
     object Validating : RegistrationVMStates()
+    class RequestPassword(val correctPassword: String) : RegistrationVMStates()
     class OnFailure(val errorMessage: ErrorMessage) : RegistrationVMStates(), TerminatingState
     class Valid(val employee: Employee) : RegistrationVMStates(), TerminatingState
 }
@@ -30,8 +35,11 @@ sealed class RegistrationVMStates {
 class RegistrationViewModel(
     private val getPostItemsUseCase: GetPostItemsUseCase,
     private val registrationUseCase: RegistrationUseCase,
-) : ViewModel(), Stateful<RegistrationVMStates> {
+    private val readPasswordUseCase: ReadAdminPasswordUseCase,
+    private val leaveAccountUseCase: LeaveAccountUseCase
+) : ViewModel(), Stateful<RegistrationVMStates>, AdminPasswordDialogCallbacks {
 
+    private var employee: Employee? = null
     var selectedPost: String = EmployeePosts.COOK.value
     private val minPasswordLength = 6
     private var _state = MutableLiveData<RegistrationVMStates>()
@@ -53,17 +61,36 @@ class RegistrationViewModel(
                 setNewState(RegistrationVMStates.OnFailure(wrongPasswordConfirmationMessage)); return
             }
         }
+        register(Employee(email, name, selectedPost, password))
+    }
 
-        val employee = Employee(email, name, selectedPost, password)
+    private fun register(employee: Employee) {
         registrationUseCase.registration(employee, object : TaskWithEmployee {
             override fun onSuccess(result: Employee) {
-                setNewState(RegistrationVMStates.Valid(employee)); return
+                this@RegistrationViewModel.employee = result
+                if (result.post == EmployeePosts.ADMINISTRATOR.value) {
+                    readAdminPassword()
+                } else {
+                    setNewState(RegistrationVMStates.Valid(result))
+                    return
+                }
             }
             override fun onError(message: ErrorMessage?) {
                 setNewState(RegistrationVMStates.OnFailure(message ?: defaultErrorMessage)); return
             }
-        }
-        )
+        })
+    }
+
+    private fun readAdminPassword() {
+        readPasswordUseCase.getPassword(object : TaskWithPassword {
+            override fun onSuccess(result: String) {
+                leaveAccountUseCase.leaveImmediately()
+                setNewState(RegistrationVMStates.RequestPassword(result))
+            }
+            override fun onError(message: ErrorMessage?) {
+                setNewState(RegistrationVMStates.OnFailure(message ?: defaultErrorMessage))
+            }
+        })
     }
 
     fun getPostItems(): MutableList<PostItem> = getPostItemsUseCase.getPostItems()
@@ -73,4 +100,20 @@ class RegistrationViewModel(
         if (state is TerminatingState)
             _state.value = RegistrationVMStates.Default
     }
+
+    override fun onCorrectPassword() {
+        setNewState(RegistrationVMStates.Validating)
+        registrationUseCase.logInAsAdministrator(employee!!, object : TaskWithEmployee {
+            override fun onSuccess(result: Employee) {
+                setNewState(RegistrationVMStates.Valid(result))
+
+            }
+            override fun onError(message: ErrorMessage?) {
+                setNewState(RegistrationVMStates.OnFailure(message ?: defaultErrorMessage)); return
+            }
+        })
+    }
+
+    override fun onDialogCanceled() { employee = null }
+
 }
