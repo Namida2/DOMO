@@ -70,7 +70,6 @@ class NewOrderItemStatusWorker(
         val dishId = orderItemId.substring(0, orderItemId.indexOf(ORDER_ITEM_ID_DELIMITER))
         try {
             orderService.changeOrderItemStatus(orderId, orderItemId, isReady)
-        } catch (e: Exception) {}
 //        if (CoreDepsStore.deps.currentEmployee!!.post == WAITER)
         // TODO: Add a dishName into fields in document to show it in this notification
         if (needToShowNotifications)
@@ -79,9 +78,10 @@ class NewOrderItemStatusWorker(
                 NotificationsTools.createNotification(
                     context,
                     context.resources.getString(R.string.table, orderId),
-                    context.resources.getString(R.string.dishIsReady) + "MenuService.getDishById(dishId.toInt()).name"
+                    context.resources.getString(R.string.dishIsReady) + MenuService.getDishById(dishId.toInt()).name
                 )
             )
+        } catch (e: Exception) {}
     }
 
 }
