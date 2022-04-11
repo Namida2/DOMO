@@ -6,8 +6,7 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.core.R
 import com.example.core.domain.di.CoreDepsStore
-import com.example.core.domain.entities.menu.MenuService
-import com.example.core.domain.entities.order.Order
+import com.example.core.domain.entities.tools.constants.FirestoreConstants
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_IS_READY
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_ORDER_ID
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_ORDER_ITEM_ID
@@ -67,21 +66,20 @@ class NewOrderItemStatusWorker(
         val orderId = (orderItemInfo[FIELD_ORDER_ID] as? Long)?.toInt() ?: return
         val orderItemId = orderItemInfo[FIELD_ORDER_ITEM_ID] as? String ?: return
         val isReady = orderItemInfo[FIELD_IS_READY] as? Boolean ?: return
-        val dishId = orderItemId.substring(0, orderItemId.indexOf(ORDER_ITEM_ID_DELIMITER))
+        val dishName = orderItemInfo[FirestoreConstants.FIELD_DISH_NAME] as? String ?: return
         try {
             orderService.changeOrderItemStatus(orderId, orderItemId, isReady)
+        } catch (e: Exception) { }
 //        if (CoreDepsStore.deps.currentEmployee!!.post == WAITER)
-        // TODO: Add a dishName into fields in document to show it in this notification
         if (needToShowNotifications)
             notificationManager?.notify(
                 id++,
                 NotificationsTools.createNotification(
                     context,
                     context.resources.getString(R.string.table, orderId),
-                    context.resources.getString(R.string.dishIsReady) + MenuService.getDishById(dishId.toInt()).name
+                    context.resources.getString(R.string.dishIsReady) + dishName
                 )
             )
-        } catch (e: Exception) {}
     }
 
 }

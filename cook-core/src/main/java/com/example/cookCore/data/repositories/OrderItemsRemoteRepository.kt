@@ -2,6 +2,8 @@ package com.example.cookCore.data.repositories
 
 import com.example.core.domain.entities.tools.SimpleTask
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.COLLECTION_ORDER_ITEMS
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.EMPTY_COMMENTARY
+import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_DISH_NAME
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_ORDER_ID
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_IS_READY
 import com.example.core.domain.entities.tools.constants.FirestoreConstants.FIELD_ORDER_ITEM_ID
@@ -18,6 +20,7 @@ class OrderItemsRemoteRepositoryImpl @Inject constructor() : OrderItemsRemoteRep
     override fun changeOrderItemStatus(
         orderId: Int,
         orderItemId: String,
+        dishName: String,
         isReady: Boolean,
         task: SimpleTask
     ) {
@@ -26,7 +29,7 @@ class OrderItemsRemoteRepositoryImpl @Inject constructor() : OrderItemsRemoteRep
         resetOrderItemState(task) {
             fireStore.runTransaction {
                 it.update(orderItemDocumentRef, FIELD_IS_READY, isReady)
-                updateOrderItemsStateListener(orderId, orderItemId, isReady, it)
+                updateOrderItemsStateListener(orderId, orderItemId, dishName, isReady, it)
             }.addOnSuccessListener {
                 task.onSuccess(Unit)
             }.addOnFailureListener {
@@ -39,9 +42,10 @@ class OrderItemsRemoteRepositoryImpl @Inject constructor() : OrderItemsRemoteRep
         orderItemsStateListenerDocumentRef.set(
             mapOf<String, Any>(
                 FIELD_ORDER_ITEM_INFO to mapOf<String, Any>(
-                    FIELD_ORDER_ID to "",
-                    FIELD_ORDER_ITEM_ID to "",
-                    FIELD_IS_READY to ""
+                    FIELD_ORDER_ID to EMPTY_COMMENTARY,
+                    FIELD_ORDER_ITEM_ID to EMPTY_COMMENTARY,
+                    FIELD_DISH_NAME to EMPTY_COMMENTARY,
+                    FIELD_IS_READY to EMPTY_COMMENTARY
                 )
             )
         ).addOnSuccessListener {
@@ -54,6 +58,7 @@ class OrderItemsRemoteRepositoryImpl @Inject constructor() : OrderItemsRemoteRep
     private fun updateOrderItemsStateListener(
         orderId: Int,
         orderItemId: String,
+        dishName: String,
         isReady: Boolean,
         transaction: Transaction
     ) {
@@ -61,6 +66,7 @@ class OrderItemsRemoteRepositoryImpl @Inject constructor() : OrderItemsRemoteRep
             FIELD_ORDER_ITEM_INFO to mapOf<String, Any>(
                 FIELD_ORDER_ID to orderId,
                 FIELD_ORDER_ITEM_ID to orderItemId,
+                FIELD_DISH_NAME to dishName,
                 FIELD_IS_READY to isReady
             )
         )
@@ -70,5 +76,5 @@ class OrderItemsRemoteRepositoryImpl @Inject constructor() : OrderItemsRemoteRep
 }
 
 interface OrderItemsRemoteRepository {
-    fun changeOrderItemStatus(orderId: Int, orderItemId: String, isReady: Boolean, task: SimpleTask)
+    fun changeOrderItemStatus(orderId: Int, orderItemId: String, dishName: String, isReady: Boolean, task: SimpleTask)
 }
