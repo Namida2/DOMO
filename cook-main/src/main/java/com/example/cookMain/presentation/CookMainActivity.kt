@@ -177,30 +177,6 @@ class CookMainActivity : BasePostActivity(), NavController.OnDestinationChangedL
         viewModelStore.clear()
     }
 
-    override fun makeWorkerRequests() {
-        val newOrdersWorkRequest: PeriodicWorkRequest =
-            PeriodicWorkRequestBuilder<NewOrdersWorker>(
-                MIN_PERIODIC_FLEX_MILLIS,
-                TimeUnit.MINUTES
-            ).build()
-        val newOrderItemsStateRequest: PeriodicWorkRequest =
-            PeriodicWorkRequestBuilder<NewOrderItemStatusWorker>(
-                MIN_PERIODIC_FLEX_MILLIS,
-                TimeUnit.MINUTES
-            ).build()
-        WorkManager.getInstance(this).also {
-            it.enqueueUniquePeriodicWork(
-                NewOrdersWorker.NEW_ORDERS_WORKER_TAG,
-                ExistingPeriodicWorkPolicy.REPLACE,
-                newOrdersWorkRequest
-            )
-            it.enqueueUniquePeriodicWork(
-                NewOrderItemStatusWorker.NEW_ORDER_ITEM_STATUS_WORKER_TAG,
-                ExistingPeriodicWorkPolicy.REPLACE,
-                newOrderItemsStateRequest
-            )
-        }
-    }
 
     override fun onDestroy() {
         if (!NewOrdersWorker.needToShowNotifications || !NewOrderItemStatusWorker.needToShowNotifications)

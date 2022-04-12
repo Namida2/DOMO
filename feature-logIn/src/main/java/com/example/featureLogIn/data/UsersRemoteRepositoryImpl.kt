@@ -2,12 +2,12 @@ package com.example.featureLogIn.data
 
 import com.example.core.domain.entities.Employee
 import com.example.core.domain.entities.tools.ErrorMessage
-import com.example.core.domain.entities.tools.constants.Messages.newMenuVersionMessage
-import com.example.core.domain.entities.tools.constants.Messages.wrongEmailOrPassword
 import com.example.core.domain.entities.tools.TaskWithEmployee
 import com.example.core.domain.entities.tools.constants.FirestoreConstants
 import com.example.core.domain.entities.tools.constants.FirestoreReferences
 import com.example.core.domain.entities.tools.constants.Messages
+import com.example.core.domain.entities.tools.constants.Messages.permissionDeniedMessage
+import com.example.core.domain.entities.tools.constants.Messages.wrongEmailOrPassword
 import com.example.core.domain.entities.tools.extensions.addOnSuccessListenerWithDefaultFailureHandler
 import com.example.core.domain.entities.tools.extensions.logE
 import com.example.core.domain.entities.tools.extensions.readEmployeeByEmail
@@ -47,7 +47,7 @@ class UsersRemoteRepositoryImpl @Inject constructor(
             override fun onSuccess(result: Employee) {
                 if (!result.permission) {
                     auth.signOut()
-                    task.onError(newMenuVersionMessage)
+                    task.onError(permissionDeniedMessage)
                 } else task.onSuccess(result)
             }
 
@@ -64,10 +64,11 @@ class UsersRemoteRepositoryImpl @Inject constructor(
                 setPermissionForAdministrator(employee, task)
             } else {
                 logE("$this: ${it.exception}")
-                task.onError(Messages.wrongEmailOrPassword)
+                task.onError(wrongEmailOrPassword)
             }
         }
     }
+
     private fun setPermissionForAdministrator(employee: Employee, task: TaskWithEmployee) {
         FirestoreReferences.employeesCollectionRef.document(employee.email).update(
             FirestoreConstants.FIELD_PERMISSION, true

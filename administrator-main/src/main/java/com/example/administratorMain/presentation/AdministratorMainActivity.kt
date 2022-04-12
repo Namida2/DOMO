@@ -164,30 +164,6 @@ class AdministratorMainActivity : BasePostActivity(), NavController.OnDestinatio
         }
     }
 
-    override fun makeWorkerRequests() {
-        val newOrdersWorkRequest: PeriodicWorkRequest =
-            PeriodicWorkRequestBuilder<NewOrdersWorker>(
-                PeriodicWorkRequest.MIN_PERIODIC_FLEX_MILLIS,
-                TimeUnit.MINUTES
-            ).build()
-        val newOrderItemsStateRequest: PeriodicWorkRequest =
-            PeriodicWorkRequestBuilder<NewOrderItemStatusWorker>(
-                PeriodicWorkRequest.MIN_PERIODIC_FLEX_MILLIS,
-                TimeUnit.MINUTES
-            ).build()
-        WorkManager.getInstance(this).also {
-            it.enqueueUniquePeriodicWork(
-                NewOrdersWorker.NEW_ORDERS_WORKER_TAG,
-                ExistingPeriodicWorkPolicy.REPLACE,
-                newOrdersWorkRequest
-            )
-            it.enqueueUniquePeriodicWork(
-                NewOrderItemStatusWorker.NEW_ORDER_ITEM_STATUS_WORKER_TAG,
-                ExistingPeriodicWorkPolicy.REPLACE,
-                newOrderItemsStateRequest
-            )
-        }
-    }
 
     override fun observeOnNewPermissionEvent() {
         viewModel.newPermissionEvent.observe(this) {
