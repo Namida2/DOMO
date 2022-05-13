@@ -33,17 +33,6 @@
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
-            <ImageButton
-                android:id="@+id/closeDialogButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@id/dishName"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="16dp"
-                android:background="@color/white"
-                android:minHeight="0dp"
-                android:src="@drawable/ic_cancel" />
         </RelativeLayout>
 
         <RelativeLayout

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.featureOrder.R
 import com.example.featureOrder.databinding.DialogGuestsCountBinding
 import com.example.featureOrder.domain.di.OrderDepsStore.deps
 import com.example.featureOrder.presentation.order.adapters.GuestsCountAdapter
@@ -36,4 +37,5 @@ class GuestsCountBottomSheetDialog(
             }
         }
     }
+
 }

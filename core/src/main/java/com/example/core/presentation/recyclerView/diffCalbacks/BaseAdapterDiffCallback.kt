@@ -5,7 +5,6 @@ import androidx.viewbinding.ViewBinding
 import com.example.core.presentation.recyclerView.interfaces.BaseAdapterDelegate
 import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 
-//TODO: Replace old adapters with BaseRecyclerViewAdapter
 class BaseAdapterDiffCallback(
     private val recyclerViewTypes: List<BaseAdapterDelegate<out ViewBinding, out BaseRecyclerViewType>>,
 ) : DiffUtil.ItemCallback<BaseRecyclerViewType>() {

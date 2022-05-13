@@ -12,22 +12,22 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.constants.OtherStringConstants
-import com.example.core.presentation.ProcessAleartDialog.ProcessAlertDialog
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.entities.tools.extensions.dismissIfAdded
 import com.example.core.domain.entities.tools.extensions.isNetworkConnected
 import com.example.core.domain.entities.tools.extensions.showIfNotAdded
 import com.example.core.domain.interfaces.EmployeeAuthCallback
+import com.example.core.presentation.ProcessAleartDialog.ProcessAlertDialog
 import com.example.core.presentation.adminPasswordDialog.AdminPasswordDialog
-import com.example.core.presentation.adminPasswordDialog.AdminPasswordDialogCallbacks
 import com.example.featureRegistration.R
 import com.example.featureRegistration.databinding.FragmentRegistrationBinding
 import com.example.featureRegistration.domain.ViewModelFactory
 import com.example.featureRegistration.domain.recyclerView.PostItemDecoration
 import com.example.featureRegistration.domain.recyclerView.PostItemsAdapter
 
-class RegistrationFragment : Fragment(){
+class RegistrationFragment : Fragment() {
 
     private var smallMargin: Int? = null
     private var largeMargin: Int? = null
@@ -65,7 +65,7 @@ class RegistrationFragment : Fragment(){
         binding = FragmentRegistrationBinding.inflate(inflater)
         with(binding.postsRecyclerView) {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-            adapter = PostItemsAdapter(getPostImagesList(),viewModel.getPostItems()) { post ->
+            adapter = PostItemsAdapter(getPostImagesList(), viewModel.getPostItems()) { post ->
                 viewModel.selectedPost = post
             }
             addItemDecoration(PostItemDecoration(smallMargin!!, largeMargin!!))
@@ -82,7 +82,7 @@ class RegistrationFragment : Fragment(){
                     )
                 }
             else requireContext().createMessageDialog(
-                com.example.core.domain.entities.tools.ErrorMessage(
+                ErrorMessage(
                     R.string.defaultTitle,
                     R.string.networkConnectionMessage
                 )
@@ -103,7 +103,7 @@ class RegistrationFragment : Fragment(){
                     employeeAuthCallback.onAuthorisationEvent(it.employee)
                 }
                 is RegistrationVMStates.OnFailure -> {
-                    requireContext().createMessageDialog(it.errorMessage){
+                    requireContext().createMessageDialog(it.errorMessage) {
                         ProcessAlertDialog.dismissIfAdded()
                     }?.show(parentFragmentManager, "")
                 }
@@ -122,6 +122,6 @@ class RegistrationFragment : Fragment(){
     private fun getPostImagesList(): List<BitmapDrawable> = listOf(
         BitmapDrawable(resources, BitmapFactory.decodeResource(resources, R.drawable.im_cook)),
         BitmapDrawable(resources, BitmapFactory.decodeResource(resources, R.drawable.im_waiter)),
-        BitmapDrawable(resources, BitmapFactory.decodeResource(resources, R.drawable.im_administrator)),
+        BitmapDrawable(resources, BitmapFactory.decodeResource(resources, R.drawable.im_administrator))
     )
 }

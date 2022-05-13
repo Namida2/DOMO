@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
+import com.example.core.domain.entities.tools.constants.OtherStringConstants.VIEW_TYPE_NOT_FOUND
 import com.example.core.presentation.recyclerView.diffCalbacks.BaseAdapterDiffCallback
 import com.example.core.presentation.recyclerView.interfaces.BaseAdapterDelegate
 import com.example.core.presentation.recyclerView.interfaces.BaseRecyclerViewType
 import com.example.core.presentation.recyclerView.interfaces.BaseViewHolder
-import com.example.core.domain.entities.tools.constants.OtherStringConstants.VIEW_TYPE_NOT_FOUND
 
 class BaseRecyclerViewAdapter(
     private var recyclerViewTypes: List<BaseAdapterDelegate<out ViewBinding, out BaseRecyclerViewType>>,
@@ -25,7 +25,6 @@ class BaseRecyclerViewAdapter(
             parent
         ) as BaseViewHolder<ViewBinding, BaseRecyclerViewType>
     }
-
 
     override fun onBindViewHolder(
         holder: BaseViewHolder<ViewBinding, BaseRecyclerViewType>,

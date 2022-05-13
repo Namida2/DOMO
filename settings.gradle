@@ -8,7 +8,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "DOMO"
 include ':app'
-include ':waiter-core'
 include ':feature-order'
 include ':waiter-main'
 include ':feature-currentOrders'

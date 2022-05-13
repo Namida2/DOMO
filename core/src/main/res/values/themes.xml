@@ -14,9 +14,12 @@
         <item name="android:navigationBarColor">@color/black</item>
         <!-- Customize your theme here. -->
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
-
+        <item name="snackbarStyle">@style/MySnackbar</item>
     </style>
 
+    <style name="MySnackbar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:layout_margin">16dp</item>
+    </style>
 
     <style name="fbaLabelStyle">
         <item name="android:background">@drawable/bg_black_rounded_24</item>

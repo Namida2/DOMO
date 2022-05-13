@@ -27,7 +27,5 @@ object NetworkConnectionListener {
             }
         })
     }
-
     fun isNetworkConnected(): Boolean = currentState
-
 }

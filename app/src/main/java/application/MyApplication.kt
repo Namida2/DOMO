@@ -12,7 +12,6 @@ import com.example.featureSplashScreen.domain.di.DaggerSplashScreenAppComponent
 import com.example.featureSplashScreen.domain.di.SplashScreenDepsStore
 
 class MyApplication : Application() {
-
     override fun onCreate() {
         NetworkConnectionListener.registerCallback(applicationContext)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)

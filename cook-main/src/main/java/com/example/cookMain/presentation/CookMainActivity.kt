@@ -60,6 +60,8 @@ class CookMainActivity : BasePostActivity(), NavController.OnDestinationChangedL
         showNavigationUI(binding.root, binding.appBar, binding.bottomNavigation)
         makeWorkerRequests()
         setOnNavigationItemSelectedListener()
+        observeOnNewPermissionEvent()
+        observeMenuVersionEvent()
     }
 
     private fun initBinding() {

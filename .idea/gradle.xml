@@ -25,11 +25,9 @@
             <option value="$PROJECT_DIR$/feature-registration" />
             <option value="$PROJECT_DIR$/feature-settings" />
             <option value="$PROJECT_DIR$/feature-splashScreen" />
-            <option value="$PROJECT_DIR$/waiter-core" />
             <option value="$PROJECT_DIR$/waiter-main" />
           </set>
         </option>
-        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

@@ -85,6 +85,7 @@
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_black_rounded_24.xml" value="0.211" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_bottom_navigation.xml" value="0.215" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_cancel_button_dialog.xml" value="0.315" />
+        <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_dialog_message.xml" value="0.3505" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_dialog_message_button.xml" value="0.362" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_guests_count_dialog.xml" value="0.219" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/bg_rounded_white_24.xml" value="0.1635" />
@@ -105,6 +106,7 @@
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/ic_settings.xml" value="0.253" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/ic_upload.xml" value="0.368" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/ic_upload_white.xml" value="0.249" />
+        <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/drawable/layout_splash_screen.xml" value="0.13" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/activity_main.xml" value="0.24791666666666667" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/dialog_admin_password.xml" value="0.25" />
         <entry key="..\:/Projects/Graduate/DOMO/core/src/main/res/layout/dialog_clodsed_question.xml" value="0.33" />
