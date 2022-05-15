@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.isDigitsOnly
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,6 +18,7 @@ import com.example.core.domain.entities.tools.extensions.Animations.prepareSlide
 import com.example.core.domain.entities.tools.extensions.Animations.prepareSlideUp
 import com.example.core.domain.entities.tools.extensions.createMessageDialog
 import com.example.core.domain.entities.tools.extensions.dismissIfAdded
+import com.example.core.domain.entities.tools.extensions.isEmptyField
 import com.example.core.domain.entities.tools.extensions.showIfNotAdded
 import com.example.core.domain.interfaces.OrdersService
 import com.example.featureMenuDialog.domain.MenuDialogDeps
@@ -88,7 +90,7 @@ class SettingsFragment: Fragment() {
             }
             maxGuestsCount.addTextChangedListener {
                 this@SettingsFragment.viewModel.onSettingsChanged(
-                    binding.maxGuestsCount.text.toString(),
+                    binding.maxTablesCount.text.toString(),
                     it.toString()
                 )
             }
@@ -140,6 +142,8 @@ class SettingsFragment: Fragment() {
                 is SettingsVMStates.Default -> {
                     ProcessAlertDialog.dismissIfAdded()
                 }
+                is SettingsVMStates.OnInvalidTablesCount -> binding.maxTablesCount.setText("1")
+                is SettingsVMStates.OnInvalidGuestCount -> binding.maxGuestsCount.setText("1")
             }
         }
     }

@@ -22,7 +22,7 @@ class GuestsCountAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.guestsCount.text = position.toString()
+        holder.binding.guestsCount.text = (position + 1).toString()
         holder.binding.root.tag = position
     }
 

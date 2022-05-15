@@ -1,5 +1,6 @@
 package com.example.featureSettings.presentation
 
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,6 +31,8 @@ sealed class SettingsVMStates {
     object Default : SettingsVMStates()
     object InProcess : SettingsVMStates()
     object OnSuccess : SettingsVMStates(), TerminatingState
+    object OnInvalidTablesCount : SettingsVMStates(), TerminatingState
+    object OnInvalidGuestCount : SettingsVMStates(), TerminatingState
     class OnFailure(val message: ErrorMessage) : SettingsVMStates(), TerminatingState
 }
 
@@ -115,18 +118,29 @@ class SettingsViewModel(
         )
     }
 
+    private fun isValidStringNumber(string: String): Boolean =
+        string.isDigitsOnly() && string.toIntOrNull() != null && string.toIntOrNull() != 0
+
     fun onSaveSettingButtonClick(maxTablesCount: String, maxGuestsCount: String) {
-        if (isEmptyField(maxTablesCount, maxGuestsCount)) return
+        var validTablesCount = maxTablesCount
+        var validGuestCount = maxGuestsCount
+        if(!isValidStringNumber(maxTablesCount)) {
+            setNewState(SettingsVMStates.OnInvalidTablesCount)
+            validTablesCount = "1"
+        }
+        if(!isValidStringNumber(maxGuestsCount)) {
+            setNewState(SettingsVMStates.OnInvalidGuestCount)
+            validGuestCount = "1"
+        }
         _state.value = SettingsVMStates.InProcess
         saveSettingsUseCase.saveNewSettings(
-            maxTablesCount.toInt(),
-            maxGuestsCount.toInt(),
+            validTablesCount.toInt(),
+            validGuestCount.toInt(),
             object : SimpleTask {
                 override fun onSuccess(result: Unit) {
                     onSettingsChanged(setting.tablesCount.toString(), setting.guestsCount.toString())
                     setNewState(SettingsVMStates.OnSuccess)
                 }
-
                 override fun onError(message: ErrorMessage?) {
                     setNewState(SettingsVMStates.OnFailure(message ?: defaultErrorMessage))
                 }
@@ -141,14 +155,13 @@ class SettingsViewModel(
     }
 
     fun onSettingsChanged(maxTablesCount: String, naxGuestsCount: String) {
-        if (isEmptyField(maxTablesCount)) return
+        if (!isValidStringNumber(maxTablesCount) || !isValidStringNumber(naxGuestsCount)) return
         val newTablesCount = maxTablesCount.toInt()
         val newGuestCount = naxGuestsCount.toInt()
         if (setting.tablesCount == newTablesCount && setting.guestsCount == newGuestCount )
             _onSettingChangedEvent.value = Event(false)
         else _onSettingChangedEvent.value = Event(true)
     }
-
 
     override fun setNewState(state: SettingsVMStates) {
         _state.value = state
