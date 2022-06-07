@@ -105,6 +105,8 @@ class CurrentOrdersFragment : Fragment() {
         onShowOrderDetailCallback.onShowDetail(orderId)
         val destination = CurrentOrdersFragmentDirections
             .actionCurrentOrdersFragmentToCurrentOrdersDetailFragment(orderId)
-        findNavController().navigate(destination)
+        runCatching {
+            findNavController().navigate(destination)
+        }
     }
 }

@@ -7,10 +7,8 @@ import android.os.Build
 import android.os.IBinder
 import com.example.core.domain.entities.tools.ErrorMessage
 import com.example.core.domain.entities.tools.SimpleTask
-import com.example.core.domain.notofications.NotificationsTools.createNotification
 import com.example.core.domain.notofications.NotificationsTools.createNotificationChannel
 import com.example.core.domain.notofications.NotificationsTools.getForegroundNotification
-import com.example.featureSettings.R
 import com.example.featureSettings.domain.useCases.SaveMenuUseCase
 import com.google.firebase.firestore.CollectionReference
 

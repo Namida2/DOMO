@@ -134,7 +134,7 @@ class OrdersServiceImpl @Inject constructor(
         ordersChanges.tryEmit(orders)
     }
 
-    //This should always be called
+    //First reading orders from remote source
     override fun addListOfOrders(orders: List<Order>) {
         this.orders.clear()
         this.orders.addAll(orders)

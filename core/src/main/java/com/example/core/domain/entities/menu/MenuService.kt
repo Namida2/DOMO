@@ -38,7 +38,7 @@ object MenuService : BaseObservable<MenuServiceSub> {
     }
 
 
-    fun getDishById(dishId: Int): Dish {
+    fun getDishById(dishId: Int): Dish? {
         var dish: Dish? = null
         menu.find { category ->
             dish = category.dishes.find {
@@ -47,7 +47,7 @@ object MenuService : BaseObservable<MenuServiceSub> {
             dish != null
         }
         //TODO: Read the menu again in this place if there is an exception
-        return dish ?: throw IllegalArgumentException(UNKNOWN_DISH_ID + dishId)
+        return dish //?: throw IllegalArgumentException(UNKNOWN_DISH_ID + dishId)
     }
 
     fun setNewMenu(menu: MutableList<Category>?) {

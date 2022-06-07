@@ -81,7 +81,9 @@ class TablesFragment : Fragment() {
                 //TODO: Add it to com.example.core.domain.constants
                 item to "end",
             )
-        findNavController().navigate(direction, fragmentExtras)
+        kotlin.runCatching {
+            findNavController().navigate(direction, fragmentExtras)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

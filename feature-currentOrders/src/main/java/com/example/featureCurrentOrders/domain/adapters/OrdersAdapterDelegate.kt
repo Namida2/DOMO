@@ -60,7 +60,7 @@ class OrdersViewHolder(
         binding.orderId.precomputeAndSetText(item.orderId.toString())
         val count = item.orderItems.size.coerceAtMost(averageOrderItemsCount)
         item.orderItems.take(count).forEach {
-            val name = MenuService.getDishById(it.dishId).name
+            val name = MenuService.getDishById(it.dishId)?.name ?: return
             preview += when {
                 name.length > maxDishNameLength -> name.substring(0, maxDishNameLength) + tooLongNamePreviewDelimiter
                 else -> name + namePreviewDelimiter

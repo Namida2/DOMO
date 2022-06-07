@@ -53,7 +53,7 @@ class OrderItemViewHolder(
 ) : BaseViewHolder<LayoutOrderItemBinding, OrderItem>(binding) {
 
     override fun onBind(item: OrderItem) {
-        val dish = MenuService.getDishById(item.dishId)
+        val dish = MenuService.getDishById(item.dishId) ?: return
         with(binding) {
             orderLargeContainer.tag = item
             orderSmallContainer.tag = item

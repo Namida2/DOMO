@@ -11,7 +11,7 @@ class ChangeOrderItemStateUseCaseImpl @Inject constructor(
 ) : ChangeOrderItemStateUseCase {
 
     override fun changeOrderItemStatus(orderId: Int, orderItem: OrderItem, task: SimpleTask) {
-        val dishName = MenuService.getDishById(orderItem.dishId).name
+        val dishName = MenuService.getDishById(orderItem.dishId)?.name ?: return
         orderItemsRepository.changeOrderItemStatus(orderId, orderItem.getOrderIemId(), dishName, !orderItem.isReady, task)
     }
 }

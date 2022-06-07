@@ -68,7 +68,7 @@ class OrderViewModel(
     fun onOrderItemSelected(orderItem: OrderItem) {
         _state.value = OrderViewModelStates.ShowingDishMenuDialog(
             orderItem,
-            MenuService.getDishById(orderItem.dishId)
+            MenuService.getDishById(orderItem.dishId) ?: return
         )
     }
 
